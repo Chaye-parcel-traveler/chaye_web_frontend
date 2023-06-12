@@ -12,7 +12,7 @@ function AddColis() {
   const [largeur, setLargeur] = useState('');
   const [longueur, setLongueur] = useState('');
   const [profondeur, setProfondeur] = useState('');
-  const [dateLimite, setDateLimite] = useState('');
+  const [dateLimiteExpedition, setdateLimiteExpedition] = useState('');
   const [photo, setPhoto] = useState('');
   const [villeDepart, setVilleDepart] = useState('');
 
@@ -37,8 +37,8 @@ function AddColis() {
     setProfondeur(event.target.value);
   };
 
-  const handleDateLimiteChange = (event) => {
-    setDateLimite(event.target.value);
+  const handledateLimiteExpeditionChange = (event) => {
+    setdateLimiteExpedition(event.target.value);
   };
 
   const handleVilleDepartChange = (event) => {
@@ -54,14 +54,14 @@ function AddColis() {
       formData.append('largeur', largeur);
       formData.append('longueur', longueur);
       formData.append('profondeur', profondeur);
-      formData.append('dateLimite', dateLimite);
+      formData.append('dateLimiteExpedition', dateLimiteExpedition);
       formData.append('villeDepart', villeDepart);
       formData.append('photo', photo);
       axios
         .post(`http://localhost:5000/api/submitcolis`, formData)
         .then((response) => {
           console.log(response.data);
-          return navigate("/acceuil");
+          return navigate("/accueil");
         })
         .catch((error) => {
           console.log(error);
@@ -96,7 +96,7 @@ function AddColis() {
 
         <Form.Field>
           <label>Date limite d'expédition:</label>
-          <input type="date" onChange={handleDateLimiteChange} />
+          <input type="date" onChange={handledateLimiteExpeditionChange} />
         </Form.Field>
 
         <Form.Field>

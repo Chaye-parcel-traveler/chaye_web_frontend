@@ -8,7 +8,7 @@ import AllMembres from './Components/User/AllMembres';
 import EditMembre from './Components/User/EditMembre';
 import Deconnecter from './Components/User/Deconnecter';
 import Profile from './Components/User/Profile';
-import Acceuil from './Components/Acceuil/Acceuil';
+import Accueil from './Components/Accueil/Accueil';
 import AjoutColis from './Components/Colis/AjoutColis';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
     <div className="App">
     <Navbar/>
   <Routes>
-    <Route path='/acceuil' element={<Acceuil/>}/>
+    <Route path='/accueil' element={<Accueil/>}/>
     <Route path='/inscription' element={<Inscription/>}/>
     <Route path='/connexion' element={<Connexion />}/>
     <Route path='/allmembres' element={<AllMembres />}/>

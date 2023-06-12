@@ -3,7 +3,7 @@ import { Menu } from 'semantic-ui-react'
 
 
  class Navbar extends Component {
-    state = { activeItem: 'acceuil' }
+    state = { activeItem: 'accueil' }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
   
@@ -13,9 +13,9 @@ import { Menu } from 'semantic-ui-react'
       return (
         <Menu inverted>
           <Menu.Item 
-             as='a' href="/acceuil"
-            name='acceuil'
-            active={activeItem === 'acceuil'}
+             as='a' href="/accueil"
+            name='accueil'
+            active={activeItem === 'accueil'}
             onClick={this.handleItemClick}
            
             
