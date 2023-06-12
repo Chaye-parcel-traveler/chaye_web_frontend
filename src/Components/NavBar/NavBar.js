@@ -38,6 +38,12 @@ import { Menu } from 'semantic-ui-react'
             active={activeItem === 'allmembres'}
             onClick={this.handleItemClick}
           />
+            <Menu.Item
+          as='a' href="/ajoutcolis"
+            name='AjoutColis'
+            active={activeItem === 'ajoutcolis'}
+            onClick={this.handleItemClick}
+          />
            <Menu.Item
           as='a' href="/deconnecter"
             name='déconnecter'

@@ -1,7 +1,7 @@
 
 import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
-import { Card, Image } from 'semantic-ui-react';
+import { Card, Button } from 'semantic-ui-react';
 
 function Acceuil() {
     const initialestate ={
@@ -55,6 +55,11 @@ function Acceuil() {
                 Dimensions: {colis.largeur}cm x {colis.longueur}cm x {colis.profondeur}cm
               </Card.Description>
               <Card.Description>Date limite: {colis.dateLimiteExpedition}</Card.Description>
+              <form action={`http://localhost:5000/colis/delete/${colis._id}?_method=DELETE`} method="post">
+              <input type="hidden" name="_method" value="DELETE"/>
+
+                <Button  positive>Supprimer</Button>
+            </form>
             </Card.Content>
           </Card>
         ))}

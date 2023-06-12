@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-
+import { useNavigate } from "react-router-dom";
 function Inscription() {
-
+  let navigate = useNavigate();
   const [file,setFile] = useState(null);
   const [nom,setNom] = useState('');
   const [prenom,setPrenom] = useState ('');
@@ -55,6 +55,7 @@ const handelStatusChange = (event)=>{
           axios.post(`http://localhost:5000/api/submitInscription`,formData)
           .then(( response )=>{
               console.log(response.data);
+              return navigate("/allmembres");
           }).catch(( error )=>{
               console.log(error);
           });

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'semantic-ui-react';
+import { useNavigate } from "react-router-dom";
+
 import '../styles/styles.css';
 
 function AddColis() {
+  let navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [contenu, setContenu] = useState('');
   const [largeur, setLargeur] = useState('');
@@ -58,6 +61,7 @@ function AddColis() {
         .post(`http://localhost:5000/api/submitcolis`, formData)
         .then((response) => {
           console.log(response.data);
+          return navigate("/acceuil");
         })
         .catch((error) => {
           console.log(error);
