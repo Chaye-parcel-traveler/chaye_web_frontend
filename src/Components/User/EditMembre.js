@@ -27,7 +27,27 @@ function EditeMembre() {
     setImagename(event.target.files[0].name); 
 };
 
-
+const handelNomChange = (event)=>{
+  setNom(event.target.value);
+};
+const handelPrenomChange = (event)=>{
+setPrenom(event.target.value);
+};
+const handelEmailChange = (event)=>{
+setEmail(event.target.value);
+};
+const handelPasswordChange = (event)=>{
+setPassword(event.target.value);
+};
+const handelAdresseChange = (event)=>{
+setAdresse(event.target.value);
+};
+const handelTelephoneChange = (event)=>{
+setTelephone(event.target.value);
+};
+const handelStatusChange = (event)=>{
+setStatus(event.target.value);
+};
 
  useEffect(()=>{
   axios.get(`http://localhost:5000/editMembre/${params.id}`)
@@ -80,37 +100,37 @@ return(
       <form  onSubmit={handelSubmit}>
       <input type="hidden" name="_method" value="PUT"/>
         <label >Nom  </label>
-        <input type="text"  name="nom"  Value={membre.nom}/><br/><br/>
+        <input type="text"  name="nom"  onChange={handelNomChange} Value={membre.nom}/><br/><br/>
 
 
         <label >Prénom  </label>
-        <input type="text"  name="prenom"   Value={membre.prenom} /><br/><br/>
+        <input type="text"  name="prenom" onChange={handelPrenomChange}  Value={membre.prenom} /><br/><br/>
 
         <label >Email   </label>
-        <input type="email"  name="email"   Value={membre.email} /><br/><br/>
+        <input type="email"  name="email"   onChange={handelEmailChange} Value={membre.email} /><br/><br/>
 
 
         <label >Mot de passe   </label>
 
-        <input type="password" name="password"   Value={membre.password} /><br/><br/>
+        <input type="password" name="password"  onChange={handelPasswordChange}  Value={membre.password} /><br/><br/>
 
 
         <label> Adresse  </label>
-        <input type="text"  name="adresse"  Value={membre.adresse} /><br/><br/>
+        <input type="text"  name="adresse" onChange={handelAdresseChange} Value={membre.adresse} /><br/><br/>
 
 
         <label>Téléphone  </label>
-        <input type="text"  name="telephone"   Value={membre.telephone}/> <br/><br/>
+        <input type="text"  name="telephone"  onChange={handelTelephoneChange} Value={membre.telephone}/> <br/><br/>
 
         <label>Status  </label>
-        <select name="status"  Value={membre.status} >
+        <select name="status" onChange={handelStatusChange} Value={membre.status} >
           <option>Sélectionnez votre status </option>
           <option>Expéditeur</option>
           <option >Voyageur</option>
          </select><br/><br/>
          <label>Photo </label>
 
-         <input type="file" onChange={handelFileChange} /><br/><br/>
+         <input type="file" onChange={handelFileChange} /><img src={`http://localhost:5000/${membre.imagename}`} width={'150px'}/><br/><br/>
         <button type='submit'>Valider</button>
         
       </form>
