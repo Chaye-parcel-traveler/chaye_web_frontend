@@ -58,7 +58,7 @@ function AddColis() {
       formData.append('villeDepart', villeDepart);
       formData.append('photo', photo);
       axios
-        .post(`http://localhost:5000/api/submitcolis`, formData)
+        .post(`http://localhost:5000/api/submitcolis`, formData ,{withCredentials:true})
         .then((response) => {
           console.log(response.data);
           return navigate("/accueil");
@@ -71,45 +71,45 @@ function AddColis() {
 
   return (
    
-    <div className="center-container">
+    <div className="Formulcontainer">
        <h1>Ajouter un colis</h1> 
       <Form onSubmit={handleSubmit}>
         <Form.Field>
           <label>Contenu:</label>
-          <input type="text" onChange={handleContenuChange} />
+          <input type="text" id="input"  onChange={handleContenuChange} />
         </Form.Field>
 
         <Form.Field>
           <label>Largeur:</label>
-          <input type="string" onChange={handleLargeurChange} placeholder="cm" />
+          <input type="string"  id="input" onChange={handleLargeurChange} placeholder="cm" />
         </Form.Field>
 
         <Form.Field>
           <label>Longueur:</label>
-          <input type="string" onChange={handleLongueurChange} placeholder="cm" />
+          <input type="string" id="input"  onChange={handleLongueurChange} placeholder="cm" />
         </Form.Field>
 
         <Form.Field>
           <label>Profondeur:</label>
-          <input type="string" onChange={handleProfondeurChange} placeholder="cm" />
+          <input type="string" id="input"  onChange={handleProfondeurChange} placeholder="cm" />
         </Form.Field>
 
         <Form.Field>
           <label>Date limite d'expédition:</label>
-          <input type="date" onChange={handledateLimiteExpeditionChange} />
+          <input type="date" id="input"  onChange={handledateLimiteExpeditionChange} />
         </Form.Field>
 
         <Form.Field>
           <label>Ville de départ:</label>
-          <input type="text" onChange={handleVilleDepartChange} />
+          <input type="text" id="input"  onChange={handleVilleDepartChange} />
         </Form.Field>
 
         <Form.Field>
           <label>Photo:</label>
-          <input type="file" onChange={handleFileChange} />
+          <input type="file"  id="input" onChange={handleFileChange} />
         </Form.Field>
 
-        <Button primary type="submit">Ajouter</Button>
+        <Button id="btn" primary type="submit">Ajouter</Button>
       </Form>
     </div>
   );

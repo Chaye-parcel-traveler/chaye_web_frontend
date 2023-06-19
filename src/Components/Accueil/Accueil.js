@@ -2,6 +2,10 @@
 import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import { Card, Button } from 'semantic-ui-react';
+//Moment (date)
+import moment from 'moment/moment' ;
+import 'moment/locale/fr'
+moment().locale('fr')
 
 function Accueil() {
     const initialestate ={
@@ -31,7 +35,7 @@ function Accueil() {
       const [state, dispatch] =useReducer(reducer,initialestate)
 
       useEffect(()=>{
-        axios.get('http://localhost:5000/colis')
+        axios.get('http://localhost:5000/colis',{withCredentials:true})
         .then(response=>{
             console.log(response.data);
                 dispatch({type: 'FETCH_SUCCESS' , payload: response.data});
@@ -54,7 +58,8 @@ function Accueil() {
               <Card.Description>
                 Dimensions: {colis.largeur}cm x {colis.longueur}cm x {colis.profondeur}cm
               </Card.Description>
-              <Card.Description>Date limite d'Expédition : {colis.dateLimiteExpedition}</Card.Description>
+              <Card.Description>Date limite d'Expédition : {moment(colis.dateLimiteExpedition).format('L')}</Card.Description>
+              <Button primary   as='a' href={`/editcolis/${colis._id}`}>Edit</Button>
               <form action={`http://localhost:5000/colis/delete/${colis._id}?_method=DELETE`} method="post">
               <input type="hidden" name="_method" value="DELETE"/>
 
@@ -72,4 +77,3 @@ function Accueil() {
 
 
 export default Accueil
-

@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* ******************HERO*********************** */
+*{
+    margin: 0;
+    padding: 0;
+}
+.hero {
+    background-image: url(../../../public/img/head.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    width: 100%;
+  }
+  
+  .heroItem {
+    text-align: center;
+    color: rgb(8, 8, 8);
+    padding: 2%;
+    width: 50%;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    background-color: hsla(0, 0%, 100%, 0.548);
+  }
+  

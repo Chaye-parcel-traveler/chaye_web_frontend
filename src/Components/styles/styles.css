@@ -1,7 +1,23 @@
-.center-container {
-  width: 50%;
+.Formulcontainer {
+  width: 30%;
+  border: 2px solid #EC634E;
+  border-radius: 15px;
   margin: auto;
+  padding: 20px;
+background-image: url();
+}
 
-    height: 100vh;
-  }
-  
+#input {
+  width: 70%;
+  border-radius: 15px;
+  padding: 15px 0px;
+}
+
+#btn {
+  background-color: #4F4294;
+  color: #FFFF;
+}
+
+/* .bgimage{
+    background-image: url(../../../public/img/logochaye-removebg-preview.png);
+  } */

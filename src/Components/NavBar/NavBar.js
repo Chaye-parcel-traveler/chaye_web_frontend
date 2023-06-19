@@ -17,8 +17,6 @@ import { Menu } from 'semantic-ui-react'
             name='accueil'
             active={activeItem === 'accueil'}
             onClick={this.handleItemClick}
-           
-            
           />
           <Menu.Item
             as='a' href="/connexion"
@@ -45,9 +43,15 @@ import { Menu } from 'semantic-ui-react'
             onClick={this.handleItemClick}
           />
            <Menu.Item
-          as='a' href="/deconnecter"
+          as='a' href="http://localhost:5000/deconnecter"
             name='déconnecter'
             active={activeItem === 'deconnecter'}
+            onClick={this.handleItemClick}
+          />
+             <Menu.Item 
+             as='a' href="/chat"
+            name='Chat'
+            active={activeItem === 'Chat'}
             onClick={this.handleItemClick}
           />
         </Menu>
