@@ -43,13 +43,14 @@ function Accueil() {
             }).catch(error=>{  
                  dispatch({type: 'FETCH_ERROR'});});
     }, [])
-
-  return (
+try{
+  <div>
+  <h1>Bienvenue sur la page d'accueil</h1>
+  <h2>Liste des colis</h2>
+  </div>
+  var returnContact =state.colis.map((colis,index) => (
     <div>
-    <h1>Bienvenue sur la page d'accueil</h1>
-      <h2>Liste des colis</h2>
       <Card.Group>
-      {state.loading ? 'Loading...'  : state.colis.map((colis,index) => (
           <Card key={index}>
           <img src={`http://localhost:5000/${colis.photo}`}/>
             <Card.Content>
@@ -67,10 +68,24 @@ function Accueil() {
             </form>
             </Card.Content>
           </Card>
-        ))}
       </Card.Group>
     </div>
-  );
+  ));
+}
+catch(error){
+  console.log(error)
+  console.log("utilisateur non connecter")
+}
+return (
+  <React.Fragment>
+    
+      <h1>Bienvenu sur notre site Chaye</h1>
+      {returnContact}
+      
+  </React.Fragment>
+)
+
+
 }
 
 
