@@ -50,7 +50,7 @@ function Inscription() {
 
   const handelSubmit = (event) => {
     event.preventDefault();
-    if (file) {
+
       const formData = new FormData();
       formData.append('file', file);
       formData.append('nom', nom);
@@ -65,12 +65,12 @@ function Inscription() {
         .post(`http://localhost:5000/api/submitInscription`, formData)
         .then((response) => {
           console.log(response.data);
-          return navigate('/allmembres');
+          return navigate('/connexion');
         })
         .catch((error) => {
           console.log(error);
         });
-    }
+    
   };
 
   return (

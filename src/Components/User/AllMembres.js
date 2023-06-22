@@ -52,8 +52,8 @@ return(
         <Table.HeaderCell>Adresse</Table.HeaderCell>
         <Table.HeaderCell>Status</Table.HeaderCell>
         <Table.HeaderCell>Photos</Table.HeaderCell>
-        <Table.HeaderCell></Table.HeaderCell>
-        <Table.HeaderCell></Table.HeaderCell>
+        <Table.HeaderCell>Modifier</Table.HeaderCell>
+        <Table.HeaderCell>Supprimer</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
     {state.loading ? 'Loading...'  : state.membres.map((membre,index) => (
@@ -69,7 +69,6 @@ return(
         <Table.Cell> 
          <form action={`http://localhost:5000/membre/delete/${membre._id}?_method=DELETE`} method="post">
               <input type="hidden" name="_method" value="DELETE"/>
-
         <Button  positive>Supprimer</Button>
             </form>
        </Table.Cell>

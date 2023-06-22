@@ -47,8 +47,8 @@ function EditeMembre() {
     setTelephone(event.target.value);
   };
 
-  const handelStatusChange = (event, data) => {
-    setStatus(data.value);
+  const handelStatusChange = (event) => {
+    setStatus(event.target.value);
   };
 
   useEffect(() => {
@@ -72,7 +72,7 @@ function EditeMembre() {
   const handelSubmit = (event) => {
     event.preventDefault();
 
-    if (file) {
+    // if (file) {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('nom', nom);
@@ -93,7 +93,7 @@ function EditeMembre() {
         .catch((error) => {
           console.log(error);
         });
-    }
+    // }
   };
 
   return (
@@ -143,7 +143,7 @@ function EditeMembre() {
 
         <Form.Field>
           <label>Photo</label>
-          <input type="file" id="input" onChange={handelFileChange} />
+          <input type="file" id="input" onChange={handelFileChange}/>
           <img src={`http://localhost:5000/${imagename}`} width="150px" alt="Profil" />
         </Form.Field>
 
