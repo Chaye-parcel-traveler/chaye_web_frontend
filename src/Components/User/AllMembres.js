@@ -32,7 +32,7 @@ function AllMembres() {
       const [state, dispatch] =useReducer(reducer,initialestate)
 
       useEffect(()=>{
-        axios.get('http://localhost:5000/membres')
+        axios.get('http://localhost:5000/membres',{ withCredentials: true })
         .then(response=>{
             console.log(response.data);
                 dispatch({type: 'FETCH_SUCCESS' , payload: response.data});
