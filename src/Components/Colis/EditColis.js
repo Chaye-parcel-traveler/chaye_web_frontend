@@ -45,16 +45,17 @@ function EditColis() {
   const handleVilleDepartChange = (event) => {
     setVilleDepart(event.target.value);
   };
+
   useEffect(() => {
-    axios.get(`http://localhost:5000/editcolis/${params.id}`,{withCredentials:true})
+    axios
+      .get(`http://localhost:5000/editcolis/${params.id}`, { withCredentials: true })
       .then((response) => {
-        
         setContenu(response.data.contenu);
         setLargeur(response.data.largeur);
         setLongueur(response.data.longueur);
         setProfondeur(response.data.profondeur);
         setdateLimiteExpedition(response.data.dateLimiteExpedition);
-        setVilleDepart(response.data. villeDepart);
+        setVilleDepart(response.data.villeDepart);
         setPhoto(response.data.photo);
       })
       .catch((error) => {
@@ -64,71 +65,72 @@ function EditColis() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-      if (file) {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('contenu', contenu);
-        formData.append('largeur', largeur);
-        formData.append('longueur', longueur);
-        formData.append('profondeur', profondeur);
-        formData.append('dateLimiteExpedition', dateLimiteExpedition);
-        formData.append('villeDepart', villeDepart);
-        formData.append('photo', photo);
-        axios.put(`http://localhost:5000/editcolis/${params.id}`, formData)
-          .then((response) => {
-            console.log(response.data);
-            return navigate("/accueil");
-          })
-          .catch((error) => {
-            
-            console.log(error);
-          });
-      }
-    };
-  
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('contenu', contenu);
+    formData.append('largeur', largeur);
+    formData.append('longueur', longueur);
+    formData.append('profondeur', profondeur);
+    formData.append('dateLimiteExpedition', dateLimiteExpedition);
+    formData.append('villeDepart', villeDepart);
+    formData.append('photo', photo);
+
+    axios
+      .put(`http://localhost:5000/editcolis/${params.id}`, formData)
+      .then((response) => {
+        console.log(response.data);
+        return navigate('/accueil');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="Formulcontainer">
-    <h1>Modifier un colis</h1> 
-   <Form  onSubmit={handleSubmit}>
-     <Form.Field>
-       <label>Contenu:</label>
-       <input type="text" id="input" onChange={handleContenuChange} value={contenu} />
-     </Form.Field>
+      <h1>Modifier un colis</h1>
+      <Form onSubmit={handleSubmit}>
+        <Form.Field>
+          <label>Contenu:</label>
+          <input type="text" id="input" onChange={handleContenuChange} value={contenu} />
+        </Form.Field>
 
-     <Form.Field>
-       <label>Largeur:</label>
-       <input type="string"  id="input" onChange={handleLargeurChange} value={largeur} placeholder="cm" />
-     </Form.Field>
+        <Form.Field>
+          <label>Largeur:</label>
+          <input type="string" id="input" onChange={handleLargeurChange} value={largeur} placeholder="cm" />
+        </Form.Field>
 
-     <Form.Field>
-       <label>Longueur:</label>
-       <input type="string" id="input" onChange={handleLongueurChange} value={longueur} placeholder="cm" />
-     </Form.Field>
+        <Form.Field>
+          <label>Longueur:</label>
+          <input type="string" id="input" onChange={handleLongueurChange} value={longueur} placeholder="cm" />
+        </Form.Field>
 
-     <Form.Field>
-       <label>Profondeur:</label>
-       <input type="string" id="input" onChange={handleProfondeurChange} value={profondeur} placeholder="cm" />
-     </Form.Field>
+        <Form.Field>
+          <label>Profondeur:</label>
+          <input type="string" id="input" onChange={handleProfondeurChange} value={profondeur} placeholder="cm" />
+        </Form.Field>
 
-     <Form.Field>
-       <label>Date limite d'expédition:</label>
-       <input type="date" id="input" onChange={handledateLimiteExpeditionChange}  value={dateLimiteExpedition} />
-     </Form.Field>
+        <Form.Field>
+          <label>Date limite d'expédition:</label>
+          <input type="date" id="input" onChange={handledateLimiteExpeditionChange} value={dateLimiteExpedition} />
+        </Form.Field>
 
-     <Form.Field>
-       <label>Ville de départ:</label>
-       <input type="text" id="input" onChange={handleVilleDepartChange} value={villeDepart}/>
-     </Form.Field>
+        <Form.Field>
+          <label>Ville de départ:</label>
+          <input type="text" id="input" onChange={handleVilleDepartChange} value={villeDepart} />
+        </Form.Field>
 
-     <Form.Field>
-       <label>Photo:</label>
-       <input type="file" id="input" onChange={handleFileChange} />
-     </Form.Field>
-     <img src={`http://localhost:5000/${photo}`} width="150px" alt="imageColis" />
+        <Form.Field>
+          <label>Photo:</label>
+          <input type="file" id="input" onChange={handleFileChange} />
+        </Form.Field>
+        <img src={`http://localhost:5000/${photo}`} width="150px" alt="imageColis" />
 
-     <Button id="btn" type="submit">Ajouter</Button>
-   </Form>
- </div>
+        <Button id="btn" type="submit">
+          Ajouter
+        </Button>
+      </Form>
+    </div>
   );
 }
 

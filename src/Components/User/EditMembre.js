@@ -7,7 +7,6 @@ import { Form, Button } from 'semantic-ui-react';
 function EditeMembre() {
   let navigate = useNavigate();
   const params = useParams();
-
   const [file, setFile] = useState(null);
   const [nom, setNom] = useState('');
   const [prenom, setPrenom] = useState('');
@@ -71,8 +70,6 @@ function EditeMembre() {
 
   const handelSubmit = (event) => {
     event.preventDefault();
-
-    // if (file) {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('nom', nom);
@@ -93,7 +90,6 @@ function EditeMembre() {
         .catch((error) => {
           console.log(error);
         });
-    // }
   };
 
   return (
