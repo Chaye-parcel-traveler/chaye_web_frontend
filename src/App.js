@@ -17,10 +17,13 @@ function App() {
   return (
     <div className="App">
 
-    <Navbar/>
-    
-
-  <Routes>
+   
+    <div className="app">
+      <div className="navbar">
+        <Navbar/>
+      </div>
+    <div className="content">
+      <Routes>
     <Route path='/accueil' element={<Accueil/>}/>
     <Route path='/inscription' element={<Inscription/>}/>
     <Route path='/connexion' element={<Connexion />}/>
@@ -31,6 +34,10 @@ function App() {
     <Route path='/editcolis/:id' element={<EditColis/>}/>
     <Route path='/chat' element={<ChatApp/>}/> 
   </Routes>
+      </div>
+    </div>
+
+
     </div>
   );
 }

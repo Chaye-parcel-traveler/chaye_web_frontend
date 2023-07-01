@@ -70,7 +70,7 @@ function AddColis() {
   };
 
   return (
-   
+    <div className="content">
     <div className="Formulcontainer">
        <h1>Ajouter un colis</h1> 
       <Form onSubmit={handleSubmit}>
@@ -111,6 +111,7 @@ function AddColis() {
 
         <Button id="btn" primary type="submit">Ajouter</Button>
       </Form>
+    </div>
     </div>
   );
 }

@@ -43,6 +43,7 @@ function AllMembres() {
   
     
 return(
+  <div className="content">
    <Table striped>
     <Table.Header>
       <Table.Row>
@@ -79,5 +80,6 @@ return(
    ) )}
 
   </Table>
+  </div>
   )}
 export default AllMembres

@@ -115,7 +115,7 @@ function EditeMembre() {
 
         <Form.Field>
           <label>Mot de passe</label>
-          <input type="password" name="password" id="input" onChange={handelPasswordChange}  />
+          <input type="password" name="password" id="input" onChange={handelPasswordChange} />
         </Form.Field>
 
         <Form.Field>

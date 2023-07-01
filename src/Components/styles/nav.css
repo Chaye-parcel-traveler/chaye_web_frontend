@@ -1,27 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-/* ******************HERO*********************** */
-*{
-    margin: 0;
-    padding: 0;
+.navbar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 10%;
+  background-color: #EC634E;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
-.hero {
-    background-image: url(../../../public/img/head.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    width: 100%;
-  }
-  
-  .heroItem {
-    text-align: center;
-    color: rgb(8, 8, 8);
-    padding: 2%;
-    width: 50%;
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-    background-color: hsla(0, 0%, 100%, 0.548);
-  }
-  
+
+.logo {
+  width: 150px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.navbar a:hover {
+  background-color: #4F4294;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.dropdown.menu {
+  background-color: #f2f2f2;
+  border: none;
+  box-shadow: none;
+}
+
+.dropdown.item {
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.dropdown.item:hover {
+  background-color: #4F4294;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 15px;
+}

@@ -1,65 +1,74 @@
-import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
+import React, { useState } from 'react';
+import { Dropdown } from 'semantic-ui-react';
+import '../styles/nav.css';
 
+const Navbar = () => {
+  const [activeItem, setActiveItem] = useState('accueil');
 
- class Navbar extends Component {
-    state = { activeItem: 'accueil' }
+  const handleItemClick = (name) => {
+    setActiveItem(name);
+  };
 
-    handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-  
-    render(){
-      const { activeItem } = this.state
-  
-      return (
-        <Menu inverted>
-          <Menu.Item 
-             as='a' href="/accueil"
-            name='accueil'
-            active={activeItem === 'accueil'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            as='a' href="/connexion"
-            name='connexion'
-            active={activeItem === 'connexion'}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-          as='a' href="/inscription"
-            name='inscription'
-            active={activeItem === 'inscription'}
-            onClick={this.handleItemClick}
-          />
-        <Menu.Item
-          as='a' href="/allmembres"
-            name='AllMembres'
-            active={activeItem === 'allmembres'}
-            onClick={this.handleItemClick}
-          />
-            <Menu.Item
-          as='a' href="/ajoutcolis"
-            name='AjoutColis'
-            active={activeItem === 'ajoutcolis'}
-            onClick={this.handleItemClick}
-          />
-           <Menu.Item
-          as='a' href="http://localhost:5000/deconnecter"
-            name='déconnecter'
-            active={activeItem === 'deconnecter'}
-            onClick={this.handleItemClick}
-          />
-             <Menu.Item 
-             as='a' href="/chat"
-            name='Chat'
-            active={activeItem === 'Chat'}
-            onClick={this.handleItemClick}
-          />
-        </Menu>
-        
-      )
-      }
-      
-}
+  return (
+    <nav className="navbar">
+      <img src={"img/logo.png"} alt="Logo" className="logo" />
+      <a
+        href="/accueil"
+        className={activeItem === 'accueil' ? 'active' : ''}
+        onClick={() => handleItemClick('accueil')}
+      >
+        Accueil
+      </a>
+      <Dropdown item text="Mon Compte" className="custom-dropdown">
+        <Dropdown.Menu>
+          <Dropdown.Item
+            as="a"
+            href="/inscription"
+            className={activeItem === 'inscription' ? 'active' : ''}
+            onClick={() => handleItemClick('inscription')}
+          >
+            S'inscrire
+          </Dropdown.Item>
+          <Dropdown.Item
+            as="a"
+            href="/connexion"
+            className={activeItem === 'connexion' ? 'active' : ''}
+            onClick={() => handleItemClick('connexion')}
+          >
+            Se connecter
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      <a
+        href="/allmembres"
+        className={activeItem === 'allmembres' ? 'active' : ''}
+        onClick={() => handleItemClick('allmembres')}
+      >
+        AllMembres
+      </a>
+      <a
+        href="/ajoutcolis"
+        className={activeItem === 'ajoutcolis' ? 'active' : ''}
+        onClick={() => handleItemClick('ajoutcolis')}
+      >
+        AjoutColis
+      </a>
+      <a
+        href="http://localhost:5000/deconnecter"
+        className={activeItem === 'deconnecter' ? 'active' : ''}
+        onClick={() => handleItemClick('deconnecter')}
+      >
+        Déconnecter
+      </a>
+      {/* <a
+        href="/chat"
+        className={activeItem === 'chat' ? 'active' : ''}
+        onClick={() => handleItemClick('chat')}
+      >
+        Chat
+      </a> */}
+    </nav>
+  );
+};
 
-
-export default Navbar
+export default Navbar;

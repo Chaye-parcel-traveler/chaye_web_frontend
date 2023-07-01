@@ -37,7 +37,7 @@ function Profile() {
   }
 
   return (
-    <div>
+    <div className='content'>
         <img src={`http://localhost:5000/${membre.imagename}`} width={'150px'}/>
       <h1>{membre.nom}</h1>
       <h1>{membre.prenom}</h1>

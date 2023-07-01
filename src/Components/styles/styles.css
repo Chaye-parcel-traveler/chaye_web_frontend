@@ -1,23 +1,28 @@
+
+.Formulcontainer{
+  background-image: url('../../../public/img/bg.jpg');
+  width: 100vw;
+  height: 100vh;
+}
 .Formulcontainer {
   width: 30%;
+  margin:auto;
   border: 2px solid #EC634E;
   border-radius: 15px;
-  margin: auto;
-  padding: 20px;
-  background-image: url();
+  background-color: #FFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-#input {
-  width: 60%;
+.Formulcontainer input {
   border-radius: 15px;
   padding: 15px 0px;
 }
 
 #btn {
   background-color: #4F4294;
-  color: #FFFF;
+  color: #FFF;
+  text-align: center;
 }
-
-/* .bgimage{
-    background-image: url(../../../public/img/logochaye-removebg-preview.png);
-  } */
