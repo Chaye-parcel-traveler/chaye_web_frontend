@@ -4,16 +4,16 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react';
 
-function EditeMembre() {
+function EditMember() {
   let navigate = useNavigate();
   const params = useParams();
   const [file, setFile] = useState(null);
-  const [nom, setNom] = useState('');
-  const [prenom, setPrenom] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [firstname, setFirstname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [adresse, setAdresse] = useState('');
-  const [telephone, setTelephone] = useState('');
+  const [adress, setAdress] = useState('');
+  const [phone, setPhone] = useState('');
   const [status, setStatus] = useState('');
   const [imagename, setImagename] = useState('');
 
@@ -22,12 +22,12 @@ function EditeMembre() {
     setImagename(event.target.files[0].name);
   };
 
-  const handelNomChange = (event) => {
-    setNom(event.target.value);
+  const handelLastnameChange = (event) => {
+    setLastname(event.target.value);
   };
 
-  const handelPrenomChange = (event) => {
-    setPrenom(event.target.value);
+  const handelFirstnameChange = (event) => {
+    setFirstname(event.target.value);
   };
 
   const handelEmailChange = (event) => {
@@ -38,28 +38,29 @@ function EditeMembre() {
     setPassword(event.target.value);
   };
 
-  const handelAdresseChange = (event) => {
-    setAdresse(event.target.value);
+  const handelAdressChange = (event) => {
+    setAdress(event.target.value);
   };
 
-  const handelTelephoneChange = (event) => {
-    setTelephone(event.target.value);
+  const handelPhoneChange = (event) => {
+    setPhone(event.target.value);
   };
 
   const handelStatusChange = (event) => {
     setStatus(event.target.value);
   };
 
+
   useEffect(() => {
     axios
       .get(`http://localhost:5000/editMembre/${params.id}`)
       .then((response) => {
-        setNom(response.data.nom);
-        setPrenom(response.data.prenom);
+        setLastname(response.data.lastname);
+        setFirstname(response.data.firstname);
         setEmail(response.data.email);
         setPassword(response.data.password);
-        setAdresse(response.data.adresse);
-        setTelephone(response.data.telephone);
+        setAdress(response.data.adress);
+        setPhone(response.data.phone);
         setStatus(response.data.status);
         setImagename(response.data.imagename);
       })
@@ -72,17 +73,17 @@ function EditeMembre() {
     event.preventDefault();
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('nom', nom);
-      formData.append('prenom', prenom);
+      formData.append('lastname', lastname);
+      formData.append('firstname', firstname);
       formData.append('email', email);
       formData.append('password', password);
-      formData.append('adresse', adresse);
-      formData.append('telephone', telephone);
+      formData.append('adress', adress);
+      formData.append('phone', phone);
       formData.append('status', status);
       formData.append('imagename', imagename);
 
       axios
-        .put(`http://localhost:5000/editMembre/${params.id}`, formData)
+        .put(`http://localhost:5000/editMember/${params.id}`, formData)
         .then((response) => {
           console.log(response.data);
           return navigate('/allmembres');
@@ -100,12 +101,12 @@ function EditeMembre() {
 
         <Form.Field>
           <label>Nom</label>
-          <input type="text" name="nom" id="input" onChange={handelNomChange} value={nom} />
+          <input type="text" name="lastname" id="input" onChange={handelLastnameChange} value={lastname} />
         </Form.Field>
 
         <Form.Field>
           <label>Prénom</label>
-          <input type="text" name="prenom" id="input" onChange={handelPrenomChange} value={prenom} />
+          <input type="text" name="firstname" id="input" onChange={handelFirstnameChange} value={firstname} />
         </Form.Field>
 
         <Form.Field>
@@ -115,17 +116,17 @@ function EditeMembre() {
 
         <Form.Field>
           <label>Mot de passe</label>
-          <input type="password" name="password" id="input" onChange={handelPasswordChange} />
+          <input type="password" name="password" id="input" onChange={handelPasswordChange}  />
         </Form.Field>
 
         <Form.Field>
           <label>Adresse</label>
-          <input type="text" name="adresse" id="input" onChange={handelAdresseChange} value={adresse} />
+          <input type="text" name="adress" id="input" onChange={handelAdressChange} value={adress} />
         </Form.Field>
 
         <Form.Field>
           <label>Téléphone</label>
-          <input type="text" name="telephone" id="input" onChange={handelTelephoneChange} value={telephone} />
+          <input type="text" name="phone" id="input" onChange={handelPhoneChange} value={phone} />
         </Form.Field>
 
         <Form.Field>
@@ -149,4 +150,4 @@ function EditeMembre() {
   );
 }
 
-export default EditeMembre;
+export default EditMember;

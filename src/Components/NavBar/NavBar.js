@@ -13,8 +13,8 @@ const Navbar = () => {
     <nav className="navbar">
       <img src={"img/logo.png"} alt="Logo" className="logo" />
       <a
-        href="/accueil"
-        className={activeItem === 'accueil' ? 'active' : ''}
+        href="/home"
+        className={activeItem === 'Accueil' ? 'active' : ''}
         onClick={() => handleItemClick('accueil')}
       >
         Accueil
@@ -23,50 +23,51 @@ const Navbar = () => {
         <Dropdown.Menu>
           <Dropdown.Item
             as="a"
-            href="/inscription"
-            className={activeItem === 'inscription' ? 'active' : ''}
-            onClick={() => handleItemClick('inscription')}
+            href="/SignUp"
+            className={activeItem === 'S\'inscrire' ? 'active' : ''}
+            onClick={() => handleItemClick('SignUp')}
           >
             S'inscrire
           </Dropdown.Item>
           <Dropdown.Item
             as="a"
-            href="/connexion"
-            className={activeItem === 'connexion' ? 'active' : ''}
-            onClick={() => handleItemClick('connexion')}
+            href="/login"
+            className={activeItem === 'Se connecter' ? 'active' : ''}
+            onClick={() => handleItemClick('login')}
           >
             Se connecter
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
+      
       <a
-        href="/allmembres"
-        className={activeItem === 'allmembres' ? 'active' : ''}
+        href="/allmembers"
+        className={activeItem === 'Membres' ? 'active' : ''}
         onClick={() => handleItemClick('allmembres')}
       >
         AllMembres
       </a>
       <a
-        href="/ajoutcolis"
-        className={activeItem === 'ajoutcolis' ? 'active' : ''}
+        href="/AddPackage"
+        className={activeItem === 'Ajoutcolis' ? 'active' : ''}
         onClick={() => handleItemClick('ajoutcolis')}
       >
         AjoutColis
       </a>
       <a
-        href="http://localhost:5000/deconnecter"
-        className={activeItem === 'deconnecter' ? 'active' : ''}
+        href="http://localhost:5000/logout"
+        className={activeItem === 'Se déconnecter' ? 'active' : ''}
         onClick={() => handleItemClick('deconnecter')}
       >
         Déconnecter
       </a>
-      {/* <a
+      <a
         href="/chat"
         className={activeItem === 'chat' ? 'active' : ''}
         onClick={() => handleItemClick('chat')}
       >
         Chat
-      </a> */}
+      </a>
     </nav>
   );
 };

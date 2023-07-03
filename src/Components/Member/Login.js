@@ -7,7 +7,7 @@ function Login() {
         <Segment placeholder>
           <Grid columns={2} relaxed='very' stackable>
             <Grid.Column>
-              <Form action="http://localhost:5000/api/submitConnexion" method="post">
+              <Form action="http://localhost:5000/login" method="post">
                 <Form.Input
                   icon='user'
                   iconPosition='left'
@@ -21,13 +21,15 @@ function Login() {
                   label='Password'
                   type='password'
                   name="password"
-                />
-                <Button content='Login' primary />
+                />         
+                 <Button content='Login' primary />
               </Form>
-            </Grid.Column>      <Grid.Column verticalAlign='middle'>
+            </Grid.Column>     
+             <Grid.Column verticalAlign='middle'>
               <Button content='Sign up' icon='signup' size='big' as='a' href="/inscription" />
             </Grid.Column>
-          </Grid>    <Divider vertical>Or</Divider>
+          </Grid>  
+            <Divider vertical>Or</Divider>
         </Segment>
 
       </React.Fragment>

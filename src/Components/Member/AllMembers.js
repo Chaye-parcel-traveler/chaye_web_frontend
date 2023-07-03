@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Table } from 'semantic-ui-react'
 import { Button } from 'semantic-ui-react'
 
-function AllMembres() {
+function AllMembers() {
 
     const initialestate ={
         loading : true,
@@ -32,7 +32,7 @@ function AllMembres() {
       const [state, dispatch] =useReducer(reducer,initialestate)
 
       useEffect(()=>{
-        axios.get('http://localhost:5000/membres',{ withCredentials: true })
+        axios.get('http://localhost:5000/members',{ withCredentials: true })
         .then(response=>{
             console.log(response.data);
                 dispatch({type: 'FETCH_SUCCESS' , payload: response.data});
@@ -57,18 +57,18 @@ return(
         <Table.HeaderCell>Supprimer</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
-    {state.loading ? 'Loading...'  : state.membres.map((membre,index) => (
+    {state.loading ? 'Loading...'  : state.membres.map((member,index) => (
     <Table.Body >
       <Table.Row key={index}>
-        <Table.Cell>{membre.nom}</Table.Cell>
-        <Table.Cell>{membre.prenom}</Table.Cell>
-        <Table.Cell>{membre.email}</Table.Cell>
-        <Table.Cell>{membre.adresse}</Table.Cell>
-        <Table.Cell>{membre.status}</Table.Cell>
-        <Table.Cell><img src={`http://localhost:5000/${membre.imagename}`} width={'150px'}/></Table.Cell>
-        <Table.Cell><Button primary   as='a' href={`/editMembre/${membre._id}`}>Edit</Button></Table.Cell>
+        <Table.Cell>{member.lastname}</Table.Cell>
+        <Table.Cell>{member.firstname}</Table.Cell>
+        <Table.Cell>{member.email}</Table.Cell>
+        <Table.Cell>{member.adress}</Table.Cell>
+        <Table.Cell>{member.status}</Table.Cell>
+        <Table.Cell><img src={`http://localhost:5000/${member.imagename}`} width={'150px'}/></Table.Cell>
+        <Table.Cell><Button primary   as='a' href={`/editMember/${member._id}`}>Modifier</Button></Table.Cell>
         <Table.Cell> 
-         <form action={`http://localhost:5000/membre/delete/${membre._id}?_method=DELETE`} method="post">
+         <form action={`http://localhost:5000/deleteMember/${member._id}?_method=DELETE`} method="post">
               <input type="hidden" name="_method" value="DELETE"/>
         <Button  positive>Supprimer</Button>
             </form>
@@ -82,4 +82,4 @@ return(
   </Table>
   </div>
   )}
-export default AllMembres
+export default AllMembers

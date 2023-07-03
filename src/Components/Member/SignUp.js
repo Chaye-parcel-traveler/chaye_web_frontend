@@ -3,15 +3,15 @@ import { Form, Input, Button } from 'semantic-ui-react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/styles.css';
-function Inscription() {
+function SignUp() {
   let navigate = useNavigate();
   const [file, setFile] = useState(null);
-  const [nom, setNom] = useState('');
-  const [prenom, setPrenom] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [firstname, setFirstname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [adresse, setAdresse] = useState('');
-  const [telephone, setTelephone] = useState('');
+  const [adress, setAdress] = useState('');
+  const [phone, setPhone] = useState('');
   const [status, setStatus] = useState('');
   const [imagename, setImagename] = useState('');
 
@@ -20,12 +20,12 @@ function Inscription() {
     setImagename(event.target.files[0].name);
   };
 
-  const handelNomChange = (event) => {
-    setNom(event.target.value);
+  const handelLastnameChange = (event) => {
+    setLastname(event.target.value);
   };
 
-  const handelPrenomChange = (event) => {
-    setPrenom(event.target.value);
+  const handelFirstnameChange = (event) => {
+    setFirstname(event.target.value);
   };
 
   const handelEmailChange = (event) => {
@@ -36,12 +36,12 @@ function Inscription() {
     setPassword(event.target.value);
   };
 
-  const handelAdresseChange = (event) => {
-    setAdresse(event.target.value);
+  const handelAdressChange = (event) => {
+    setAdress(event.target.value);
   };
 
-  const handelTelephoneChange = (event) => {
-    setTelephone(event.target.value);
+  const handelPhoneChange = (event) => {
+    setPhone(event.target.value);
   };
 
   const handelStatusChange = (event) => {
@@ -53,19 +53,19 @@ function Inscription() {
 
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('nom', nom);
-      formData.append('prenom', prenom);
+      formData.append('lastname', lastname);
+      formData.append('firstname', firstname);
       formData.append('email', email);
       formData.append('password', password);
-      formData.append('adresse', adresse);
-      formData.append('telephone', telephone);
+      formData.append('adress', adress);
+      formData.append('phone', phone);
       formData.append('status', status);
       formData.append('imagename', imagename);
       axios
-        .post(`http://localhost:5000/api/submitInscription`, formData)
+        .post(`http://localhost:5000/SignUp`, formData)
         .then((response) => {
           console.log(response.data);
-          return navigate('/connexion');
+          return navigate('/login');
         })
         .catch((error) => {
           console.log(error);
@@ -84,12 +84,12 @@ function Inscription() {
         <Form onSubmit={handelSubmit}>
           <Form.Field>
             <label>Nom</label>
-            <Input type="text" name="nom" id="input" onChange={handelNomChange} className="center aligned" />
+            <Input type="text" name="lastname" id="input" onChange={handelLastnameChange} className="center aligned" />
           </Form.Field>
 
           <Form.Field>
             <label>Prénom</label>
-            <Input type="text" name="prenom" id="input" onChange={handelPrenomChange} className="center aligned" />
+            <Input type="text" name="firstname" id="input" onChange={handelFirstnameChange} className="center aligned" />
           </Form.Field>
 
           <Form.Field>
@@ -103,13 +103,13 @@ function Inscription() {
           </Form.Field>
 
           <Form.Field>
-            <label>Adresse</label>
-            <Input type="text" name="adresse" id="input" onChange={handelAdresseChange} className="center aligned" />
+            <label>Adress</label>
+            <Input type="text" name="adress" id="input" onChange={handelAdressChange} className="center aligned" />
           </Form.Field>
 
           <Form.Field>
             <label>Téléphone</label>
-            <Input type="text" name="telephone" id="input" onChange={handelTelephoneChange} className="center aligned" />
+            <Input type="text" name="phone" id="input" onChange={handelPhoneChange} className="center aligned" />
           </Form.Field>
 
           <Form.Field id="input">
@@ -133,4 +133,4 @@ function Inscription() {
   );
 }
 
-export default Inscription;
+export default SignUp;

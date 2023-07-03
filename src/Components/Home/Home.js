@@ -8,31 +8,11 @@ import moment from 'moment/moment';
 import 'moment/locale/fr'
 moment().locale('fr')
 
-function Accueil() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
-
-    const handleSearch = () => {
-        // Effectuer la recherche avec la valeur saisie (searchTerm)
-        // Vous pouvez utiliser axios.get ou toute autre méthode pour effectuer la recherche
-
-        // Exemple de recherche avec axios
-        axios.get(`http://localhost:5000/colis?q=${searchTerm}`, { withCredentials: true })
-            .then(response => {
-                setSearchResults(response.data);
-            })
-            .catch(error => {
-                console.error('Erreur lors de la recherche:', error);
-            });
-    };
-
-    const handleInputChange = (event) => {
-        setSearchTerm(event.target.value);
-    };
+function Home() {
     const initialestate = {
         loading: true,
         error: '',
-        colis: {}
+        packages: {}
     }
 
     const reducer = (state, action) => {
@@ -40,13 +20,13 @@ function Accueil() {
             case 'FETCH_SUCCESS':
                 return {
                     loading: false,
-                    colis: action.payload,
+                    package: action.payload,
                     error: '',
                 };
             case 'FETCH_ERROR':
                 return {
                     loading: false,
-                    colis: {},
+                    package: {},
                     error: 'Something went wrong!!!!!',
                 };
             default:
@@ -56,7 +36,7 @@ function Accueil() {
     const [state, dispatch] = useReducer(reducer, initialestate)
 
     useEffect(() => {
-        axios.get('http://localhost:5000/colis', { withCredentials: true })
+        axios.get('http://localhost:5000/packages', { withCredentials: true })
             .then(response => {
                 console.log(response.data);
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
@@ -70,22 +50,17 @@ function Accueil() {
             <div class="hero">
                 <div class="heroItem">
                     <h2> Que veux tu faire?</h2>
-                    <a href='/ajoutcolis'><input type="button" value="j'expédier" /></a>
+                    <a href='/AddPackage'><input type="button" value="j'expédier" /></a>
                     <input type="button" value="je transporte" />
                 </div>
 
             </div>
             <div className="search-bar">
-                <input type="text" placeholder="Rechercher" value={searchTerm} onChange={handleInputChange} />
-                <button onClick={handleSearch}>Rechercher</button>
+                <input type="text" placeholder="Rechercher" />
+                <button >Rechercher</button>
             </div>
             <div className="search-results">
-                {/* Afficher les résultats de la recherche */}
-                {searchResults.map((colis, index) => (
-                    <div key={index}>
-                        {/* Afficher les détails du colis */}
-                    </div>
-                ))}
+
             </div>
             <React.Fragment>
                 <div className="assurance">
@@ -99,20 +74,20 @@ function Accueil() {
                     <h4>A la une</h4>
                     <Card.Group>
 
-                        {state.loading ? 'loading...' : state.colis.map((colis, index) => (
+                        {state.loading ? 'loading...' : state.packages.map((packages, index) => (
                             <div>
 
                                 <Card key={index}>
-                                    <img src={`http://localhost:5000/${colis.photo}`} />
+                                    <img src={`http://localhost:5000/${packages.picture}`} />
                                     <Card.Content>
-                                        <Card.Header>{colis.contenu}</Card.Header>
-                                        <Card.Meta>{colis.villeDepart}</Card.Meta>
+                                        <Card.Header>{packages.content}</Card.Header>
+                                        <Card.Meta>{packages.departureCity}</Card.Meta>
                                         <Card.Description>
-                                            Dimensions: {colis.largeur}cm x {colis.longueur}cm x {colis.profondeur}cm
+                                            Dimensions: {packages.weight}x{packages.size}
                                         </Card.Description>
-                                        <Card.Description>Date limite d'Expédition : {moment(colis.dateLimiteExpedition).format('L')}</Card.Description>
-                                        <Button primary as='a' href={`/editcolis/${colis._id}`}>Edit</Button>
-                                        <form action={`http://localhost:5000/colis/delete/${colis._id}?_method=DELETE`} method="post">
+                                        <Card.Description>Date de Création{moment(packages.creationDate).format('L')}</Card.Description>
+                                        <Button primary as='a' href={`/EditPackage/${packages._id}`}>Edit</Button>
+                                        <form action={`http://localhost:5000/deletepackage/${packages._id}?_method=DELETE`} method="post">
                                             <input type="hidden" name="_method" value="DELETE" />
 
                                             <Button positive>Supprimer</Button>
@@ -137,4 +112,4 @@ function Accueil() {
 
 
 
-export default Accueil
+export default Home
