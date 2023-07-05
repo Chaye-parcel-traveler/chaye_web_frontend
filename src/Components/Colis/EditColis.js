@@ -46,9 +46,9 @@ function EditColis() {
     setVilleDepart(event.target.value);
   };
 
-  useEffect(() => {
+  useEffect((id) => {
     axios
-      .get(`http://localhost:5000/editcolis/${params.id}`, { withCredentials: true })
+      .get(`http://localhost:5000/editcolis/${id}`, { withCredentials: true })
       .then((response) => {
         setContenu(response.data.contenu);
         setLargeur(response.data.largeur);
@@ -61,7 +61,7 @@ function EditColis() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [params.id]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

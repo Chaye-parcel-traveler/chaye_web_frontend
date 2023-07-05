@@ -50,9 +50,9 @@ function EditeMembre() {
     setStatus(event.target.value);
   };
 
-  useEffect(() => {
+  useEffect((id) => {
     axios
-      .get(`http://localhost:5000/editMembre/${params.id}`)
+      .get(`http://localhost:5000/editMembre/${id}`)
       .then((response) => {
         setNom(response.data.nom);
         setPrenom(response.data.prenom);
@@ -66,7 +66,7 @@ function EditeMembre() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [params.id]);
 
   const handelSubmit = (event) => {
     event.preventDefault();

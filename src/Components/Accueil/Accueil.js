@@ -53,7 +53,7 @@ function Accueil() {
         <div>
         
             <Card key={index}>
-              <img src={`http://localhost:5000/${colis.photo}`} />
+              <img src={`http://localhost:5000/${colis.photo}`} alt='bonjour le monde'/>
               <Card.Content>
                 <Card.Header>{colis.contenu}</Card.Header>
                 <Card.Meta>{colis.villeDepart}</Card.Meta>

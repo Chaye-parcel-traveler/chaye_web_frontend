@@ -13,9 +13,9 @@ function Profile() {
   // État pour les données du membre
   const [membre, setMembre] = useState({});
 
-  useEffect(() => {
+  useEffect((id) => {
     axios
-      .get(`http://localhost:5000/membres/${params.id}`,{withCredentials:true})
+      .get(`http://localhost:5000/membres/${id}`,{withCredentials:true})
       .then((response) => {
         setLoading(false);
         setError('');
@@ -38,7 +38,7 @@ function Profile() {
 
   return (
     <div>
-        <img src={`http://localhost:5000/${membre.imagename}`} width={'150px'}/>
+        <img src={`http://localhost:5000/${membre.imagename}`} width={'150px'} alt='profile img'/>
       <h1>{membre.nom}</h1>
       <h1>{membre.prenom}</h1>
       <h1>{membre.email}</h1>
