@@ -8,7 +8,7 @@ function AllMembers() {
     const initialestate ={
         loading : true,
         error : '',
-      membres : {}
+      members : []
     }
     
     const reducer = (state, action) => {
@@ -16,13 +16,13 @@ function AllMembers() {
           case 'FETCH_SUCCESS':
             return {
               loading: false, 
-             membres: action.payload, 
+             members: action.payload, 
               error: '', 
             };
           case 'FETCH_ERROR':
             return {
               loading: false, 
-             membres: {}, 
+             members: [], 
               error: 'Something went wrong!!!!!', 
             };
           default:
@@ -32,7 +32,7 @@ function AllMembers() {
       const [state, dispatch] =useReducer(reducer,initialestate)
 
       useEffect(()=>{
-        axios.get('http://localhost:5000/members',{ withCredentials: true })
+        axios.get('http://localhost:5000/member',{ withCredentials: true })
         .then(response=>{
             console.log(response.data);
                 dispatch({type: 'FETCH_SUCCESS' , payload: response.data});
@@ -57,7 +57,7 @@ return(
         <Table.HeaderCell>Supprimer</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
-    {state.loading ? 'Loading...'  : state.membres.map((member,index) => (
+    {state.loading ? 'Loading...'  : state.members.map((member,index) => (
     <Table.Body >
       <Table.Row key={index}>
         <Table.Cell>{member.lastname}</Table.Cell>

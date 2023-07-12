@@ -1,70 +1,55 @@
-// Dialogue.js
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import moment from 'moment';
+import { useNavigate } from "react-router-dom";
+const Date = moment().format('YYYY-MM-DD');
 
-const Dialogue = ({ email, member }) => {
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(true);
+function Message() {
+    let navigate = useNavigate();
+  const [recipient, setRecipient] = useState('');
+  const [message, setMessage] = useState('');
+  const handelMessage = (event) => {
+    setMessage(event.target.value);
+  };
 
-  useEffect(() => {
-    // Fonction pour récupérer les messages du backend
-    const fetchMessages = async () => {
-      try {
-        const response = await fetch(`/api/messages?email=${email}`);
-        const data = await response.json();
-        setMessages(data);
-        setLoading(false);
-      } catch (error) {
-        console.log('Error retrieving messages:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchMessages();
-  }, [email]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const handelRecipient = (event) => {
+    setRecipient(event.target.value);
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append('recipient', recipient);
+    formData.append('message', message);
+    axios
+      .post(`http://localhost:5000/message`, formData ,{withCredentials:true})
+      .then((response) => {
+        console.log(response.data);
+        return navigate('/home');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
-    <div>
-      <h1>Chat with {email}</h1>
-
-      <h2>Sent Messages:</h2>
-      <ul>
-        {messages
-          .filter(message => message.sender === member.email)
-          .map(message => (
-            <li key={message._id}>{message.message}</li>
-          ))}
-      </ul>
-
-      <h2>Received Messages:</h2>
-      <ul>
-        {messages
-          .filter(message => message.recipient === member.email)
-          .map(message => (
-            <li key={message._id}>{message.message}</li>
-          ))}
-      </ul>
-
-      <h2>Contact Messages:</h2>
-      <ul>
-        {messages
-          .filter(message => message.recipient === member.email || message.sender === member.email)
-          .map(message => (
-            <li key={message._id}>{message.message}</li>
-          ))}
-      </ul>
-
-      <h2>All Messages:</h2>
-      <ul>
-        {messages.map(message => (
-          <li key={message._id}>{message.message}</li>
-        ))}
-      </ul>
+    <div className="d-flex flex-column align-items-center">
+      <div className="container col-6">
+        <h1 className="text-center">Nouveau message</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="fst-italic">email de destinataire</label>
+            <input type="text" className="form-control" id="recipient"  name="recipient"  value={recipient} onChange={handelRecipient} />
+          </div>
+          <div className="form-group">
+            <label className="fst-italic">Message</label>
+            <textarea className="form-control" id="message" name="message"  rows="4" value={message}  onChange={handelMessage}></textarea>
+          </div>
+          <input type="hidden" name="datetime" id="datetime" value={Date} />
+          <button type="submit" className="btn btn-primary mt-2">Envoyer</button>
+        </form>
+      </div>
     </div>
   );
-};
+}
 
-export default Dialogue;
+export default Message;

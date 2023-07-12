@@ -37,7 +37,7 @@ function EditColis() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/editcolis/${params.id}`, { withCredentials: true })
+      .get(`http://localhost:5000/package/${params.id}`, { withCredentials: true })
       .then((response) => {
         setContent(response.data.content);
         setWeight(response.data.weight);
@@ -64,7 +64,7 @@ function EditColis() {
       .put(`http://localhost:5000/editpackage/${params.id}`, formData)
       .then((response) => {
         console.log(response.data);
-        return navigate('/accueil');
+        return navigate('/home');
       })
       .catch((error) => {
         console.log(error);

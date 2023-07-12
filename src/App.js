@@ -10,17 +10,22 @@ import Profile from './Components/Member/Profile';
 import Home from './Components/Home/Home';
 import AddPackage from './Components/Package/AddPackage';
 import EditPackage from './Components/Package/EditPackage';
-import ChatApp from './Components/ChatApp/ChatApp';
+import Maps from './Components/Maps/Maps';
+import Announcements from './Components/Announcements/Announcements';
+import Comments from './Components/Comments/Comments';
+import Message from './Components/Message/Message';
+
+
 function App() {
 
 
   return (
     <div className="App">
-      <div className="app">
-        <div className="navbar">
+      <div className="vw-100 vh-100 row ">
+        <div className="col-2">
           <Navbar />
         </div>
-        <div className="content">
+        <div className="col-10">
           <Routes>
             <Route path='/home' element={<Home />} />
             <Route path='/signup' element={<SignUp />} />
@@ -30,7 +35,10 @@ function App() {
             <Route path='/profile/:id' element={<Profile />} />
             <Route path='/AddPackage' element={<AddPackage />} />
             <Route path='/EditPackage/:id' element={<EditPackage />} />
-            <Route path='/chat' element={<ChatApp />} />
+            <Route path='/announcements' element={<Announcements />} />
+            <Route path='/carte' element={<Maps />}/>
+            <Route path='/comment' element={<Comments />}/>
+            <Route path='/message' element={<Message />}/>
           </Routes>
         </div>
       </div>
