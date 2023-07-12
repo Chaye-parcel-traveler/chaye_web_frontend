@@ -36,7 +36,7 @@ function Home() {
     const [state, dispatch] = useReducer(reducer, initialestate)
 
     useEffect(() => {
-        axios.get('http://localhost:5000/package', { withCredentials: true })
+        axios.get('http://localhost:5000/packages', { withCredentials: true })
             .then(response => {
                 console.log(response.data);
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });

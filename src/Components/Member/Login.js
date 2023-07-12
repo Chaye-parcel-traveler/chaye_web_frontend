@@ -26,7 +26,7 @@ function Login() {
               </Form>
             </Grid.Column>     
              <Grid.Column verticalAlign='middle'>
-              <Button content='Sign up' icon='signup' size='big' as='a' href="/inscription" />
+              <Button content='Sign up' icon='signup' size='big' as='a' href="/signup" />
             </Grid.Column>
           </Grid>  
             <Divider vertical>Or</Divider>

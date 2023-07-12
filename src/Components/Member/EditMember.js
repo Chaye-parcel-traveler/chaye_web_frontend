@@ -53,7 +53,7 @@ function EditMember() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/editMember/${params.id}`)
+      .get(`http://localhost:5000/members/${params.id}`)
       .then((response) => {
         setLastname(response.data.lastname);
         setFirstname(response.data.firstname);
@@ -83,7 +83,7 @@ function EditMember() {
       formData.append('imagename', imagename);
 
       axios
-        .put(`http://localhost:5000/member/${params.id}`, formData)
+        .put(`http://localhost:5000/members/${params.id}`, formData)
         .then((response) => {
           console.log(response.data);
           return navigate('/allmembers');

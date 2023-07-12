@@ -22,12 +22,12 @@ function App() {
   return (
     <div className="App">
       <div className="vw-100 vh-100 row ">
-        <div className="col-2">
+        <div className="col-2 vh-100">
           <Navbar />
         </div>
         <div className="col-10">
           <Routes>
-            <Route path='/home' element={<Home />} />
+            <Route path='/' element={<Home />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
             <Route path='/allmembers' element={<AllMembers />} />

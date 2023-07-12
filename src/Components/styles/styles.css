@@ -1,28 +1,18 @@
-/* .content{
-  background-image: url('../../../public/img/bg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-} */
+
 .Formulcontainer {
-  margin-top: 5%;
-  width: 30%;
-  margin: auto;
   border: 2px solid #EC634E;
   border-radius: 15px;
-  padding: 20px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .Formulcontainer input {
-  border-radius: 15px;
-  padding: 15px 0px;
+  border-radius: 10px;
+  padding: 13px;
 }
 
+.button{
+  display: flex;
+  justify-content: center;
+}
 #btn {
   background-color: #4F4294;
   color: #FFF;

@@ -14,18 +14,12 @@ const Navbar = () => {
 
     <div className="navbar">
       <ul className='text-decoration-none'>
-        <a href="/home"> <img src={"img/logo.png"} alt="Logo" className="logo" />
+        <a href="/"> <img src={"img/logo.png"} alt="Logo" className="logo" />
         </a>
-
-        <li>   <a
-          href="/announcements"
-          className={activeItem === 'announcements' ? 'active' : ''}
-          onClick={() => handleItemClick('Announcements')}
-        ><i class=" icon fa-solid fa-bullhorn"></i> Annonces
+        <li>   <a href="/announcements"><i className=" me-3 fa-solid fa-bullhorn"></i> Annonces
         </a></li>
 
-        <li> <i className="fa-solid fa-user text-white"></i><Dropdown item text="Mon Compte" className="custom-dropdown">
-
+        <li> <i className="fa-solid me-3 fa-user text-white"></i><Dropdown item text="Mon Compte" className="custom-dropdown">
           <Dropdown.Menu>
             <Dropdown.Item
               as="a"
@@ -46,11 +40,8 @@ const Navbar = () => {
           </Dropdown.Menu>
         </Dropdown></li>
         <li>
-          <a
-            href="/AboutUs"
-            className={activeItem === 'AboutUs' ? 'active' : ''}
-            onClick={() => handleItemClick('AboutUs')}
-          ><i class=" icon fa-solid fa-bullhorn"></i> À propos de nous
+          <a href="/AboutUs"
+          ><i class="me-3 fa-solid fa-bullhorn"></i> À propos de nous
           </a></li>
         <li>  <a
           href="/allmembers"

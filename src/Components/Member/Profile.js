@@ -15,7 +15,7 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/member/${params.id}`,{withCredentials:true})
+      .get(`http://localhost:5000/members/${params.id}`,{withCredentials:true})
       .then((response) => {
         setLoading(false);
         setError('');

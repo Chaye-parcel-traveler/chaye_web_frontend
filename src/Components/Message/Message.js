@@ -21,7 +21,7 @@ function Message() {
     formData.append('recipient', recipient);
     formData.append('message', message);
     axios
-      .post(`http://localhost:5000/message`, formData ,{withCredentials:true})
+      .post(`http://localhost:5000/messages`, formData ,{withCredentials:true})
       .then((response) => {
         console.log(response.data);
         return navigate('/home');
