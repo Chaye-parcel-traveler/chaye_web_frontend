@@ -50,7 +50,7 @@ const Navbar = () => {
         >
           AllMembres
         </a></li>
-        <li>  <a href="http://localhost:5000/logout" >
+        <li>  <a href="/logout" >
           Déconnecter
         </a></li>
       </ul>

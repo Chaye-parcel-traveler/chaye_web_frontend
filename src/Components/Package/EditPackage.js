@@ -37,7 +37,7 @@ function EditColis() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/package/${params.id}`, { withCredentials: true })
+      .get(`/package/${params.id}`, { withCredentials: true })
       .then((response) => {
         setContent(response.data.content);
         setWeight(response.data.weight);
@@ -61,7 +61,7 @@ function EditColis() {
     formData.append('picture', picture);
 
     axios
-      .put(`http://localhost:5000/editpackage/${params.id}`, formData)
+      .put(`/editpackage/${params.id}`, formData)
       .then((response) => {
         console.log(response.data);
         return navigate('/home');
@@ -98,7 +98,7 @@ function EditColis() {
           <label>Photo de contenu du colis ::</label>
           <input type="file" id="input" onChange={handleFileChange} />
         </Form.Field>
-        <img src={`http://localhost:5000/${picture}`} width="150px" alt="imageColis" />
+        <img src={`/${picture}`} width="150px" alt="imageColis" />
 
         <Button id="btn" type="submit">
           Ajouter

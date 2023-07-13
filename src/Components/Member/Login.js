@@ -7,7 +7,7 @@ function Login() {
         <Segment placeholder>
           <Grid columns={2} relaxed='very' stackable>
             <Grid.Column>
-              <Form action="http://localhost:5000/login" method="post">
+              <Form action="/login" method="post">
                 <Form.Input
                   icon='user'
                   iconPosition='left'

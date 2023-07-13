@@ -72,10 +72,10 @@ function AllMembers() {
             <Table.Cell>{membre.email}</Table.Cell>
             <Table.Cell>{membre.address}</Table.Cell>
             {/* <Table.Cell>{membre.status}</Table.Cell> */}
-            {/* <Table.Cell><img src={`http://localhost:5000/${membre.imagename}`} width={'150px'} /></Table.Cell> */}
+            {/* <Table.Cell><img src={`/${membre.imagename}`} width={'150px'} /></Table.Cell> */}
             <Table.Cell><Button primary as='a' href={`/editMembre/${membre._id}`}>Edit</Button></Table.Cell>
             <Table.Cell>
-              <form action={`http://localhost:5000/membre/delete/${membre._id}?_method=DELETE`} method="post">
+              <form action={`/membre/delete/${membre._id}?_method=DELETE`} method="post">
                 <input type="hidden" name="_method" value="DELETE" />
                 <Button positive>Supprimer</Button>
               </form>

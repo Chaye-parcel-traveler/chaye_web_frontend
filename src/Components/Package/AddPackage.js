@@ -45,7 +45,7 @@ function AddPackage() {
       formData.append('departureCity', departureCity);
       formData.append('picture', picture);
       axios
-        .post(`http://localhost:5000/package`, formData ,{withCredentials:true})
+        .post(`/package`, formData ,{withCredentials:true})
         .then((response) => {
           console.log(response.data);
           return navigate("/home");

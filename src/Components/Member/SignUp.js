@@ -62,7 +62,7 @@ function SignUp() {
     formData.append('status', status);
     formData.append('imagename', imagename);
     axios
-      .post(`http://localhost:5000/SignUp`, formData)
+      .post(`/SignUp`, formData)
       .then((response) => {
         console.log(response.data);
         return navigate('/login');

@@ -52,7 +52,7 @@ function EditMember() {
 
   useEffect((id) => {
     axios
-      .get(`http://localhost:5000/members/${id}`)
+      .get(`/members/${id}`)
       .then((response) => {
         setLastname(response.data.lastname);
         setFirstname(response.data.firstname);
@@ -82,7 +82,7 @@ function EditMember() {
       formData.append('imagename', imagename);
 
       axios
-        .put(`http://localhost:5000/members/${params.id}`, formData)
+        .put(`/members/${params.id}`, formData)
         .then((response) => {
           console.log(response.data);
           return navigate('/allmembers');
@@ -140,7 +140,7 @@ function EditMember() {
         <Form.Field>
           <label>Photo</label>
           <input type="file" id="input" onChange={handelFileChange}/>
-          <img src={`http://localhost:5000/${imagename}`} width="150px" alt="Profil" />
+          <img src={`/${imagename}`} width="150px" alt="Profil" />
         </Form.Field>
 
         <Button id="btn" type="submit">Valider</Button>

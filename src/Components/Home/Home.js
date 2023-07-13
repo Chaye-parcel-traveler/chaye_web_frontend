@@ -36,7 +36,7 @@ function Home() {
     const [state, dispatch] = useReducer(reducer, initialestate)
 
     useEffect(() => {
-        axios.get('http://localhost:5000/packages', { withCredentials: true })
+        axios.get('/packages', { withCredentials: true })
             .then(response => {
                 console.log(response.data);
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
@@ -75,7 +75,7 @@ function Home() {
                         {state.loading ? 'loading...' : state.packages.map((packages, index) => (
                             <div className='card' key={index}>
             
-                                    <img src={`http://localhost:5000/${packages.picture}`} />
+                                    <img src={`/${packages.picture}`} />
                                     <div>
                                         <h3>{packages.content}</h3>
                                         <p>{packages.departureCity}</p>
@@ -85,7 +85,7 @@ function Home() {
                                         <p>Date de Création{moment(packages.creationDate).format('L')}</p>
                                         <div className='btnAnnonce'>
                                         <Button primary as='a' href={`/EditPackage/${packages._id}`}>Edit</Button>
-                                        <form action={`http://localhost:5000/deletepackage/${packages._id}?_method=DELETE`} method="post">
+                                        <form action={`/deletepackage/${packages._id}?_method=DELETE`} method="post">
                                             <input type="hidden" name="_method" value="DELETE" />
                                             <Button positive>Supprimer</Button>
                                         </form>

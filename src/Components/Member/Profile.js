@@ -15,7 +15,7 @@ function Profile() {
 
   useEffect((id) => {
     axios
-      .get(`http://localhost:5000/members/${id}`,{withCredentials:true})
+      .get(`/members/${id}`,{withCredentials:true})
       .then((response) => {
         setLoading(false);
         setError('');
@@ -38,7 +38,7 @@ function Profile() {
 
   return (
     <div>
-      <img src={`http://localhost:5000/${membre.imagename}`} width={'150px'} alt='profile img'/>
+      <img src={`/${membre.imagename}`} width={'150px'} alt='profile img'/>
       <h1>{membre.last_name}</h1>
       <h1>{membre.first_name}</h1>
       <h1>{membre.email}</h1>
@@ -46,7 +46,7 @@ function Profile() {
       <Button primary as='a' href={`/editmember/${membre._id}`}>
         Edit
       </Button>
-      <form action={`http://localhost:5000/deleteMember/${membre._id}?_method=DELETE`} method='post'>
+      <form action={`/deleteMember/${membre._id}?_method=DELETE`} method='post'>
         <input type='hidden' name='_method' value='DELETE' />
         <Button positive type='submit'>Supprimer</Button>
       </form>
