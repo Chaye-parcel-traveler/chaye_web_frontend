@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from 'react'
 import { Table, Button } from 'semantic-ui-react'
 import { fetchMembers } from '../../Services/member'
 
-function AllMembres() {
+function AllMembers() {
 
   const initialestate = {
     loading: true,
@@ -89,4 +89,4 @@ function AllMembres() {
     </Table>
   )
 }
-export default AllMembres
+export default AllMembers

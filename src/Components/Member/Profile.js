@@ -15,7 +15,7 @@ function Profile() {
 
   useEffect((id) => {
     axios
-      .get(`http://localhost:5000/membres/${id}`,{withCredentials:true})
+      .get(`http://localhost:5000/members/${id}`,{withCredentials:true})
       .then((response) => {
         setLoading(false);
         setError('');
@@ -38,16 +38,15 @@ function Profile() {
 
   return (
     <div>
-        <img src={`http://localhost:5000/${membre.imagename}`} width={'150px'} alt='profile img'/>
-      <h1>{membre.nom}</h1>
-      <h1>{membre.prenom}</h1>
+      <img src={`http://localhost:5000/${membre.imagename}`} width={'150px'} alt='profile img'/>
+      <h1>{membre.last_name}</h1>
+      <h1>{membre.first_name}</h1>
       <h1>{membre.email}</h1>
-      <h1>{membre.adresse}</h1>
-      <h1>{membre.status}</h1>
-      <Button primary as='a' href={`/editMembre/${membre._id}`}>
+      <h1>{membre.adress}</h1>
+      <Button primary as='a' href={`/editmember/${membre._id}`}>
         Edit
       </Button>
-      <form action={`http://localhost:5000/membre/delete/${membre._id}?_method=DELETE`} method='post'>
+      <form action={`http://localhost:5000/deleteMember/${membre._id}?_method=DELETE`} method='post'>
         <input type='hidden' name='_method' value='DELETE' />
         <Button positive type='submit'>Supprimer</Button>
       </form>

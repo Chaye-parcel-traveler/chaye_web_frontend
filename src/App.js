@@ -2,39 +2,48 @@
 import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
-import Inscription from './Components/User/Inscription';
-import Connexion from './Components/User/Connexion';
+import SignUp from './Components/Member/SignUp';
+import Login from './Components/Member/Login';
 import Navbar from './Components/NavBar/NavBar';
-import AllMembres from './Components/User/AllMembres';
-import EditMembre from './Components/User/EditMembre';
-import Profile from './Components/User/Profile';
-import Accueil from './Components/Accueil/Accueil';
-import AjoutColis from './Components/Colis/AjoutColis';
-import EditColis from './Components/Colis/EditColis';
-// import ChatApp from './Components/ChatApp/ChatApp';
+import AllMembers from './Components/Member/AllMembers';
+import EditMember from './Components/Member/EditMember';
+import Profile from './Components/Member/Profile';
+import Home from './Components/Home/Home';
+import AddPackage from './Components/Package/AddPackage';
+import EditPackage from './Components/Package/EditPackage';
+import Maps from './Components/Maps/Maps';
+import Announcements from './Components/Announcements/Announcements';
+import Comments from './Components/Comments/Comments';
+import Message from './Components/Message/Message';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 console.log('process.env',process.env)
 
-
 function App() {
   return (
     <div className="App">
+      <div className="vw-100 vh-100 row ">
+        <div className="col-2 vh-100">
+          <Navbar />
+        </div>
+        <div className="col-10">
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/signup' element={<SignUp />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/allmembers' element={<AllMembers />} />
+            <Route path='/editmember/:id' element={<EditMember />} />
+            <Route path='/profile/:id' element={<Profile />} />
+            <Route path='/AddPackage' element={<AddPackage />} />
+            <Route path='/EditPackage/:id' element={<EditPackage />} />
+            <Route path='/announcements' element={<Announcements />} />
+            <Route path='/carte' element={<Maps />}/>
+            <Route path='/comment' element={<Comments />}/>
+            <Route path='/message' element={<Message />}/>
+          </Routes>
+        </div>
+      </div>
 
-      <Navbar />
-
-
-      <Routes>
-        <Route path='/accueil' element={<Accueil />} />
-        <Route path='/inscription' element={<Inscription />} />
-        <Route path='/connexion' element={<Connexion />} />
-        <Route path='/allmembres' element={<AllMembres />} />
-        <Route path='/editmembre/:id' element={<EditMembre />} />
-        <Route path='/profile/:id' element={<Profile />} />
-        <Route path='/ajoutcolis' element={<AjoutColis />} />
-        <Route path='/editcolis/:id' element={<EditColis />} />
-        {/* <Route path='/chat' element={<ChatApp/>}/>  */}
-      </Routes>
     </div>
   );
 }
