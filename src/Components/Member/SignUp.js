@@ -13,12 +13,12 @@ function SignUp() {
   const [adress, setAdress] = useState('');
   const [phone, setPhone] = useState('');
   const [status, setStatus] = useState('');
-  const [imagename, setImagename] = useState('');
+  // const [imagename, setImagename] = useState('');
 
-  const handelFileChange = (event) => {
-    setFile(event.target.files[0]);
-    setImagename(event.target.files[0].name);
-  };
+  // const handelFileChange = (event) => {
+  //   setFile(event.target.files[0]);
+  //   setImagename(event.target.files[0].name);
+  // };
 
   const handelLastnameChange = (event) => {
     setLastname(event.target.value);
@@ -51,18 +51,28 @@ function SignUp() {
   const handelSubmit = (event) => {
     event.preventDefault();
 
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('lastname', lastname);
-    formData.append('firstname', firstname);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('adress', adress);
-    formData.append('phone', phone);
-    formData.append('status', status);
-    formData.append('imagename', imagename);
+    // const formData = new FormData();
+    // formData.append('file', file);
+    // formData.append('lastname', lastname);
+    // formData.append('firstname', firstname);
+    // formData.append('email', email);
+    // formData.append('password', password);
+    // formData.append('adress', adress);
+    // formData.append('phone', phone);
+    // formData.append('status', status);
+    // formData.append('imagename', imagename);
+    const formData = {
+      file: file,
+      lastname: lastname,
+      firstname: firstname,
+      email: email,
+      password: password,
+      address: adress,
+      phone: phone,
+      status: status,
+    }
     axios
-      .post(`/SignUp`, formData)
+      .post(`/members`, formData)
       .then((response) => {
         console.log(response.data);
         return navigate('/login');
@@ -75,58 +85,58 @@ function SignUp() {
 
   return (
     <div className="Formulcontainer mt-5 col-5 m-auto">
-     <div className=" m-5">
+      <div className=" m-5">
         <div className='text-center mt-5'>
           <h1 >S'enregistrer</h1>
           <h3>Créez votre nouveau compte</h3>
         </div>
-        <form  onSubmit={handelSubmit}>
+        <form onSubmit={handelSubmit}>
           <div className="mb-3 ">
             <label className="fst-italic">Nom</label>
-            <input type="text" className="form-control " name="lastname"  onChange={handelLastnameChange} />
+            <input type="text" className="form-control " name="lastname" onChange={handelLastnameChange} />
           </div>
           <div className="mb-3">
             <label className="fst-italic">Prénom</label>
-            <input type="text" className="form-control" name="firstname"  onChange={handelFirstnameChange} />
+            <input type="text" className="form-control" name="firstname" onChange={handelFirstnameChange} />
           </div>
           <div className="mb-3">
             <label className="fst-italic">Email</label>
-            <input type="email" className="form-control" name="email"  onChange={handelEmailChange} />
+            <input type="email" className="form-control" name="email" onChange={handelEmailChange} />
           </div>
-          
-            <div className="mb-3">
-              <label className="fst-italic">Mot de passe</label>
-              <input type="password" className="form-control" name="password"  onChange={handelPasswordChange} />
-            </div>
-            <div className="mb-3">
-              <label className="fst-italic">Adress</label>
-              <input type="text" className="form-control" name="adress"  onChange={handelAdressChange} />
-            </div>
-            <div className="mb-3">
 
-              <label className="fst-italic">Téléphone</label>
-              <input type="text" className="form-control" name="phone"  onChange={handelPhoneChange} />
-            </div>
-            <div className="mb-3">
+          <div className="mb-3">
+            <label className="fst-italic">Mot de passe</label>
+            <input type="password" className="form-control" name="password" onChange={handelPasswordChange} />
+          </div>
+          <div className="mb-3">
+            <label className="fst-italic">Adress</label>
+            <input type="text" className="form-control" name="adress" onChange={handelAdressChange} />
+          </div>
+          <div className="mb-3">
 
-              <label className="fst-italic">Status</label>
-              <select name="status" className="form-select" onChange={handelStatusChange}>
-                <option>Sélectionnez votre status</option>
-                <option>Expéditeur</option>
-                <option>Voyageur</option>
-              </select>
-            </div>
-            <div className="mb-3">
-              <label className="fst-italic">Photo</label>
-              <input type="file" className="form-control" onChange={handelFileChange} />
-            </div>
-            <div className='button'>
+            <label className="fst-italic">Téléphone</label>
+            <input type="text" className="form-control" name="phone" onChange={handelPhoneChange} />
+          </div>
+          {/* <div className="mb-3">
+
+            <label className="fst-italic">Status</label>
+            <select name="status" className="form-select" onChange={handelStatusChange}>
+              <option>Sélectionnez votre status</option>
+              <option>Expéditeur</option>
+              <option>Voyageur</option>
+            </select>
+          </div> */}
+          {/* <div className="mb-3">
+            <label className="fst-italic">Photo</label>
+            <input type="file" className="form-control" onChange={handelFileChange} />
+          </div> */}
+          <div className='button'>
             <Button id="btn" type="submit">Valider</Button>
-            </div>
+          </div>
         </form>
       </div>
-      </div>
-    
+    </div>
+
   );
 }
 

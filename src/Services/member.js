@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export function login(credentials) {
+export async function login(credentials) {
     try {
-        const response = axios.post('/login', credentials)
+        const response = await axios.post('/login', credentials)
         console.log(response.data)
         return response.data
     } catch (error) {

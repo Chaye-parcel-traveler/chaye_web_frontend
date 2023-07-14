@@ -1,6 +1,7 @@
 
 import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import './App.css';
 import SignUp from './Components/Member/SignUp';
 import Login from './Components/Member/Login';
@@ -15,12 +16,18 @@ import Maps from './Components/Maps/Maps';
 import Announcements from './Components/Announcements/Announcements';
 import Comments from './Components/Comments/Comments';
 import Message from './Components/Message/Message';
+import { setAuthToken } from './setAuthToken';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 console.log('process.env',process.env)
 
+//check jwt token
+const token = localStorage.getItem("token");
+setAuthToken(token);
+
 function App() {
   return (
+    <GoogleOAuthProvider clientId="871900328667-bq9ic36okos7jmctp2kc00f5q9q8bv5l.apps.googleusercontent.com">
     <div className="App">
       <div className="vw-100 vh-100 row ">
         <div className="col-2 vh-100">
@@ -45,6 +52,7 @@ function App() {
       </div>
 
     </div>
+    </GoogleOAuthProvider>
   );
 }
 
