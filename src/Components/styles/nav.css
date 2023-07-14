@@ -9,16 +9,22 @@
 .logo {
   width: 150px;
   height: auto;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .navbar ul li{
   list-style: none;
   margin-top: 20px;
 }
-.navbar  a{
+.navbar li a{
   color: white;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 15px;
+
+}
+.navbar li i{
+  color: white;
+  font-size: 15px;
+  margin-right: 10px;
 
 }
 

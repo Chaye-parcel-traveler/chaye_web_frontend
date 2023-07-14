@@ -6,6 +6,7 @@ import '../styles/accueil.css';
 //Moment (date)
 import moment from 'moment/moment';
 import 'moment/locale/fr'
+import Navbar from '../NavBar/NavBar';
 moment().locale('fr')
 
 function Home() {
@@ -46,58 +47,63 @@ function Home() {
             });
     }, [])
     return (
-        <div className="">
-            <div class="hero">
-                <div class="heroItem">
-                    <h2> Que veux tu faire?</h2>
-                    <a href='/AddPackage'><input type="button" value="j'expédier" /></a>
-                    <input type="button" value="je transporte" />
-                </div>
+        <div className='row'>
+            <div className="col-2 ">
+                <Navbar/>
+            </div>
+            <div className="col-10 ">
+                <div class="hero">
+                    <div class="heroItem">
+                        <h2> Que veux tu faire?</h2>
+                        <a href='/AddPackage'><input type="button" value="j'expédier" /></a>
+                        <input type="button" value="je transporte" />
+                    </div>
 
-            </div>
-            <div className="search-bar">
-                <input type="text" placeholder="Rechercher" />
-                <button >Rechercher</button>
-            </div>
-            <div className="search-results">
-
-            </div>
-            <React.Fragment>
-                <div className="assurance">
-                    <h4>Assurance</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores iste labore magni repudiandae et,
-                        eum
-                        deleniti quaerat nobis nemo aut praesentium adipisci facere? Quos, impedit nobis quisquam in harum
-                        perspiciatis!...</p><a href="">Lire la suite</a>
                 </div>
-                <h3>A la une</h3>
-                <div className='annonce'>
+                <div className="search-bar">
+                    <input type="text" placeholder="Rechercher" />
+                    <button >Rechercher</button>
+                </div>
+                <div className="search-results">
+
+                </div>
+                <React.Fragment>
+                    <div className="assurance">
+                        <h4>Assurance</h4>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores iste labore magni repudiandae et,
+                            eum
+                            deleniti quaerat nobis nemo aut praesentium adipisci facere? Quos, impedit nobis quisquam in harum
+                            perspiciatis!...</p><a href="">Lire la suite</a>
+                    </div>
+                    <h3>A la une</h3>
+                    <div className='annonce'>
                         {state.loading ? 'loading...' : state.packages.map((packages, index) => (
                             <div className='card' key={index}>
-            
-                                    <img src={`http://localhost:5000/${packages.picture}`} />
-                                    <div>
-                                        <h3>{packages.content}</h3>
-                                        <p>{packages.departureCity}</p>
-                                        <p>
-                                            Dimensions: {packages.weight}x{packages.size}
-                                        </p>
-                                        <p>Date de Création{moment(packages.creationDate).format('L')}</p>
-                                        <div className='btnAnnonce'>
+
+                                <img src={`http://localhost:5000/${packages.picture}`} />
+                                <div>
+                                    <h3>{packages.content}</h3>
+                                    <p>{packages.departureCity}</p>
+                                    <p>
+                                        Dimensions: {packages.weight}x{packages.size}
+                                    </p>
+                                    <p>Date de Création{moment(packages.creationDate).format('L')}</p>
+                                    <div className='btnAnnonce'>
                                         <Button primary as='a' href={`/EditPackage/${packages._id}`}>Edit</Button>
                                         <form action={`http://localhost:5000/deletepackage/${packages._id}?_method=DELETE`} method="post">
                                             <input type="hidden" name="_method" value="DELETE" />
                                             <Button positive>Supprimer</Button>
                                         </form>
-                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         ))}
+                    </div>
+                </React.Fragment>
+                <div class="btnAnnonce">
+                    <input className="btn" type="button" value="Voir tous les annonces" />
+                    <input className="btn" type="button" value="Carte intéractive" />
                 </div>
-            </React.Fragment>
-            <div class="btnAnnonce">
-                <input className="btn" type="button" value="Voir tous les annonces" />
-                <input className="btn" type="button" value="Carte intéractive" />
             </div>
         </div>
     )
