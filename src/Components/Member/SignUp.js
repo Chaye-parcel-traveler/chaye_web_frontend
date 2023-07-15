@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/signup.css';
+import Footer from '../Footer/Footer';
 function SignUp() {
   let navigate = useNavigate();
   const [file, setFile] = useState(null);
@@ -73,7 +74,7 @@ function SignUp() {
   };
 
   return (
-    <div className=" Bg vh-100">
+    <div className=" Bg">
       <div className=" d-flex justify-content-center">
         <a href="/"><img src={"img/logo.png"} alt="Logo" className="Logo" /></a>
       </div>
@@ -135,6 +136,7 @@ function SignUp() {
           </form>
         </div>
       </div>
+      <Footer/>
     </div>
 
   );

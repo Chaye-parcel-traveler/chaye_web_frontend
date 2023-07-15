@@ -10,9 +10,7 @@ const Navbar = () => {
   };
 
   return (
-
-
-    <div className="navbar">
+    <div className="navbar col-2">
       <ul className='text-decoration-none'>
         <a href="/"> <img src={"img/logo.png"} alt="Logo" className="logo" /> </a>
         <li><a href="/announcements"><i className="  fa-solid fa-bullhorn"></i> Annonces

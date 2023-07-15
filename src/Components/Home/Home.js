@@ -7,6 +7,8 @@ import '../styles/accueil.css';
 import moment from 'moment/moment';
 import 'moment/locale/fr'
 import Navbar from '../NavBar/NavBar';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 moment().locale('fr')
 
 function Home() {
@@ -47,26 +49,12 @@ function Home() {
             });
     }, [])
     return (
-        <div className='row'>
+        <div className='d-flex'>
             <div className="col-2 ">
-                <Navbar/>
+                <Navbar />
             </div>
-            <div className="col-10 ">
-                <div class="hero">
-                    <div class="heroItem">
-                        <h2> Que veux tu faire?</h2>
-                        <a href='/AddPackage'><input type="button" value="j'expédier" /></a>
-                        <input type="button" value="je transporte" />
-                    </div>
-
-                </div>
-                <div className="search-bar">
-                    <input type="text" placeholder="Rechercher" />
-                    <button >Rechercher</button>
-                </div>
-                <div className="search-results">
-
-                </div>
+            <div className="col-10 ms-2 me-5">
+                <Header />
                 <React.Fragment>
                     <div className="assurance">
                         <h4>Assurance</h4>
@@ -104,7 +92,9 @@ function Home() {
                     <input className="btn" type="button" value="Voir tous les annonces" />
                     <input className="btn" type="button" value="Carte intéractive" />
                 </div>
+                <Footer />
             </div>
+
         </div>
     )
 

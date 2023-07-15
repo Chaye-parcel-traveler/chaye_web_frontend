@@ -18,7 +18,6 @@ import Message from './Components/Message/Message';
 function App() {
   return (
     <div className="App ">
-  
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/signup' element={<SignUp />} />

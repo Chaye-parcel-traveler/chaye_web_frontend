@@ -1,26 +1,37 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
+import Footer from '../Footer/Footer';
+
 function Login() {
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    navigate('/');
+  };
+
   return (
-    <div className='Bg '>
+    <div className='Bg'>
       <div className=" d-flex justify-content-center">
         <a href="/"><img src={"img/logo.png"} alt="Logo" className="Logo" /></a>
       </div>
-      <div className=" formule bg-white container-fluid col-4 my-3">
+      <div className=" formule bg-white container-fluid col-4 my-5">
         <div className="m-5 ">
           <h1 className="text-center pt-5 fw-bold">Content de te revoir</h1>
           <p className="text-center ">Connectez-vous à votre compte</p>
-          <form className='login' action="http://localhost:5000/login" method="post">
+          <form className='login' onSubmit={handleLogin}>
             <div className="mb-3">
-              <input className="form-control" type="email" id="email" name="user_mail" placeholder='Email' />
+              <input className="form-control" type="email" id="email" name="email" placeholder='Email' />
             </div>
             <div className="mb-3">
               <input className="form-control" type="password" id="password" name="password" placeholder='Mot de passe'/>
             </div>
             <div className="mb-3 d-flex justify-content-between">
-          <div>
-              <input type="radio" id="rappeler" name="rappeler" />
-              <label htmlFor="rappeler" className="form-label">Se rappeler de moi</label></div>
+              <div>
+                <input type="radio" id="rappeler" name="rappeler" />
+                <label htmlFor="rappeler" className="form-label">Se rappeler de moi</label>
+              </div>
               <a className="text-danger ms-5" href="">Mot de passe oublié?</a>
             </div>
             <div className="p-3 text-center">
@@ -37,6 +48,7 @@ function Login() {
           </form>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

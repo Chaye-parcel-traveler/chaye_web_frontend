@@ -43,7 +43,7 @@ function AllMembers() {
   
     
 return(
-  <div className="content">
+  <div>
    <Table striped>
     <Table.Header>
       <Table.Row>

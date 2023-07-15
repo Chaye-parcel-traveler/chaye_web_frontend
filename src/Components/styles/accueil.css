@@ -28,22 +28,9 @@
     background-color: #EC634E;
 }
 
-/* Button searche */
-.search-bar {
-    margin: 1% 0;
-}
-
-.search-bar input {
-    padding: 10px;
-    width: 90%;
-    border: 1px solid #ced4da;
-}
-
-.search-bar button {
-    padding: 10px 20px;
-    background-color: #12bd67;
-    color: #fff;
-    cursor: pointer;
+/* Button search */
+.search{
+    margin-top: 1%;
 }
 /* Assurance */
 .assurance {
