@@ -10,16 +10,13 @@ const Navbar = () => {
   };
 
   return (
-
-
-    <div className="navbar">
+    <div className="navbar col-2">
       <ul className='text-decoration-none'>
-        <a href="/"> <img src={"img/logo.png"} alt="Logo" className="logo" />
-        </a>
-        <li>   <a href="/announcements"><i className=" me-3 fa-solid fa-bullhorn"></i> Annonces
+        <a href="/"> <img src={"img/logo.png"} alt="Logo" className="logo" /> </a>
+        <li><a href="/announcements"><i className="  fa-solid fa-bullhorn"></i> Annonces
         </a></li>
 
-        <li> <i className="fa-solid me-3 fa-user text-white"></i><Dropdown item text="Mon Compte" className="custom-dropdown">
+        <li> <i className="fa-solid me-3 fa-user "></i><Dropdown item text="Mon Compte" className="custom-dropdown">
           <Dropdown.Menu>
             <Dropdown.Item
               as="a"
@@ -41,13 +38,15 @@ const Navbar = () => {
         </Dropdown></li>
         <li>
           <a href="/AboutUs"
-          ><i class="me-3 fa-solid fa-bullhorn"></i> À propos de nous
+          ><i className="fa-solid fa-bullhorn"></i> À propos de nous
           </a></li>
+        <li>
+          <a href="/support"><i className="fa-solid fa-circle-info"></i>Support</a></li>
         <li>  <a
           href="/allmembers"
           className={activeItem === 'Membres' ? 'active' : ''}
           onClick={() => handleItemClick('allmembres')}
-        >
+        ><i class="fa-solid fa-users  "></i>
           AllMembres
         </a></li>
         <li>  <a href="/logout" >

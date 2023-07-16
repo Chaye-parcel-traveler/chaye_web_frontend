@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'semantic-ui-react';
 import { useNavigate } from "react-router-dom";
+import Navbar from '../NavBar/NavBar';
 
 import '../styles/styles.css';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 function AddPackage() {
   let navigate = useNavigate();
@@ -57,36 +60,45 @@ function AddPackage() {
   };
 
   return (
-    <div className="content">
-    <div className="Formulcontainer">
-       <h1>Ajouter un colis</h1> 
-      <Form onSubmit={handleSubmit}>
+  <div className='row'>
+    <div className="col-2 ">
+        <Navbar/>
+    </div>
+    <div className="col-10 ">
+    <Header/>
+       <h1  className="text-center pt-5 fs-2 fw-bold" >J'expédier un colis</h1> 
+       <div className=' col-6 d-flex m-auto '>
+       <input type="text" className="form-control me-5 py-3"  onChange={handleDepartureCityChange} placeholder='Départ de ' />
+       <input type="text" className="form-control py-3"  onChange={handleDepartureCityChange} placeholder='Arrivé à ' />
+       </div>
+      <Form  className="col-formule bg-white container-fluid col-4 my-3 " onSubmit={handleSubmit}>
         <Form.Field>
-          <label>Contenu:</label>
-          <input type="text" id="input"  onChange={handleContentChange} />
+          <label className="form-label">Contenu:</label>
+          <input type="text" className="form-control"  onChange={handleContentChange} />
         </Form.Field>
 
         <Form.Field>
-          <label>Poids:</label>
-          <input type="string"  id="input" onChange={handleWeightChange}/>
+          <label className="form-label">Poids:</label>
+          <input type="string"  className="form-control" onChange={handleWeightChange}/>
         </Form.Field>
 
         <Form.Field>
-          <label>Taille:</label>
-          <input type="string" id="input"  onChange={handleSizeChange}/>
+          <label className="form-label">Taille:</label>
+          <input type="string" className="form-control"  onChange={handleSizeChange}/>
         </Form.Field>
         <Form.Field>
-          <label>Ville de départ:</label>
-          <input type="text" id="input"  onChange={handleDepartureCityChange} />
+          <label className="form-label">Ville de départ:</label>
+          <input type="text" className="form-control"  onChange={handleDepartureCityChange} />
         </Form.Field>
         <Form.Field>
-          <label>Photo de contenu du colis :</label>
-          <input type="file"  id="input" onChange={handleFileChange} />
+          <label className="form-label">Photo de contenu du colis :</label>
+          <input type="file"  className="form-control" onChange={handleFileChange} />
         </Form.Field>
         <Button id="btn" primary type="submit">Ajouter</Button>
       </Form>
+      <Footer/>
     </div>
-    </div>
+  </div>
   );
 }
 

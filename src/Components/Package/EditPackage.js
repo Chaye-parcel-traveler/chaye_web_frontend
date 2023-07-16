@@ -73,30 +73,30 @@ function EditColis() {
 
   return (
     <div className="Formulcontainer">
-      <h1>Modifier un colis</h1>
-      <Form onSubmit={handleSubmit}>
+      <h1>Modifier Votre colis</h1>
+      <Form  className="col-formule bg-white container-fluid col-4 my-3 " onSubmit={handleSubmit}>
         <Form.Field>
-          <label>Contenu:</label>
-          <input type="text" id="input" onChange={handleContentChange} value={content} />
+          <label className="form-label">Contenu:</label>
+          <input  className="form-control" type="text" id="input" onChange={handleContentChange} value={content} />
         </Form.Field>
 
         <Form.Field>
-          <label>Poids:</label>
-          <input type="string" id="input" onChange={handleWeightChange} value={weight}/>
+          <label className="form-label">Poids:</label>
+          <input className="form-control" type="string" id="input" onChange={handleWeightChange} value={weight}/>
         </Form.Field>
 
         <Form.Field>
-          <label>Taille:</label>
-          <input type="string" id="input" onChange={handleSizeChange} value={size} />
+          <label className="form-label">Taille:</label>
+          <input className="form-control" type="string" id="input" onChange={handleSizeChange} value={size} />
         </Form.Field>
         <Form.Field>
-          <label>Ville de départ:</label>
-          <input type="text" id="input" onChange={handleDepartureCityChange} value={departureCity} />
+          <label className="form-label">Ville de départ:</label>
+          <input className="form-control" type="text" id="input" onChange={handleDepartureCityChange} value={departureCity} />
         </Form.Field>
 
         <Form.Field>
-          <label>Photo de contenu du colis ::</label>
-          <input type="file" id="input" onChange={handleFileChange} />
+          <label className="form-label">Photo de contenu du colis ::</label>
+          <input  className="form-control"type="file" id="input" onChange={handleFileChange} />
         </Form.Field>
         <img src={`/${picture}`} width="150px" alt="imageColis" />
 

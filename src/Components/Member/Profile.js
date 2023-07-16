@@ -10,8 +10,8 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   // État pour les erreurs
   const [error, setError] = useState('');
-  // État pour les données du membre
-  const [membre, setMembre] = useState({});
+  // État pour les données du member
+  const [member, setMember] = useState({});
 
   useEffect((id) => {
     axios
@@ -19,12 +19,12 @@ function Profile() {
       .then((response) => {
         setLoading(false);
         setError('');
-        setMembre(response.data.membre);
+        setMember(response.data.member);
       })
       .catch((error) => {
         setLoading(false);
         setError('Something went wrong!');
-        setMembre({});
+        setMember({});
       });
   }, [params.id]);
 
@@ -37,19 +37,20 @@ function Profile() {
   }
 
   return (
+    
     <div>
-      <img src={`/${membre.imagename}`} width={'150px'} alt='profile img'/>
-      <h1>{membre.last_name}</h1>
-      <h1>{membre.first_name}</h1>
-      <h1>{membre.email}</h1>
-      <h1>{membre.adress}</h1>
-      <Button primary as='a' href={`/editmember/${membre._id}`}>
+      {/* <img src={`http://localhost:5000/${member.imagename}`} width={'150px'}/> */}
+      <h1>{member.lastname}</h1>
+      <h1>{member.firstname}</h1>
+      <h1>{member.email}</h1>
+      <h1>{member.adress}</h1>
+      <Button primary as='a' href={`/editmember/${member._id}`}>
         Edit
       </Button>
-      <form action={`/deleteMember/${membre._id}?_method=DELETE`} method='post'>
-        <input type='hidden' name='_method' value='DELETE' />
+      {/* <form action={`http://localhost:5000/deleteMember/${member._id}?_method=DELETE`} method='post'>
+        <input type='hidden' name='_method' value='DELETE' /> */}
         <Button positive type='submit'>Supprimer</Button>
-      </form>
+      {/* </form> */}
     </div>
   );
 }

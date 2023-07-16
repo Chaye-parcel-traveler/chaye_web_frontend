@@ -1,24 +1,32 @@
 .navbar {
-  height: 100vh;
+  position: fixed;
+  height: 100%;
   background-color: #EC634E;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  box-shadow: #4F4294 10px ;
 }
 
 .logo {
   width: 150px;
   height: auto;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .navbar ul li{
   list-style: none;
   margin-top: 20px;
 }
-.navbar  a{
+.navbar li a{
   color: white;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 16px;
+
+}
+.navbar li i{
+  color: white;
+  font-size: 16px;
+  margin-right: 8px;
 
 }
 
@@ -41,9 +49,3 @@
   font-size: 14px;
 }
 
-/* .dropdown.item:hover {
-  background-color: #4F4294;
-  width: 100%;
-  border-radius: 10px;
-  font-size: 15px;
-} */

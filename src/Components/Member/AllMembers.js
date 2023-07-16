@@ -49,7 +49,6 @@ function AllMembers() {
     fetchData();
   }, [])
 
-
   return (
     <Table striped>
       <Table.Header>
@@ -75,10 +74,10 @@ function AllMembers() {
             {/* <Table.Cell><img src={`/${membre.imagename}`} width={'150px'} /></Table.Cell> */}
             <Table.Cell><Button primary as='a' href={`/editMembre/${membre._id}`}>Edit</Button></Table.Cell>
             <Table.Cell>
-              <form action={`/membre/delete/${membre._id}?_method=DELETE`} method="post">
-                <input type="hidden" name="_method" value="DELETE" />
+              {/* <form action={`/membre/delete/${membre._id}?_method=DELETE`} method="post">
+                <input type="hidden" name="_method" value="DELETE" /> */}
                 <Button positive>Supprimer</Button>
-              </form>
+              {/* </form> */}
             </Table.Cell>
           </Table.Row>
 

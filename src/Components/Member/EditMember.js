@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/signup.css';
 import { useNavigate } from 'react-router-dom';
-import { Form, Button } from 'semantic-ui-react';
 
 function EditMember() {
   let navigate = useNavigate();
@@ -93,59 +93,64 @@ function EditMember() {
   };
 
   return (
-    <div className='Formulcontainer '>
-      <h1>Modifier votre Profil</h1>
-      <Form onSubmit={handelSubmit}>
-        <input type="hidden" name="_method" value="PUT" />
-
-        <Form.Field>
-          <label>Nom</label>
-          <input type="text" name="lastname" id="input" onChange={handelLastnameChange} value={lastname} />
-        </Form.Field>
-
-        <Form.Field>
-          <label>Prénom</label>
-          <input type="text" name="firstname" id="input" onChange={handelFirstnameChange} value={firstname} />
-        </Form.Field>
-
-        <Form.Field>
-          <label>Email</label>
-          <input type="email" name="email" id="input" onChange={handelEmailChange} value={email} />
-        </Form.Field>
-
-        <Form.Field>
-          <label>Mot de passe</label>
-          <input type="password" name="password" id="input" onChange={handelPasswordChange}  />
-        </Form.Field>
-
-        <Form.Field>
-          <label>Adresse</label>
-          <input type="text" name="adress" id="input" onChange={handelAdressChange} value={adress} />
-        </Form.Field>
-
-        <Form.Field>
-          <label>Téléphone</label>
-          <input type="text" name="phone" id="input" onChange={handelPhoneChange} value={phone} />
-        </Form.Field>
-
-        <Form.Field>
-          <label>Status</label>
-          <select name="status" id="input" onChange={handelStatusChange} value={status}>
-            <option>Sélectionnez votre status</option>
-            <option value="Expéditeur">Expéditeur</option>
-            <option value="Voyageur">Voyageur</option>
-          </select>
-        </Form.Field>
-
-        <Form.Field>
-          <label>Photo</label>
-          <input type="file" id="input" onChange={handelFileChange}/>
-          <img src={`/${imagename}`} width="150px" alt="Profil" />
-        </Form.Field>
-
-        <Button id="btn" type="submit">Valider</Button>
-      </Form>
+    <div className=" Bg vh-100">
+    <div className=" d-flex justify-content-center">
+      <a href="/"><img src={"img/logo.png"} alt="Logo" className="Logo" /></a>
     </div>
+    <div className="formule bg-white container-fluid col-4 my-3 ">
+      <div className="m-5 ">
+        <div className='text-center mt-5'>
+          <h1 className="text-center pt-5 fs-2 fw-bold">Modifier votre Profile</h1>
+        </div>
+        <form className='singup' onSubmit={handelSubmit}>
+        <input type="hidden" name="_method" value="PUT" />
+          <div className="mb-3 ">
+            <label className="form-label">Nom</label>
+            <input type="text" className="form-control " name="lastname" onChange={handelLastnameChange} value={lastname} />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Prénom </label>
+            <input type="text" className="form-control" name="firstname" onChange={handelFirstnameChange} value={firstname} />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Email </label>
+            <input type="email" className="form-control" name="email" onChange={handelEmailChange} value={email}  />
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Mot de passe </label>
+            <input type="password" className="form-control" name="password" onChange={handelPasswordChange} />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Adress </label>
+            <input type="text" className="form-control" name="adress" onChange={handelAdressChange} value={adress} />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Téléphone </label>
+            <input type="text" className="form-control" name="phone" onChange={handelPhoneChange} value={phone} />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Status </label>
+            <select name="status" className="form-select" onChange={handelStatusChange} value={status}>
+              <option>Sélectionnez votre status</option>
+              <option>Expéditeur</option>
+              <option>Voyageur</option>
+            </select>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Photo</label>
+            <input type="file" className="form-control" onChange={handelFileChange} />
+            <img src={`http://localhost:5000/${imagename}`} width="150px" alt="Profil" />
+          </div>
+          <div className="p-3 text-center">
+            <input className="text-light fw-bold valider px-5 py-2" type="submit" value="Modifier" />
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   );
 }
 
