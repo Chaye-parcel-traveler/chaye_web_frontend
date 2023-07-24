@@ -1,4 +1,4 @@
-.footer{
+footer{
     display: flex;
     background-color: #2D2C2C;
     color: #CFCFCE;
@@ -6,9 +6,20 @@
     align-items: center;
     padding: 5px;
 }
-.footer .lienFooter a{
+footer .lienFooter a{
     color: #CFCFCE;
     margin-left: 5px;
     text-decoration: none;
     border-left: 2px #CFCFCE solid;
+}
+
+footer ul.lienFooter {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+footer ul.lienFooter li {
+    list-style:none ;
+    margin-left: 10px;
 }

@@ -1,4 +1,9 @@
 /* Accueil.css */
+.content-home{
+    display: flex;
+    flex-direction: column;
+}
+
 .hero {
     height: 30vh;
     background-image: url('../../../public/img/head.jpg');
