@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 import Footer from '../Footer/Footer';
-import { Button, Divider, Form, Grid, Segment } from 'semantic-ui-react'
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import { login } from '../../Services/member'
 import { setAuthToken } from '../../setAuthToken';
 
@@ -22,15 +22,18 @@ function Login() {
 
   const googleLogin = useGoogleLogin({
     flow: 'auth-code',
-    redirect_uri: `${process.env.REACT_APP_API_URL}/google/redirect`,
+    redirect_uri: `${process.env.REACT_APP_API_URL}/auth/google/redirect`,
+    ux_mode: 'redirect',
     onSuccess: async (codeResponse) => {
       console.log(codeResponse);
-      // const tokens = await axios.pgetost(
-      //   `${process.env.REACT_APP_API_URL}/google/callback`, {
-      //         code: codeResponse.code,
-      //     });
+      const qs = `code=${encodeURIComponent(codeResponse.code)}
+        &scope=${encodeURIComponent(codeResponse.scope)}
+        &authuser=${encodeURIComponent(codeResponse.authuser)}
+        &prompt=${encodeURIComponent(codeResponse.prompt)}`;
+      const tokens = await axios.get(
+        `${process.env.REACT_APP_API_URL}/auth/google/callback?${qs}`);
 
-      // console.log(tokens);
+      console.log('tokens',tokens);
     },
     onError: errorResponse => console.log(errorResponse),
   });
@@ -72,7 +75,7 @@ function Login() {
                 <input type="radio" id="rappeler" name="rappeler" />
                 <label htmlFor="rappeler" className="form-label">Se rappeler de moi</label>
               </div>
-              <a className="text-danger ms-5" href="">Mot de passe oublié?</a>
+              <a className="text-danger ms-5" href="#top">Mot de passe oublié?</a>
             </div>
             <div className="p-3 text-center">
               <input className="text-light fw-bold valider p-5 py-2" type="submit" value="Valider" />
@@ -80,7 +83,7 @@ function Login() {
             <h6 className="text-center text-secondary">Ou inscrivez-vous en utilisant</h6>
             <hr />
             <div className="reseSocio fs-2 text-center">
-              <a href="https://www.google.com/intl/fr/gmail/about/" onClick={() => googleLogin()} ><i className="me-3 fa-brands fa-google"></i></a>
+              <a href="#top" onClick={() => googleLogin()} ><i className="me-3 fa-brands fa-google"></i></a>
               <a href="https://www.facebook.com"><i className="me-3 fa-brands fa-facebook"></i></a>
               <a href="https://www.icloud.com/mail"> <i className="fa-brands text-dark fa-apple"></i></a>
             </div>

@@ -1,7 +1,7 @@
 
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
-import { Card, Button } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import '../styles/accueil.css';
 //Moment (date)
 import moment from 'moment/moment';
@@ -50,9 +50,9 @@ function Home() {
     }, [])
     return (
         <div className='d-flex'>
-            <div className="col-2 ">
+            {/* <div className="col-2 "> */}
                 <Navbar />
-            </div>
+            {/* </div> */}
             <div className="col-10 ms-2 me-5">
                 <Header />
                 <React.Fragment>
@@ -61,14 +61,14 @@ function Home() {
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores iste labore magni repudiandae et,
                             eum
                             deleniti quaerat nobis nemo aut praesentium adipisci facere? Quos, impedit nobis quisquam in harum
-                            perspiciatis!...</p><a href="">Lire la suite</a>
+                            perspiciatis!...</p><a href="#top">Lire la suite</a>
                     </div>
                     <h3>A la une</h3>
                     <div className='annonce'>
                         {state.loading ? 'loading...' : state.packages.map((packages, index) => (
                             <div className='card' key={index}>
 
-                                <img src={`/${packages.picture}`} />
+                                <img src={`/${packages.picture}`} alt='avatar'/>
                                 <div>
                                     <h3>{packages.content}</h3>
                                     <p>{packages.departureCity}</p>

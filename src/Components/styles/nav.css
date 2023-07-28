@@ -1,19 +1,26 @@
 .navbar {
-  position: fixed;
-  height: 100%;
+  /* position: fixed; */
+  /* height: 100%; */
   background-color: #EC634E;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* align-items: flex-start; */
   box-shadow: #4F4294 10px ;
 }
 
-.logo {
+/* .logo {
   width: 150px;
   height: auto;
   margin-bottom: 10px;
+} */
+
+.bg-chaye {
+  --bs-bg-opacity: 1;
+  background-color: #EC634E;
+  box-shadow: #4F4294 10px ;
 }
-.navbar ul li{
+
+/* .navbar ul li{
   list-style: none;
   margin-top: 20px;
 }
@@ -47,5 +54,5 @@
 .dropdown.item {
   color: white;
   font-size: 14px;
-}
+} */
 

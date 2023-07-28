@@ -5,14 +5,14 @@ import '../styles/signup.css';
 import Footer from '../Footer/Footer';
 function SignUp() {
   let navigate = useNavigate();
-  const [file, setFile] = useState(null);
+  // const [file, setFile] = useState(null);
   const [lastname, setLastname] = useState('');
   const [firstname, setFirstname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [adress, setAdress] = useState('');
   const [phone, setPhone] = useState('');
-  const [status, setStatus] = useState('');
+  // const [status, setStatus] = useState('');
   // const [imagename, setImagename] = useState('');
 
   // const handelFileChange = (event) => {
@@ -44,9 +44,9 @@ function SignUp() {
     setPhone(event.target.value);
   };
 
-  const handelStatusChange = (event) => {
-    setStatus(event.target.value);
-  };
+  // const handelStatusChange = (event) => {
+  //   setStatus(event.target.value);
+  // };
 
   const handelSubmit = (event) => {
     event.preventDefault();
@@ -62,14 +62,14 @@ function SignUp() {
     // formData.append('status', status);
     // formData.append('imagename', imagename);
     const formData = {
-      file: file,
+      // file: file,
       lastname: lastname,
       firstname: firstname,
       email: email,
       password: password,
       address: adress,
       phone: phone,
-      status: status,
+      // status: status,
     }
     axios
       .post(`/members`, formData)
