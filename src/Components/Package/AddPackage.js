@@ -3,8 +3,9 @@ import axios from 'axios';
 import { Form, Button } from 'semantic-ui-react';
 import { useNavigate } from "react-router-dom";
 import Navbar from '../NavBar/NavBar';
+import '../styles/accueil.css';
 
-import '../styles/styles.css';
+import '../styles/formule.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
@@ -16,6 +17,8 @@ function AddPackage() {
   const [size, setSize] = useState('');
   const [picture, setPicture] = useState('');
   const [departureCity, setDepartureCity] = useState('');
+  const [arrivalCity, setArrivalCity] = useState('');
+
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -36,6 +39,9 @@ function AddPackage() {
   const handleDepartureCityChange = (event) => {
     setDepartureCity(event.target.value);
   };
+  const handleArrivalCityChange = (event) => {
+    setArrivalCity(event.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -46,9 +52,10 @@ function AddPackage() {
       formData.append('weight', weight);
       formData.append('size', size);
       formData.append('departureCity', departureCity);
+      formData.append('arrivalCity', arrivalCity);
       formData.append('picture', picture);
       axios
-        .post(`http://localhost:5000/package`, formData ,{withCredentials:true})
+        .post(`http://localhost:5000/packages`, formData ,{withCredentials:true})
         .then((response) => {
           console.log(response.data);
           return navigate("/home");
@@ -60,41 +67,38 @@ function AddPackage() {
   };
 
   return (
-  <div className='row'>
-    <div className="col-2 ">
+    <div className='content'>
+    <div className='content-menu'>
         <Navbar/>
     </div>
-    <div className="col-10 ">
+    <div className="content-body ">
     <Header/>
-       <h1  className="text-center pt-5 fs-2 fw-bold" >J'expédier un colis</h1> 
-       <div className=' col-6 d-flex m-auto '>
-       <input type="text" className="form-control me-5 py-3"  onChange={handleDepartureCityChange} placeholder='Départ de ' />
-       <input type="text" className="form-control py-3"  onChange={handleDepartureCityChange} placeholder='Arrivé à ' />
+       <h1  className="text-center pt-5 fw-bold" >J'expédier un colis</h1> 
+  
+      <Form  className="formule  " onSubmit={handleSubmit}>
+      <div className='d-flex my-5'>
+       <input type="text" name='departureCity' className="form-control me-5 py-3"  onChange={handleDepartureCityChange} placeholder='Départ de ' />
+       <input type="text"name='arrivalCity' className="form-control py-3"  onChange={handleArrivalCityChange} placeholder='Arrivé à ' />
        </div>
-      <Form  className="col-formule bg-white container-fluid col-4 my-3 " onSubmit={handleSubmit}>
         <Form.Field>
           <label className="form-label">Contenu:</label>
-          <input type="text" className="form-control"  onChange={handleContentChange} />
+          <input type="text" name='content' className="form-control"  onChange={handleContentChange} />
         </Form.Field>
-
         <Form.Field>
           <label className="form-label">Poids:</label>
-          <input type="string"  className="form-control" onChange={handleWeightChange}/>
+          <input type="number" name='weight' className="form-control" onChange={handleWeightChange}/>
         </Form.Field>
-
         <Form.Field>
           <label className="form-label">Taille:</label>
-          <input type="string" className="form-control"  onChange={handleSizeChange}/>
-        </Form.Field>
-        <Form.Field>
-          <label className="form-label">Ville de départ:</label>
-          <input type="text" className="form-control"  onChange={handleDepartureCityChange} />
+          <input type="number" name='size' className="form-control"  onChange={handleSizeChange}/>
         </Form.Field>
         <Form.Field>
           <label className="form-label">Photo de contenu du colis :</label>
-          <input type="file"  className="form-control" onChange={handleFileChange} />
+          <input type="file" name='picture'  className="form-control" onChange={handleFileChange} />
         </Form.Field>
+        <div className='button mb-5'>
         <Button id="btn" primary type="submit">Ajouter</Button>
+        </div>
       </Form>
       <Footer/>
     </div>

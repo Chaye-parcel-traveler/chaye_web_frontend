@@ -50,11 +50,11 @@ function Home() {
             });
     }, [])
     return (
-        <div className='d-flex content'>
-            <div className="navbar col-3 ">
+        <div className='content'>
+            <div className='content-menu'>
                 <Navbar />
             </div>
-            <div className="col-9 content-home">
+            <div className="content-body ">
                 <Header />
                 <React.Fragment>
                     <div className="assurance">
@@ -64,8 +64,8 @@ function Home() {
                             deleniti quaerat nobis nemo aut praesentium adipisci facere? Quos, impedit nobis quisquam in harum
                             perspiciatis!...</p><a href="">Lire la suite</a>
                     </div>
-                    <h3>A la une</h3>
                     <div className='annonce'>
+                    <h3>A la une</h3>
                         {state.loading ? 'loading...' : state.packages.map((packages, index) => (
                             <div className='card' key={index}>
 

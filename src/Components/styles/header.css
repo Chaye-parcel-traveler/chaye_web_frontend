@@ -1,0 +1,28 @@
+.hero {
+    height: 30vh;
+    background-image: url('../../../public/img/head.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+}
+
+.heroItem {
+    text-align: center;
+    color: rgb(8, 8, 8);
+    padding: 2%;
+    width: 50%;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    background-color: hsla(0, 0%, 100%, 0.548);
+}
+
+.heroItem input {
+    border: 2px solid #EC634E;
+    color: #FFFFFF;
+    padding: 2% 4%;
+    margin: 2% 10%;
+    border-radius: 10px;
+    background-color: #EC634E;
+}

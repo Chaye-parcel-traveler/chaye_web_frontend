@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/accueil.css';
+import '../styles/header.css';
 
 function Header() {
     return (
@@ -7,8 +7,8 @@ function Header() {
             <div class="hero me-2">
                 <div class="heroItem">
                     <h2> Que veux tu faire?</h2>
-                    <a href='/AddPackage'><input className='fw-bold' type="button" value="J'expédier" /></a>
-                    <a href='/AddAnnoncements'> <input type="button"  className='fw-bold' value="Je transporte" /></a>
+                    <a href='/AddPackage'><input className='fw-bold' type="button" value="J'expédie" /></a>
+                    <a href='/AddAnnouncements'> <input type="button"  className='fw-bold' value="Je transporte" /></a>
                 </div>
             </div>
             <div className="search me-2">

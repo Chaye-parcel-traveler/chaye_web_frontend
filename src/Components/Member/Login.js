@@ -12,7 +12,7 @@ function Login() {
   };
 
   return (
-    <div className='Bg'>
+    <div className="content-image">
       <div className=" d-flex justify-content-center">
         <a href="/"><img src={"img/logo.png"} alt="Logo" className="Logo" /></a>
       </div>
