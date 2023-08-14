@@ -27,8 +27,8 @@ function App() {
           <Route path='/editmember/:id' element={<EditMember />} />
           <Route path='/profile/:id' element={<Profile />} />
           <Route path='/AddPackage' element={<AddPackage />} />
-          <Route path='/EditPackage/:id' element={<EditPackage />} />
-          <Route path='/announcements' element={<Announcements />} />
+          <Route path='/EditPackage/:id' element={<EditPackage />}/>
+          <Route path='/announcements' element={<Announcements />}/>
           <Route path='/AddAnnouncements' element={<AddAnnouncements />} />
           <Route path='/carte' element={<Maps />} />
           <Route path='/comment' element={<Comments />} />

@@ -43,7 +43,6 @@ function AddPackage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     const formData = new FormData();
     formData.append('announcementsType', announcementsType);
     formData.append('priceKilo', priceKilo);
@@ -53,10 +52,10 @@ function AddPackage() {
     formData.append('departureDate', departureDate);
     formData.append('arrivalDate', arrivalDate);
     axios
-      .post(`http://localhost:5000/announcements`, formData, { withCredentials: true })
+      .post(`http://localhost:5000/announcements`, formData)
       .then((response) => {
         console.log(response.data);
-        return navigate("/home");
+        return navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -75,17 +74,17 @@ function AddPackage() {
 
         <Form className="bg-white my-3 formule" onSubmit={handleSubmit}>
           <div className=' d-flex my-5 '>
-            <input type="text" name='departure_city' className="form-control me-5 py-3" onChange={handleDepartureCityChange} placeholder='Départ de ' />
+            <input type="text" name='departureCity' className="form-control me-5 py-3" onChange={handleDepartureCityChange} placeholder='Départ de ' />
             <input type="text" name='destination' className="form-control py-3" onChange={handleDestinationChange} placeholder='Arrivé à ' />
           </div>
           <Form.Field>
             <label className="form-label">Type de l'annonce</label>
-            <input type="text" name='announcements_type' className="form-control" onChange={handleAnnouncementsTypeChange} />
+            <input type="text" name='announcementsType' className="form-control" onChange={handleAnnouncementsTypeChange} />
           </Form.Field>
 
           <Form.Field>
             <label className="form-label">Prix de kilo </label>
-            <input type="number" name='price_kilo' className="form-control" onChange={handlePricekiloChange} />
+            <input type="number" name='priceKilo' className="form-control" onChange={handlePricekiloChange} />
           </Form.Field>
 
           <Form.Field>
@@ -94,11 +93,11 @@ function AddPackage() {
           </Form.Field>
           <Form.Field>
             <label className="form-label">Date de départ</label>
-            <input type="date" name="departure_date" className="form-control" onChange={handleDepartureDateChange} />
+            <input type="date" name="departureDate" className="form-control" onChange={handleDepartureDateChange} />
           </Form.Field>
           <Form.Field>
             <label className="form-label">Date d'arrivée</label>
-            <input type="date" name="arrival_date" className="form-control" onChange={handleArrivalDateChange} />
+            <input type="date" name="arrivalDate" className="form-control" onChange={handleArrivalDateChange} />
           </Form.Field>
           <div className='button mb-5'>
           <Button id="btn" type="submit">Ajouter</Button>

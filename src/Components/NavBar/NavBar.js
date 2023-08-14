@@ -36,7 +36,7 @@ function Navbar (){
         <li>
           <a href="/support">
             <i className="fa-solid fa-circle-info"></i>
-              <span>Support</span>
+              <span> Support</span>
           </a>
         </li>
 

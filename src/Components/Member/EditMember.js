@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/signup.css';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
 function EditMember() {
   let navigate = useNavigate();
@@ -94,10 +95,9 @@ function EditMember() {
   };
 
   return (
-    <div className=" Bg vh-100">
+  <div className="content-image">
     <div className=" d-flex justify-content-center">
-      <a href="/"><img src={"img/logo.png"} alt="Logo" className="Logo" /></a>
-    </div>
+    <a href="/"><img src={"img/logo.png"} alt="Logo" className="Logo" /></a>    </div>
     <div className="formule bg-white container-fluid col-4 my-3 ">
       <div className="m-5 ">
         <div className='text-center mt-5'>
@@ -150,6 +150,7 @@ function EditMember() {
         </form>
       </div>
     </div>
+    <Footer/>
   </div>
 
   );

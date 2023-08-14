@@ -55,10 +55,10 @@ function AddPackage() {
       formData.append('arrivalCity', arrivalCity);
       formData.append('picture', picture);
       axios
-        .post(`http://localhost:5000/packages`, formData ,{withCredentials:true})
+        .post(`http://localhost:5000/packages`, formData)
         .then((response) => {
           console.log(response.data);
-          return navigate("/home");
+          return navigate("/");
         })
         .catch((error) => {
           console.log(error);
@@ -78,7 +78,7 @@ function AddPackage() {
       <Form  className="formule  " onSubmit={handleSubmit}>
       <div className='d-flex my-5'>
        <input type="text" name='departureCity' className="form-control me-5 py-3"  onChange={handleDepartureCityChange} placeholder='Départ de ' />
-       <input type="text"name='arrivalCity' className="form-control py-3"  onChange={handleArrivalCityChange} placeholder='Arrivé à ' />
+       <input type="text" name='arrivalCity' className="form-control py-3"  onChange={handleArrivalCityChange} placeholder='Arrivé à ' />
        </div>
         <Form.Field>
           <label className="form-label">Contenu:</label>

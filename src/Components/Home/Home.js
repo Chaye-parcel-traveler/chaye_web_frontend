@@ -1,9 +1,14 @@
 
 import React, { useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
-import { Card, Button } from 'semantic-ui-react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
 import '../styles/accueil.css';
 import '../styles/nav.css';
+
 //Moment (date)
 import moment from 'moment/moment';
 import 'moment/locale/fr'
@@ -37,10 +42,10 @@ function Home() {
                 return state;
         }
     };
-    const [state, dispatch] = useReducer(reducer, initialestate)
+    const [state, dispatch] = useReducer(reducer, initialestate);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/packages', { withCredentials: true })
+        axios.get('http://localhost:5000/packages')
             .then(response => {
                 console.log(response.data);
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
@@ -54,7 +59,7 @@ function Home() {
             <div className='content-menu'>
                 <Navbar />
             </div>
-            <div className="content-body ">
+            <div className="content-body">
                 <Header />
                 <React.Fragment>
                     <div className="assurance">
@@ -64,28 +69,32 @@ function Home() {
                             deleniti quaerat nobis nemo aut praesentium adipisci facere? Quos, impedit nobis quisquam in harum
                             perspiciatis!...</p><a href="">Lire la suite</a>
                     </div>
+                    <h3 className='ms-3'>A la une</h3>
                     <div className='annonce'>
-                    <h3>A la une</h3>
+                       
                         {state.loading ? 'loading...' : state.packages.map((packages, index) => (
-                            <div className='card' key={index}>
-
-                                <img src={`http://localhost:5000/${packages.picture}`} />
-                                <div>
-                                    <h3>{packages.content}</h3>
-                                    <p>{packages.departureCity}</p>
-                                    <p>
-                                        Dimensions: {packages.weight}x{packages.size}
-                                    </p>
-                                    <p>Date de Création{moment(packages.creationDate).format('L')}</p>
-                                    <div className='btnAnnonce'>
-                                        <Button primary as='a' href={`/EditPackage/${packages._id}`}>Edit</Button>
-                                        <form action={`http://localhost:5000/deletepackage/${packages._id}?_method=DELETE`} method="post">
-                                            <input type="hidden" name="_method" value="DELETE" />
-                                            <Button positive>Supprimer</Button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            <Card key={index} sx={{ maxWidth: 345 }}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        component="img"
+                                        height="140"
+                                        image={`http://localhost:5000/${packages.picture}`}
+                                        alt="green iguana"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="div">
+                                            <h3>{packages.content}</h3>
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            <p>{packages.departureCity}</p>
+                                            <p>
+                                                Dimensions: {packages.weight}x{packages.size}
+                                            </p>
+                                            <p>Date de Création : {moment(packages.creationDate).format('L')}</p>
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
                         ))}
                     </div>
                 </React.Fragment>

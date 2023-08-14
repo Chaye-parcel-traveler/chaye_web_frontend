@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react';
+import '../styles/formule.css';
 
 function EditColis() {
   let navigate = useNavigate();

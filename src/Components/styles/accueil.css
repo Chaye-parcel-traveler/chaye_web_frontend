@@ -1,12 +1,12 @@
 /* Accueil.css */
 .content {
     display: grid;
-    grid-template-columns: 190px 1fr;
-    grid-template-rows: 200px 1fr;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 1fr 1fr;
 }
 .content-menu {
     grid-row: 1;
-    grid-column: 2;
+    grid-column: 1;
 }
 .content-body  {
     grid-row: 1;
@@ -15,20 +15,22 @@
 
 /* Button search */
 .search {
-    margin: 7px;
+    margin: 10px;
 }
 
 /* Assurance */
 .assurance {
-    padding: 2% 1%;
-    margin: 7px;
+    padding: 3% 1%;
+    margin: 10px;
     background-color: #FFFFFF;
     border: 1px solid #ced4da;
 }
 
 /* Annonce */
 .annonce {
-    margin: 7px;
+    display: flex;
+    gap: 20px;
+    margin: 10px;
     padding: 3% 1%;
 }
 
