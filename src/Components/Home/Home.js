@@ -1,5 +1,5 @@
 
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer} from 'react';
 import axios from 'axios';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -45,7 +45,7 @@ function Home() {
     const [state, dispatch] = useReducer(reducer, initialestate);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/packages')
+        axios.get('http://localhost:5000/packages', { withCredentials: true })
             .then(response => {
                 console.log(response.data);
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
@@ -67,7 +67,7 @@ function Home() {
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores iste labore magni repudiandae et,
                             eum
                             deleniti quaerat nobis nemo aut praesentium adipisci facere? Quos, impedit nobis quisquam in harum
-                            perspiciatis!...</p><a href="">Lire la suite</a>
+                            perspiciatis!...</p><a href="#">Lire la suite</a>
                     </div>
                     <h3 className='ms-3'>A la une</h3>
                     <div className='annonce'>

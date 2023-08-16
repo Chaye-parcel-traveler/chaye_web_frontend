@@ -52,7 +52,7 @@ function AddPackage() {
     formData.append('departureDate', departureDate);
     formData.append('arrivalDate', arrivalDate);
     axios
-      .post(`http://localhost:5000/announcements`, formData)
+      .post(`http://localhost:5000/announcements`,formData, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
         return navigate("/");

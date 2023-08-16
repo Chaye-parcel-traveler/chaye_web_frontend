@@ -48,7 +48,7 @@ function Home() {
     const [state, dispatch] = useReducer(reducer, initialestate);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/announcements')
+        axios.get('http://localhost:5000/announcements', { withCredentials: true })
             .then(response => {
                 console.log(response.data);
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
@@ -77,7 +77,7 @@ function Home() {
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores iste labore magni repudiandae et,
                             eum
                             deleniti quaerat nobis nemo aut praesentium adipisci facere? Quos, impedit nobis quisquam in harum
-                            perspiciatis!...</p><a href="">Lire la suite</a>
+                            perspiciatis!...</p><a href="#">Lire la suite</a>
                     </div>
                     <h3 className='ms-3'>Toutes les annonces</h3>
                     <div className='annonce'>

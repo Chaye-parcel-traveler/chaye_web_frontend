@@ -5,11 +5,8 @@ import Footer from '../Footer/Footer';
 
 function Login() {
   const navigate = useNavigate();
-
-  const handleLogin = (e) => {
-    e.preventDefault();
     navigate('/');
-  };
+
 
   return (
     <div className="content-image">
@@ -20,7 +17,7 @@ function Login() {
         <div className="m-5 ">
           <h1 className="text-center pt-5 fw-bold">Content de te revoir</h1>
           <p className="text-center ">Connectez-vous à votre compte</p>
-          <form className='login' onSubmit={handleLogin}>
+          <form  className='login' action="http://localhost:5000/login" method="post">
             <div className="mb-3">
               <input className="form-control" type="email" id="email" name="email" placeholder='Email' />
             </div>
