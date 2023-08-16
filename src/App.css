@@ -6,3 +6,7 @@
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
+
+#root,.App,.content ,.content-menu{
+    height: 100vh;
+}

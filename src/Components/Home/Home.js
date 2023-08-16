@@ -3,6 +3,7 @@ import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import { Button } from 'semantic-ui-react';
 import '../styles/accueil.css';
+import '../styles/nav.css';
 //Moment (date)
 import moment from 'moment/moment';
 import 'moment/locale/fr'
@@ -49,11 +50,11 @@ function Home() {
             });
     }, [])
     return (
-        <div className='d-flex'>
-            {/* <div className="col-2 "> */}
+        <div className='d-flex content'>
+            <div className="navbar col-3 ">
                 <Navbar />
-            {/* </div> */}
-            <div className="col-10 ms-2 me-5">
+            </div>
+            <div className="col-9 content-home">
                 <Header />
                 <React.Fragment>
                     <div className="assurance">
