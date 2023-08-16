@@ -71,7 +71,7 @@ function Home() {
             </div>
             <div className="content-body">
                 <Header />
-                <React.Fragment>
+                <div>
                     <div className="assurance">
                         <h4>Assurance</h4>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores iste labore magni repudiandae et,
@@ -114,7 +114,7 @@ function Home() {
                             </Card>
                         ))}
                     </div>
-                </React.Fragment>
+                </div>
                 <Footer />
             </div>
 

@@ -100,10 +100,10 @@ function AddPackage() {
             <input type="date" name="arrivalDate" className="form-control" onChange={handleArrivalDateChange} />
           </Form.Field>
           <div className='button mb-5'>
-          <Button id="btn" type="submit">Ajouter</Button>
+            <Button id="btn" type="submit">Ajouter</Button>
           </div>
         </Form>
-        <Footer />
+      <Footer />
       </div>
     </div>
   );
