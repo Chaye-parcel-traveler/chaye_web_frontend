@@ -1,0 +1,38 @@
+@media screen and (max-device-width: 700px) {
+  .sidebar {
+    display: none;
+  }
+
+  .sidebar.close ~ .home{
+    width: 100%;
+    left: 0px;
+  }
+  .col-4{
+    width: 100%;
+  }
+  .box-chaye{
+    padding-left: 20px;
+    padding-right: 20px
+  }
+  .row>*{
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+  .displayFlex{
+    flex-direction: column; 
+  }
+  .paddingAssurance{
+    padding-left: 8px;
+  }
+  .cat-layout{
+    display: flex;
+    flex-direction: column;
+  }
+  .sansFond{
+    display: flex;
+    flex-direction: column;
+  }
+  .margin-bottom-res{
+    margin-bottom: 20px;
+  }
+}
