@@ -75,7 +75,7 @@ function AllMembers() {
                 <Table.Cell>
                   <form action={`http://localhost:5000/members/${member._id}?_method=DELETE`} method="post">
                     <input type="hidden" name="_method" value="DELETE" />
-                    <Button positive>Supprimer</Button>
+                    <Button negative>Supprimer</Button>
                   </form>
                 </Table.Cell>
               </Table.Row>

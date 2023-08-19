@@ -1,0 +1,39 @@
+.content-profile{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.message{
+    width: 60%;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+
+}
+.profile{
+    border: 1px solid #ced4da;
+    width: 30%;
+    border-radius: 10px;
+}
+.profile h1,.profile p {
+    text-align: center;
+}
+.profile hr{
+    margin: 20px;
+    font-size: 2rem;
+}
+.profile span i ,.profile h3{
+    margin-left: 20px;
+}
+.profile span i{
+    color: #4F4294;
+    margin-right: 10px;
+}
+.img-profile{
+    background-color:  #EC634E;
+    padding-top: 20px;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+}

@@ -8,7 +8,7 @@ import '../styles/formule.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-function AddPackage() {
+function AddAnnouncements() {
   let navigate = useNavigate();
   const [announcementsType, setAnnouncementsType] = useState('');
   const [priceKilo, setPricekilo] = useState('');
@@ -51,11 +51,10 @@ function AddPackage() {
     formData.append('destination', destination);
     formData.append('departureDate', departureDate);
     formData.append('arrivalDate', arrivalDate);
-    axios
-      .post(`http://localhost:5000/announcements`,formData, { withCredentials: true })
+    axios.post(`http://localhost:5000/announcement`, formData, { withCredentials: true })
       .then((response) => {
         console.log(response.data);
-        return navigate("/");
+        return navigate("/announcements");
       })
       .catch((error) => {
         console.log(error);
@@ -74,39 +73,42 @@ function AddPackage() {
 
         <Form className="bg-white my-3 formule" onSubmit={handleSubmit}>
           <div className=' d-flex my-5 '>
-            <input type="text" name='departureCity' className="form-control me-5 py-3" onChange={handleDepartureCityChange} placeholder='Départ de ' />
-            <input type="text" name='destination' className="form-control py-3" onChange={handleDestinationChange} placeholder='Arrivé à ' />
+            <input type="text" name='departureCity' className="form-control me-5 py-3" onChange={handleDepartureCityChange} placeholder='Départ de ' required />
+            <input type="text" name='destination' className="form-control py-3" onChange={handleDestinationChange} placeholder='Arrivé à ' required />
           </div>
           <Form.Field>
             <label className="form-label">Type de l'annonce</label>
-            <input type="text" name='announcementsType' className="form-control" onChange={handleAnnouncementsTypeChange} />
+            <select name="announcementsType" className="form-select" onChange={handleAnnouncementsTypeChange} required>
+              <option>Disponible</option>
+              <option>Non disponible</option>
+            </select>
           </Form.Field>
 
           <Form.Field>
             <label className="form-label">Prix de kilo </label>
-            <input type="number" name='priceKilo' className="form-control" onChange={handlePricekiloChange} />
+            <input type="number" name='priceKilo' className="form-control" onChange={handlePricekiloChange} required />
           </Form.Field>
 
           <Form.Field>
             <label className="form-label">Description:</label>
-            <input type="text" name='description' className="form-control" onChange={handleDescriptionChange} />
+            <input type="text" name='description' className="form-control" onChange={handleDescriptionChange} required />
           </Form.Field>
           <Form.Field>
             <label className="form-label">Date de départ</label>
-            <input type="date" name="departureDate" className="form-control" onChange={handleDepartureDateChange} />
+            <input type="date" name="departureDate" className="form-control" onChange={handleDepartureDateChange} required />
           </Form.Field>
           <Form.Field>
             <label className="form-label">Date d'arrivée</label>
-            <input type="date" name="arrivalDate" className="form-control" onChange={handleArrivalDateChange} />
+            <input type="date" name="arrivalDate" className="form-control" onChange={handleArrivalDateChange} required />
           </Form.Field>
           <div className='button mb-5'>
             <Button id="btn" type="submit">Ajouter</Button>
           </div>
         </Form>
-      <Footer />
+        <Footer />
       </div>
     </div>
   );
 }
 
-export default AddPackage;
+export default AddAnnouncements;

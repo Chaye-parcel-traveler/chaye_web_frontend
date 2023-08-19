@@ -98,7 +98,7 @@ function Home() {
                         ))}
                     </div>
                 </React.Fragment>
-                <div class="btnAnnonce">
+                <div className="btnAnnonce">
                     <input className="btn" type="button" value="Voir tous les annonces" />
                     <input className="btn" type="button" value="Carte intéractive" />
                 </div>

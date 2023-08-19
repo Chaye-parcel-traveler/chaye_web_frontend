@@ -1,11 +1,10 @@
 .content-menu {
-  grid-row: 1;
-  grid-column: 1;
   background-color: #EC634E;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   height: 100%; 
+  width: 220px;
   position: fixed; 
   z-index: 1; 
   top: 0; 
@@ -23,17 +22,18 @@
 .content-menu ul li{
   list-style: none;
   margin-top: 20px;
+  padding: 8px;
 }
 .content-menu li a{
   color: white;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 16px;
 
 }
 .content-menu li i{
   color: white;
-  font-size: 15px;
-  margin-right: 8px;
+  font-size: 16px;
+  margin-right: 10px;
 
 }
 
@@ -42,7 +42,7 @@
   background-color: #4F4294;
   width: 100%;
   border-radius: 10px;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .dropdown.menu {
@@ -53,8 +53,19 @@
 
 .dropdown.item {
   color: white;
-  font-size: 14px;
+  font-size: 16px;
+}
+.content-menu .logout-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 10px;
 }
 
-
-
+.content-menu .logout-btn a {
+  display: flex;
+  align-items: center;
+}
+.content-menu .logout-btn i {
+    margin: 10px;
+}

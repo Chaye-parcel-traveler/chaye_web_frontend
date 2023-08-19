@@ -17,7 +17,7 @@ function Navbar (){
         </li>
 
         <li> 
-          <i className="fa-solid me-3 fa-user "></i>
+          <i className="fa-solid fa-user "></i>
           <Dropdown item text="Mon Compte" className="custom-dropdown">
               <Dropdown.Menu>
                 <Dropdown.Item  as="a" href="/SignUp"> S'inscrire</Dropdown.Item>
@@ -47,8 +47,9 @@ function Navbar (){
           </a>
         </li>
         
-        <li>  
+        <li className='logout-btn'>  
           <a href="http://localhost:5000/logout" >
+          <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>
             Déconnecter
           </a>
         </li>
