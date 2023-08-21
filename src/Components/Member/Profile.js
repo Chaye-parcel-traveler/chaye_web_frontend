@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Button } from 'semantic-ui-react';
 import '../styles/nav.css';
 import '../styles/accueil.css';
 import '../styles/profile.css';
 import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import Message from '../Message/Message';
+import AllMessages from '../Message/AllMessages';
 
 function Profile() {
   const params = useParams();
@@ -54,6 +55,8 @@ function Profile() {
             <div className='message'>
               <h1>Mes messages </h1>
               <hr></hr>
+              <Message />
+              <AllMessages/>
             </div>
             <div className='profile'>
               <div className='img-profile'>

@@ -32,7 +32,7 @@ function App() {
           <Route path='/AddAnnouncements' element={<AddAnnouncements />} />
           <Route path='/carte' element={<Maps />} />
           <Route path='/comment' element={<Comments />} />
-          <Route path='/message' element={<Message />} />
+          {/* <Route path='/message' element={<Message />} /> */}
         </Routes>
       </div>
   );

@@ -1,122 +1,49 @@
-import React, { useEffect, useReducer, useState } from 'react'
-import { Routes, Route } from 'react-router-dom';
-import axios from 'axios'
-import io from 'socket.io-client'
-// import style from '../styles/ChatApp.style.css'
-const socket = io('http://localhost:5000')
-function ChatApp() {   // Messages -----------------------------------------------------------------
-  const [message, setMessage] = useState('')
-  const [messages, setMessages] = useState([])   // On récupère les messages et on les affiches
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+function Message() {
+  const [userId, setUserId] = useState(null);
+
   useEffect(() => {
-    socket.on('message', (data) => {
-      setMessages([...messages, data])
-      // Les 3 petits points vont sauvegarder les anciens messages
-      // Donc, la fonction va récupérer les nouveaux messages et garder les anciens
-    }); return () => {
-      socket.off('message')
-    }
-  }, [messages]);  // Chat Liste ---------------------------------------------------------------
-  const initialState = {
-    loading: true,
-    error: "",
-    onlines: {}
-  }; const reducer = (state, action) => {
-    switch (action.type) {
-      case "FECTCH_SUCCESS": return {
-        loading: false,
-        error: "",
-        onlines: action.payload
+    // Faites une requête pour obtenir le token JWT depuis le serveur
+    const fetchToken = async () => {
+      try {
+        const response = await axios.get('/login'); 
+        const token = response.data.token; 
+
+        // Déchiffrez le token pour obtenir les informations
+        const decodedToken = jwt_decode(token);
+        const id = decodedToken.id; 
+
+        setUserId(id);
+      } catch (error) {
+        console.error('Error fetching token:', error);
       }
-      case "FECTCH_ERROR": return {
-        loading: false,
-        error: "Something went wrong",
-        onlines: {}
-      }
-      default: return state
-    }
-  }
-  const [state, dispatch] = useReducer(reducer, initialState)
-  const [signalReceived, setSignalReceived] = useState(false);
-  socket.on('online', () => {
-    setSignalReceived(true)
-  })
-  useEffect(() => {
-    setSignalReceived(false)
-    axios.get('http://localhost:5000/chatliste', { withCredentials: true })
-      .then(response => {
-        dispatch({ type: "FECTCH_SUCCESS", payload: response.data })
-        console.log(response);
-      })
-      .catch(error => {
-        // console.log(error.code)
-        dispatch({ type: "FECTCH_ERROR", payload: error })
-      });
-  }, [signalReceived]);    // Prendre l'ID de l'utilisateur ------------------------------------------
-  const [ID, setID] = useState(null); useEffect(() => {
-    axios.get('http://localhost:5000/idcheck', { withCredentials: true })
-      .then(response => {
-        setID(response.data)
-        console.log(response.data)
-      })
-      .catch(error => {
-        // console.log(error.code)
-        dispatch({ type: "FECTCH_ERROR", payload: error })
-      });
-  }, [signalReceived]);    // Récupérer l'ID de l'username selectionné
-  const [interlocuteur, setInterlocuteur] = useState(null); 
-  const [isActive, setIsActive] = useState(false);
-  const [EvenementId, setEvenementId] = useState(false); try {
-    var enLigne = state.loading ? 'Loading ...' : state.onlines.map((online, index) => {
-      return (
-        <div key={index} className='ChatListeDetail'>
-          <div id={index}
-            onClick={(event) => {
-              setEvenementId(event.target.id)
-              setIsActive(true)
-              return (setInterlocuteur(online._id))
-            }}
-            onBlur={() =>
-              setIsActive(false)}
-            className={`${ID === online._id ? 'hide' : EvenementId == index ? 'active' : "ChatListeDetail"}`}>
-            {online.username}
-          </div>
-        </div>
-      )
-    })
-  }
-  catch (error) {
-    console.log("Aucun utilisateur connecté");
-    console.log(error)
-    return (
-      <div> Aucun utilisateur connecté </div>
-    )
-  }   // Envoyer le message au serveur
-  const sendMessage = (e) => {
-    e.preventDefault()
-    socket.emit('message', message);
-    setMessage('')
-    //  socket.broadcast.to(interlocuteur).emit('message', message)
-    //  setMessage('')
-  }
+    };
+
+    fetchToken();
+  }, []);
+
   return (
-    <React.Fragment>
-      {/* Chat Liste */}
-      <div id='ChatPage'>
-        <div className='ChatList'>
-          {enLigne}
-        </div>
-        <div>          {/* Totalité des messages */}
-          <ul>
-            {messages.map((msg, index) => (
-              <li key={index}>
-                {msg}
-              </li>
-            ))}
-          </ul>
-          <form onSubmit={sendMessage}>
-            <input type='text' value={message} onChange={(e) => setMessage(e.target.value)}
-            />
-            <button type='submit'>Send</button>          </form>        </div>
+    <form action="http://localhost:5000/messages" method="post">
+      <div>
+        <label for="recipient">Destinataire:</label>
+        <input className='formul-control' type="text" name="recipient" />
       </div>
-    </React.Fragment>)
-} export default ChatApp
+      <div>
+        <label for="message">Message:</label>
+        <textarea name="message" />
+      </div>
+      <button type="submit">Envoyer</button>
+      <Link to={`/profile/${userId}`}>
+        Voir le profil de l'utilisateur
+      </Link>
+    </form>
+    
+     
+    
+  );
+}
+
+export default Message;

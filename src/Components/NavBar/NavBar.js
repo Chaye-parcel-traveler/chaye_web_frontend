@@ -6,7 +6,7 @@ function Navbar (){
   return (
     <div className="content-menu">
       <a href="/"> 
-        <img src={"img/logo.png"} alt="Logo" className="logo" />
+        <img src={"/img/logo.png"} alt="Logo" className="logo" />
       </a>
       <ul className='text-decoration-none'>
         <li>
@@ -46,6 +46,12 @@ function Navbar (){
             <span> AllMembres </span> 
           </a>
         </li>
+        {/* <li>  
+          <a  href={`/profile/${req.id}`}>
+          <i class="fa-solid fa-bell"></i>
+            <span>Profile</span> 
+          </a>
+        </li> */}
         
         <li className='logout-btn'>  
           <a href="http://localhost:5000/logout" >

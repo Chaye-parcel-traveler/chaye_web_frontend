@@ -1,12 +1,8 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 import Footer from '../Footer/Footer';
 
 function Login() {
-  const navigate = useNavigate();
-    navigate('/');
-
 
   return (
     <div className="content-image">
