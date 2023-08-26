@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Form, Button } from 'semantic-ui-react';
 import Navbar from '../NavBar/NavBar';
 import '../styles/formule.css';
@@ -6,6 +7,17 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 function AddAnnouncements() {
+
+
+  const [userData, setUserData] = useState('');
+  useEffect(() => {
+      axios.get('http://localhost:5000/getConnectedUser', { withCredentials: true })
+      .then(response => {
+        setUserData(response.data);
+      }).catch(error => {
+        setUserData(false);
+      });
+  }, []);
   return (
     <div className='content'>
       <div className="content-menu">
@@ -16,6 +28,8 @@ function AddAnnouncements() {
         <h1 className="text-center pt-5 fw-bold" >Je transporte un colis</h1>
 
         <Form className="bg-white my-3 formule" action="http://localhost:5000/announcement" method="post">
+        <input type="text" name='memberId' className="form-control " value={userData.id} />
+
           <div className=' d-flex my-5 '>
             <input type="text" name='departureCity' className="form-control me-5 py-3"  placeholder='Départ de ' required />
             <input type="text" name='destination' className="form-control py-3" placeholder='Arrivé à ' required />

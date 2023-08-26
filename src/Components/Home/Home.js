@@ -8,8 +8,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import '../styles/accueil.css';
 import '../styles/nav.css';
-import {Carousel,} from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
 
 //Moment (date)
 import moment from 'moment/moment';
@@ -75,7 +74,7 @@ function Home() {
                     <div className='annonce'>
                        
                         {state.loading ? 'loading...' : state.packages.map((packages, index) => (
-                        <Carousel showArrows={true} showThumbs={false}>
+                       
                             <Card  key={index} sx={{ maxWidth: 345 }}>
                                 <CardActionArea>
                                     <CardMedia
@@ -98,7 +97,7 @@ function Home() {
                                     </CardContent>
                                 </CardActionArea>
                             </Card>
-                        </Carousel>
+                        
                         ))}
                     </div>
                 </React.Fragment>

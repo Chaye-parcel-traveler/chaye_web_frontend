@@ -56,7 +56,7 @@ function Profile() {
               <h1>Mes messages </h1>
               <hr></hr>
               <Message />
-              <AllMessages/>
+              {/* <AllMessages/> */}
             </div>
             <div className='profile'>
               <div className='img-profile'>

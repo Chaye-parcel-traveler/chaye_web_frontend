@@ -1,48 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
+
 function Message() {
-  const [userId, setUserId] = useState(null);
+  const [userData, setUserData] = useState({}); // Initialisez avec un objet vide
 
   useEffect(() => {
-    // Faites une requête pour obtenir le token JWT depuis le serveur
-    const fetchToken = async () => {
-      try {
-        const response = await axios.get('/login'); 
-        const token = response.data.token; 
-
-        // Déchiffrez le token pour obtenir les informations
-        const decodedToken = jwt_decode(token);
-        const id = decodedToken.id; 
-
-        setUserId(id);
-      } catch (error) {
-        console.error('Error fetching token:', error);
-      }
-    };
-
-    fetchToken();
+    axios.get('http://localhost:5000/getConnectedUser', { withCredentials: true })
+      .then(response => {
+        setUserData(response.data);
+      })
+      .catch(error => {
+        setUserData(false);
+      });
   }, []);
+
+  if (!userData) {
+    return <p>Loading...</p>; // Condition de rendu conditionnelle
+  }
 
   return (
     <form action="http://localhost:5000/messages" method="post">
+    
+    <div className="form-group col-8 m-auto">
+      <input type="hidden" name="sender" value={userData.email} />
       <div>
-        <label for="recipient">Destinataire:</label>
-        <input className='formul-control' type="text" name="recipient" />
+        <label For="recipient" className="fst-italic">Destinataire</label>
+        <input className="form-control" type="text" name="recipient" />
       </div>
       <div>
-        <label for="message">Message:</label>
-        <textarea name="message" />
+        <label For="texte" className="fst-italic">Message:</label>
+        <textarea name="message" className="form-control" rows="4" />
       </div>
-      <button type="submit">Envoyer</button>
-      <Link to={`/profile/${userId}`}>
-        Voir le profil de l'utilisateur
-      </Link>
+      <button type="submit" className="btn btn-primary fst-italic mt-2 mx-2">Envoyer</button>
+      </div>
     </form>
-    
-     
-    
   );
 }
 

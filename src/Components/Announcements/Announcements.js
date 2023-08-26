@@ -20,7 +20,7 @@ import Footer from '../Footer/Footer';
 moment().locale('fr')
 
 function Home() {
-    const [members, setMembers] = useState([]);
+    const [member, setMember] = useState({});
     const initialestate = {
         loading: true,
         error: '',
@@ -50,20 +50,22 @@ function Home() {
     useEffect(() => {
         axios.get('http://localhost:5000/announcements', { withCredentials: true })
             .then(response => {
-                console.log(response.data);
+                if (response.data.length > 0) {
+                    const memberId = response.data[0].memberId;
+                    axios.get(`http://localhost:5000/member/${memberId}`)
+                        .then((response) => {
+                            setMember(response.data);
+                        })
+                        .catch((error) => {
+                            setMember(false);
+                        });
+                }
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
-
-            }).catch(error => {
+            })
+            .catch(error => {
                 dispatch({ type: 'FETCH_ERROR' });
             });
-        axios.get('http://localhost:5000/members')
-            .then(response => {
-                const members = response.data;
-                setMembers(members);
-            }).catch(error => {
-                console.error('Erreur lors de la récupération des membres :', error);
-            });
-    }, [])
+    }, []);
     return (
         <div className='content'>
             <div className='content-menu'>
@@ -85,15 +87,11 @@ function Home() {
                         {state.loading ? 'loading...' : state.announcements.map((announcements, index) => (
                             <Card key={index} sx={{ maxWidth: 345 }}>
                                 <CardActionArea>
-                                    {members && members.imagename && (
-                                        <CardMedia
-                                            component="img"
-                                            height="140"
-                                            image={members.imagename}
-                                            alt="Image de l'utilisateur"
-                                        />
 
-                                    )}
+
+                                    <img src={`http://localhost:5000/${member.imagename}`} width={'200px'}/>
+
+
                                     <CardContent>
                                         <Typography gutterBottom variant="h5" component="div">
                                             <h3>{announcements.description}</h3>
@@ -102,12 +100,12 @@ function Home() {
                                             </Fab>
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary">
-                                            <p>Ville de départ : {announcements.departure_city}</p>
+                                            <p>Ville de départ : {announcements.departureCity}</p>
                                             <p>Ville de destination : {announcements.destination}</p>
-                                            <p>Type d'annonce : {announcements.announcements_type}</p>
-                                            <p>Prix au kilo  : {announcements.price_kilo} €</p>
-                                            <p>Date de Départ : {moment(announcements.departure_date).format('L')}</p>
-                                            <p>Date d'arrivée : {moment(announcements.arrival_date).format('L')}</p>
+                                            <p>Type d'annonce : {announcements.announcementsType}</p>
+                                            <p>Prix au kilo  : {announcements.priceKilo} €</p>
+                                            <p>Date de Départ : {moment(announcements.departureDate).format('L')}</p>
+                                            <p>Date d'arrivée : {moment(announcements.arrivalDate).format('L')}</p>
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>
