@@ -8,14 +8,13 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import '../styles/accueil.css';
 import '../styles/nav.css';
-
-
-//Moment (date)
-import moment from 'moment/moment';
-import 'moment/locale/fr'
 import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import AllComments from '../Comments/AllComments';
+//Moment (date)
+import moment from 'moment/moment';
+import 'moment/locale/fr'
 moment().locale('fr')
 
 function Home() {
@@ -104,6 +103,10 @@ function Home() {
                 <div className="btnAnnonce">
                     <a href="/announcements" className="btn" >Voir tous les annonces</a>
                     <a href="/announcements" className="btn" >Carte intéractive</a>
+                </div>
+                <div>
+
+                    <AllComments />
                 </div>
                 <Footer />
             </div>

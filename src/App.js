@@ -13,7 +13,7 @@ import Maps from './Components/Maps/Maps';
 import Announcements from './Components/Announcements/Announcements';
 import AddAnnouncements from './Components/Announcements/AddAnnouncements';
 import Comments from './Components/Comments/Comments';
-import Message from './Components/Message/Message';
+// import Message from './Components/Message/Message';
 
 
 function App() {

@@ -16,15 +16,16 @@ function Navbar() {
         setJWT('');
         setIsLoggedIn(false);
       });
-      axios.get('http://localhost:5000/getConnectedUser', { withCredentials: true })
+    axios.get('http://localhost:5000/getConnectedUser', { withCredentials: true })
       .then(response => {
+        console.log(response.data);
         setUserData(response.data);
       }).catch(error => {
         setUserData(false);
       });
   }, []);
 
-  
+
 
   return (
     <div className="content-menu">
@@ -64,7 +65,7 @@ function Navbar() {
             <span> Support</span>
           </a>
         </li>
-        {userData?.admin && (
+        {userData && userData.admin === true && (
           <li>
             <a href="/allmembers">
               <i className="fa-solid fa-users"></i>
@@ -72,6 +73,7 @@ function Navbar() {
             </a>
           </li>
         )}
+
 
 
         {userData && (

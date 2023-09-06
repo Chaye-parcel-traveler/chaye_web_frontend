@@ -28,7 +28,7 @@ function AddAnnouncements() {
         <h1 className="text-center pt-5 fw-bold" >Je transporte un colis</h1>
 
         <Form className="bg-white my-3 formule" action="http://localhost:5000/announcement" method="post">
-        <input type="text" name='memberId' className="form-control " value={userData.id} />
+        <input type="hidden" name='memberId' className="form-control " value={userData.id} />
 
           <div className=' d-flex my-5 '>
             <input type="text" name='departureCity' className="form-control me-5 py-3"  placeholder='Départ de ' required />
