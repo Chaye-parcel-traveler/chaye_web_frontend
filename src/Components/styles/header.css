@@ -6,7 +6,9 @@
     background-position: center;
     display: flex;
 }
-
+.search {
+    margin: 1%;
+}
 .heroItem {
     text-align: center;
     color: rgb(8, 8, 8);
@@ -25,4 +27,8 @@
     margin: 2% 10%;
     border-radius: 10px;
     background-color: #EC634E;
+}
+.heroItem input:hover{
+    background-color: #4F4294;
+    border: 2px  #4F4294 solid;
 }

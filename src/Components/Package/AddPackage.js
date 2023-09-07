@@ -86,11 +86,11 @@ function AddPackage() {
         </Form.Field>
         <Form.Field>
           <label className="form-label">Poids:</label>
-          <input type="number" name='weight' className="form-control" onChange={handleWeightChange}/>
+          <input type="number" name='weight' className="form-control" min={0} onChange={handleWeightChange}/>
         </Form.Field>
         <Form.Field>
           <label className="form-label">Taille:</label>
-          <input type="number" name='size' className="form-control"  onChange={handleSizeChange}/>
+          <input type="number" name='size' className="form-control" min={0}  onChange={handleSizeChange}/>
         </Form.Field>
         <Form.Field>
           <label className="form-label">Photo de contenu du colis :</label>

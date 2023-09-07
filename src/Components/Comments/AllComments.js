@@ -2,48 +2,11 @@ import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+
 import moment from 'moment/moment';
 import 'moment/locale/fr';
 moment().locale('fr')
 function AllComments() {
-
-    var settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        initialSlide: 0,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                    infinite: true,
-                    dots: true
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    initialSlide: 2
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
-    };
     const initialestate = {
         loading: true,
         error: '',
@@ -83,21 +46,20 @@ function AllComments() {
 
     return (
 
-        <div className='caroussel'>
-        {state.loading ? 'loading...' : state.comments.map((comments, index) => (
-        <Slider {...settings}>
-                    <div className="card" key={index}>
+        <div className='d-flex gap-3 m-5'>
+            {state.loading ? 'loading...' : state.comments.map((comments, index) => (
+                <div className="card" key={index}>
+                    <div className='card-body '>
                         {/* <img src="../.." width="70px" height="70px" className="rounded-circle" alt="Cinque Terre" /> */}
                         <Stack spacing={1}>
                             <Rating name="ratingStars" defaultValue={comments.ratingStars} size="large" readOnly />
                         </Stack>
                         <p className="card-text">{comments.content}</p>
                         <p className="text-secondary card-text">{moment(comments.creationDate).format('LL')}</p>
-
                     </div>
-        </Slider>
-                ))}
-            </div>
+                </div>
+            ))}
+        </div>
 
     );
 }

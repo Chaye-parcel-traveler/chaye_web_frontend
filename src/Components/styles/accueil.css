@@ -1,19 +1,16 @@
-/* Accueil.css */
-/* .content {
+.content {
     display: grid;
     grid-template-columns: 220px 1fr;
-    grid-template-rows: 1fr 1fr;
-}
-.content-menu {
+    grid-template-rows:1fr;
+  }
+  .content-menu {
     grid-row: 1;
     grid-column: 1;
-}
-.content-body  {
+  }
+  .content-body  {
     grid-row: 1;
-    grid-column: 1;
-    
-} */
-/* Button search */
+    grid-column: 2;
+  }
 .search {
     margin:20px ;
 }
@@ -34,20 +31,18 @@
     margin: 2%;
     padding: 3% 1%;
 }
-
+.annonce .card img{
+    width :100%;
+    border-radius: 5px;
+}
+.card .card-top{
+    width: 100%;
+}
 .card {
-   
-    border: 1px solid #ced4da;
-    width: 30%;
-    height: 5%;
+    border-radius: 12px;
 }
 
-.card img {
-    width: 300px;
-    height: 200px;
-}
-
-.btn {
+.btnAnnonce .btn {
     background-color: #EC634E;
     padding: 1% 2%;
     border-radius: 20px;
@@ -58,10 +53,73 @@
 .btnAnnonce {
     display: flex;
     justify-content: center;
-
 }
 
 .btnAnnonce .btn:hover {
     background-color: #4F4294;
     color: #FFFFFF;
+}
+
+.categorie{
+  margin: 2%;
+}
+.categorie .box1 h5,.categorie .box2 h5{
+    color: white;
+    background-color: #ec634eb8;
+    width: 75px;
+    padding: 2px;
+    text-align: center;
+
+}
+.categorie .box1{
+    display: flex;
+    justify-content: space-evenly;
+    height: 200px;
+}
+.categorie .box1 .item1{
+    width: 50%;
+    background-image: url('../../../public/img/img1.jpg') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+}
+.categorie .box1 .item2{
+    width: 30%;
+    background-image: url('../../../public/img/img2.jpg') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+
+}
+.categorie .box2 {
+    display:flex;
+    height: 200px;
+    justify-content: space-evenly;
+}
+.categorie .box2 .item3{
+    width: 25%;
+    background-image: url('../../../public/img/img3.jpg') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+
+}
+.categorie .box2 .item4{
+    width: 25%;
+    background-image: url('../../../public/img/img4.jpg') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+}
+.categorie .box2 .item5{
+    width: 25%;
+    background-image: url('../../../public/img/img5.jpg') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
 }

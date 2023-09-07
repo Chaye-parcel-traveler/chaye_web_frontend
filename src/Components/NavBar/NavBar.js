@@ -54,14 +54,14 @@ function Navbar() {
 
         <li>
           <a href="/AboutUs">
-            <i className="fa-solid fa-bullhorn"></i>
+          <i className="fa-solid fa-circle-info"></i>
             <span>À propos de nous</span>
           </a>
         </li>
 
         <li>
           <a href="/support">
-            <i className="fa-solid fa-circle-info"></i>
+          <i class="fa-solid fa-headset"></i>
             <span> Support</span>
           </a>
         </li>

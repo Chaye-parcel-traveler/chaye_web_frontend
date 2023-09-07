@@ -1,11 +1,5 @@
-
-import React, { useEffect, useReducer} from 'react';
+import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
 import '../styles/accueil.css';
 import '../styles/nav.css';
 import Navbar from '../NavBar/NavBar';
@@ -69,34 +63,22 @@ function Home() {
                             deleniti quaerat nobis nemo aut praesentium adipisci facere? Quos, impedit nobis quisquam in harum
                             perspiciatis!...</p><a href="#">Lire la suite</a>
                     </div>
-                    <h3 className='ms-3'>A la une</h3>
+                    <h3 className='ms-4'>A la une</h3>
                     <div className='annonce'>
-                       
                         {state.loading ? 'loading...' : state.packages.map((packages, index) => (
-                       
-                            <Card  key={index} sx={{ maxWidth: 345 }}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        component="img"
-                                        height="140"
-                                        image={`http://localhost:5000/${packages.picture}`}
-                                        alt="green iguana"
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            <h3>{packages.content}</h3>
-                                        </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            <p>{packages.departureCity}</p>
-                                            <p>
-                                                Dimensions: {packages.weight}x{packages.size}
-                                            </p>
-                                            <p>Date de Création : {moment(packages.creationDate).format('L')}</p>
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                            </Card>
-                        
+                            <div className="card " key={index}>
+                                <div className='card-top '>
+                                    <img src={`http://localhost:5000/${packages.picture}`} alt="" />
+                                </div>
+                                <div className="card-body">
+                                    <p className="card-text ">
+                                        Départ :<b className="text-primary">{packages.departureCity}</b> <br />
+                                        Contenu : <b className="text-primary">{packages.content}</b><br />
+                                        Dimensions: <b className="text-primary">{packages.weight}x{packages.size}</b><br />
+                                        Date de Création :<b className="text-primary"> {moment(packages.creationDate).format('L')}</b><br />
+                                    </p>
+                                </div>
+                            </div>
                         ))}
                     </div>
                 </React.Fragment>
@@ -105,10 +87,36 @@ function Home() {
                     <a href="/announcements" className="btn" >Carte intéractive</a>
                 </div>
                 <div>
+                <h3 className='ms-4'>Avis</h3>
 
-                    <AllComments />
+                <AllComments />
                 </div>
-                <Footer />
+
+                <div className="categorie">
+                    <h4>Catégories</h4>
+                    <div className="box1 d-flex ">
+                        <div className="item1">
+                            <h5>caraibies</h5>
+                        </div>
+                        <div className="item2">
+                            <h5>Europe</h5>
+                        </div>
+                    </div>
+                    <div className="box2 my-5">
+                        <div className="item3 ">
+                            <h5>Amérique</h5>
+                        </div>
+                        <div className="item4 ">
+                            <h5>Afrique</h5>
+                        </div>
+
+                        <div className="item5">
+                            <h5>Asie</h5>
+                        </div>
+                    </div>
+
+                </div>
+                 <Footer/>
             </div>
 
         </div>

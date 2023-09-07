@@ -35,19 +35,7 @@ function Comments() {
                 </div>
                 <Button primary>Soumettre</Button>
             </form>
-            {/* <div className="comments">
-            <h2>Commentaires et notes :</h2>
-            <List divided relaxed>
-                {comments.map((comment, index) => (
-                <List.Item key={index}>
-                    <List.Content>
-                    <List.Header>{`Note : ${comment.rating}`}</List.Header>
-                    <List.Description>{comment.text}</List.Description>
-                    </List.Content>
-                </List.Item>
-                ))}
-            </List>
-            </div> */}
+   
         </div>
     );
 }

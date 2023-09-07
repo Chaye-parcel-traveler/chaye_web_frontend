@@ -83,35 +83,25 @@ function Home() {
                     </div>
                     <h3 className='ms-3'>Toutes les annonces</h3>
                     <div className='annonce'>
-
-                        {state.loading ? 'loading...' : state.announcements.map((announcements, index) => (
-                            <Card key={index} sx={{ maxWidth: 345 }}>
-                                <CardActionArea>
-
-
-                                    <img src={`http://localhost:5000/${member.imagename}`} width={'200px'}/>
-
-
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            <h3>{announcements.description}</h3>
-                                            <Fab disabled aria-label="like">
-                                                <FavoriteIcon />
-                                            </Fab>
-                                        </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            <p>Ville de départ : {announcements.departureCity}</p>
-                                            <p>Ville de destination : {announcements.destination}</p>
-                                            <p>Type d'annonce : {announcements.announcementsType}</p>
-                                            <p>Prix au kilo  : {announcements.priceKilo} €</p>
-                                            <p>Date de Départ : {moment(announcements.departureDate).format('L')}</p>
-                                            <p>Date d'arrivée : {moment(announcements.arrivalDate).format('L')}</p>
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                            </Card>
+                        {state.loading ? 'loading...' : state.announcements.map((announcement, index) => (
+                            <div className="card " key={index}>
+                                <div className='card-top w-100'>
+                                    <img src="/img/avion.jpg"  alt="" />
+                                </div>
+                                <div className="card-body">
+                                    <p className="card-text ">
+                                        Destination .................<b className="text-primary">{announcement.destination}</b> <br />
+                                        Description .................<b className="text-primary">{announcement.description}</b><br />
+                                        Prix .............................<b className="text-primary">{announcement.priceKilo}€</b><br />
+                                        Départ .....................<b className="text-primary"> {moment(announcement.departureDate).format('LL')}</b><br />
+                                        Arrivé  .................<b className="text-primary"> {moment(announcement.arrivalDate).format('LL')}</b>
+                            
+                                    </p>
+                                </div>
+                            </div>
                         ))}
                     </div>
+
                 </div>
                 <Footer />
             </div>

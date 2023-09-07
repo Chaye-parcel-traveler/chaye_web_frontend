@@ -44,7 +44,7 @@ function AddAnnouncements() {
 
           <Form.Field>
             <label className="form-label">Prix de kilo </label>
-            <input type="number" name='priceKilo' className="form-control" required />
+            <input type="number" name='priceKilo' min={0}  className="form-control" required />
           </Form.Field>
 
           <Form.Field>
