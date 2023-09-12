@@ -1,23 +1,6 @@
-.content {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    grid-template-rows:1fr;
-  }
-  .content-menu {
-    grid-row: 1;
-    grid-column: 1;
-  }
-  .content-body  {
-    grid-row: 1;
-    grid-column: 2;
-  }
-.search {
-    margin:20px ;
-}
 
 /* Assurance */
 .assurance {
-    padding: 3% 1%;
     margin: 20px;
     border-radius: 10px;
     background-color: #FFFFFF;
@@ -25,11 +8,25 @@
 }
 
 /* Annonce */
+.favori.favori-actif {
+    color: red; /* Couleur du cœur active */
+}
+
+.favori {
+    color: grey; /* Couleur du cœur inactive */
+    cursor: pointer;
+}
+
+.favori:hover {
+    color: pink; /* Couleur différente au survol */
+}
+
 .annonce {
     display: flex;
+    flex-wrap: wrap;
     gap: 3%;
     margin: 2%;
-    padding: 3% 1%;
+
 }
 .annonce .card img{
     width :100%;
@@ -40,6 +37,8 @@
 }
 .card {
     border-radius: 12px;
+    width: 20%;
+    margin-bottom: 2%;
 }
 
 .btnAnnonce .btn {

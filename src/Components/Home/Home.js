@@ -9,6 +9,8 @@ import AllComments from '../Comments/AllComments';
 //Moment (date)
 import moment from 'moment/moment';
 import 'moment/locale/fr'
+import AllPackages from '../Package/AllPackges';
+import Favoris from '../Favoris/Favoris';
 moment().locale('fr')
 
 function Home() {
@@ -64,23 +66,7 @@ function Home() {
                             perspiciatis!...</p><a href="#">Lire la suite</a>
                     </div>
                     <h3 className='ms-4'>A la une</h3>
-                    <div className='annonce'>
-                        {state.loading ? 'loading...' : state.packages.map((packages, index) => (
-                            <div className="card " key={index}>
-                                <div className='card-top '>
-                                    <img src={`http://localhost:5000/${packages.picture}`} alt="" />
-                                </div>
-                                <div className="card-body">
-                                    <p className="card-text ">
-                                        Départ :<b className="text-primary">{packages.departureCity}</b> <br />
-                                        Contenu : <b className="text-primary">{packages.content}</b><br />
-                                        Dimensions: <b className="text-primary">{packages.weight}x{packages.size}</b><br />
-                                        Date de Création :<b className="text-primary"> {moment(packages.creationDate).format('L')}</b><br />
-                                    </p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                    <Favoris/>
                 </React.Fragment>
                 <div className="btnAnnonce">
                     <a href="/announcements" className="btn" >Voir tous les annonces</a>

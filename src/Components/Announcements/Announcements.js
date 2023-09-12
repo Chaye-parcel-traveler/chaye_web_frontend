@@ -1,13 +1,8 @@
 
 import React, { useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Fab from '@mui/material/Fab';
-import { CardActionArea } from '@mui/material';
 import '../styles/accueil.css';
 import '../styles/nav.css';
 
@@ -17,9 +12,10 @@ import 'moment/locale/fr'
 import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import AllPackages from '../Package/AllPackges';
 moment().locale('fr')
 
-function Home() {
+function Announcements() {
     const [member, setMember] = useState({});
     const initialestate = {
         loading: true,
@@ -51,7 +47,7 @@ function Home() {
         axios.get('http://localhost:5000/announcements', { withCredentials: true })
             .then(response => {
                 if (response.data.length > 0) {
-                    const memberId = response.data[0].memberId;
+                    const memberId = response.data[0].memberId.toString();
                     axios.get(`http://localhost:5000/member/${memberId}`)
                         .then((response) => {
                             setMember(response.data);
@@ -66,6 +62,32 @@ function Home() {
                 dispatch({ type: 'FETCH_ERROR' });
             });
     }, []);
+
+
+    const handleFavoriteClick = (announcement) => {
+        console.log('Avant la mise à jour :', announcement.isFavorite);
+        const id = announcement._id.toString();
+        console.log(id);
+        axios.put(`http://localhost:5000/favorites/${id}`, { isFavorite: !announcement.isFavorite },{ withCredentials: true })
+        .then(response => {
+                console.log('Réponse de la mise à jour :', response.data);
+    
+                const updatedAnnouncements = state.announcements.map(ann => {
+                    if (ann._id === announcement._id) {
+                        return { ...ann, isFavorite: !ann.isFavorite };
+                    }
+                    return ann;
+                });
+                dispatch({ type: 'FETCH_SUCCESS', payload: updatedAnnouncements });
+            })
+            .catch(error => {
+                console.error('Erreur lors de la mise à jour de l\'état de favori :', error);
+            });
+    };
+    
+
+
+
     return (
         <div className='content'>
             <div className='content-menu'>
@@ -85,8 +107,11 @@ function Home() {
                     <div className='annonce'>
                         {state.loading ? 'loading...' : state.announcements.map((announcement, index) => (
                             <div className="card " key={index}>
-                                <div className='card-top w-100'>
-                                    <img src="/img/avion.jpg"  alt="" />
+                                <div className="card-top">
+                                    <img src="/img/avion.jpg" alt="" />
+                                    <Fab className={`text-danger favori ${announcement.isFavorite ? 'favori-actif' : ''}`} aria-label="like" onClick={() => handleFavoriteClick(announcement)}>
+                                        <FavoriteIcon />
+                                    </Fab>
                                 </div>
                                 <div className="card-body">
                                     <p className="card-text ">
@@ -95,13 +120,14 @@ function Home() {
                                         Prix .............................<b className="text-primary">{announcement.priceKilo}€</b><br />
                                         Départ .....................<b className="text-primary"> {moment(announcement.departureDate).format('LL')}</b><br />
                                         Arrivé  .................<b className="text-primary"> {moment(announcement.arrivalDate).format('LL')}</b>
-                            
+
                                     </p>
                                 </div>
                             </div>
                         ))}
                     </div>
-
+                    <h3 className='ms-4'>Les colis</h3>
+                    <AllPackages />
                 </div>
                 <Footer />
             </div>
@@ -114,4 +140,4 @@ function Home() {
 
 
 
-export default Home
+export default Announcements

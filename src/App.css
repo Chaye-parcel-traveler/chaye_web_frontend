@@ -10,3 +10,16 @@
 #root,.App,.content{
     height: 100vh;
 }
+.content {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows:1fr 1fr;
+}
+.content-menu {
+  grid-row: 1;
+  grid-column: 2;
+}
+.content-body  {
+  grid-row: 1;
+  grid-column: 2;
+}

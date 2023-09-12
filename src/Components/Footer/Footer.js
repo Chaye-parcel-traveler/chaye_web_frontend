@@ -2,11 +2,11 @@ import React from 'react'
 import '../styles/footer.css';
 function Footer() {
   return (
-    <footer>
-      <div className='m-2'>
+    <footer className='fixed-buttom'>
+      <div className=''>
         <p >© 2023,Chaye</p>
       </div>
-      <ul className="lienFooter">
+      <ul className="lienFooter ">
           <li>
              <a href="#">Mentions légales</a>
           </li>
