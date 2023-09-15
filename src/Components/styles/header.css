@@ -6,9 +6,11 @@
     background-position: center;
     display: flex;
 }
+
 .search {
-    margin: 1%;
+    margin-top: 2%;
 }
+
 .heroItem {
     text-align: center;
     color: rgb(8, 8, 8);
@@ -28,7 +30,30 @@
     border-radius: 10px;
     background-color: #EC634E;
 }
-.heroItem input:hover{
+
+.heroItem input:hover {
     background-color: #4F4294;
-    border: 2px  #4F4294 solid;
+    border: 2px #4F4294 solid;
+}
+
+.content-header {
+    width: 90%;
+    margin: auto;
+}
+
+/* Assurance */
+.assurance {
+    margin-top: 2%;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    border: 1px solid #ced4da;
+}
+
+.titre {
+    font-weight: bold;
+    margin: 30px 0;
+}
+
+.paraAssurance {
+    font-size: 15px;
 }

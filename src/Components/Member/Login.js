@@ -7,9 +7,9 @@ function Login() {
   return (
     <div className="content-image">
       <div className=" d-flex justify-content-center">
-        <a href="/"><img src={"img/logo.png"} alt="Logo" className="Logo" /></a>
+        <a href="/"><img src={"/img/logo.png"} alt="Logo" className="Logo" /></a>
       </div>
-      <div className=" formule bg-white container-fluid col-4 my-5">
+      <div className=" content-login bg-white container-fluid col-4 my-5">
         <div className="m-5 ">
           <h1 className="text-center pt-5 fw-bold">Content de te revoir</h1>
           <p className="text-center ">Connectez-vous à votre compte</p>

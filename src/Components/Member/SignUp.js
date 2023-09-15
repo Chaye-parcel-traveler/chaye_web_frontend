@@ -76,9 +76,9 @@ function SignUp() {
   return (
     <div className="content-image">
       <div className=" d-flex justify-content-center">
-        <a href="/"><img src={"img/logo.png"} alt="Logo" className="Logo" /></a>
+        <a href="/"><img src={"/img/logo.png"} alt="Logo" className="Logo" /></a>
       </div>
-      <div className="formule bg-white container-fluid col-4 my-3 ">
+      <div className="content-login bg-white container-fluid col-4 my-3 ">
         <div className="m-5 ">
           <div className='text-center mt-5'>
             <h1 className="text-center pt-5 fs-2 fw-bold">S'enregistrer</h1>
@@ -129,8 +129,8 @@ function SignUp() {
             <hr />
             <div className="reseSocio fs-4 text-center">
               <a href="https://www.google.com/intl/fr/gmail/about/"><i className="me-3 fa-brands fa-google"></i></a>
-              <a href="https://www.facebook.com"><i className=" me-2 fa-brands fa-facebook"></i></a>
-              <a href="https://www.icloud.com/mail"> <i className="fa-brands fa-apple text-dark"></i></a>
+              <a href="https://www.facebook.com"><i className=" me-3 fa-brands fa-facebook"></i></a>
+              <a href="https://www.icloud.com/mail"><i className="fa-brands fa-apple text-dark"></i></a>
             </div>
             <p className="text-center py-5">Vous avez déjà un compte? <a className="text-secondary" href="/login">Connectez-vous</a></p>
           </form>

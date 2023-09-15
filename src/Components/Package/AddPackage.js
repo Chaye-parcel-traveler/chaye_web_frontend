@@ -55,7 +55,7 @@ function AddPackage() {
       formData.append('arrivalCity', arrivalCity);
       formData.append('picture', picture);
       axios
-        .post(`http://localhost:5000/packages`, formData , { withCredentials: true })
+        .post(`http://localhost:5000/packages`, formData, { withCredentials: true })
         .then((response) => {
           console.log(response.data);
           return navigate("/");
@@ -68,41 +68,44 @@ function AddPackage() {
 
   return (
     <div className='content'>
-    <div className='content-menu'>
-        <Navbar/>
+      <div className='content-menu'>
+        <Navbar />
+      </div>
+      <div className="content-body ">
+        <Header />
+        <Form className="formule" onSubmit={handleSubmit}>
+          <div className='formule-fond'>
+            <h3 className='py-5'>J'expédier un colis</h3>
+            <div className='city'>
+              <input type="text" name='departureCity' className="form-control me-3" onChange={handleDepartureCityChange} placeholder='Départ de ' />
+              <input type="text" name='arrivalCity' className="form-control" onChange={handleArrivalCityChange} placeholder='Arrivé à ' />
+            </div>
+          </div>
+          <div className='formule-body mb-5'>
+            <Form.Field>
+              <label className="form-label">Contenu:</label>
+              <input type="text" name='content' className="form-control" onChange={handleContentChange} />
+            </Form.Field>
+            <Form.Field>
+              <label className="form-label">Poids:</label>
+              <input type="number" name='weight' className="form-control" min={0} onChange={handleWeightChange} />
+            </Form.Field>
+            <Form.Field>
+              <label className="form-label">Taille:</label>
+              <input type="number" name='size' className="form-control" min={0} onChange={handleSizeChange} />
+            </Form.Field>
+            <Form.Field>
+              <label className="form-label">Photo de contenu du colis :</label>
+              <input type="file" name='picture' className="form-control" onChange={handleFileChange} />
+            </Form.Field>
+            <div className='button mb-5'>
+              <Button id="btn" primary type="submit">Ajouter</Button>
+            </div>
+          </div>
+        </Form>
+        <Footer />
+      </div>
     </div>
-    <div className="content-body ">
-    <Header/>
-       <h1  className="text-center pt-5 fw-bold" >J'expédier un colis</h1> 
-  
-      <Form  className="formule  " onSubmit={handleSubmit}>
-      <div className='d-flex my-5'>
-       <input type="text" name='departureCity' className="form-control me-5 py-3"  onChange={handleDepartureCityChange} placeholder='Départ de ' />
-       <input type="text" name='arrivalCity' className="form-control py-3"  onChange={handleArrivalCityChange} placeholder='Arrivé à ' />
-       </div>
-        <Form.Field>
-          <label className="form-label">Contenu:</label>
-          <input type="text" name='content' className="form-control"  onChange={handleContentChange} />
-        </Form.Field>
-        <Form.Field>
-          <label className="form-label">Poids:</label>
-          <input type="number" name='weight' className="form-control" min={0} onChange={handleWeightChange}/>
-        </Form.Field>
-        <Form.Field>
-          <label className="form-label">Taille:</label>
-          <input type="number" name='size' className="form-control" min={0}  onChange={handleSizeChange}/>
-        </Form.Field>
-        <Form.Field>
-          <label className="form-label">Photo de contenu du colis :</label>
-          <input type="file" name='picture'  className="form-control" onChange={handleFileChange} />
-        </Form.Field>
-        <div className='button mb-5'>
-        <Button id="btn" primary type="submit">Ajouter</Button>
-        </div>
-      </Form>
-      <Footer/>
-    </div>
-  </div>
   );
 }
 

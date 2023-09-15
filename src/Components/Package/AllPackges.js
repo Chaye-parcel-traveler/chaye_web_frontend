@@ -56,11 +56,11 @@ function AllPackages() {
                         </div>
                         <div className="card-body">
                             <p className="card-text ">
-                                Départ :<b className="text-primary">{packages.departureCity}</b> <br />
-                                Contenu : <b className="text-primary">{packages.content}</b><br />
-                                Dimensions: <b className="text-primary">{packages.weight}x{packages.size}</b><br />
-                                Date de Création :<b className="text-primary"> {moment(packages.creationDate).format('L')}</b><br />
+                                Départ ...........<b className="violet">{packages.departureCity}</b> <br />
+                                Contenu .......... <b className="violet">{packages.content}</b><br />
+                                Dimensions......... <b className="violet">{packages.weight} kg x{packages.size} cm</b><br />
                             </p>
+                            <span className="text-secondary text-center"> {moment(packages.creationDate).format('LLL')}</span><br />
                         </div>
                     </div>
                 ))}

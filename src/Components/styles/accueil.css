@@ -1,26 +1,31 @@
+.content {
+    display: flex;
+}
 
-/* Assurance */
-.assurance {
-    margin: 20px;
-    border-radius: 10px;
-    background-color: #FFFFFF;
-    border: 1px solid #ced4da;
+.content-menu {
+    height: 100%;
+    width: 250px;
+}
+
+.content-body {
+    position: absolute;
+    top: 0;
+    left: 250px;
+    height: 100vh;
+    width: calc(100% - 250px);
+    transition: 0.5 step-start;
+}
+
+.content-main {
+    width: 90%;
+    margin: auto;
+}
+.titre{
+    font-weight: bold;
+    margin:30px 0;
 }
 
 /* Annonce */
-.favori-actif {
-    color: red; 
-}
-
-.favori {
-    color: grey;
-    cursor: pointer;
-}
-
-.favori:hover {
-    color: rgb(120, 28, 44);
-}
-
 .annonce {
     display: flex;
     flex-wrap: wrap;
@@ -28,13 +33,18 @@
     margin: 2%;
 
 }
-.annonce .card img{
-    width :100%;
+.violet{
+    color: #4F4294;
+}
+.annonce .card img {
+    width: 100%;
     border-radius: 5px;
 }
-.card .card-top{
+
+.card .card-top {
     width: 100%;
 }
+
 .card {
     border-radius: 12px;
     width: 20%;
@@ -59,10 +69,12 @@
     color: #FFFFFF;
 }
 
-.categorie{
-  margin: 2%;
+.categorie {
+    margin: 2%;
 }
-.categorie .box1 h5,.categorie .box2 h5{
+
+.categorie .box1 h5,
+.categorie .box2 h5 {
     color: white;
     background-color: #ec634eb8;
     width: 75px;
@@ -70,53 +82,60 @@
     text-align: center;
 
 }
-.categorie .box1{
+
+.categorie .box1 {
     display: flex;
     justify-content: space-evenly;
     height: 200px;
 }
-.categorie .box1 .item1{
+
+.categorie .box1 .item1 {
     width: 50%;
-    background-image: url('../../../public/img/img1.jpg') ;
+    background-image: url('../../../public/img/img1.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     border-radius: 10px;
 }
-.categorie .box1 .item2{
+
+.categorie .box1 .item2 {
     width: 30%;
-    background-image: url('../../../public/img/img2.jpg') ;
+    background-image: url('../../../public/img/img2.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     border-radius: 10px;
 
 }
+
 .categorie .box2 {
-    display:flex;
+    display: flex;
     height: 200px;
     justify-content: space-evenly;
 }
-.categorie .box2 .item3{
+
+.categorie .box2 .item3 {
     width: 25%;
-    background-image: url('../../../public/img/img3.jpg') ;
+    background-image: url('../../../public/img/img3.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     border-radius: 10px;
 
 }
-.categorie .box2 .item4{
+
+.categorie .box2 .item4 {
     width: 25%;
-    background-image: url('../../../public/img/img4.jpg') ;
+    background-image: url('../../../public/img/img4.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     border-radius: 10px;
 }
-.categorie .box2 .item5{
+
+.categorie .box2 .item5 {
     width: 25%;
-    background-image: url('../../../public/img/img5.jpg') ;
+    background-image: url('../../../public/img/img5.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

@@ -51,33 +51,36 @@ function Profile() {
       <div className="content-body">
         <Header />
         <React.Fragment>
-          <div className='content-profile'>
-            <div className='message'>
-              <h1>Mes messages </h1>
-              <hr></hr>
-              <Message />
-              {/* <AllMessages/> */}
-            </div>
-            <div className='profile'>
-              <div className='img-profile'>
-                <img src={`http://localhost:5000/${member.imagename}`} className='rounded-circle' width={'120px'} height={'100px'} />
-              </div>
-              <h1>{member.lastname} {member.firstname}</h1>
-              <p><i class="fa-solid fa-location-dot"></i>{member.adress}</p>
-              <hr />
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-              <hr />
+          <div className="content-main">
 
-              <h3>Contact info</h3>
-              <span>  <i class="fa-regular fa-envelope"></i> Email : {member.email}</span><br />
-              <span> <i class="fa-solid fa-phone"></i>Phone : {member.phone}</span>
-              {/* <Button primary as='a' href={`/editmember/${member._id}`}>
+            <div className='content-profile'>
+              <div className='message'>
+                <h1>Mes messages </h1>
+                <hr></hr>
+                <Message />
+                {/* <AllMessages/> */}
+              </div>
+              <div className='profile'>
+                <div className='img-profile'>
+                  <img src={`http://localhost:5000/${member.imagename}`} className='rounded-circle' width={'120px'} height={'100px'} />
+                </div>
+                <h1>{member.lastname} {member.firstname}</h1>
+                <p><i class="fa-solid fa-location-dot"></i>{member.adress}</p>
+                <hr />
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                <hr />
+
+                <h3>Contact info</h3>
+                <span>  <i class="fa-regular fa-envelope"></i> Email : {member.email}</span><br />
+                <span> <i class="fa-solid fa-phone"></i>Phone : {member.phone}</span>
+                {/* <Button primary as='a' href={`/editmember/${member._id}`}>
                     Edit
                   </Button>
                   <form action={`http://localhost:5000/members/${member._id}?_method=DELETE`} method='post'>
                     <input type='hidden' name='_method' value='DELETE' />
                     <Button positive type='submit'>Supprimer</Button>
                   </form> */}
+              </div>
             </div>
           </div>
         </React.Fragment>

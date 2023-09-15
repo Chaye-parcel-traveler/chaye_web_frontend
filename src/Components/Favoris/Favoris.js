@@ -29,17 +29,16 @@ function Favoris() {
                 <div className="card " key={index}>
                     <div className="card-top">
                         <img src="/img/avion.jpg" alt="" />
-                        <Fab disabled aria-label="like">
+                        <Fab className='text-danger' disabled aria-label="like">
                             <FavoriteIcon />
                         </Fab>
                     </div>
                     <div className="card-body">
                         <p className="card-text ">
-                            Destination .................<b className="text-primary">{announcement.destination}</b> <br />
-                            Description .................<b className="text-primary">{announcement.description}</b><br />
-                            Prix .............................<b className="text-primary">{announcement.priceKilo}€</b><br />
-                            Départ .....................<b className="text-primary"> {moment(announcement.departureDate).format('LL')}</b><br />
-                            Arrivé  .................<b className="text-primary"> {moment(announcement.arrivalDate).format('LL')}</b>
+                            Destination ................<b className="violet">{announcement.destination}</b> <br />
+                            Prix ...............<b className="violet">{announcement.priceKilo}€</b><br />
+                            Départ ...............<b className="violet"> {moment(announcement.departureDate).format('L')}</b><br />
+                            Arrivé  ................<b className="violet"> {moment(announcement.arrivalDate).format('L')}</b>
                         </p>
                     </div>
                 </div>

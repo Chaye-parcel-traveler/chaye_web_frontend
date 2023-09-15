@@ -2,6 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import '../styles/accueil.css';
 import '../styles/nav.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -9,7 +10,6 @@ import AllComments from '../Comments/AllComments';
 //Moment (date)
 import moment from 'moment/moment';
 import 'moment/locale/fr'
-import AllPackages from '../Package/AllPackges';
 import Favoris from '../Favoris/Favoris';
 moment().locale('fr')
 
@@ -57,52 +57,49 @@ function Home() {
             </div>
             <div className="content-body">
                 <Header />
-                <React.Fragment>
-                    <div className="assurance">
-                        <h4>Assurance</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores iste labore magni repudiandae et,
-                            eum
-                            deleniti quaerat nobis nemo aut praesentium adipisci facere? Quos, impedit nobis quisquam in harum
-                            perspiciatis!...</p><a href="#">Lire la suite</a>
-                    </div>
-                    <h3 className='ms-4'>A la une</h3>
-                    <Favoris/>
-                </React.Fragment>
-                <div className="btnAnnonce">
-                    <a href="/announcements" className="btn" >Voir tous les annonces</a>
-                    <a href="/announcements" className="btn" >Carte intéractive</a>
+                <div className="content-main">
+                <div className='d-flex justify-content-between'>
+                    <h2 className='titre'>A la une</h2>
+                    <h4 className='text-danger fw-bold text-decoration-underline'>Favoris</h4>
                 </div>
-                <div>
-                <h3 className='ms-4'>Avis</h3>
+                    <Favoris />
 
-                <AllComments />
-                </div>
-
-                <div className="categorie">
-                    <h4>Catégories</h4>
-                    <div className="box1 d-flex ">
-                        <div className="item1">
-                            <h5>caraibies</h5>
-                        </div>
-                        <div className="item2">
-                            <h5>Europe</h5>
-                        </div>
+                    <div className="btnAnnonce">
+                        <a href="/announcements" className="btn" >Voir tous les annonces</a>
+                        <a href="/announcements" className="btn" >Carte intéractive</a>
                     </div>
-                    <div className="box2 my-5">
-                        <div className="item3 ">
-                            <h5>Amérique</h5>
-                        </div>
-                        <div className="item4 ">
-                            <h5>Afrique</h5>
-                        </div>
+                    <div>
+                        <h2 className='titre'>Avis</h2>
 
-                        <div className="item5">
-                            <h5>Asie</h5>
-                        </div>
+                        <AllComments />
                     </div>
 
+                    <div className="categorie">
+                    <h2 className='titre'>Catégories</h2>
+                        <div className="box1 d-flex ">
+                            <div className="item1">
+                                <h5>caraibies</h5>
+                            </div>
+                            <div className="item2">
+                                <h5>Europe</h5>
+                            </div>
+                        </div>
+                        <div className="box2 my-5">
+                            <div className="item3 ">
+                                <h5>Amérique</h5>
+                            </div>
+                            <div className="item4 ">
+                                <h5>Afrique</h5>
+                            </div>
+
+                            <div className="item5">
+                                <h5>Asie</h5>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                 <Footer/>
+                <Footer />
             </div>
 
         </div>

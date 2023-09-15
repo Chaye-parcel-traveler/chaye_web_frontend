@@ -83,38 +83,31 @@ function Announcements() {
             </div>
             <div className="content-body">
                 <Header />
-                <div>
-                    <div className="assurance">
-                        <h4>Assurance</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores iste labore magni repudiandae et,
-                            eum
-                            deleniti quaerat nobis nemo aut praesentium adipisci facere? Quos, impedit nobis quisquam in harum
-                            perspiciatis!...</p><a href="#">Lire la suite</a>
-                    </div>
-                    <h3 className='ms-3'>Toutes les annonces</h3>
+
+                <div className="content-main">
+                    <h2 className='titre'>Toutes les annonces</h2>
                     <div className='annonce'>
                         {state.loading ? 'loading...' : state.announcements.map((announcement, index) => (
                             <div className="card " key={index}>
                                 <div className="card-top">
                                     <img src="/img/avion.jpg" alt="" />
-                                    <Fab className={`favori ${announcement.isFavorite ? 'favori-actif' : ''}`} onClick={() => handleFavoriteClick(announcement)}>
+                                    <Fab className={`${announcement.isFavorite ? 'text-danger' : 'text-secondary'}`} onClick={() => handleFavoriteClick(announcement)}>
                                          <FavoriteIcon />
                                     </Fab>
                                 </div>
                                 <div className="card-body">
                                     <p className="card-text ">
-                                        Destination .................<b className="text-primary">{announcement.destination}</b> <br />
-                                        Description .................<b className="text-primary">{announcement.description}</b><br />
-                                        Prix .............................<b className="text-primary">{announcement.priceKilo}€</b><br />
-                                        Départ .....................<b className="text-primary"> {moment(announcement.departureDate).format('LL')}</b><br />
-                                        Arrivé  .................<b className="text-primary"> {moment(announcement.arrivalDate).format('LL')}</b>
+                                        Destination ................<b className="violet">{announcement.destination}</b> <br />
+                                        Prix ...............<b className="violet">{announcement.priceKilo}€</b><br />
+                                        Départ ...............<b className="violet"> {moment(announcement.departureDate).format('L')}</b><br />
+                                        Arrivé  ................<b className="violet"> {moment(announcement.arrivalDate).format('L')}</b>
 
                                     </p>
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <h3 className='ms-4'>Les colis</h3>
+                    <h2 className='titre'>Les colis</h2>
                     <AllPackages />
                 </div>
                 <Footer />
