@@ -2,6 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
+import '../styles/accueil.css';
 
 import moment from 'moment/moment';
 import 'moment/locale/fr';
@@ -46,16 +47,16 @@ function AllComments() {
 
     return (
 
-        <div className='d-flex gap-3 m-5'>
+        <div className='avis'>
             {state.loading ? 'loading...' : state.comments.map((comments, index) => (
                 <div className="card" key={index}>
-                    <div className='card-body '>
-                        {/* <img src="../.." width="70px" height="70px" className="rounded-circle" alt="Cinque Terre" /> */}
+                    <div className='card-body'>
+                        <img src="/img/fille.jpg" className="rounded-circle" alt="Cinque Terre" />
                         <Stack spacing={1}>
-                            <Rating name="ratingStars" defaultValue={comments.ratingStars} size="large" readOnly />
+                            <Rating name="ratingStars" defaultValue={comments.ratingStars} size="medium" readOnly />
                         </Stack>
                         <p className="card-text">{comments.content}</p>
-                        <p className="text-secondary card-text">{moment(comments.creationDate).format('LL')}</p>
+                        <p className="text-secondary card-text">{moment(comments.creationDate).format('LLL')}</p>
                     </div>
                 </div>
             ))}

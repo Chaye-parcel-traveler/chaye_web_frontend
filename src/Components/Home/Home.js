@@ -70,7 +70,6 @@ function Home() {
                     </div>
                     <div>
                         <h2 className='titre'>Avis</h2>
-
                         <AllComments />
                     </div>
 
@@ -82,6 +81,7 @@ function Home() {
                             </div>
                             <div className="item2">
                                 <h5>Europe</h5>
+                                
                             </div>
                         </div>
                         <div className="box2 my-5">
@@ -96,7 +96,6 @@ function Home() {
                                 <h5>Asie</h5>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <Footer />

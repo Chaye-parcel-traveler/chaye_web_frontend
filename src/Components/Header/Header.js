@@ -12,7 +12,7 @@ function Header() {
             <div>
                 <div className="hero me-2">
                     <div className="heroItem">
-                        <h2> Que veux tu faire?</h2>
+                        <h2 className='fw-bold'> Que veux tu faire?</h2>
                         <a href='/AddPackage'><input className='fw-bold' type="button" value="J'expédie" /></a>
                         <a href='/AddAnnouncements'><input type="button" className='fw-bold' value="Je transporte" /></a>
                     </div>
@@ -54,8 +54,8 @@ function Header() {
                             </div>
                         )}
                     </div>
-                    <div>
-                        <img src="/img/logochayeassurance.png" style={{ display: 'block', margin: '0 auto' }} alt="Logo Assurance" />
+                    <div className='text-end'>
+                        <img src="/img/logochayeassurance.png" alt="Logo Assurance" />
                     </div>
                 </div>
             </div>

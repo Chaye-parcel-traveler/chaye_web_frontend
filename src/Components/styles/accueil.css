@@ -68,7 +68,19 @@
     background-color: #4F4294;
     color: #FFFFFF;
 }
+/* Avis */
+.avis {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3%;
+    margin: 2%;
 
+}
+.avis img {
+    width: 70px;
+
+}
+/* Categorie */
 .categorie {
     margin: 2%;
 }
@@ -77,9 +89,11 @@
 .categorie .box2 h5 {
     color: white;
     background-color: #ec634eb8;
-    width: 75px;
+    width: 76px;
     padding: 2px;
     text-align: center;
+    border-radius: 10px 1px;
+
 
 }
 
@@ -96,6 +110,8 @@
     background-size: cover;
     background-position: center;
     border-radius: 10px;
+    transition: transform 0.3s ease; 
+
 }
 
 .categorie .box1 .item2 {
@@ -105,6 +121,7 @@
     background-size: cover;
     background-position: center;
     border-radius: 10px;
+    transition: transform 0.3s ease; 
 
 }
 
@@ -121,6 +138,8 @@
     background-size: cover;
     background-position: center;
     border-radius: 10px;
+    transition: transform 0.3s ease; 
+
 
 }
 
@@ -131,6 +150,8 @@
     background-size: cover;
     background-position: center;
     border-radius: 10px;
+    transition: transform 0.3s ease; 
+
 }
 
 .categorie .box2 .item5 {
@@ -140,4 +161,28 @@
     background-size: cover;
     background-position: center;
     border-radius: 10px;
-}
+    transition: transform 0.3s ease; 
+  }
+  
+  .categorie .box1 .item1:hover {
+    width: 55%;
+    transform: scale(1); 
+  }
+  .categorie .box1 .item2:hover {
+    width: 35%;
+    transform: scale(1); 
+  }
+  .categorie .box2 .item3:hover {
+    width: 30%;
+    transform: scale(1); 
+  }
+  .categorie .box2 .item4:hover {
+    width: 30%;
+    transform: scale(1); 
+  }
+  
+  .categorie .box2 .item5:hover {
+    width: 30%;
+    transform: scale(1); 
+  }
+  
