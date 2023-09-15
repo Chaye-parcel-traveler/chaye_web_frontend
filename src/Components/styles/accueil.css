@@ -8,17 +8,17 @@
 }
 
 /* Annonce */
-.favori.favori-actif {
-    color: red; /* Couleur du cœur active */
+.favori-actif {
+    color: red; 
 }
 
 .favori {
-    color: grey; /* Couleur du cœur inactive */
+    color: grey;
     cursor: pointer;
 }
 
 .favori:hover {
-    color: pink; /* Couleur différente au survol */
+    color: rgb(120, 28, 44);
 }
 
 .annonce {

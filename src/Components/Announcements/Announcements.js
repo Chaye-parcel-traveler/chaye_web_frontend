@@ -46,16 +46,16 @@ function Announcements() {
     useEffect(() => {
         axios.get('http://localhost:5000/announcements', { withCredentials: true })
             .then(response => {
-                if (response.data.length > 0) {
                     const memberId = response.data[0].memberId.toString();
                     axios.get(`http://localhost:5000/member/${memberId}`)
                         .then((response) => {
+                            console.log('les information de un member',response.data);
                             setMember(response.data);
                         })
                         .catch((error) => {
                             setMember(false);
                         });
-                }
+                
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
             })
             .catch(error => {
@@ -65,28 +65,16 @@ function Announcements() {
 
 
     const handleFavoriteClick = (announcement) => {
-        console.log('Avant la mise à jour :', announcement.isFavorite);
         const id = announcement._id.toString();
-        console.log(id);
-        axios.put(`http://localhost:5000/favorites/${id}`, { isFavorite: !announcement.isFavorite },{ withCredentials: true })
-        .then(response => {
-                console.log('Réponse de la mise à jour :', response.data);
-    
-                const updatedAnnouncements = state.announcements.map(ann => {
-                    if (ann._id === announcement._id) {
-                        return { ...ann, isFavorite: !ann.isFavorite };
-                    }
-                    return ann;
-                });
-                dispatch({ type: 'FETCH_SUCCESS', payload: updatedAnnouncements });
+        console.log(announcement.isFavorite);
+        axios.put(`http://localhost:5000/favorites/${id}`, { isFavorite: !announcement.isFavorite }, { withCredentials: true })
+            .then(response => {
+                dispatch({ type: 'TOGGLE_FAVORITE', payload: { _id: announcement._id } });
             })
             .catch(error => {
                 console.error('Erreur lors de la mise à jour de l\'état de favori :', error);
             });
     };
-    
-
-
 
     return (
         <div className='content'>
@@ -109,8 +97,8 @@ function Announcements() {
                             <div className="card " key={index}>
                                 <div className="card-top">
                                     <img src="/img/avion.jpg" alt="" />
-                                    <Fab className={`text-danger favori ${announcement.isFavorite ? 'favori-actif' : ''}`} aria-label="like" onClick={() => handleFavoriteClick(announcement)}>
-                                        <FavoriteIcon />
+                                    <Fab className={`favori ${announcement.isFavorite ? 'favori-actif' : ''}`} onClick={() => handleFavoriteClick(announcement)}>
+                                         <FavoriteIcon />
                                     </Fab>
                                 </div>
                                 <div className="card-body">
