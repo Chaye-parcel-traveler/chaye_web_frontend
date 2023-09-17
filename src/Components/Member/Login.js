@@ -35,7 +35,7 @@ function Login() {
             <div className="reseSocio fs-2 text-center">
               <a href="https://www.google.com/intl/fr/gmail/about/"><i className="me-3 fa-brands fa-google"></i></a>
               <a href="https://www.facebook.com"><i className="me-3 fa-brands fa-facebook"></i></a>
-              <a href="https://www.icloud.com/mail"> <i className="fa-brands text-dark fa-apple"></i></a>
+              <a href="https://www.icloud.com/mail"><i className="fa-brands text-dark fa-apple"></i></a>
             </div>
             <p className="text-center py-5">Vous n'avez pas de compte? <a className="text-danger" href="/signup">Créez votre compte</a></p>
           </form>

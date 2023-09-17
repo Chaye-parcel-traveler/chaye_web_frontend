@@ -24,11 +24,11 @@ function Message() {
     <div className="form-group col-8 m-auto">
       <input type="hidden" name="sender" value={userData.email} />
       <div>
-        <label For="recipient" className="fst-italic">Destinataire</label>
+        <label htmlFor="recipient" className="fst-italic">Destinataire</label>
         <input className="form-control" type="text" name="recipient" />
       </div>
       <div>
-        <label For="texte" className="fst-italic">Message:</label>
+        <label htmlFor="texte" className="fst-italic">Message:</label>
         <textarea name="message" className="form-control" rows="4" />
       </div>
       <button type="submit" className="btn btn-primary fst-italic mt-2 mx-2">Envoyer</button>

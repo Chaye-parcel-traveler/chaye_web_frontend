@@ -13,6 +13,7 @@ import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import AllPackages from '../Package/AllPackges';
+import Assurance from '../Header/Assurance';
 moment().locale('fr')
 
 function Announcements() {
@@ -49,8 +50,8 @@ function Announcements() {
                     const memberId = response.data[0].memberId.toString();
                     axios.get(`http://localhost:5000/member/${memberId}`)
                         .then((response) => {
-                            console.log('les information de un member',response.data);
                             setMember(response.data);
+                            console.log('les information de un member',response.data);
                         })
                         .catch((error) => {
                             setMember(false);
@@ -83,7 +84,7 @@ function Announcements() {
             </div>
             <div className="content-body">
                 <Header />
-
+                <Assurance/>
                 <div className="content-main">
                     <h2 className='titre'>Toutes les annonces</h2>
                     <div className='annonce'>

@@ -65,14 +65,14 @@ function Profile() {
                   <img src={`http://localhost:5000/${member.imagename}`} className='rounded-circle' width={'120px'} height={'100px'} />
                 </div>
                 <h1>{member.lastname} {member.firstname}</h1>
-                <p><i class="fa-solid fa-location-dot"></i>{member.adress}</p>
+                <p><i className="fa-solid fa-location-dot"></i>{member.adress}</p>
                 <hr />
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
                 <hr />
 
                 <h3>Contact info</h3>
-                <span>  <i class="fa-regular fa-envelope"></i> Email : {member.email}</span><br />
-                <span> <i class="fa-solid fa-phone"></i>Phone : {member.phone}</span>
+                <span>  <i className="fa-regular fa-envelope"></i> Email : {member.email}</span><br />
+                <span> <i className="fa-solid fa-phone"></i>Phone : {member.phone}</span>
                 {/* <Button primary as='a' href={`/editmember/${member._id}`}>
                     Edit
                   </Button>

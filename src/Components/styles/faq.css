@@ -1,0 +1,32 @@
+/* Styles pour la page FAQ (Foire aux questions) */
+.faq-container {
+    background-color: #f4f4f4;
+    padding: 20px;
+    text-align: left;
+    max-width: 800px;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .faq-container h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .faq-item {
+    margin-bottom: 20px;
+  }
+  
+  .faq-item h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .faq-item p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #666;
+  }
+  

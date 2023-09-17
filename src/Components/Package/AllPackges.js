@@ -2,12 +2,10 @@ import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import '../styles/accueil.css';
 import '../styles/nav.css';
-
 //Moment (date)
 import moment from 'moment/moment';
 import 'moment/locale/fr'
 moment().locale('fr')
-
 function AllPackages() {
     const initialestate = {
         loading: true,
@@ -38,7 +36,6 @@ function AllPackages() {
     useEffect(() => {
         axios.get('http://localhost:5000/packages', { withCredentials: true })
             .then(response => {
-                console.log(response.data);
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
 
             }).catch(error => {
@@ -47,7 +44,6 @@ function AllPackages() {
     }, [])
     return (
         <React.Fragment>
-
             <div className='annonce'>
                 {state.loading ? 'loading...' : state.packages.map((packages, index) => (
                     <div className="card " key={index}>

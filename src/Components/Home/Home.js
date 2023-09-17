@@ -11,6 +11,7 @@ import AllComments from '../Comments/AllComments';
 import moment from 'moment/moment';
 import 'moment/locale/fr'
 import Favoris from '../Favoris/Favoris';
+import Assurance from '../Header/Assurance';
 moment().locale('fr')
 
 function Home() {
@@ -57,6 +58,7 @@ function Home() {
             </div>
             <div className="content-body">
                 <Header />
+                <Assurance/>
                 <div className="content-main">
                 <div className='d-flex justify-content-between'>
                     <h2 className='titre'>A la une</h2>
@@ -66,7 +68,7 @@ function Home() {
 
                     <div className="btnAnnonce">
                         <a href="/announcements" className="btn" >Voir tous les annonces</a>
-                        <a href="/announcements" className="btn" >Carte intéractive</a>
+                        <a href="/carte" className="btn" >Carte intéractive</a>
                     </div>
                     <div>
                         <h2 className='titre'>Avis</h2>

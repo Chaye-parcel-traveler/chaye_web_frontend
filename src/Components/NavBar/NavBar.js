@@ -18,13 +18,14 @@ function Navbar() {
       });
     axios.get('http://localhost:5000/getConnectedUser', { withCredentials: true })
       .then(response => {
-        console.log(response.data);
         setUserData(response.data);
       }).catch(error => {
         setUserData(false);
       });
   }, []);
-
+  const handleSearch = (e) => {
+    // Vous pouvez ajouter ici la logique de recherche en fonction de la valeur de e.target.value
+  };
 
 
   return (
@@ -33,6 +34,12 @@ function Navbar() {
         <img src={"/img/logo.png"} alt="Logo" className="logo" />
       </a>
       <ul className='text-decoration-none'>
+        <li>
+          <div className="input-group">
+            <i className="fa-solid fa-search"></i>
+            <input className="form-control" type="search" placeholder="Recherche" aria-label="Search" onChange={handleSearch} />
+          </div>
+        </li>
         <li>
           <a href="/announcements">
             <i className="fa-solid fa-bullhorn"></i>
@@ -54,14 +61,14 @@ function Navbar() {
 
         <li>
           <a href="/AboutUs">
-          <i className="fa-solid fa-circle-info"></i>
+            <i className="fa-solid fa-circle-info"></i>
             <span>À propos de nous</span>
           </a>
         </li>
 
         <li>
           <a href="/support">
-          <i class="fa-solid fa-headset"></i>
+            <i className="fa-solid fa-headset"></i>
             <span> Support</span>
           </a>
         </li>
@@ -84,20 +91,16 @@ function Navbar() {
             </a>
           </li>
         )}
-      </ul>
-      {isLoggedIn && (
 
-        <ul>
+        {isLoggedIn && (
           <li className="logout-btn">
             <a href="http://localhost:5000/logout">
               <i className="fa-solid fa-right-from-bracket fa-rotate-180"></i>
               Déconnecter
             </a>
           </li>
-        </ul>
-
-      )}
-
+        )}
+      </ul>
     </div>
   );
 };

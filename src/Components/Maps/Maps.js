@@ -1,39 +1,33 @@
-// import React from "react";
-// import GoogleMapReact from 'google-map-react';
+import React from 'react';
+import { LoadScript, GoogleMap, Marker } from 'react-google-maps';
 
-// const AnyReactComponent = ({ text }) => <div>{text}</div>;
+function MapComponent() {
+  const mapStyles = {
+    height: "400px",
+    width: "100%",
+  };
 
-// export default function SimpleMap() {
-//     const defaultProps = {
-//         center: {
-//             lat: 10.99835602,
-//             lng: 77.01502627
-//         },
-//         zoom: 11
-//     };
+  const defaultCenter = {
+    lat: 0, // Latitude initiale
+    lng: 0, // Longitude initiale
+  };
 
-//     const handleApiLoaded = (map, maps) => {
+  return (
+    <div>
+      <LoadScript
+        googleMapsApiKey="VOTRE_CLE_API_GOOGLE_MAPS"
+      >
+        <GoogleMap
+          mapContainerStyle={mapStyles}
+          zoom={10} // Niveau de zoom initial
+          center={defaultCenter} // Centre initial
+        >
+          {/* Marqueur sur la carte */}
+          <Marker position={defaultCenter} />
+        </GoogleMap>
+      </LoadScript>
+    </div>
+  );
+}
 
-//     };
-
-//     return (
-//         <div className="content">
-//             <div style={{ height: '80%', width: '80%' }}>
-//                 <GoogleMapReact
-//                     bootstrapURLKeys={{ key: 'YOUR_API_KEY' }}
-//                     defaultCenter={defaultProps.center}
-//                     defaultZoom={defaultProps.zoom}
-//                     yesIWantToUseGoogleMapApiInternals
-//                     onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-//                 >
-//                     <AnyReactComponent
-//                         lat={59.955413}
-//                         lng={30.337844}
-//                         text="My Marker"
-//                     />
-//                 </GoogleMapReact>
-//             </div>
-//         </div>
-//     );
-// }
- 
+export default MapComponent;
