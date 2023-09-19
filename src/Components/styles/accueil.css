@@ -26,7 +26,37 @@
     margin: 30px 0;
 }
 
-/* Annonce */
+/* AnnonceFavoris caroussel */
+.announcements-container {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    width: 100%;
+    display: inline-block;
+
+}
+.card-annonce {
+    border-radius: 12px;
+    width: 30%;
+    margin-bottom: 2%;
+    margin-right: 10px;
+    vertical-align: top;
+}
+.carousel-container {
+    overflow-x: auto;
+    width: 100%;
+    white-space: nowrap;
+}
+.card-annonce  img {
+    width: 100%;
+    border-radius: 5px;
+}
+.card-annonce .card-top {
+    width: 100%;
+}
+.violet {
+    color: #4F4294;
+}
+/* annonce */
 .annonce {
     display: flex;
     flex-wrap: wrap;
@@ -34,12 +64,7 @@
     margin: 2%;
 
 }
-
-.violet {
-    color: #4F4294;
-}
-
-.annonce .card img {
+.card img {
     width: 100%;
     border-radius: 5px;
 }
