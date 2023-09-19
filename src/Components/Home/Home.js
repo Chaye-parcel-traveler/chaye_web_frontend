@@ -58,12 +58,12 @@ function Home() {
             </div>
             <div className="content-body">
                 <Header />
-                <Assurance/>
+                <Assurance />
                 <div className="content-main">
-                <div className='d-flex justify-content-between'>
-                    <h2 className='titre'>A la une</h2>
-                    <h4 className='text-danger fw-bold text-decoration-underline'>Favoris</h4>
-                </div>
+                    <div className='d-flex justify-content-between'>
+                        <h2 className='titre'>A la une</h2>
+                        <h4 className='text-danger fw-bold text-decoration-underline'>Favoris</h4>
+                    </div>
                     <Favoris />
 
                     <div className="btnAnnonce">
@@ -76,17 +76,17 @@ function Home() {
                     </div>
 
                     <div className="categorie">
-                    <h2 className='titre'>Catégories</h2>
-                        <div className="box1 d-flex ">
+                        <h2 className='titre'>Catégories</h2>
+                        <div className="box1">
                             <div className="item1">
                                 <h5>caraibies</h5>
                             </div>
                             <div className="item2">
                                 <h5>Europe</h5>
-                                
+
                             </div>
                         </div>
-                        <div className="box2 my-5">
+                        <div className="box2">
                             <div className="item3 ">
                                 <h5>Amérique</h5>
                             </div>
@@ -100,7 +100,7 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <Footer />
+                    <Footer />
             </div>
 
         </div>

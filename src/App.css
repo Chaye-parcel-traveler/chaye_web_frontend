@@ -7,7 +7,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-#root, .App, .content {
+#root, .App ,.content{
   height: 100vh;
 }
 

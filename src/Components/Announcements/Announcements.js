@@ -6,6 +6,7 @@ import Fab from '@mui/material/Fab';
 import '../styles/accueil.css';
 import '../styles/nav.css';
 
+
 //Moment (date)
 import moment from 'moment/moment';
 import 'moment/locale/fr'
@@ -92,7 +93,7 @@ function Announcements() {
                             <div className="card " key={index}>
                                 <div className="card-top">
                                     <img src="/img/avion.jpg" alt="" />
-                                    <Fab className={`${announcement.isFavorite ? 'text-danger' : 'text-secondary'}`} onClick={() => handleFavoriteClick(announcement)}>
+                                    <Fab className={`${announcement.isFavorite ? 'text-danger' : 'text-secondary'}`}  size="small"  onClick={() => handleFavoriteClick(announcement)}>
                                          <FavoriteIcon />
                                     </Fab>
                                 </div>

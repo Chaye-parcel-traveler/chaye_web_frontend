@@ -1,19 +1,36 @@
-.content-image{
-    background-image: url('../../../public/img/bg.jpg') ;
+.content-image2 {
+    background-image: url('../../../public/img/bg.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
-.Logo{
+
+.Logo {
     margin-top: 4rem;
 }
-.singup input{
+.content-signUp{
+    border-radius: 15px;
+}
+
+.signUp input {
     padding: 10px 3px;
     border-radius: 10px;
 }
-.singup .valider{
-    background:  #4F4294;
+.signUp .valider {
+    background: #4F4294;
     border-radius: 15px;
 }
 
 
+@media (max-width: 768px) {
+    .content-image2{
+        height: max-content;
+    }
+    .Logo {
+        margin-top: 2rem;
+    }
+    .content-signUp{
+        width: 90%;
+        margin: auto;
+    }
+}

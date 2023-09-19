@@ -3,6 +3,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+
 }
 .Logo{
     margin-top: 4rem;
@@ -24,4 +25,20 @@
 .login .reseSocio a i{
     font-size:2rem ;
 }
-
+.login .valider{
+    width: 30%;
+}
+@media (max-width: 768px) {
+    .content-image {
+        height: 100vh;
+    }
+    .login .valider{
+        width: 30%;
+    }
+   .footerfixe {
+        width: 100%;
+        margin: auto;
+        position: absolute;
+        bottom: 0;
+    }
+}

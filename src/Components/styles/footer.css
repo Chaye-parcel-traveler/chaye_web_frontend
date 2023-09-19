@@ -1,4 +1,4 @@
-footer{
+footer {
     display: flex;
     background-color: #2D2C2C;
     color: #CFCFCE;
@@ -6,7 +6,8 @@ footer{
     align-items: center;
     padding: 15px;
 }
-footer .lienFooter a{
+
+footer .lienFooter a {
     color: #CFCFCE;
     margin-left: 2px;
     text-decoration: none;
@@ -20,6 +21,31 @@ footer ul.lienFooter {
 }
 
 footer ul.lienFooter li {
-    list-style:none ;
+    list-style: none;
     margin-left: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    footer {
+        width: 100%;
+        margin: auto;
+        position: relative;
+    
+    }
+    footer p{
+        font-size: .7rem;
+    }
+    footer .lienFooter a {
+        border: none;
+    }
+
+    footer ul.lienFooter {
+        display: block;
+    }
+
+    footer ul.lienFooter li {
+        text-decoration: underline;
+        margin-left: 0px;
+        font-size: .7rem;
+    }
 }

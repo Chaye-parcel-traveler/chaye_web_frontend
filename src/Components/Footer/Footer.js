@@ -2,16 +2,16 @@ import React from 'react'
 import '../styles/footer.css';
 function Footer() {
   return (
-    <footer className='fixed-buttom'>
+    <footer className=''>
       <div className=''>
         <p >© 2023,Chaye</p>
       </div>
       <ul className="lienFooter ">
           <li>
-             <a href="#">Mentions légales</a>
+             <a href="/mentionlegale">Mentions légales</a>
           </li>
           <li> 
-             <a href="#">Politiques de confidentialité</a>
+             <a href="/politiqueDeConfidentialite">Politiques de confidentialité</a>
           </li>
           <li>
              <a href="#">Tous droits reservés</a>

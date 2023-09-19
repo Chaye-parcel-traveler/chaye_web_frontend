@@ -52,7 +52,6 @@ function Profile() {
         <Header />
         <React.Fragment>
           <div className="content-main">
-
             <div className='content-profile'>
               <div className='message'>
                 <h1>Mes messages </h1>
@@ -72,14 +71,20 @@ function Profile() {
 
                 <h3>Contact info</h3>
                 <span>  <i className="fa-regular fa-envelope"></i> Email : {member.email}</span><br />
-                <span> <i className="fa-solid fa-phone"></i>Phone : {member.phone}</span>
-                {/* <Button primary as='a' href={`/editmember/${member._id}`}>
-                    Edit
-                  </Button>
-                  <form action={`http://localhost:5000/members/${member._id}?_method=DELETE`} method='post'>
-                    <input type='hidden' name='_method' value='DELETE' />
-                    <Button positive type='submit'>Supprimer</Button>
-                  </form> */}
+                <span> <i className="fa-solid fa-phone"></i>Phone : {member.phone}</span><br />
+                <a className="py-3 m-3" href={`/editmember/${member._id}`}>
+                  <i className="fas fa-pencil-alt"></i> Modifier mes informations
+                </a>
+
+                <form action={`http://localhost:5000/members/${member._id}?_method=DELETE`} method='post'>
+                  <input type='hidden' name='_method' value='DELETE' />
+                  <button className="btn btn-danger m-3" type="submit" >
+                    <i className="fas fa-trash "></i>Supprimer mon compte
+                  </button>
+                </form>
+                <br />
+
+
               </div>
             </div>
           </div>

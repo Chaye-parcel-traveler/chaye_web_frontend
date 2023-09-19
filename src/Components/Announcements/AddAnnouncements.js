@@ -30,8 +30,8 @@ function AddAnnouncements() {
           <div className='formule-fond'>
             <h3 className="py-5" >Je transporte un colis</h3>
             <div className='city'>
-              <input type="text" name='departureCity' className="form-control me-5 py-3" placeholder='Départ de ' required />
-              <input type="text" name='destination' className="form-control py-3" placeholder='Arrivé à ' required />
+              <input type="text" name='departureCity' className="form-control me-3" placeholder='Départ de ' required />
+              <input type="text" name='destination' className="form-control " placeholder='Arrivé à ' required />
             </div>
           </div>
           <div className='formule-body mb-5'>

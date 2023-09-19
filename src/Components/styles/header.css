@@ -6,11 +6,6 @@
     background-position: center;
     display: flex;
 }
-
-.search {
-    margin-top: 2%;
-}
-
 .heroItem {
     text-align: center;
     color: rgb(8, 8, 8);
@@ -57,3 +52,44 @@
 .paraAssurance {
     font-size: 15px;
 }
+
+
+@media screen and (max-width: 768px) {
+    .hero {
+        height: 20vh;
+    }
+    .heroItem {
+        padding: 1%;
+        width: 70%;
+    }
+    
+    .heroItem input {
+        padding: 2%;
+        margin: 4%;
+        border-radius: 7px;
+        background-color: #EC634E;
+    }
+    .heroItem h2{
+        font-size: 1.2rem;
+    }
+    .heroItem .button-size{
+        font-size: .7rem;
+
+    }
+    .heroItem input:hover {
+        background-color: #4F4294;
+        border: 2px #4F4294 solid;
+    }
+    
+    .content-header {
+        width: 80%;
+        margin: 20px auto;
+    }
+    /* Assurance */
+    .assurance {
+        margin-top: 1%;
+    }
+    .paraAssurance {
+        font-size: 12px;
+    }
+  }

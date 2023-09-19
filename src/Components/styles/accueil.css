@@ -20,9 +20,10 @@
     width: 90%;
     margin: auto;
 }
-.titre{
+
+.titre {
     font-weight: bold;
-    margin:30px 0;
+    margin: 30px 0;
 }
 
 /* Annonce */
@@ -33,9 +34,11 @@
     margin: 2%;
 
 }
-.violet{
+
+.violet {
     color: #4F4294;
 }
+
 .annonce .card img {
     width: 100%;
     border-radius: 5px;
@@ -68,6 +71,7 @@
     background-color: #4F4294;
     color: #FFFFFF;
 }
+
 /* Avis */
 .avis {
     display: flex;
@@ -76,10 +80,12 @@
     margin: 2%;
 
 }
+
 .avis img {
     width: 70px;
 
 }
+
 /* Categorie */
 .categorie {
     margin: 2%;
@@ -110,7 +116,7 @@
     background-size: cover;
     background-position: center;
     border-radius: 10px;
-    transition: transform 0.3s ease; 
+    transition: transform 0.3s ease;
 
 }
 
@@ -121,13 +127,14 @@
     background-size: cover;
     background-position: center;
     border-radius: 10px;
-    transition: transform 0.3s ease; 
+    transition: transform 0.3s ease;
 
 }
 
 .categorie .box2 {
     display: flex;
     height: 200px;
+    margin-top: 20px;
     justify-content: space-evenly;
 }
 
@@ -138,9 +145,7 @@
     background-size: cover;
     background-position: center;
     border-radius: 10px;
-    transition: transform 0.3s ease; 
-
-
+    transition: transform 0.3s ease;
 }
 
 .categorie .box2 .item4 {
@@ -150,7 +155,7 @@
     background-size: cover;
     background-position: center;
     border-radius: 10px;
-    transition: transform 0.3s ease; 
+    transition: transform 0.3s ease;
 
 }
 
@@ -161,28 +166,99 @@
     background-size: cover;
     background-position: center;
     border-radius: 10px;
-    transition: transform 0.3s ease; 
-  }
-  
-  .categorie .box1 .item1:hover {
+    transition: transform 0.3s ease;
+}
+
+.categorie .box1 .item1:hover {
     width: 55%;
-    transform: scale(1); 
-  }
-  .categorie .box1 .item2:hover {
+    transform: scale(1);
+}
+
+.categorie .box1 .item2:hover {
     width: 35%;
-    transform: scale(1); 
-  }
-  .categorie .box2 .item3:hover {
+    transform: scale(1);
+}
+
+.categorie .box2 .item3:hover {
     width: 30%;
-    transform: scale(1); 
-  }
-  .categorie .box2 .item4:hover {
+    transform: scale(1);
+}
+
+.categorie .box2 .item4:hover {
     width: 30%;
-    transform: scale(1); 
-  }
-  
-  .categorie .box2 .item5:hover {
+    transform: scale(1);
+}
+
+.categorie .box2 .item5:hover {
     width: 30%;
-    transform: scale(1); 
-  }
-  
+    transform: scale(1);
+}
+
+
+@media screen and (max-width: 768px) {
+    .content-menu {
+        height: 100%;
+        width: 80px;
+    }
+
+    .content-body {
+        position: absolute;
+        top: 0;
+        left: 80px;
+        width: calc(100% - 80px);
+        transition: 0.5 step-start;
+    }
+
+    .content-main {
+        width: 80%;
+        margin: auto;
+    }
+
+    /* Annonce */
+    .annonce {
+        display: block;
+        height: 30%;
+    }
+
+    .annonce .card img {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .card {
+        border-radius: 12px;
+        width: 80%;
+        margin-bottom: 2%;
+    }
+
+    .card-body p {
+        font-size: .7rem;
+    }
+
+    .btnAnnonce .btn {
+        padding: 3% 2%;
+        border-radius: 10px;
+        margin: 4%;
+    }
+
+    .btnAnnonce a {
+        font-size: .6rem;
+    }
+
+    .btnAnnonce .btn:hover {
+        background-color: #4F4294;
+        color: #FFFFFF;
+    }
+
+    /* Avis */
+    .categorie {
+        display: none;
+    }
+
+    .footerfixe {
+        width: 100%;
+        margin: auto;
+        position: absolute;
+        bottom: 0;
+    }
+}

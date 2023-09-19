@@ -9,13 +9,14 @@ import Profile from './Components/Member/Profile';
 import Home from './Components/Home/Home';
 import AddPackage from './Components/Package/AddPackage';
 import EditPackage from './Components/Package/EditPackage';
-import Maps from './Components/Maps/Maps';
 import Announcements from './Components/Announcements/Announcements';
 import AddAnnouncements from './Components/Announcements/AddAnnouncements';
 import Comments from './Components/Comments/Comments';
 import AboutUs from './Components/AboutUs/AboutUs';
 import Support from './Components/Support/Support';
 import Faq from './Components/Support/Faq';
+import MentionsLegales from './Components/Footer/MentionsLegales';
+import PolitiqueDeConfidentialite from './Components/Footer/PolitiqueDeConfidentialite';
 // import Message from './Components/Message/Message';
 
 
@@ -37,7 +38,8 @@ function App() {
           <Route path='/AboutUs' element={<AboutUs/>} />
           <Route path='/support' element={<Support/>} />
           <Route path='/faq' element={<Faq/>} />
-          <Route path='/carte' element={<Maps/>} />
+          <Route path='/mentionlegale' element={<MentionsLegales/>} />
+          <Route path='/politiqueDeConfidentialite' element={<PolitiqueDeConfidentialite/>} />
           {/* <Route path='/message' element={<Message />} /> */}
         </Routes>
       </div>

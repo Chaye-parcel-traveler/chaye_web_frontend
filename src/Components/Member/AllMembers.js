@@ -56,7 +56,7 @@ function AllMembers() {
             <Table.HeaderCell>Supprimer</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-        
+
         <Table.Body>
           {state.loading ? (
             <Table.Row>
@@ -70,12 +70,14 @@ function AllMembers() {
                 <Table.Cell>{member.email}</Table.Cell>
                 <Table.Cell>{member.adress}</Table.Cell>
                 <Table.Cell>{member.status}</Table.Cell>
-                <Table.Cell><img src={`http://localhost:5000/${member.imagename}`} width={'150px'} alt="Membre"/></Table.Cell>
+                <Table.Cell><img src={`http://localhost:5000/${member.imagename}`} width={'150px'} alt="Membre" /></Table.Cell>
                 <Table.Cell><Button primary as='a' href={`/editMember/${member._id}`}>Modifier</Button></Table.Cell>
                 <Table.Cell>
                   <form action={`http://localhost:5000/members/${member._id}?_method=DELETE`} method="post">
                     <input type="hidden" name="_method" value="DELETE" />
-                    <Button negative>Supprimer</Button>
+                    <Button negative onClick={() => { return window.confirm('Êtes-vous sûr de vouloir supprimer ce compte ?'); }}>
+                      Supprimer
+                    </Button>
                   </form>
                 </Table.Cell>
               </Table.Row>
@@ -85,6 +87,6 @@ function AllMembers() {
       </Table>
     </React.Fragment>
   );
-  
+
 }
 export default AllMembers

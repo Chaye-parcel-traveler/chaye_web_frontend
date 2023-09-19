@@ -1,0 +1,46 @@
+.mentions-legales {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .mentions-legales h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #007bff;
+    text-align: center;
+  }
+  
+  .mentions-legales p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+  
+  .mentions-legales ul {
+    margin-left: 20px;
+  }
+  
+  .mentions-legales li {
+    margin-bottom: 5px;
+  }
+  
+  /* Responsive  */
+  @media screen and (max-width: 768px) {
+    .mentions-legales {
+      padding: 10px;
+    }
+  
+    .mentions-legales h1 {
+      font-size: 20px;
+    }
+  
+    .mentions-legales p {
+      font-size: 14px;
+    }
+  }
+  

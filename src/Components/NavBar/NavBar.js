@@ -26,8 +26,6 @@ function Navbar() {
   const handleSearch = (e) => {
     // Vous pouvez ajouter ici la logique de recherche en fonction de la valeur de e.target.value
   };
-
-
   return (
     <div className="content-menu">
       <a href="/">
@@ -37,7 +35,7 @@ function Navbar() {
         <li>
           <div className="input-group">
             <i className="fa-solid fa-search"></i>
-            <input className="form-control" type="search" placeholder="Recherche" aria-label="Search" onChange={handleSearch} />
+            <input className="form-control search" type="search" placeholder="Recherche" aria-label="Search" onChange={handleSearch} />
           </div>
         </li>
         <li>
@@ -50,7 +48,8 @@ function Navbar() {
         {!isLoggedIn && (
           <li>
             <i className="fa-solid fa-user "></i>
-            <Dropdown item text="Mon Compte" className="custom-dropdown">
+            <span>Compte</span>
+            <Dropdown item  className="custom-dropdown">
               <Dropdown.Menu>
                 <Dropdown.Item as="a" href="/SignUp"> S'inscrire</Dropdown.Item>
                 <Dropdown.Item as="a" href="/login"> Se connecter</Dropdown.Item>
@@ -96,7 +95,8 @@ function Navbar() {
           <li className="logout-btn">
             <a href="http://localhost:5000/logout">
               <i className="fa-solid fa-right-from-bracket fa-rotate-180"></i>
-              Déconnecter
+              <span>  Déconnecter </span>
+            
             </a>
           </li>
         )}

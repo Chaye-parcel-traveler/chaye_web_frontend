@@ -29,7 +29,7 @@ function Favoris() {
                 <div className="card " key={index}>
                     <div className="card-top">
                         <img src="/img/avion.jpg" alt="" />
-                        <Fab className='text-danger' disabled aria-label="like">
+                        <Fab className='text-danger'  size="small" disabled aria-label="like">
                             <FavoriteIcon />
                         </Fab>
                     </div>
