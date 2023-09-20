@@ -56,8 +56,8 @@ function Profile() {
               <div className='message'>
                 <h1>Mes messages </h1>
                 <hr></hr>
-                <Message />
-                {/* <AllMessages/> */}
+                {/* <Message /> */}
+                <AllMessages/>
               </div>
               <div className='profile'>
                 <div className='img-profile'>
