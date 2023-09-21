@@ -77,8 +77,8 @@ function AllMessages() {
 
     sortedMessages.forEach(message => {
         if (userData && userData.email === message.recipient) {
-            if (!lastMessagesByRecipient[message.recipient] || message.datetime > lastMessagesByRecipient[message.recipient].datetime) {
-                lastMessagesByRecipient[message.recipient] = message;
+            if (!lastMessagesByRecipient[message.sender] || message.datetime > lastMessagesByRecipient[message.sender]?.datetime) {
+                lastMessagesByRecipient[message.sender] = message;
             }
         }
     });
@@ -110,41 +110,53 @@ function AllMessages() {
 
     return (
         <div>
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            <List sx={{ width: '100%' }}>
                 {state.loading ? 'Loading...' : filteredMessages.map((message, index) => (
-                    <div key={index}>
+                    <div className='boxMessage rounded mb-4' key={index}>
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>
-                                <Avatar alt="Remy Sharp" src={userData.image} />
+                                <img alt="Remy Sharp" src={`http://localhost:5000/${userData.image}`} className='rounded-circle me-5' width={'70px'} />
                             </ListItemAvatar>
                             <ListItemText
                                 primary={message.sender}
                                 secondary={
                                     <React.Fragment>
                                         <Typography
-                                            sx={{ display: 'inline' }}
+                                            sx={{
+                                                display: 'inline',
+                                                fontWeight: 'bold',
+                                                color: 'white',
+                                                fontSize: '16px',
+                                            }}
                                             component="span"
                                             variant="body2"
-                                            color="text-primary"
                                         >
                                             {message.message}
                                         </Typography>
-                                        <br />
-                                        {moment(message.datetime).format('LLL')}
                                     </React.Fragment>
                                 }
                             />
+                        </ListItem>
+                        <Divider />
+                        <div className="text-center"> {/* Ajoutez une classe CSS pour centrer le bouton */}
                             <Button
                                 variant="outlined"
                                 onClick={() => handleOpenReplyDialog(message.sender)}
+                                sx={{
+                                    backgroundColor: '#EC634E', 
+                                    color: 'white', 
+                                    borderColor: '#EC634E',
+                                    marginTop: '8px', 
+                                }}
                             >
                                 Répondre
                             </Button>
-                        </ListItem>
-                        <Divider />
+                        </div>
                     </div>
                 ))}
             </List>
+
+
 
             <Dialog open={openReplyDialog} onClose={handleCloseReplyDialog}>
                 <DialogTitle>Répondre au message</DialogTitle>
@@ -178,6 +190,7 @@ function AllMessages() {
                 </DialogContent>
                 <DialogActions>
                     <form className="form-message" action="http://localhost:5000/messages" method="post">
+                    <input type="hidden" name='memberId' className="form-control " value={userData.id}/>
                         <input type="hidden" name="sender" value={userData.email} />
                         <input type="hidden" name="recipient" value={selectedRecipient} />
                         <TextField
