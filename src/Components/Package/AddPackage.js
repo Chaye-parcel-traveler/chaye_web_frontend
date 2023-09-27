@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'semantic-ui-react';
 import { useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 function AddPackage() {
+
   let navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [content, setContent] = useState('');
@@ -19,7 +20,15 @@ function AddPackage() {
   const [departureCity, setDepartureCity] = useState('');
   const [arrivalCity, setArrivalCity] = useState('');
 
-
+  const [userData, setUserData] = useState('');
+  useEffect(() => {
+    axios.get('http://localhost:5000/getConnectedUser', { withCredentials: true })
+      .then(response => {
+        setUserData(response.data);
+      }).catch(error => {
+        setUserData(false);
+      });
+  }, []);
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
     setPicture(event.target.files[0].name);
@@ -74,6 +83,7 @@ function AddPackage() {
       <div className="content-body ">
         <Header />
         <Form className="formule" onSubmit={handleSubmit}>
+        <input type="hidden" name='memberId' className="form-control " value={userData.id} />
           <div className='formule-fond'>
             <h3 className='py-5'>J'expédier un colis</h3>
             <div className='city'>

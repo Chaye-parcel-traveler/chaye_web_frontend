@@ -4,7 +4,6 @@ import { Table } from 'semantic-ui-react'
 import { Button } from 'semantic-ui-react'
 
 function AllMembers() {
-
   const initialestate = {
     loading: true,
     error: '',

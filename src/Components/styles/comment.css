@@ -27,3 +27,13 @@ textarea {
     border: 1px solid #ccc;
     padding: 10px;
 }
+
+.modal-content {
+    color: white;
+    margin: auto;
+    background-color: #4F4294;
+    width: 70%;
+}
+.sumau{
+    background-color: #EC634E;
+}

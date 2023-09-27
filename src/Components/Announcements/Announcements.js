@@ -1,126 +1,173 @@
-
 import React, { useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Fab from '@mui/material/Fab';
 import '../styles/accueil.css';
 import '../styles/nav.css';
-
-
-//Moment (date)
+import '../styles/comment.css';
+import FormComment from '../Comments/FormComment';
+import CommentIcon from '@mui/icons-material/Comment';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment/moment';
-import 'moment/locale/fr'
+import 'moment/locale/fr';
 import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import AllPackages from '../Package/AllPackges';
+import AllPackages from '../Package/AllPackages';
 import Assurance from '../Header/Assurance';
-moment().locale('fr')
-
+moment().locale('fr');
 function Announcements() {
-    const [member, setMember] = useState({});
-    const initialestate = {
-        loading: true,
-        error: '',
-        announcements: []
-    }
+
+    const [showCommentForm, setShowCommentForm] = useState(false); // État pour afficher/masquer le formulaire de commentaire
+    const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+    const initialState = {
+        loadingAnnouncements: true,
+        errorAnnouncements: '',
+        announcements: [],
+        loadingMembers: true,
+        errorMembers: '',
+        members: [],
+    };
 
     const reducer = (state, action) => {
         switch (action.type) {
-            case 'FETCH_SUCCESS':
+            case 'FETCH_ANNOUNCEMENTS_SUCCESS':
                 return {
-                    loading: false,
+                    ...state,
+                    loadingAnnouncements: false,
                     announcements: action.payload,
-                    error: '',
+                    errorAnnouncements: '',
                 };
-            case 'FETCH_ERROR':
+            case 'FETCH_ANNOUNCEMENTS_ERROR':
                 return {
-                    loading: false,
-                    announcements: [],
-                    error: 'Something went wrong!!!!!',
+                    ...state,
+                    loadingAnnouncements: false,
+                    errorAnnouncements: 'Something went wrong with announcements!',
+                };
+            case 'FETCH_MEMBERS_SUCCESS':
+                return {
+                    ...state,
+                    loadingMembers: false,
+                    members: action.payload,
+                    errorMembers: '',
+                };
+            case 'FETCH_MEMBERS_ERROR':
+                return {
+                    ...state,
+                    loadingMembers: false,
+                    errorMembers: 'Something went wrong with members!',
                 };
             default:
                 return state;
         }
     };
-    const [state, dispatch] = useReducer(reducer, initialestate);
+
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/announcements', { withCredentials: true })
-            .then(response => {
-                    const memberId = response.data[0].memberId.toString();
-                    axios.get(`http://localhost:5000/member/${memberId}`)
-                        .then((response) => {
-                            setMember(response.data);
-                            console.log('les information de un member',response.data);
-                        })
-                        .catch((error) => {
-                            setMember(false);
-                        });
-                
-                dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
+        axios
+            .get('http://localhost:5000/announcements', { withCredentials: true })
+            .then((response) => {
+                dispatch({ type: 'FETCH_ANNOUNCEMENTS_SUCCESS', payload: response.data });
             })
-            .catch(error => {
-                dispatch({ type: 'FETCH_ERROR' });
+            .catch(() => {
+                dispatch({ type: 'FETCH_ANNOUNCEMENTS_ERROR' });
+            });
+
+        axios
+            .get('http://localhost:5000/memberinfos', { withCredentials: true })
+            .then((response) => {
+                dispatch({ type: 'FETCH_MEMBERS_SUCCESS', payload: response.data });
+            })
+            .catch(() => {
+                dispatch({ type: 'FETCH_MEMBERS_ERROR' });
             });
     }, []);
 
-
     const handleFavoriteClick = (announcement) => {
         const id = announcement._id.toString();
-        console.log(announcement.isFavorite);
-        axios.put(`http://localhost:5000/favorites/${id}`, { isFavorite: !announcement.isFavorite }, { withCredentials: true })
-            .then(response => {
+        axios
+            .put(
+                `http://localhost:5000/favorites/${id}`,
+                { isFavorite: !announcement.isFavorite },
+                { withCredentials: true }
+            )
+            .then(() => {
                 dispatch({ type: 'TOGGLE_FAVORITE', payload: { _id: announcement._id } });
             })
-            .catch(error => {
-                console.error('Erreur lors de la mise à jour de l\'état de favori :', error);
+            .catch((error) => {
+                console.error("Erreur lors de la mise à jour de l'état de favori :", error);
             });
+    };
+    const handleCommentClick = (announcement) => {
+        setSelectedAnnouncement(announcement); // Stocke l'annonce sélectionnée
+        setShowCommentForm(true); // Affiche le formulaire de commentaire
     };
 
     return (
-        <div className='content'>
-            <div className='content-menu'>
+        <div className="content">
+            <div className="content-menu">
                 <Navbar />
             </div>
             <div className="content-body">
                 <Header />
-                <Assurance/>
+                <Assurance />
                 <div className="content-main">
-                    <h2 className='titre'>Toutes les annonces</h2>
-                    <div className='annonce'>
-                        {state.loading ? 'loading...' : state.announcements.map((announcement, index) => (
-                            <div className="card " key={index}>
-                                <div className="card-top">
-                                    <img src="/img/avion.jpg" alt="" />
-                                    <Fab className={`${announcement.isFavorite ? 'text-danger' : 'text-secondary'}`}  size="small"  onClick={() => handleFavoriteClick(announcement)}>
-                                         <FavoriteIcon />
-                                    </Fab>
-                                </div>
-                                <div className="card-body">
-                                    <p className="card-text ">
-                                        Destination ................<b className="violet">{announcement.destination}</b> <br />
-                                        Prix ...............<b className="violet">{announcement.priceKilo}€</b><br />
-                                        Départ ...............<b className="violet"> {moment(announcement.departureDate).format('L')}</b><br />
-                                        Arrivé  ................<b className="violet"> {moment(announcement.arrivalDate).format('L')}</b>
+                    <h2 className="titre">Toutes les annonces</h2>
+                    <div className="annonce">
+                        {state.loadingAnnouncements || state.loadingMembers
+                            ? 'Loading...'
+                            : state.announcements.map((announcement, index) => (
+                                <div className="card" key={index}>
+                                    <div className="card-top">
+                                        {/* Recherchez le membre associé à l'annonce */}
+                                        {state.members.map((member) => {
+                                            if (member._id === announcement.memberId) {
+                                                console.log(member._id);
+                                                return (
+                                                    <div key={member._id}>
+                                                        <img src={`http://localhost:5000/${member.imagename}`} alt="Membre" />
+                                                    </div>
+                                                );
+                                            }
+                                            return null;
+                                        })}
 
-                                    </p>
+                                        <Fab
+                                            className={`${announcement.isFavorite ? 'text-danger' : 'text-secondary'}`}
+                                            size="small"
+                                            onClick={() => handleFavoriteClick(announcement)}
+                                        >
+                                            <FavoriteIcon />
+                                        </Fab>
+                                    </div>
+                                    <div className="card-body">
+                                        <p className="card-text">
+                                            Destination ................<b className="violet">{announcement.destination}</b> <br />
+                                            Prix ...............<b className="violet">{announcement.priceKilo}€</b><br />
+                                            Départ ...............<b className="violet"> {moment(announcement.departureDate).format('L')}</b><br />
+                                            Arrivé  ................<b className="violet"> {moment(announcement.arrivalDate).format('L')}</b>
+                                        </p>
+                                    </div>
+                                    <div className="card-bottom">
+                                        <button onClick={() => handleCommentClick(announcement)}>
+                                            <CommentIcon />
+                                        </button>
+                                        {showCommentForm && selectedAnnouncement && (
+                                            <FormComment announcementId={selectedAnnouncement._id} />
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
                     </div>
-                    <h2 className='titre'>Les colis</h2>
+                    <h2 className="titre">Les colis</h2>
                     <AllPackages />
                 </div>
                 <Footer />
             </div>
 
         </div>
-    )
-
+    );
 }
 
-
-
-
-export default Announcements
+export default Announcements;

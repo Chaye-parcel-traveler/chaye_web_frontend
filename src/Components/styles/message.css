@@ -1,9 +1,8 @@
 .boxMessage {
   background-color: #4F4294;
   color: white;
-  padding: 20px;
-  border-radius: 10px;
-  margin-left: 3%;
+  margin: auto;
+  width: 80%;
 }
 
 .form-message {

@@ -138,15 +138,12 @@ function AllMessages() {
                             />
                         </ListItem>
                         <Divider />
-                        <div className="text-center"> {/* Ajoutez une classe CSS pour centrer le bouton */}
-                            <Button
-                                variant="outlined"
-                                onClick={() => handleOpenReplyDialog(message.sender)}
-                                sx={{
+                        <div className="text-center"> 
+                            <Button variant="outlined" onClick={() => handleOpenReplyDialog(message.sender)} sx={{
                                     backgroundColor: '#EC634E', 
                                     color: 'white', 
                                     borderColor: '#EC634E',
-                                    marginTop: '8px', 
+                                    margin: '8px', 
                                 }}
                             >
                                 Répondre

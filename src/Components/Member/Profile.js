@@ -54,9 +54,9 @@ function Profile() {
           <div className="content-main">
             <div className='content-profile'>
               <div className='message'>
-                <h1>Mes messages </h1>
-                <hr></hr>
-                {/* <Message /> */}
+                <h1 className='fw-bold m-3'>Mes messages </h1>
+                <hr className='tri-ligne mx-4'/>
+                <Message />
                 <AllMessages/>
               </div>
               <div className='profile'>
@@ -70,9 +70,9 @@ function Profile() {
                 <hr />
 
                 <h3>Contact info</h3>
-                <span>  <i className="fa-regular fa-envelope"></i> Email : {member.email}</span><br />
-                <span> <i className="fa-solid fa-phone"></i>Phone : {member.phone}</span><br />
-                <a className="py-3 m-3" href={`/editmember/${member._id}`}>
+                <span>  <i className="fa-regular fa-envelope"></i> Email : {member.email}</span><br /><br />
+                <span> <i className="fa-solid fa-phone"></i>Phone : {member.phone}</span><br /><br />
+                <a className="py-3 m-3" href={`/editmember/${member._id}`}><br />
                   <i className="fas fa-pencil-alt"></i> Modifier mes informations
                 </a>
 
@@ -83,8 +83,6 @@ function Profile() {
                   </button>
                 </form>
                 <br />
-
-
               </div>
             </div>
           </div>

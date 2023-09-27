@@ -95,16 +95,16 @@ function EditMember() {
   };
 
   return (
-    <div className="content-image">
+    <div className="content-image2">
       <div className=" d-flex justify-content-center">
         <a href="/"><img src={"/img/logo.png"} alt="Logo" className="Logo" /></a>
       </div>
-      <div className="content-login bg-white container-fluid col-4 my-3 ">
+      <div className="content-signUp bg-white container-fluid col-4 my-3 ">
         <div className="m-5 ">
           <div className='text-center mt-5'>
             <h1 className="text-center pt-5 fs-2 fw-bold">Modifier votre Profile</h1>
           </div>
-          <form className='singup' onSubmit={handelSubmit}>
+          <form className='signUp' onSubmit={handelSubmit}>
             <input type="hidden" name="_method" value="PUT" />
             <div className="mb-3 ">
               <label className="form-label">Nom</label>
@@ -146,7 +146,6 @@ function EditMember() {
             </div>
             <div className="p-3 text-center">
               <input className="text-light fw-bold valider px-5 py-2" type="submit" value="Modifier" />
-
             </div>
           </form>
         </div>

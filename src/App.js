@@ -11,7 +11,6 @@ import AddPackage from './Components/Package/AddPackage';
 import EditPackage from './Components/Package/EditPackage';
 import Announcements from './Components/Announcements/Announcements';
 import AddAnnouncements from './Components/Announcements/AddAnnouncements';
-import Comments from './Components/Comments/Comments';
 import AboutUs from './Components/AboutUs/AboutUs';
 import Support from './Components/Support/Support';
 import Faq from './Components/Support/Faq';
@@ -34,7 +33,6 @@ function App() {
           <Route path='/EditPackage/:id' element={<EditPackage />}/>
           <Route path='/announcements' element={<Announcements />}/>
           <Route path='/AddAnnouncements' element={<AddAnnouncements />} />
-          <Route path='/comment' element={<Comments />} />
           <Route path='/AboutUs' element={<AboutUs/>} />
           <Route path='/support' element={<Support/>} />
           <Route path='/faq' element={<Faq/>} />
