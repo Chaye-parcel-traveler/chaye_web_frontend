@@ -7,6 +7,7 @@ import '../styles/nav.css';
 import '../styles/comment.css';
 import FormComment from '../Comments/FormComment';
 import CommentIcon from '@mui/icons-material/Comment';
+import EmailIcon from '@mui/icons-material/Email';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment/moment';
 import 'moment/locale/fr';
@@ -15,10 +16,12 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import AllPackages from '../Package/AllPackages';
 import Assurance from '../Header/Assurance';
+import Message from '../Message/Message';
 moment().locale('fr');
 function Announcements() {
-
-    const [showCommentForm, setShowCommentForm] = useState(false); // État pour afficher/masquer le formulaire de commentaire
+    const [showMessage, setShowMessage] = useState(false);
+    const [selectedMessage, setSelectedMessage] = useState(null);
+    const [showCommentForm, setShowCommentForm] = useState(false);
     const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
     const initialState = {
         loadingAnnouncements: true,
@@ -103,6 +106,12 @@ function Announcements() {
         setSelectedAnnouncement(announcement); // Stocke l'annonce sélectionnée
         setShowCommentForm(true); // Affiche le formulaire de commentaire
     };
+    const handleMessageClick = (announcement) => {
+        console.log("Message icon clicked");
+        setSelectedMessage(announcement);
+        setShowMessage(true);
+    };
+    let recipient = null;
 
     return (
         <div className="content">
@@ -123,12 +132,16 @@ function Announcements() {
                                         {/* Recherchez le membre associé à l'annonce */}
                                         {state.members.map((member) => {
                                             if (member._id === announcement.memberId) {
-                                                console.log(member._id);
+                                                recipient = member.email;
+                                                console.log(recipient);
+
                                                 return (
                                                     <div key={member._id}>
                                                         <img src={`http://localhost:5000/${member.imagename}`} alt="Membre" />
                                                     </div>
+
                                                 );
+
                                             }
                                             return null;
                                         })}
@@ -150,12 +163,18 @@ function Announcements() {
                                         </p>
                                     </div>
                                     <div className="card-bottom">
-                                        <button onClick={() => handleCommentClick(announcement)}>
+                                        <button className='m-3 btn btn-primary' onClick={() => handleCommentClick(announcement)}>
                                             <CommentIcon />
                                         </button>
-                                        {showCommentForm && selectedAnnouncement && (
-                                            <FormComment announcementId={selectedAnnouncement._id} />
+                                        {showCommentForm && selectedAnnouncement === announcement && (
+                                            <FormComment announcementId={announcement._id} />
                                         )}
+                                        <button className='m-3 btn btn-primary' onClick={() => handleMessageClick(announcement)}>
+                                            <EmailIcon />
+                                        </button>
+                                        {showMessage && selectedMessage && <Message recipient={recipient} />}
+
+
                                     </div>
                                 </div>
                             ))}

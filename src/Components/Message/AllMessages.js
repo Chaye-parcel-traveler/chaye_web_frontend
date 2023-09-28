@@ -32,6 +32,44 @@ function AllMessages() {
             });
     }, []);
 
+    const initialMembersState = {
+        loading: true,
+        error: '',
+        members: []
+    };
+
+    const membersReducer = (state, action) => {
+        switch (action.type) {
+            case 'FETCH_MEMBERS_SUCCESS':
+                return {
+                    ...state,
+                    loading: false,
+                    members: action.payload,
+                    error: '',
+                };
+            case 'FETCH_MEMBERS_ERROR':
+                return {
+                    ...state,
+                    loading: false,
+                    members: [],
+                    error: 'Something went wrong with members!',
+                };
+            default:
+                return state;
+        }
+    };
+
+    const [membersState, membersDispatch] = useReducer(membersReducer, initialMembersState);
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/memberinfos', { withCredentials: true })
+            .then(response => {
+                membersDispatch({ type: 'FETCH_MEMBERS_SUCCESS', payload: response.data });
+            }).catch(() => {
+                membersDispatch({ type: 'FETCH_MEMBERS_ERROR' });
+            });
+    }, []);
+
     const initialState = {
         loading: true,
         error: '',
@@ -42,15 +80,17 @@ function AllMessages() {
         switch (action.type) {
             case 'FETCH_SUCCESS':
                 return {
+                    ...state,
                     loading: false,
                     messages: action.payload,
                     error: '',
                 };
             case 'FETCH_ERROR':
                 return {
+                    ...state,
                     loading: false,
                     messages: [],
-                    error: 'Something went wrong!!!!!',
+                    error: 'Something went wrong with messages!',
                 };
             default:
                 return state;
@@ -62,9 +102,8 @@ function AllMessages() {
     useEffect(() => {
         axios.get('http://localhost:5000/messages', { withCredentials: true })
             .then(response => {
-                console.log(response.data);
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
-            }).catch(error => {
+            }).catch(() => {
                 dispatch({ type: 'FETCH_ERROR' });
             });
     }, []);
@@ -111,49 +150,69 @@ function AllMessages() {
     return (
         <div>
             <List sx={{ width: '100%' }}>
-                {state.loading ? 'Loading...' : filteredMessages.map((message, index) => (
-                    <div className='boxMessage rounded mb-4' key={index}>
-                        <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <img alt="Remy Sharp" src={`http://localhost:5000/${userData.image}`} className='rounded-circle me-5' width={'70px'} />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={message.sender}
-                                secondary={
-                                    <React.Fragment>
-                                        <Typography
-                                            sx={{
-                                                display: 'inline',
-                                                fontWeight: 'bold',
-                                                color: 'white',
-                                                fontSize: '16px',
-                                            }}
-                                            component="span"
-                                            variant="body2"
-                                        >
-                                            {message.message}
-                                        </Typography>
-                                    </React.Fragment>
-                                }
-                            />
-                        </ListItem>
-                        <Divider />
-                        <div className="text-center"> 
-                            <Button variant="outlined" onClick={() => handleOpenReplyDialog(message.sender)} sx={{
-                                    backgroundColor: '#EC634E', 
-                                    color: 'white', 
-                                    borderColor: '#EC634E',
-                                    margin: '8px', 
-                                }}
-                            >
-                                Répondre
-                            </Button>
-                        </div>
-                    </div>
-                ))}
+                {state.loading || membersState.loading ? (
+                    'Loading...'
+                ) : (
+                    filteredMessages.map((message, index) => {
+                        return (
+                            <div className='boxMessage rounded mb-4' key={index}>
+                                <ListItem alignItems="flex-start">
+                                    <ListItemAvatar>
+                                        {membersState.members.map((member) => {
+                                            if (member.email === message.sender) {
+                                                return (
+                                                    <div  key={member.email}>
+                                                        <img
+                                                            src={`http://localhost:5000/${member.imagename}`}
+                                                            alt="Membre" className='rounded-circle' width={"70px"}
+                                                        />
+                                                        <h3 className='text-center'>{member.firstname}  {member.lastname}</h3>
+                                                    </div>
+                                                );
+                                            }
+                                            return null;
+                                        })}
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                       primary={
+                                            <React.Fragment>
+                                                <Typography
+                                                    sx={{
+                                                        fontWeight: 'bold',
+                                                        color: 'white',
+                                                        fontSize: '16px',
+                                                    }}
+                                                    component="span"
+                                                    variant="body2"
+                                                >
+                                                     {message.message}
+                                                </Typography>
+                                            </React.Fragment>
+                                        }
+                                    />
+                                </ListItem>
+
+
+                                <Divider />
+                                <div className="text-center">
+                                    <Button
+                                        variant="outlined"
+                                        onClick={() => handleOpenReplyDialog(message.sender)}
+                                        sx={{
+                                            backgroundColor: '#EC634E',
+                                            color: 'white',
+                                            borderColor: '#EC634E',
+                                            margin: '8px',
+                                        }}
+                                    >
+                                        Répondre
+                                    </Button>
+                                </div>
+                            </div>
+                        );
+                    })
+                )}
             </List>
-
-
 
             <Dialog open={openReplyDialog} onClose={handleCloseReplyDialog}>
                 <DialogTitle>Répondre au message</DialogTitle>
@@ -187,7 +246,7 @@ function AllMessages() {
                 </DialogContent>
                 <DialogActions>
                     <form className="form-message" action="http://localhost:5000/messages" method="post">
-                    <input type="hidden" name='memberId' className="form-control " value={userData.id}/>
+                        <input type="hidden" name='memberId' className="form-control " value={userData.id} />
                         <input type="hidden" name="sender" value={userData.email} />
                         <input type="hidden" name="recipient" value={selectedRecipient} />
                         <TextField
@@ -210,7 +269,7 @@ function AllMessages() {
                     </form>
                 </DialogActions>
             </Dialog>
-        </div>
+        </div >
     );
 }
 

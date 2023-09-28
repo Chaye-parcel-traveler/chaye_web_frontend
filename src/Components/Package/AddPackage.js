@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'semantic-ui-react';
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,6 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 function AddPackage() {
-
   let navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [content, setContent] = useState('');
@@ -19,7 +18,6 @@ function AddPackage() {
   const [picture, setPicture] = useState('');
   const [departureCity, setDepartureCity] = useState('');
   const [arrivalCity, setArrivalCity] = useState('');
-
   const [userData, setUserData] = useState('');
   useEffect(() => {
     axios.get('http://localhost:5000/getConnectedUser', { withCredentials: true })
@@ -64,7 +62,7 @@ function AddPackage() {
       formData.append('arrivalCity', arrivalCity);
       formData.append('picture', picture);
       axios
-        .post(`http://localhost:5000/packages`, formData, { withCredentials: true })
+        .post(`http://localhost:5000/packages`, formData)
         .then((response) => {
           console.log(response.data);
           return navigate("/");
@@ -83,7 +81,7 @@ function AddPackage() {
       <div className="content-body ">
         <Header />
         <Form className="formule" onSubmit={handleSubmit}>
-        <input type="hidden" name='memberId' className="form-control " value={userData.id} />
+          <input type="hidden" name='memberId' className="form-control " value={userData.id} />
           <div className='formule-fond'>
             <h3 className='py-5'>J'expédier un colis</h3>
             <div className='city'>

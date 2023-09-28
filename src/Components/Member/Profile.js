@@ -56,7 +56,6 @@ function Profile() {
               <div className='message'>
                 <h1 className='fw-bold m-3'>Mes messages </h1>
                 <hr className='tri-ligne mx-4'/>
-                <Message />
                 <AllMessages/>
               </div>
               <div className='profile'>
