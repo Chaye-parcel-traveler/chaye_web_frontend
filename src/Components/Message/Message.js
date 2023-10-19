@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import moment from 'moment';
 import { useNavigate } from "react-router-dom";
-const Date = moment().format('YYYY-MM-DD');
+import axios from 'axios';
+import { Button, Modal } from 'react-bootstrap'; 
 
-function Message() {
-    let navigate = useNavigate();
-  const [recipient, setRecipient] = useState('');
-  const [message, setMessage] = useState('');
-  const handelMessage = (event) => {
-    setMessage(event.target.value);
-  };
-
-  const handelRecipient = (event) => {
-    setRecipient(event.target.value);
-  };
+function Message({ recipient }) {
+  let navigate = useNavigate();
+  const [userData, setUserData] = useState({});
+  const [show, setShow] = useState(false);
+  const [message, setMessage] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
@@ -26,29 +22,45 @@ function Message() {
         console.log(response.data);
         return navigate('/home');
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(error => {
+        setUserData(false);
       });
+  }
+
+  const handelMessageChange = (event) => {
+    setMessage(event.target.value);
   };
 
   return (
-    <div className="d-flex flex-column align-items-center">
-      <div className="container col-6">
-        <h1 className="text-center">Nouveau message</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="fst-italic">email de destinataire</label>
-            <input type="text" className="form-control" id="recipient"  name="recipient"  value={recipient} onChange={handelRecipient} />
-          </div>
-          <div className="form-group">
-            <label className="fst-italic">Message</label>
-            <textarea className="form-control" id="message" name="message"  rows="4" value={message}  onChange={handelMessage}></textarea>
-          </div>
-          <input type="hidden" name="datetime" id="datetime" value={Date} />
-          <button type="submit" className="btn btn-primary mt-2">Envoyer</button>
-        </form>
-      </div>
-    </div>
+    <div> {/* Ajoutez un élément parent */}
+      <Button variant="primary" onClick={handleShow}>
+       message
+      </Button>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Message</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group col-8 m-auto">
+              <input type="hidden" name="sender" value={userData.email} />
+              <input type="hidden" name="recipient" value={recipient} />
+              <input type="hidden" name="memberId" value={userData.id} />
+              <div>
+                <label htmlFor="texte" className="fst-italic">Message:</label>
+                <textarea name="message" className="form-control" rows="4" onChange={handelMessageChange} />
+              </div>
+              <button type="submit" className="btn btn-primary fst-italic mt-2 mx-2">Envoyer</button>
+            </div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className='sumau' onClick={handleClose}>
+            Fermer
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div> 
   );
 }
 

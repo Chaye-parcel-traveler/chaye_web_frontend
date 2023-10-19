@@ -1,80 +1,292 @@
-/* Accueil.css */
-.content-home{
+.content {
     display: flex;
-    flex-direction: column;
 }
 
-.hero {
-    height: 30vh;
-    background-image: url('../../../public/img/head.jpg');
+.content-menu {
+    height: 100%;
+    width: 250px;
+}
+
+.content-body {
+    position: absolute;
+    top: 0;
+    left: 250px;
+    height: 100vh;
+    width: calc(100% - 250px);
+    transition: 0.5 step-start;
+}
+
+.content-main {
+    width: 90%;
+    margin: auto;
+}
+
+.titre {
+    font-weight: bold;
+    margin: 30px 0;
+}
+
+/* AnnonceFavoris caroussel */
+.announcements-container {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    width: 100%;
+    display: inline-block;
+
+}
+.card-annonce {
+    border-radius: 12px;
+    width: 30%;
+    margin-bottom: 2%;
+    margin-right: 10px;
+    vertical-align: top;
+}
+.carousel-container {
+    overflow-x: auto;
+    width: 100%;
+    white-space: nowrap;
+}
+.card-annonce  img {
+    width: 100%;
+    border-radius: 5px;
+}
+.card-annonce .card-top {
+    width: 100%;
+}
+.violet {
+    color: #4F4294;
+}
+/* annonce */
+.annonce {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3%;
+    margin: 2%;
+
+}
+ .colis {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  
+.card img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.card .card-top {
+    width: 100%;
+}
+
+.card {
+    border-radius: 12px;
+    width: 20%;
+    margin-bottom: 2%;
+}
+
+.btnAnnonce .btn {
+    background-color: #EC634E;
+    padding: 1% 2%;
+    border-radius: 20px;
+    margin: 3%;
+    color: #FFFFFF;
+}
+
+.btnAnnonce {
+    display: flex;
+    justify-content: center;
+}
+
+.btnAnnonce .btn:hover {
+    background-color: #4F4294;
+    color: #FFFFFF;
+}
+
+/* Avis */
+.avis {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3%;
+    margin: 2%;
+}
+
+.avis img {
+    width: 100px;
+}
+
+/* Categorie */
+.categorie {
+    margin: 2%;
+}
+
+.categorie .box1 h5,
+.categorie .box2 h5 {
+    color: white;
+    background-color: #ec634eb8;
+    width: 76px;
+    padding: 2px;
+    text-align: center;
+    border-radius: 10px 1px;
+
+
+}
+
+.categorie .box1 {
+    display: flex;
+    justify-content: space-evenly;
+    height: 200px;
+}
+
+.categorie .box1 .item1 {
+    width: 50%;
+    background-image: url('../../../public/img/img1.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    display: flex;
-}
-
-.heroItem {
-    text-align: center;
-    color: rgb(8, 8, 8);
-    padding: 2%;
-    width: 50%;
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-    background-color: hsla(0, 0%, 100%, 0.548);
-}
-
-.heroItem input {
-    border: 2px solid #EC634E;
-    color: #FFFFFF;
-    padding: 2% 4%;
-    margin: 2% 10%;
     border-radius: 10px;
-    background-color: #EC634E;
+    transition: transform 0.3s ease;
+
 }
 
-/* Button search */
-.search{
-    margin-top: 1%;
+.categorie .box1 .item2 {
+    width: 30%;
+    background-image: url('../../../public/img/img2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+
 }
-/* Assurance */
-.assurance {
-    padding: 2% 1%;
-    margin: auto;
-    margin-top: 1%;
-    background-color: #FFFFFF;
-    border: 1px solid #ced4da;
-}
-/* Annonce */
-.annonce {
+
+.categorie .box2 {
     display: flex;
-    gap: 2px;
-    margin-top: 4px;
-    padding: 3% 1%;
-}
-.card{
-    margin-right: 1%;
-    border: 1px solid #ced4da;
-    width: 20%;
-    height: 5%;
-}
-.card img{
-    width: 300px;
     height: 200px;
+    margin-top: 20px;
+    justify-content: space-evenly;
 }
-.btn{
-    background-color: #EC634E;
-    padding: 1% 2%;
-    border-radius:20px;
-    margin: 3% ;
-    color: #FFFFFF;
+
+.categorie .box2 .item3 {
+    width: 25%;
+    background-image: url('../../../public/img/img3.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
 }
-.btnAnnonce{
-    display: flex;
-    justify-content: center;
- 
+
+.categorie .box2 .item4 {
+    width: 25%;
+    background-image: url('../../../public/img/img4.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+
 }
-.btnAnnonce .btn:hover{
-    background-color: #4F4294;
-    color: #FFFFFF;
+
+.categorie .box2 .item5 {
+    width: 25%;
+    background-image: url('../../../public/img/img5.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.categorie .box1 .item1:hover {
+    width: 55%;
+    transform: scale(1);
+}
+
+.categorie .box1 .item2:hover {
+    width: 35%;
+    transform: scale(1);
+}
+
+.categorie .box2 .item3:hover {
+    width: 30%;
+    transform: scale(1);
+}
+
+.categorie .box2 .item4:hover {
+    width: 30%;
+    transform: scale(1);
+}
+
+.categorie .box2 .item5:hover {
+    width: 30%;
+    transform: scale(1);
+}
+
+
+@media screen and (max-width: 768px) {
+    .content-menu {
+        height: 100%;
+        width: 80px;
+    }
+
+    .content-body {
+        position: absolute;
+        top: 0;
+        left: 80px;
+        width: calc(100% - 80px);
+        transition: 0.5 step-start;
+    }
+
+    .content-main {
+        width: 80%;
+        margin: auto;
+    }
+
+    /* Annonce */
+    .annonce {
+        display: block;
+        height: 30%;
+    }
+
+    .annonce .card img {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .card {
+        border-radius: 12px;
+        width: 80%;
+        margin-bottom: 2%;
+    }
+
+    .card-body p {
+        font-size: .7rem;
+    }
+
+    .btnAnnonce .btn {
+        padding: 3% 2%;
+        border-radius: 10px;
+        margin: 4%;
+    }
+
+    .btnAnnonce a {
+        font-size: .6rem;
+    }
+
+    .btnAnnonce .btn:hover {
+        background-color: #4F4294;
+        color: #FFFFFF;
+    }
+
+    /* Avis */
+    .categorie {
+        display: none;
+    }
+
+    .footerfixe {
+        width: 100%;
+        margin: auto;
+        position: absolute;
+        bottom: 0;
+    }
 }

@@ -1,32 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Button } from 'semantic-ui-react';
+import '../styles/nav.css';
+import '../styles/accueil.css';
+import '../styles/profile.css';
+import Navbar from '../NavBar/NavBar';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import AllMessages from '../Message/AllMessages';
 
 function Profile() {
-  const params = useParams();
 
   // État pour le chargement
   const [loading, setLoading] = useState(true);
   // État pour les erreurs
   const [error, setError] = useState('');
-  // État pour les données du member
+  // État pour les données des membres
   const [member, setMember] = useState({});
 
-  useEffect((id) => {
+  useEffect(() => {
     axios
-      .get(`/members/${id}`,{withCredentials:true})
+      .get('/me')
       .then((response) => {
         setLoading(false);
         setError('');
-        setMember(response.data.member);
+        setMember(response.data);
       })
       .catch((error) => {
         setLoading(false);
         setError('Something went wrong!');
         setMember({});
       });
-  }, [params.id]);
+  }, []);
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -37,22 +41,52 @@ function Profile() {
   }
 
   return (
-    
-    <div>
-      {/* <img src={`http://localhost:5000/${member.imagename}`} width={'150px'}/> */}
-      <h1>{member.lastname}</h1>
-      <h1>{member.firstname}</h1>
-      <h1>{member.email}</h1>
-      <h1>{member.adress}</h1>
-      <Button primary as='a' href={`/editmember/${member._id}`}>
-        Edit
-      </Button>
-      {/* <form action={`http://localhost:5000/deleteMember/${member._id}?_method=DELETE`} method='post'>
-        <input type='hidden' name='_method' value='DELETE' /> */}
-        <Button positive type='submit'>Supprimer</Button>
-      {/* </form> */}
+    <div className='content'>
+      <div className='content-menu'>
+        <Navbar />
+      </div>
+      <div className="content-body">
+        <Header />
+        <React.Fragment>
+          <div className="content-main">
+            <div className='content-profile'>
+              <div className='message'>
+                <h1 className='fw-bold m-3'>Mes messages </h1>
+                <hr className='tri-ligne mx-4'/>
+                <AllMessages/>
+              </div>
+              <div className='profile'>
+                <div className='img-profile'>
+                  <img src={`/${member.imagename}`} className='rounded-circle' width={'120px'} height={'100px'} alt='toto' />
+                </div>
+                <h1>{member.lastname} {member.firstname}</h1>
+                <p><i className="fa-solid fa-location-dot"></i>{member.adress}</p>
+                <hr />
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                <hr />
+
+                <h3>Contact info</h3>
+                <span>  <i className="fa-regular fa-envelope"></i> Email : {member.email}</span><br /><br />
+                <span> <i className="fa-solid fa-phone"></i>Phone : {member.phone}</span><br /><br />
+                <a className="py-3 m-3" href={`/editmember/${member._id}`}><br />
+                  <i className="fas fa-pencil-alt"></i> Modifier mes informations
+                </a>
+
+                <form action={`/members/${member._id}?_method=DELETE`} method='post'>
+                  <input type='hidden' name='_method' value='DELETE' />
+                  <button className="btn btn-danger m-3" type="submit" >
+                    <i className="fas fa-trash "></i>Supprimer mon compte
+                  </button>
+                </form>
+                <br />
+              </div>
+            </div>
+          </div>
+        </React.Fragment>
+        <Footer />
+      </div>
     </div>
-  );
+  )
 }
 
 export default Profile;

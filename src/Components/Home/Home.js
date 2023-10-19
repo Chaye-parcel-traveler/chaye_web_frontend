@@ -1,18 +1,21 @@
-
-import React, { useEffect, useReducer } from 'react';
-import axios from 'axios';
-import { Button } from 'semantic-ui-react';
+// import React, { useEffect, useReducer } from 'react';
+// import axios from 'axios';
 import '../styles/accueil.css';
 import '../styles/nav.css';
-//Moment (date)
-import moment from 'moment/moment';
-import 'moment/locale/fr'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import AllComments from '../Comments/AllComments';
+//Moment (date)
+import moment from 'moment/moment';
+import 'moment/locale/fr'
+import Favoris from '../Favoris/Favoris';
+import Assurance from '../Header/Assurance';
 moment().locale('fr')
 
 function Home() {
+    /*
     const initialestate = {
         loading: true,
         error: '',
@@ -37,8 +40,7 @@ function Home() {
                 return state;
         }
     };
-    const [state, dispatch] = useReducer(reducer, initialestate)
-
+    const [state, dispatch] = useReducer(reducer, initialestate);
     useEffect(() => {
         axios.get('/packages', { withCredentials: true })
             .then(response => {
@@ -49,59 +51,62 @@ function Home() {
                 dispatch({ type: 'FETCH_ERROR' });
             });
     }, [])
+*/
     return (
-        <div className='d-flex content'>
-            <div className="navbar col-3 ">
+        <div className='content'>
+            <div className='content-menu'>
                 <Navbar />
             </div>
-            <div className="col-9 content-home">
+            <div className="content-body">
                 <Header />
-                <React.Fragment>
-                    <div className="assurance">
-                        <h4>Assurance</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores iste labore magni repudiandae et,
-                            eum
-                            deleniti quaerat nobis nemo aut praesentium adipisci facere? Quos, impedit nobis quisquam in harum
-                            perspiciatis!...</p><a href="#top">Lire la suite</a>
+                <Assurance />
+                <div className="content-main">
+                    <div className='d-flex justify-content-between'>
+                        <h2 className='titre'>A la une</h2>
+                        <h4 className='text-danger fw-bold text-decoration-underline'>Favoris</h4>
                     </div>
-                    <h3>A la une</h3>
-                    <div className='annonce'>
-                        {state.loading ? 'loading...' : state.packages.map((packages, index) => (
-                            <div className='card' key={index}>
+                    <Favoris />
 
-                                <img src={`/${packages.picture}`} alt='avatar'/>
-                                <div>
-                                    <h3>{packages.content}</h3>
-                                    <p>{packages.departureCity}</p>
-                                    <p>
-                                        Dimensions: {packages.weight}x{packages.size}
-                                    </p>
-                                    <p>Date de Création{moment(packages.creationDate).format('L')}</p>
-                                    <div className='btnAnnonce'>
-                                        <Button primary as='a' href={`/EditPackage/${packages._id}`}>Edit</Button>
-                                        <form action={`/deletepackage/${packages._id}?_method=DELETE`} method="post">
-                                            <input type="hidden" name="_method" value="DELETE" />
-                                            <Button positive>Supprimer</Button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                    <div className="btnAnnonce">
+                        <a href="/announcements" className="btn" >Voir tous les annonces</a>
+                        <a href="/carte" className="btn" >Carte intéractive</a>
                     </div>
-                </React.Fragment>
-                <div class="btnAnnonce">
-                    <input className="btn" type="button" value="Voir tous les annonces" />
-                    <input className="btn" type="button" value="Carte intéractive" />
+                    <div>
+                        <h2 className='titre'>Avis</h2>
+                        <AllComments />
+                    </div>
+
+                    <div className="categorie">
+                        <h2 className='titre'>Catégories</h2>
+                        <div className="box1">
+                            <div className="item1">
+                                <h5>caraibies</h5>
+                            </div>
+                            <div className="item2">
+                                <h5>Europe</h5>
+
+                            </div>
+                        </div>
+                        <div className="box2">
+                            <div className="item3 ">
+                                <h5>Amérique</h5>
+                            </div>
+                            <div className="item4 ">
+                                <h5>Afrique</h5>
+                            </div>
+
+                            <div className="item5">
+                                <h5>Asie</h5>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <Footer />
+                    <Footer />
             </div>
 
         </div>
     )
 
 }
-
-
-
 
 export default Home

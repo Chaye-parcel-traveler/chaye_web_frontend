@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'semantic-ui-react';
 import { useNavigate } from "react-router-dom";
 import Navbar from '../NavBar/NavBar';
+import '../styles/accueil.css';
 
-import '../styles/styles.css';
+import '../styles/formule.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
@@ -16,7 +17,16 @@ function AddPackage() {
   const [size, setSize] = useState('');
   const [picture, setPicture] = useState('');
   const [departureCity, setDepartureCity] = useState('');
-
+  const [arrivalCity, setArrivalCity] = useState('');
+  const [userData, setUserData] = useState('');
+  useEffect(() => {
+    axios.get('/me')
+      .then(response => {
+        setUserData(response.data);
+      }).catch(error => {
+        setUserData(false);
+      });
+  }, []);
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
     setPicture(event.target.files[0].name);
@@ -36,6 +46,9 @@ function AddPackage() {
   const handleDepartureCityChange = (event) => {
     setDepartureCity(event.target.value);
   };
+  const handleArrivalCityChange = (event) => {
+    setArrivalCity(event.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -46,12 +59,13 @@ function AddPackage() {
       formData.append('weight', weight);
       formData.append('size', size);
       formData.append('departureCity', departureCity);
+      formData.append('arrivalCity', arrivalCity);
       formData.append('picture', picture);
       axios
-        .post(`/package`, formData ,{withCredentials:true})
+        .post(`/packages`, formData ,{withCredentials:true})
         .then((response) => {
           console.log(response.data);
-          return navigate("/home");
+          return navigate("/");
         })
         .catch((error) => {
           console.log(error);
@@ -60,45 +74,46 @@ function AddPackage() {
   };
 
   return (
-  <div className='row'>
-    <div className="col-2 ">
-        <Navbar/>
+    <div className='content'>
+      <div className='content-menu'>
+        <Navbar />
+      </div>
+      <div className="content-body ">
+        <Header />
+        <Form className="formule" onSubmit={handleSubmit}>
+          <input type="hidden" name='memberId' className="form-control " value={userData.id} />
+          <div className='formule-fond'>
+            <h3 className='py-5'>J'expédier un colis</h3>
+            <div className='city'>
+              <input type="text" name='departureCity' className="form-control me-3" onChange={handleDepartureCityChange} placeholder='Départ de ' />
+              <input type="text" name='arrivalCity' className="form-control" onChange={handleArrivalCityChange} placeholder='Arrivé à ' />
+            </div>
+          </div>
+          <div className='formule-body mb-5'>
+            <Form.Field>
+              <label className="form-label">Contenu:</label>
+              <input type="text" name='content' className="form-control" onChange={handleContentChange} />
+            </Form.Field>
+            <Form.Field>
+              <label className="form-label">Poids:</label>
+              <input type="number" name='weight' className="form-control" min={0} onChange={handleWeightChange} />
+            </Form.Field>
+            <Form.Field>
+              <label className="form-label">Taille:</label>
+              <input type="number" name='size' className="form-control" min={0} onChange={handleSizeChange} />
+            </Form.Field>
+            <Form.Field>
+              <label className="form-label">Photo de contenu du colis :</label>
+              <input type="file" name='picture' className="form-control" onChange={handleFileChange} />
+            </Form.Field>
+            <div className='button mb-5'>
+              <Button id="btn" primary type="submit">Ajouter</Button>
+            </div>
+          </div>
+        </Form>
+        <Footer />
+      </div>
     </div>
-    <div className="col-10 ">
-    <Header/>
-       <h1  className="text-center pt-5 fs-2 fw-bold" >J'expédier un colis</h1> 
-       <div className=' col-6 d-flex m-auto '>
-       <input type="text" className="form-control me-5 py-3"  onChange={handleDepartureCityChange} placeholder='Départ de ' />
-       <input type="text" className="form-control py-3"  onChange={handleDepartureCityChange} placeholder='Arrivé à ' />
-       </div>
-      <Form  className="col-formule bg-white container-fluid col-4 my-3 " onSubmit={handleSubmit}>
-        <Form.Field>
-          <label className="form-label">Contenu:</label>
-          <input type="text" className="form-control"  onChange={handleContentChange} />
-        </Form.Field>
-
-        <Form.Field>
-          <label className="form-label">Poids:</label>
-          <input type="string"  className="form-control" onChange={handleWeightChange}/>
-        </Form.Field>
-
-        <Form.Field>
-          <label className="form-label">Taille:</label>
-          <input type="string" className="form-control"  onChange={handleSizeChange}/>
-        </Form.Field>
-        <Form.Field>
-          <label className="form-label">Ville de départ:</label>
-          <input type="text" className="form-control"  onChange={handleDepartureCityChange} />
-        </Form.Field>
-        <Form.Field>
-          <label className="form-label">Photo de contenu du colis :</label>
-          <input type="file"  className="form-control" onChange={handleFileChange} />
-        </Form.Field>
-        <Button id="btn" primary type="submit">Ajouter</Button>
-      </Form>
-      <Footer/>
-    </div>
-  </div>
   );
 }
 

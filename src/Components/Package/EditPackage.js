@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react';
+import '../styles/formule.css';
 
 function EditColis() {
   let navigate = useNavigate();
@@ -35,9 +36,9 @@ function EditColis() {
   };
 
 
-  useEffect(() => {
+  useEffect((id) => {
     axios
-      .get(`/package/${params.id}`, { withCredentials: true })
+      .get(`/package/${id}`, { withCredentials: true })
       .then((response) => {
         setContent(response.data.content);
         setWeight(response.data.weight);
@@ -48,7 +49,7 @@ function EditColis() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [params.id]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

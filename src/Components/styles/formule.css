@@ -1,0 +1,67 @@
+.formule-fond {
+  background-image: url('../../../public/img/fond.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 250px;
+  border-radius: 10px;
+  margin-top: 3%;
+  padding: 10px;
+}
+
+.formule-fond h3 {
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+
+.formule-body {
+  width: 60%;
+  margin: auto;
+  border: 1px solid #ced4da;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.city {
+  display: flex;
+  margin: auto;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+}
+
+.formule {
+  width: 70%;
+  margin: auto;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+}
+
+#btn {
+  background-color: #EC634E;
+  color: #FFFF;
+}
+
+@media screen and (max-width: 768px) {
+  .formule-fond {
+    height: 230px;
+
+  }
+
+  .formule-fond h3 {
+    font-size: 1.5rem;
+  }
+
+  .formule-body {
+    width: 90%;
+    padding: 20px;
+  }
+  .formule {
+    width: 90%;
+    margin-top: 20px;
+  }
+}

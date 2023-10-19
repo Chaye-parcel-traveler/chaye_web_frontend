@@ -7,7 +7,7 @@ function AllMembers() {
   const initialestate = {
     loading: true,
     error: '',
-    membres: {}
+    members: []
   }
 
   const reducer = (state, action) => {
@@ -16,14 +16,14 @@ function AllMembers() {
         console.log('reducer FETCH_SUCCESS',state, action)
         return {
           loading: false,
-          membres: action.payload,
+          members: action.payload,
           error: '',
         };
       case 'FETCH_ERROR':
         console.log('reducer FETCH_ERROR',state, action)
         return {
           loading: false,
-          membres: [],
+          members: [],
           error: 'Something went wrong!!!!!',
         };
       default:
@@ -50,6 +50,7 @@ function AllMembers() {
   }, [])
 
   return (
+    <React.Fragment>
     <Table striped>
       <Table.Header>
         <Table.Row>
@@ -63,29 +64,34 @@ function AllMembers() {
           <Table.HeaderCell>Supprimer</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
-      {state.loading ? 'Loading...' : state.membres.map((membre, index) => (
-        <Table.Body >
+      <Table.Body>
+          {state.loading ? (
+            <Table.Row>
+              <Table.Cell colSpan="8">Chargement en cours...</Table.Cell>
+            </Table.Row>
+          ) : (
+            state.members.map((member, index) => (
           <Table.Row key={index}>
-            <Table.Cell>{membre.firstname}</Table.Cell>
-            <Table.Cell>{membre.lastname}</Table.Cell>
-            <Table.Cell>{membre.email}</Table.Cell>
-            <Table.Cell>{membre.address}</Table.Cell>
-            {/* <Table.Cell>{membre.status}</Table.Cell> */}
-            {/* <Table.Cell><img src={`/${membre.imagename}`} width={'150px'} /></Table.Cell> */}
-            <Table.Cell><Button primary as='a' href={`/editMembre/${membre._id}`}>Edit</Button></Table.Cell>
+            <Table.Cell>{member.firstname}</Table.Cell>
+            <Table.Cell>{member.lastname}</Table.Cell>
+            <Table.Cell>{member.email}</Table.Cell>
+            <Table.Cell>{member.address}</Table.Cell>
+            {/* <Table.Cell>{member.status}</Table.Cell> */}
+            {/* <Table.Cell><img src={`/${member.imagename}`} width={'150px'} /></Table.Cell> */}
+            <Table.Cell><Button primary as='a' href={`/editMembre/${member._id}`}>Edit</Button></Table.Cell>
             <Table.Cell>
-              {/* <form action={`/membre/delete/${membre._id}?_method=DELETE`} method="post">
+              {/* <form action={`/member/delete/${member._id}?_method=DELETE`} method="post">
                 <input type="hidden" name="_method" value="DELETE" /> */}
                 <Button positive>Supprimer</Button>
               {/* </form> */}
             </Table.Cell>
           </Table.Row>
-
+        ))
+        )}
         </Table.Body>
 
-      ))}
-
     </Table>
-  )
+    </React.Fragment>
+  );
 }
 export default AllMembers
