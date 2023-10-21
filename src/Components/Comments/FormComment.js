@@ -3,8 +3,6 @@ import { Button, Modal } from 'react-bootstrap';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';
-import 'semantic-ui-css/semantic.min.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/comment.css';
 
 

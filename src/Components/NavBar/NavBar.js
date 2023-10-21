@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Dropdown } from 'semantic-ui-react';
-import '../styles/nav.css';
 import axios from 'axios';
 import { logout } from '../../Services/member'
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [sideBarClose, setSideBarClose] = useState(true);
   console.log('user', userData, isLoggedIn);
 
   useEffect(() => {
-      axios.get('/me')
+    axios.get('/me')
       .then(response => {
         setUserData(response.data);
         setIsLoggedIn(true);
@@ -23,88 +23,108 @@ function Navbar() {
   };
 
   const handleLogout = async (e) => {
-      await logout();
-      sessionStorage.clear();
-      setUserData(null);
-      setIsLoggedIn(false);
+    await logout();
+    sessionStorage.clear();
+    setUserData(null);
+    setIsLoggedIn(false);
+  }
+
+  const toggleSidebar = () => {
+    setSideBarClose(!sideBarClose);
   }
 
   return (
-    <div className="content-menu">
-      <a href="/">
-        <img src={"/img/logo.png"} alt="Logo" className="logo" />
-      </a>
-      <ul className='text-decoration-none'>
-        <li>
-          <div className="input-group">
-            <i className="fa-solid fa-search"></i>
-            <input className="form-control search" type="search" placeholder="Recherche" aria-label="Search" onChange={handleSearch} />
+    <nav className={`sidebar ${sideBarClose ? "close" : null}`}>
+      <header>
+        <div className="image-text">
+          <span className="image">
+            <img src="images/logo.png" alt="Chaye" />
+          </span>
+
+          <div className="text logo-text">
+            <span className="name">Chaye</span>
+            {/*<span className="profession">New Edge</span>*/}
           </div>
-        </li>
-        <li>
-          <a href="/announcements">
-            <i className="fa-solid fa-bullhorn"></i>
-            <span> Annonces</span>
-          </a>
-        </li>
+        </div>
 
-        {!isLoggedIn && (
-          <li>
-            <i className="fa-solid fa-user "></i>
-            <span>Compte</span>
-            <Dropdown item  className="custom-dropdown">
-              <Dropdown.Menu>
-                <Dropdown.Item as="a" href="/SignUp"> S'inscrire</Dropdown.Item>
-                <Dropdown.Item as="a" href="/login"> Se connecter</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+        <i className="bx bx-chevron-right toggle" onClick={toggleSidebar}></i>
+      </header>
+
+      <div className="menu-bar">
+        <div className="menu">
+          <li className="search-box" onClick={() => { setSideBarClose(false) }}>
+            <i className="bx bx-search icon"></i>
+            <input type="text" placeholder="Rechercher..." onChange={handleSearch} />
           </li>
-        )}
 
-        <li>
-          <a href="/AboutUs">
-            <i className="fa-solid fa-circle-info"></i>
-            <span>À propos de nous</span>
-          </a>
-        </li>
+          <ul className="menu-links">
+            <li className="nav-link">
+              <Link to={'/announcements'}>
+                <i className="bx bx-tada-hover bxs-widget bx-md icon"></i>
+                <span className="text nav-text">Annonces</span>
+              </Link>
+            </li>
 
-        <li>
-          <a href="/support">
-            <i className="fa-solid fa-headset"></i>
-            <span> Support</span>
-          </a>
-        </li>
-        {userData && userData.isAdmin === true && (
-          <li>
-            <a href="/allmembers">
-              <i className="fa-solid fa-users"></i>
-              <span> AllMembres </span>
-            </a>
-          </li>
-        )}
+            <li className="nav-link">
+              <Link to={isLoggedIn ? `/profile/${userData.id}` : '/loginSignup'}>
+                <i className="bx bx-tada-hover bxs-user-detail bx-md icon"></i>
+                <span className="text nav-text">Mon compte</span>
+              </Link>
+            </li>
 
+            <li className="nav-link">
+              <Link to={'/'}>
+                <i className="bx bx-tada-hover bxs-help-circle bx-md icon"></i>
+                <span className="text nav-text">Support</span>
+              </Link>
+            </li>
 
+            <li className="nav-link">
+              <Link to={'/'}>
+                <i className="bx bx-tada-hover bxs-info-circle bx-md icon"></i>
+                <span className="text nav-text">À propos de nous </span>
+              </Link>
+            </li>
 
-        {userData && (
-          <li>
-            <a href={`/profile/${userData.id}`}>
-              <i className="fa-solid fa-user"></i>
-              <span> Profile </span>
-            </a>
-          </li>
-        )}
+            <li className="nav-link">
+              <Link to={'/'}>
+                <i className="bx bxs-bell bx-tada-hover bx-md icon"></i>
+                <span className="text nav-text">Mes messages </span>
+              </Link>
+            </li>
 
-        {isLoggedIn && (
-          <li className="logout-btn">
-            <button onClick={handleLogout}>
-              <i className="fa-solid fa-right-from-bracket fa-rotate-180"></i>
-              <span>  Déconnecter </span>
-            
-            </button>
-          </li>
-        )}
-      </ul>
-    </div>
+            <li className="nav-link">
+              <Link to={'/'}>
+                <i className="bx bxs-wallet bx-tada-hover bx-md icon"></i>
+                <span className="text nav-text">Portefeuille</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        <div className="bottom-content">
+          {isLoggedIn && (
+            <li onClick={handleLogout}>
+              
+                <i className="bx bx-log-out bx-tada-hover bx-md icon"></i>
+                <span className="text nav-text pointer" >Se deconnecter</span>
+              
+            </li>
+          )}
+          {/* <li className="mode">
+                <div className="sun-moon">
+                  <i className="bx bx-moon icon moon"></i>
+                  <i className="bx bx-sun icon sun"></i>
+                </div>
+                <span className="mode-text text">Dark mode</span>
+    
+                <div className="toggle-switch">
+                  <span className="switch"></span>
+                </div>
+              </li>*/}
+        </div>
+      </div>
+    </nav>
   );
 };
 

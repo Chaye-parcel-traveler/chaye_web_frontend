@@ -1,8 +1,6 @@
 import React from 'react';
 import '../styles/aboutUs.css';
 import '../styles/accueil.css';
-import '../styles/nav.css';
-import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
@@ -10,9 +8,6 @@ import Footer from '../Footer/Footer';
 function AboutUs() {
     return (
         <div className='content'>
-            <div className='content-menu'>
-                <Navbar />
-            </div>
             <div className="content-body">
                 <Header />
 

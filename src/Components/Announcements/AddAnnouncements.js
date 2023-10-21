@@ -35,9 +35,6 @@ function AddAnnouncements() {
 
   return (
     <div className='content'>
-      <div className="content-menu">
-        <Navbar />
-      </div>
       <div className="content-body">
         <Header />
         <Form className="bg-white my-3 formule" onSubmit={handleSubmit}>

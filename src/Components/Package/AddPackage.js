@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'semantic-ui-react';
 import { useNavigate } from "react-router-dom";
-import Navbar from '../NavBar/NavBar';
 import '../styles/accueil.css';
 
 import '../styles/formule.css';
@@ -75,9 +74,6 @@ function AddPackage() {
 
   return (
     <div className='content'>
-      <div className='content-menu'>
-        <Navbar />
-      </div>
       <div className="content-body ">
         <Header />
         <Form className="formule" onSubmit={handleSubmit}>

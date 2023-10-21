@@ -1,17 +1,12 @@
 import React from 'react';
 import '../styles/faq.css';
 import '../styles/accueil.css';
-import '../styles/nav.css';
-import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 function Faq() {
     return (
         <div className='content'>
-            <div className='content-menu'>
-                <Navbar />
-            </div>
             <div className="content-body">
                 <Header />
 

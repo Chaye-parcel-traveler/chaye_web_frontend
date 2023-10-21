@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../styles/nav.css';
 import '../styles/accueil.css';
 import '../styles/profile.css';
-import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import AllMessages from '../Message/AllMessages';
@@ -42,9 +40,6 @@ function Profile() {
 
   return (
     <div className='content'>
-      <div className='content-menu'>
-        <Navbar />
-      </div>
       <div className="content-body">
         <Header />
         <React.Fragment>

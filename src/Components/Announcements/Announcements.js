@@ -3,15 +3,12 @@ import axios from 'axios';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Fab from '@mui/material/Fab';
 import '../styles/accueil.css';
-import '../styles/nav.css';
 import '../styles/comment.css';
 import FormComment from '../Comments/FormComment';
 import CommentIcon from '@mui/icons-material/Comment';
 import EmailIcon from '@mui/icons-material/Email';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment/moment';
 import 'moment/locale/fr';
-import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import AllPackages from '../Package/AllPackages';
@@ -120,9 +117,6 @@ function Announcements() {
 
     return (
         <div className="content">
-            <div className="content-menu">
-                <Navbar />
-            </div>
             <div className="content-body">
                 <Header />
                 <Assurance />
