@@ -1,115 +1,164 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Form, Button } from 'semantic-ui-react';
 import { useNavigate } from "react-router-dom";
-import '../styles/accueil.css';
-
-import '../styles/formule.css';
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 
 function AddPackage() {
   let navigate = useNavigate();
-  const [file, setFile] = useState(null);
-  const [content, setContent] = useState('');
-  const [weight, setWeight] = useState('');
-  const [size, setSize] = useState('');
-  const [picture, setPicture] = useState('');
-  const [departureCity, setDepartureCity] = useState('');
-  const [arrivalCity, setArrivalCity] = useState('');
-  const [userData, setUserData] = useState('');
-  useEffect(() => {
-    axios.get('/me')
-      .then(response => {
-        setUserData(response.data);
-      }).catch(error => {
-        setUserData(false);
-      });
-  }, []);
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-    setPicture(event.target.files[0].name);
-  };
+  const [inputs, setInputs] = useState({});
 
-  const handleContentChange = (event) => {
-    setContent(event.target.value);
-  };
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs(values => ({ ...values, [name]: value }))
+  }
 
-  const handleWeightChange = (event) => {
-    setWeight(event.target.value);
-  };
-
-  const handleSizeChange = (event) => {
-    setSize(event.target.value);
-  };
-  const handleDepartureCityChange = (event) => {
-    setDepartureCity(event.target.value);
-  };
-  const handleArrivalCityChange = (event) => {
-    setArrivalCity(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (file) {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('content', content);
-      formData.append('weight', weight);
-      formData.append('size', size);
-      formData.append('departureCity', departureCity);
-      formData.append('arrivalCity', arrivalCity);
-      formData.append('picture', picture);
-      axios
-        .post(`/packages`, formData ,{withCredentials:true})
-        .then((response) => {
-          console.log(response.data);
-          return navigate("/");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
+  const handleSubmit = async e => {
+    e.preventDefault();
+    // await axios.post('/announcements', inputs);
+    // navigate('/announcements')
+  }
 
   return (
     <div className='content'>
-      <div className="content-body ">
+      <div className="content-body">
         <Header />
-        <Form className="formule" onSubmit={handleSubmit}>
-          <input type="hidden" name='memberId' className="form-control " value={userData.id} />
-          <div className='formule-fond'>
-            <h3 className='py-5'>J'expédier un colis</h3>
-            <div className='city'>
-              <input type="text" name='departureCity' className="form-control me-3" onChange={handleDepartureCityChange} placeholder='Départ de ' />
-              <input type="text" name='arrivalCity' className="form-control" onChange={handleArrivalCityChange} placeholder='Arrivé à ' />
+        <div className="container">
+
+          <div className="box-chaye margin-top-25 bgPurple" style={{ position: 'relative' }}>
+            <h2 className="txtCenter margin-top-36 txtwhite margin-bottom-40 ">J’expédie un colis</h2>
+            <div className="displayFlex ">
+              <div className="container">
+
+                <div className="DisplayVol">
+
+                  <div>
+                    <div className="setting-description p-2">
+                      <div className="setting-description-text mb-3" style={{ marginLeft: '15px' }}>
+                        <h1>Départ de</h1>
+                      </div>
+                    </div>
+                    <div className="wrapper-dropdown" id="dropdown">
+                      <input className="form-control" list="datalistOptions" name='departing_from' placeholder="Fort de France" onChange={handleChange}/>
+                      <datalist id="datalistOptions">
+                        <option value="Fort de France" />
+                        <option value="San Francisco" />
+                        <option value="New York" />
+                        <option value="Seattle" />
+                        <option value="Los Angeles" />
+                        <option value="Chicago" />
+                      </datalist>
+                      {/* <span className="selected-display" id="destination">Guadeloupe</span>
+                      <svg className="arrow" id="drp-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-all ml-auto rotate-180">
+                        <path d="M7 14.5l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>
+                      <ul className="dropdown">
+                        <li className="item">Option 1</li>
+                        <li className="item">Option 2</li>
+                        <li className="item">Option 3</li>
+                        <li className="item">Option 4</li>
+                      </ul> */}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="setting-description p-2">
+                      <div className="setting-description-text mb-3" style={{ marginLeft: '15px' }}>
+                        <h10>Arrivée à :</h10>
+                      </div>
+                    </div>
+                    <div className="wrapper-dropdown" id="dropdown">
+                      <input className="form-control" list="datalistOptions" name='arriving_at' placeholder="Paris" onChange={handleChange}/>
+                      <datalist id="datalistOptions">
+                        <option value="Paris" />
+                        <option value="Fort de France" />
+                        <option value="San Francisco" />
+                        <option value="New York" />
+                        <option value="Seattle" />
+                        <option value="Los Angeles" />
+                      </datalist>
+                      {/* <span className="selected-display" id="destination">Paris</span>
+                      <svg className="arrow" id="drp-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-all ml-auto rotate-180">
+                        <path d="M7 14.5l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>
+                      <ul className="dropdown">
+                        <li className="item">Special Option 1</li>
+                        <li className="item">Special Option 2</li>
+                        <li className="item">Special Option 3</li>
+                        <li className="item">Special Option 4</li>
+                      </ul> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+
           </div>
-          <div className='formule-body mb-5'>
-            <Form.Field>
-              <label className="form-label">Contenu:</label>
-              <input type="text" name='content' className="form-control" onChange={handleContentChange} />
-            </Form.Field>
-            <Form.Field>
-              <label className="form-label">Poids:</label>
-              <input type="number" name='weight' className="form-control" min={0} onChange={handleWeightChange} />
-            </Form.Field>
-            <Form.Field>
-              <label className="form-label">Taille:</label>
-              <input type="number" name='size' className="form-control" min={0} onChange={handleSizeChange} />
-            </Form.Field>
-            <Form.Field>
-              <label className="form-label">Photo de contenu du colis :</label>
-              <input type="file" name='picture' className="form-control" onChange={handleFileChange} />
-            </Form.Field>
-            <div className='button mb-5'>
-              <Button id="btn" primary type="submit">Ajouter</Button>
+
+        </div>
+        <section className="section gray-bg" id="blog">
+          <div className="container">
+
+            <div className="row">
+              <div className="col">
+                <div className="blog-grid">
+
+                  <div className="blog-info mt-n2">
+                    <div className="mb-3">
+
+                      <input type="text" name="description" className="form-control"  aria-describedby="emailHelp" placeholder="Contenu du colis*" />
+
+                    </div>
+                    <div className="mb-3">
+
+                      <input type="text" name="weight" className="form-control"  aria-describedby="emailHelp" placeholder="Poids du colis en Kg *" />
+
+                    </div>
+                    <div className="mb-3">
+
+                      <input type="text" name="long" className="form-control"  aria-describedby="emailHelp" placeholder="Longueur du colis*" />
+
+                    </div>
+                    <div className="mb-3">
+                      <input type="text" name="lar" className="form-control"  aria-describedby="emailHelp" placeholder="Largeur  du colis*" />
+
+                    </div>
+                    <div className="mb-3">
+
+                      <input type="text" name="prof" className="form-control" aria-describedby="emailHelp" placeholder="Profondeur du colis" />
+
+                    </div>
+                    <div className="mb-3">
+
+                      <input type="number" name="price" className="form-control" aria-describedby="emailHelp" placeholder="Prix proposé*  " />
+
+                    </div>
+                    <div className="mb-3">
+
+                      <input type="date" name="long" className="form-control" aria-describedby="emailHelp" placeholder="Date limite d'expédition *" />
+
+                    </div>
+                    <div className="container content mt-2">
+                      <div className="row align-items-center content">
+
+                        <div className="col-12 text-center">
+
+                          <button type="button" onClick={handleSubmit} className="btn btn-secondary px-4 py-3">
+                            Publier votre annonce
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
           </div>
-        </Form>
-        <Footer />
-      </div>
-    </div>
+        </section>
+      </div >
+    </div >
   );
 }
 

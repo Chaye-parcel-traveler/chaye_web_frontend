@@ -1,35 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Form, Button } from 'semantic-ui-react';
-import Navbar from '../NavBar/NavBar';
-import '../styles/formule.css';
+import { useNavigate } from "react-router-dom";
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 
 function AddAnnouncements() {
-
-  const navigate = useNavigate();
-  const [userData, setUserData] = useState('');
-  const [inputs, setInputs] = useState('');
-  useEffect(() => {
-    axios.get('/me')
-      .then(response => {
-        setUserData(response.data);
-      }).catch(error => {
-        setUserData(false);
-      });
-  }, []);
+  let navigate = useNavigate();
+  const [inputs, setInputs] = useState({});
 
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setInputs(values => ({...values, [name]: value}))
+    setInputs(values => ({ ...values, [name]: value }))
   }
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await axios.post('/announcements', inputs);
+    await axios.post('/announcements', {
+      ...inputs, 
+      type: 'transport',
+    });
     navigate('/announcements')
   }
 
@@ -37,50 +26,124 @@ function AddAnnouncements() {
     <div className='content'>
       <div className="content-body">
         <Header />
-        <Form className="bg-white my-3 formule" onSubmit={handleSubmit}>
-          <input type="hidden" name='memberId' className="form-control " value={userData.id} />
-          {/* <div className='formule-fond'>
-            <h3 className="py-5" >Je transporte un colis</h3>
-            <div className='city'>
-              <input type="text" name='departureCity' className="form-control me-3" placeholder='Départ de ' required onChange={handleChange}/>
-              <input type="text" name='destination' className="form-control " placeholder='Arrivé à ' required onChange={handleChange}/>
+        <div className="container">
+
+          <div className="box-chaye margin-top-25 bgPurple" style={{ position: 'relative' }}>
+            <h2 className="txtCenter margin-top-36 txtwhite margin-bottom-40 ">J’expédie un colis</h2>
+            <div className="displayFlex ">
+              <div className="container">
+
+                <div className="DisplayVol">
+
+                  <div>
+                    <div className="setting-description p-2">
+                      <div className="setting-description-text mb-3" style={{ marginLeft: '15px' }}>
+                        <h1>Départ de</h1>
+                      </div>
+                    </div>
+                    <div className="wrapper-dropdown" id="dropdown">
+                      <input className="form-control" list="datalistOptions" name='departing_from' placeholder="Fort de France" onChange={handleChange} />
+                      <datalist id="datalistOptions">
+                        <option value="Fort de France" />
+                        <option value="San Francisco" />
+                        <option value="New York" />
+                        <option value="Seattle" />
+                        <option value="Los Angeles" />
+                        <option value="Chicago" />
+                      </datalist>
+                      {/* <span className="selected-display" id="destination">Guadeloupe</span>
+                      <svg className="arrow" id="drp-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-all ml-auto rotate-180">
+                        <path d="M7 14.5l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>
+                      <ul className="dropdown">
+                        <li className="item">Option 1</li>
+                        <li className="item">Option 2</li>
+                        <li className="item">Option 3</li>
+                        <li className="item">Option 4</li>
+                      </ul> */}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="setting-description p-2">
+                      <div className="setting-description-text mb-3" style={{ marginLeft: '15px' }}>
+                        <h10>Arrivée à :</h10>
+                      </div>
+                    </div>
+                    <div className="wrapper-dropdown" id="dropdown">
+                      <input className="form-control" list="datalistOptions" name='arriving_at' placeholder="Paris" onChange={handleChange} />
+                      <datalist id="datalistOptions">
+                        <option value="Paris" />
+                        <option value="Fort de France" />
+                        <option value="San Francisco" />
+                        <option value="New York" />
+                        <option value="Seattle" />
+                        <option value="Los Angeles" />
+                      </datalist>
+                      {/* <span className="selected-display" id="destination">Paris</span>
+                      <svg className="arrow" id="drp-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-all ml-auto rotate-180">
+                        <path d="M7 14.5l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      </svg>
+                      <ul className="dropdown">
+                        <li className="item">Special Option 1</li>
+                        <li className="item">Special Option 2</li>
+                        <li className="item">Special Option 3</li>
+                        <li className="item">Special Option 4</li>
+                      </ul> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div> */}
-          <div className='formule-body mb-5'>
 
-            <Form.Field>
-              <label className="form-label">Type de l'annonce</label>
-              <select name="type" className="form-select" required onChange={handleChange}>
-                <option value="transport" >transport</option>
-                <option value="shipping">shipping</option>
-              </select>
-            </Form.Field>
 
-            {/* <Form.Field>
-              <label className="form-label">Prix de kilo </label>
-              <input type="number" name='priceKilo' min={0} className="form-control" required onChange={handleChange}/>
-            </Form.Field> */}
-
-            <Form.Field>
-              <label className="form-label">Description:</label>
-              <input type="text" name='description' className="form-control" required onChange={handleChange}/>
-            </Form.Field>
-            {/* <Form.Field>
-              <label className="form-label">Date de départ</label>
-              <input type="date" name="departureDate" className="form-control" required onChange={handleChange}/>
-            </Form.Field>
-            <Form.Field>
-              <label className="form-label">Date d'arrivée</label>
-              <input type="date" name="arrivalDate" className="form-control" required onChange={handleChange}/>
-            </Form.Field> */}
-            <div className='button mb-5'>
-              <Button id="btn" type="submit">Ajouter</Button>
-            </div>
           </div>
-        </Form>
-        <Footer />
-      </div>
-    </div>
+
+        </div>
+        <section className="section gray-bg" id="blog">
+          <div className="container">
+
+            <div className="row">
+              <div className="col">
+                <div className="blog-grid">
+
+                  <div className="blog-info mt-n2">
+                    <div className="mb-3">
+
+                      <input type="text" name="description" className="form-control" aria-describedby="emailHelp" placeholder="Description"  onChange={handleChange} />
+
+                    </div>
+                    <div className="mb-3">
+
+                      <input type="number" name="weight_availability" className="form-control" aria-describedby="emailHelp" placeholder="Kg disponible *"  onChange={handleChange} />
+
+                    </div>
+                    <div className="mb-3">
+
+                      <input type="number" name="price" className="form-control" aria-describedby="emailHelp" placeholder="Prix au kilo"  onChange={handleChange} />
+
+                    </div>
+
+                    <div className="container content mt-2">
+                      <div className="row align-items-center content">
+
+                        <div className="col-12 text-center">
+
+                          <button type="button" onClick={handleSubmit} className="btn btn-secondary px-4 py-3">
+                            Publier votre annonce
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div >
+    </div >
   );
 }
 

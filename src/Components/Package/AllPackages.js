@@ -1,6 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
-import '../styles/accueil.css';
 //Moment (date)
 import moment from 'moment/moment';
 import 'moment/locale/fr'

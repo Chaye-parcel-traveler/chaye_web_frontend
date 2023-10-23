@@ -38,7 +38,7 @@ function Navbar() {
       <header>
         <div className="image-text">
           <span className="image">
-            <img src="images/logo.png" alt="Chaye" />
+            <Link to="/"><img src="images/logo.png" alt="Chaye" /></Link>
           </span>
 
           <div className="text logo-text">

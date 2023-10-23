@@ -1,8 +1,6 @@
 import React from 'react';
 import '../styles/support.css';
-import '../styles/accueil.css';
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 
 function Support() {
   return (
@@ -30,7 +28,6 @@ function Support() {
       <p>Consultez notre <a href="/faq">FAQ</a> pour obtenir des réponses aux questions courantes sur l'utilisation de Chaye.</p>
     </div>
     </div>
-                <Footer />
             </div>
 
         </div>

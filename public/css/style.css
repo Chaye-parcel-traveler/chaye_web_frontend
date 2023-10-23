@@ -1226,7 +1226,8 @@ svg {
   border-radius: 5px;
   background: #ffffff;
   padding: 70px 70px;
-  margin: -160px 20px 0;
+  /* margin: -160px 20px 0; */
+  margin-top: -7.25rem !important;
   position: relative;
   width: 560px;
 }

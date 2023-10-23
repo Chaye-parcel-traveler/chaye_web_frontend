@@ -1,9 +1,6 @@
 import React from 'react';
 import '../styles/PolitiqueDeConfidentialite.css';
-import '../styles/accueil.css';
-import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 
 function PolitiqueDeConfidentialite() {
     return (
@@ -48,7 +45,6 @@ function PolitiqueDeConfidentialite() {
                     <h2>Contact</h2>
                     <p>Pour toute question concernant notre politique de confidentialité, vous pouvez nous contacter via notre page de <a href="/support">support</a>.</p>
                 </div>
-                <Footer />
             </div>
         </div>
   );

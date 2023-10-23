@@ -1,15 +1,31 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Header() {
 
     return (
-            <div className="hero">
-                <div className="heroItem">
-                    <h2 className='fw-bold'> Que veux tu faire?</h2>
-                    <a href='/AddPackage'><input className='fw-bold button-size' type="button" value="J'expédie" /></a>
-                    <a href='/AddAnnouncements'><input type="button" className='fw-bold button-size' value="Je transporte" /></a>
+        <div className="container">
+        <div className="row">
+            <div className="col">
+                {/*--content title choix--> */}
+                <div className="box-chaye margin-top-36">
+                    <h2>Que veux tu faire ?</h2>
+
+                    <div className="container">
+                        <div className="row justify-content-center">
+                            <div className="col-4">
+                                <Link className="btnChaye" to="/addPackage">J'expédie</Link>
+                            </div>
+                            <div className="col-4">
+                                <Link className="btnChaye" to="/addAnnouncement">Je transporte</Link>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                {/*--fin content title choix--> */}
             </div>
+        </div>
+    </div>
     )
 }
 

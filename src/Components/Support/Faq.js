@@ -1,6 +1,5 @@
 import React from 'react';
 import '../styles/faq.css';
-import '../styles/accueil.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 

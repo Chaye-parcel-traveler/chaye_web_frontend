@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import { login } from '../../Services/member'
 import { setAuthToken } from '../../setAuthToken';
@@ -41,19 +41,25 @@ function Login() {
 
   const handleLogin = async e => {
     e.preventDefault();
+    console.log(inputs)
     const response = await login({
       email: inputs.email,
       password: inputs.password
     });
     console.log('token', response)
-    setToken(response.token);
-    sessionStorage.setItem("token", response.token);
-    setAuthToken(response.token);
+    if(response?.token) {
 
-    const me = await axios.get('/me')
-    setUserData(me)
-
-    return navigate('/');
+      setToken(response.token);
+      sessionStorage.setItem("token", response.token);
+      setAuthToken(response.token);
+      
+      const me = await axios.get('/me')
+      setUserData(me)
+      
+      return navigate('/');
+    } else {
+      alert('Login incorrect')
+    }
   }
   const handleSignup = async e => {
     e.preventDefault();
@@ -86,9 +92,12 @@ function Login() {
   return (
     <div className='page-login' >
       <section className="logoChaye">
-        <img src="images/logoChaye.png" /></section>
-      <section className={`container container-login forms ${showSignUp ? 'show-signup' : ''}`}>
-        <div className="form login">
+        <Link to="/">
+          <img src="images/logoChaye.png" />
+        </Link>
+      </section>
+      <section className={`container container-login forms`}>
+        <div className={`form login ${showSignUp ? 'd-none' : ''}`}>
           <div className="form-content">
             <header>
               <h2>Content de te revoir</h2>
@@ -97,11 +106,11 @@ function Login() {
             </header>
             <form onSubmit={handleLogin}>
               <div className="field input-field">
-                <input type="email" placeholder="Email" className="input" onChange={handleChange} />
+                <input type="email" name="email" placeholder="Email" className="input" onChange={handleChange} />
               </div>
 
               <div className="field input-field">
-                <input type="password" placeholder="Mot de passe" className="password" onChange={handleChange} />
+                <input type="password" name="password" placeholder="Mot de passe" className="password" onChange={handleChange} />
                 <i class='bx bx-hide eye-icon'></i>
               </div>
 
@@ -147,7 +156,7 @@ function Login() {
 
         {/* <!-- Signup Form --> */}
 
-        <div className="form signup">
+        <div className={`form signup ${showSignUp ? '' : 'd-none'}`}>
           <div className="form-content">
             <header> <h2>S’enregistrer</h2>
               <h4 style={{ fontSize: '17px!important', fontFamily: 'Poppins, sans-serif' }}>Créez votre nouveau compte</h4></header>
@@ -176,7 +185,7 @@ function Login() {
               </div>
 
               <div className="field input-field">
-                <input type="password" placeholder="Créer votre mot de passe" className="password" name="password" onChange={handleChange} />
+                <input type=" " placeholder="Créer votre mot de passe" className="password" name="password" onChange={handleChange} />
               </div>
 
               {/* <div className="field input-field">
@@ -219,7 +228,7 @@ function Login() {
 
         </div>
       </section>
-    </div>
+    </div >
   );
 }
 

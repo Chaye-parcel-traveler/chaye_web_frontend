@@ -1,8 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import SignUp from './Components/Member/SignUp';
-import Login from './Components/Member/Login';
 import LoginSignup from './Components/Member/LoginSignup';
 import AllMembers from './Components/Member/AllMembers';
 import EditMember from './Components/Member/EditMember';
@@ -60,11 +58,11 @@ function App() {
             <Route path='/allmembers' element={<AllMembers />} />
             <Route path='/editmember/:id' element={<EditMember />} />
             <Route path='/profile/:id' element={<Profile />} />
-            <Route path='/AddPackage' element={<AddPackage />} />
-            <Route path='/EditPackage/:id' element={<EditPackage />} />
+            <Route path='/addPackage' element={<AddPackage />} />
+            <Route path='/editPackage/:id' element={<EditPackage />} />
             <Route path='/announcements' element={<Announcements />} />
-            <Route path='/AddAnnouncements' element={<AddAnnouncements />} />
-            <Route path='/AboutUs' element={<AboutUs />} />
+            <Route path='/addAnnouncement' element={<AddAnnouncements />} />
+            <Route path='/aboutUs' element={<AboutUs />} />
             <Route path='/support' element={<Support />} />
             <Route path='/faq' element={<Faq />} />
             <Route path='/mentionlegale' element={<MentionsLegales />} />

@@ -2,7 +2,6 @@ import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
-import '../styles/accueil.css';
 import moment from 'moment/moment';
 import 'moment/locale/fr';
 

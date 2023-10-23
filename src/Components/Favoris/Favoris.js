@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Fab from '@mui/material/Fab';
-import '../styles/accueil.css';
 import moment from 'moment/moment';
 import 'moment/locale/fr';
 import Carousel from 'react-material-ui-carousel';

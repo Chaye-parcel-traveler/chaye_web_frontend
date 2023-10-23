@@ -1,7 +1,5 @@
 import React from 'react';
 import '../styles/MentionsLegales.css';
-import '../styles/accueil.css';
-import Navbar from '../NavBar/NavBar';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 function MentionsLegales() {

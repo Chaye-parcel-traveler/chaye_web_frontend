@@ -2,7 +2,6 @@ import React, { useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Fab from '@mui/material/Fab';
-import '../styles/accueil.css';
 import '../styles/comment.css';
 import FormComment from '../Comments/FormComment';
 import CommentIcon from '@mui/icons-material/Comment';
@@ -10,10 +9,10 @@ import EmailIcon from '@mui/icons-material/Email';
 import moment from 'moment/moment';
 import 'moment/locale/fr';
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import AllPackages from '../Package/AllPackages';
 import Assurance from '../Header/Assurance';
 import Message from '../Message/Message';
+import CarrouselAnnouncements from './CarrousselAnnouncements';
 moment().locale('fr');
 function Announcements() {
     const [showMessage, setShowMessage] = useState(false);
@@ -122,67 +121,10 @@ function Announcements() {
                 <Assurance />
                 <div className="content-main">
                     <h2 className="titre">Toutes les annonces</h2>
-                    <div className="annonce">
-                        {state.loadingAnnouncements
-                            ? `Loading... ${JSON.stringify(state)} - ${state.loadingAnnouncements || state.loadingMembers}`
-                            : state.announcements.map((announcement, index) => (
-                                <div className="card" key={index}>
-                                    <div className="card-top">
-                                        {/* Recherchez le membre associé à l'annonce */}
-                                        {/* {state.members.map((member) => {
-                                            if (member._id === announcement.memberId) {
-                                                recipient = member.email;
-                                                console.log(recipient);
-
-                                                return (
-                                                    <div key={member._id}>
-                                                        <img src={`http://localhost:5000/${member.imagename}`} alt="Membre" />
-                                                    </div>
-
-                                                );
-
-                                            }
-                                            return null;
-                                        })} */}
-
-                                        <Fab
-                                            className={`${announcement.isFavorite ? 'text-danger' : 'text-secondary'}`}
-                                            size="small"
-                                            onClick={() => handleFavoriteClick(announcement)}
-                                        >
-                                            <FavoriteIcon />
-                                        </Fab>
-                                    </div>
-                                    <div className="card-body">
-                                        <p className="card-text">
-                                            Description ................<b className="violet">{announcement.description}</b> <br />
-                                            {/* Destination ................<b className="violet">{announcement.destination}</b> <br /> */}
-                                            Prix ...............<b className="violet">{announcement.priceKilo}€</b><br />
-                                            Départ ...............<b className="violet"> {moment(announcement.departureDate).format('L')}</b><br />
-                                            Arrivé  ................<b className="violet"> {moment(announcement.arrivalDate).format('L')}</b>
-                                        </p>
-                                    </div>
-                                    <div className="card-bottom">
-                                        <button className='m-3 btn btn-primary' onClick={() => handleCommentClick(announcement)}>
-                                            <CommentIcon />
-                                        </button>
-                                        {showCommentForm && selectedAnnouncement === announcement && (
-                                            <FormComment announcementId={announcement.id} />
-                                        )}
-                                        <button className='m-3 btn btn-primary' onClick={() => handleMessageClick(announcement)}>
-                                            <EmailIcon />
-                                        </button>
-                                        {showMessage && selectedMessage && <Message recipient={recipient} />}
-
-
-                                    </div>
-                                </div>
-                            ))}
-                    </div>
+                    <CarrouselAnnouncements />
                     <h2 className="titre">Les colis</h2>
                     <AllPackages />
                 </div>
-                <Footer />
             </div>
 
         </div>

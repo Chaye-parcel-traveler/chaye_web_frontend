@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../styles/accueil.css';
 import '../styles/profile.css';
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import AllMessages from '../Message/AllMessages';
+import { useNavigate } from 'react-router-dom';
 
 function Profile() {
-
+  const navigate = useNavigate()
   // État pour le chargement
   const [loading, setLoading] = useState(true);
   // État pour les erreurs
@@ -27,6 +26,7 @@ function Profile() {
         setLoading(false);
         setError('Something went wrong!');
         setMember({});
+        navigate('/loginSignup')
       });
   }, []);
 
@@ -78,7 +78,6 @@ function Profile() {
             </div>
           </div>
         </React.Fragment>
-        <Footer />
       </div>
     </div>
   )
