@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "cooperation_key": "abcd1234",
+    "package_weight": 5.5,
+    "package_sizes": "30x20x10",
+    "package_content_list": "Books, Clothes",
+    "createdAt": "2023-07-25T14:48:00.000Z",
+    "updatedAt": "2023-07-25T15:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "cooperation_key": "efgh5678",
+    "package_weight": 3.2,
+    "package_sizes": "25x15x10",
+    "package_content_list": "Electronics, Gadgets",
+    "createdAt": "2023-08-25T14:48:00.000Z",
+    "updatedAt": "2023-08-25T15:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "cooperation_key": "ijkl9101",
+    "package_weight": 2.7,
+    "package_sizes": "20x20x15",
+    "package_content_list": "Toys, Games",
+    "createdAt": "2023-09-25T14:48:00.000Z",
+    "updatedAt": "2023-09-25T15:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "cooperation_key": "mnop1121",
+    "package_weight": 4.8,
+    "package_sizes": "35x25x20",
+    "package_content_list": "Clothes, Shoes",
+    "createdAt": "2023-10-25T14:48:00.000Z",
+    "updatedAt": "2023-10-25T15:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "cooperation_key": "qrst3141",
+    "package_weight": 1.9,
+    "package_sizes": "15x10x5",
+    "package_content_list": "Books, Magazines",
+    "createdAt": "2023-11-25T14:48:00.000Z",
+    "updatedAt": "2023-11-25T15:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "cooperation_key": "uvwx5161",
+    "package_weight": 3.0,
+    "package_sizes": "30x20x10",
+    "package_content_list": "Kitchenware",
+    "createdAt": "2023-12-25T14:48:00.000Z",
+    "updatedAt": "2023-12-25T15:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "cooperation_key": "yzab7181",
+    "package_weight": 5.0,
+    "package_sizes": "40x30x20",
+    "package_content_list": "Furniture",
+    "createdAt": "2024-01-25T14:48:00.000Z",
+    "updatedAt": "2024-01-25T15:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "cooperation_key": "cdef9201",
+    "package_weight": 2.4,
+    "package_sizes": "25x15x10",
+    "package_content_list": "Gadgets, Tools",
+    "createdAt": "2024-02-25T14:48:00.000Z",
+    "updatedAt": "2024-02-25T15:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "cooperation_key": "ghij1222",
+    "package_weight": 3.7,
+    "package_sizes": "30x20x10",
+    "package_content_list": "Sports Equipment",
+    "createdAt": "2024-03-25T14:48:00.000Z",
+    "updatedAt": "2024-03-25T15:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "cooperation_key": "klmn1423",
+    "package_weight": 4.2,
+    "package_sizes": "35x25x20",
+    "package_content_list": "Garden Tools",
+    "createdAt": "2024-04-25T14:48:00.000Z",
+    "updatedAt": "2024-04-25T15:00:00.000Z"
+  }
+]

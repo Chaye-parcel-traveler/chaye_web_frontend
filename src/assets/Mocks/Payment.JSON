@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "from_reserved_account_id": 1301,
+    "to_bank_account_id": 1401,
+    "state": "waiting",
+    "createdAt": "2023-07-25T14:48:00.000Z",
+    "solded_at": null
+  },
+  {
+    "id": 2,
+    "from_reserved_account_id": 1302,
+    "to_bank_account_id": 1402,
+    "state": "sold",
+    "createdAt": "2023-08-25T14:48:00.000Z",
+    "solded_at": "2023-08-25T15:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "from_reserved_account_id": 1303,
+    "to_bank_account_id": 1403,
+    "state": "waiting",
+    "createdAt": "2023-09-25T14:48:00.000Z",
+    "solded_at": null
+  },
+  {
+    "id": 4,
+    "from_reserved_account_id": 1304,
+    "to_bank_account_id": 1404,
+    "state": "sold",
+    "createdAt": "2023-10-25T14:48:00.000Z",
+    "solded_at": "2023-10-25T15:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "from_reserved_account_id": 1305,
+    "to_bank_account_id": 1405,
+    "state": "waiting",
+    "createdAt": "2023-11-25T14:48:00.000Z",
+    "solded_at": null
+  },
+  {
+    "id": 6,
+    "from_reserved_account_id": 1306,
+    "to_bank_account_id": 1406,
+    "state": "sold",
+    "createdAt": "2023-12-25T14:48:00.000Z",
+    "solded_at": "2023-12-25T15:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "from_reserved_account_id": 1307,
+    "to_bank_account_id": 1407,
+    "state": "waiting",
+    "createdAt": "2024-01-25T14:48:00.000Z",
+    "solded_at": null
+  },
+  {
+    "id": 8,
+    "from_reserved_account_id": 1308,
+    "to_bank_account_id": 1408,
+    "state": "sold",
+    "createdAt": "2024-02-25T14:48:00.000Z",
+    "solded_at": "2024-02-25T15:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "from_reserved_account_id": 1309,
+    "to_bank_account_id": 1409,
+    "state": "waiting",
+    "createdAt": "2024-03-25T14:48:00.000Z",
+    "solded_at": null
+  },
+  {
+    "id": 10,
+    "from_reserved_account_id": 1310,
+    "to_bank_account_id": 1410,
+    "state": "sold",
+    "createdAt": "2024-04-25T14:48:00.000Z",
+    "solded_at": "2024-04-25T15:00:00.000Z"
+  }
+]

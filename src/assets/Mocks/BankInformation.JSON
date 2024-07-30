@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "bank_account_id": 1001,
+    "informations": "Bank of America, Account Number: 123456789",
+    "createdAt": "2023-07-25T14:48:00.000Z",
+    "updatedAt": "2023-07-25T15:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "bank_account_id": 1002,
+    "informations": "Chase Bank, Account Number: 987654321",
+    "createdAt": "2023-08-25T14:48:00.000Z",
+    "updatedAt": "2023-08-25T15:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "bank_account_id": 1003,
+    "informations": "Wells Fargo, Account Number: 456123789",
+    "createdAt": "2023-09-25T14:48:00.000Z",
+    "updatedAt": "2023-09-25T15:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "bank_account_id": 1004,
+    "informations": "Citibank, Account Number: 789456123",
+    "createdAt": "2023-10-25T14:48:00.000Z",
+    "updatedAt": "2023-10-25T15:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "bank_account_id": 1005,
+    "informations": "HSBC, Account Number: 321654987",
+    "createdAt": "2023-11-25T14:48:00.000Z",
+    "updatedAt": "2023-11-25T15:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "bank_account_id": 1006,
+    "informations": "Barclays, Account Number: 654321789",
+    "createdAt": "2023-12-25T14:48:00.000Z",
+    "updatedAt": "2023-12-25T15:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "bank_account_id": 1007,
+    "informations": "Santander, Account Number: 147258369",
+    "createdAt": "2024-01-25T14:48:00.000Z",
+    "updatedAt": "2024-01-25T15:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "bank_account_id": 1008,
+    "informations": "Deutsche Bank, Account Number: 963852741",
+    "createdAt": "2024-02-25T14:48:00.000Z",
+    "updatedAt": "2024-02-25T15:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "bank_account_id": 1009,
+    "informations": "Lloyds Bank, Account Number: 258369147",
+    "createdAt": "2024-03-25T14:48:00.000Z",
+    "updatedAt": "2024-03-25T15:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "bank_account_id": 1010,
+    "informations": "BNP Paribas, Account Number: 741852963",
+    "createdAt": "2024-04-25T14:48:00.000Z",
+    "updatedAt": "2024-04-25T15:00:00.000Z"
+  }
+]

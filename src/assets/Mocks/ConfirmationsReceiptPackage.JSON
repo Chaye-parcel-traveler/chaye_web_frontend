@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "cooperation_key": "coop123",
+    "package_id": 901,
+    "confirmation_applicant_state": "accepted",
+    "confirmation_carrier_state": "accepted",
+    "confirmation_state": "accepted",
+    "createdAt": "2023-07-25T14:48:00.000Z"
+  },
+  {
+    "id": 2,
+    "cooperation_key": "coop456",
+    "package_id": 902,
+    "confirmation_applicant_state": "accepted",
+    "confirmation_carrier_state": "rejected",
+    "confirmation_state": "rejected",
+    "createdAt": "2023-08-25T14:48:00.000Z"
+  },
+  {
+    "id": 3,
+    "cooperation_key": "coop789",
+    "package_id": 903,
+    "confirmation_applicant_state": "rejected",
+    "confirmation_carrier_state": "accepted",
+    "confirmation_state": "rejected",
+    "createdAt": "2023-09-25T14:48:00.000Z"
+  },
+  {
+    "id": 4,
+    "cooperation_key": "coop101",
+    "package_id": 904,
+    "confirmation_applicant_state": "accepted",
+    "confirmation_carrier_state": "accepted",
+    "confirmation_state": "accepted",
+    "createdAt": "2023-10-25T14:48:00.000Z"
+  },
+  {
+    "id": 5,
+    "cooperation_key": "coop112",
+    "package_id": 905,
+    "confirmation_applicant_state": "rejected",
+    "confirmation_carrier_state": "rejected",
+    "confirmation_state": "rejected",
+    "createdAt": "2023-11-25T14:48:00.000Z"
+  },
+  {
+    "id": 6,
+    "cooperation_key": "coop131",
+    "package_id": 906,
+    "confirmation_applicant_state": "accepted",
+    "confirmation_carrier_state": "accepted",
+    "confirmation_state": "accepted",
+    "createdAt": "2023-12-25T14:48:00.000Z"
+  },
+  {
+    "id": 7,
+    "cooperation_key": "coop415",
+    "package_id": 907,
+    "confirmation_applicant_state": "accepted",
+    "confirmation_carrier_state": "rejected",
+    "confirmation_state": "rejected",
+    "createdAt": "2024-01-25T14:48:00.000Z"
+  },
+  {
+    "id": 8,
+    "cooperation_key": "coop161",
+    "package_id": 908,
+    "confirmation_applicant_state": "rejected",
+    "confirmation_carrier_state": "accepted",
+    "confirmation_state": "rejected",
+    "createdAt": "2024-02-25T14:48:00.000Z"
+  },
+  {
+    "id": 9,
+    "cooperation_key": "coop718",
+    "package_id": 909,
+    "confirmation_applicant_state": "accepted",
+    "confirmation_carrier_state": "accepted",
+    "confirmation_state": "accepted",
+    "createdAt": "2024-03-25T14:48:00.000Z"
+  },
+  {
+    "id": 10,
+    "cooperation_key": "coop920",
+    "package_id": 910,
+    "confirmation_applicant_state": "rejected",
+    "confirmation_carrier_state": "rejected",
+    "confirmation_state": "rejected",
+    "createdAt": "2024-04-25T14:48:00.000Z"
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "member_id": 200,
+    "account_type": "crypto",
+    "createdAt": "2023-07-25T14:48:00.000Z",
+    "updatedAt": "2023-07-25T15:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "member_id": 201,
+    "account_type": "fudiciary",
+    "createdAt": "2023-08-25T14:48:00.000Z",
+    "updatedAt": "2023-08-25T15:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "member_id": 202,
+    "account_type": "crypto",
+    "createdAt": "2023-09-25T14:48:00.000Z",
+    "updatedAt": "2023-09-25T15:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "member_id": 203,
+    "account_type": "fudiciary",
+    "createdAt": "2023-10-25T14:48:00.000Z",
+    "updatedAt": "2023-10-25T15:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "member_id": 204,
+    "account_type": "crypto",
+    "createdAt": "2023-11-25T14:48:00.000Z",
+    "updatedAt": "2023-11-25T15:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "member_id": 205,
+    "account_type": "fudiciary",
+    "createdAt": "2023-12-25T14:48:00.000Z",
+    "updatedAt": "2023-12-25T15:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "member_id": 206,
+    "account_type": "crypto",
+    "createdAt": "2024-01-25T14:48:00.000Z",
+    "updatedAt": "2024-01-25T15:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "member_id": 207,
+    "account_type": "fudiciary",
+    "createdAt": "2024-02-25T14:48:00.000Z",
+    "updatedAt": "2024-02-25T15:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "member_id": 208,
+    "account_type": "crypto",
+    "createdAt": "2024-03-25T14:48:00.000Z",
+    "updatedAt": "2024-03-25T15:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "member_id": 209,
+    "account_type": "fudiciary",
+    "createdAt": "2024-04-25T14:48:00.000Z",
+    "updatedAt": "2024-04-25T15:00:00.000Z"
+  }
+]

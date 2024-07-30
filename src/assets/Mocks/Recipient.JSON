@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "member_id": 1901,
+    "lastname": "Doe",
+    "phone": "+123456789",
+    "delivery_address": "123 Main St, Springfield",
+    "delivery_validation_key": "abc123",
+    "createdAt": "2023-07-25T14:48:00.000Z",
+    "updatedAt": "2023-07-25T15:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "member_id": 1902,
+    "lastname": "Smith",
+    "phone": "+987654321",
+    "delivery_address": "456 Elm St, Shelbyville",
+    "delivery_validation_key": "def456",
+    "createdAt": "2023-08-25T14:48:00.000Z",
+    "updatedAt": "2023-08-25T15:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "member_id": 1903,
+    "lastname": "Brown",
+    "phone": "+111222333",
+    "delivery_address": "789 Oak St, Ogdenville",
+    "delivery_validation_key": "ghi789",
+    "createdAt": "2023-09-25T14:48:00.000Z",
+    "updatedAt": "2023-09-25T15:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "member_id": 1904,
+    "lastname": "Johnson",
+    "phone": "+444555666",
+    "delivery_address": "101 Maple St, Capital City",
+    "delivery_validation_key": "jkl101",
+    "createdAt": "2023-10-25T14:48:00.000Z",
+    "updatedAt": "2023-10-25T15:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "member_id": 1905,
+    "lastname": "Williams",
+    "phone": "+777888999",
+    "delivery_address": "202 Pine St, North Haverbrook",
+    "delivery_validation_key": "mno112",
+    "createdAt": "2023-11-25T14:48:00.000Z",
+    "updatedAt": "2023-11-25T15:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "member_id": 1906,
+    "lastname": "Jones",
+    "phone": "+000111222",
+    "delivery_address": "303 Cedar St, Brockway",
+    "delivery_validation_key": "pqr131",
+    "createdAt": "2023-12-25T14:48:00.000Z",
+    "updatedAt": "2023-12-25T15:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "member_id": 1907,
+    "lastname": "Miller",
+    "phone": "+333444555",
+    "delivery_address": "404 Birch St, Springfield",
+    "delivery_validation_key": "stu415",
+    "createdAt": "2024-01-25T14:48:00.000Z",
+    "updatedAt": "2024-01-25T15:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "member_id": 1908,
+    "lastname": "Davis",
+    "phone": "+666777888",
+    "delivery_address": "505 Walnut St, Shelbyville",
+    "delivery_validation_key": "vwx161",
+    "createdAt": "2024-02-25T14:48:00.000Z",
+    "updatedAt": "2024-02-25T15:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "member_id": 1909,
+    "lastname": "Garcia",
+    "phone": "+999000111",
+    "delivery_address": "606 Chestnut St, Ogdenville",
+    "delivery_validation_key": "yz0123",
+    "createdAt": "2024-03-25T14:48:00.000Z",
+    "updatedAt": "2024-03-25T15:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "member_id": 1910,
+    "lastname": "Rodriguez",
+    "phone": "+111222333",
+    "delivery_address": "707 Spruce St, Capital City",
+    "delivery_validation_key": "abc456",
+    "createdAt": "2024-04-25T14:48:00.000Z",
+    "updatedAt": "2024-04-25T15:00:00.000Z"
+  }
+]

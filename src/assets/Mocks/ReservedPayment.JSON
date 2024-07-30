@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "cooperation_key": "coop123",
+    "from_bank_account_id": 1601,
+    "to_reserved_account_id": 1701,
+    "createdAt": "2023-07-25T14:48:00.000Z",
+    "updatedAt": "2023-07-25T15:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "cooperation_key": "coop456",
+    "from_bank_account_id": 1602,
+    "to_reserved_account_id": 1702,
+    "createdAt": "2023-08-25T14:48:00.000Z",
+    "updatedAt": "2023-08-25T15:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "cooperation_key": "coop789",
+    "from_bank_account_id": 1603,
+    "to_reserved_account_id": 1703,
+    "createdAt": "2023-09-25T14:48:00.000Z",
+    "updatedAt": "2023-09-25T15:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "cooperation_key": "coop101",
+    "from_bank_account_id": 1604,
+    "to_reserved_account_id": 1704,
+    "createdAt": "2023-10-25T14:48:00.000Z",
+    "updatedAt": "2023-10-25T15:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "cooperation_key": "coop112",
+    "from_bank_account_id": 1605,
+    "to_reserved_account_id": 1705,
+    "createdAt": "2023-11-25T14:48:00.000Z",
+    "updatedAt": "2023-11-25T15:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "cooperation_key": "coop131",
+    "from_bank_account_id": 1606,
+    "to_reserved_account_id": 1706,
+    "createdAt": "2023-12-25T14:48:00.000Z",
+    "updatedAt": "2023-12-25T15:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "cooperation_key": "coop415",
+    "from_bank_account_id": 1607,
+    "to_reserved_account_id": 1707,
+    "createdAt": "2024-01-25T14:48:00.000Z",
+    "updatedAt": "2024-01-25T15:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "cooperation_key": "coop161",
+    "from_bank_account_id": 1608,
+    "to_reserved_account_id": 1708,
+    "createdAt": "2024-02-25T14:48:00.000Z",
+    "updatedAt": "2024-02-25T15:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "cooperation_key": "coop718",
+    "from_bank_account_id": 1609,
+    "to_reserved_account_id": 1709,
+    "createdAt": "2024-03-25T14:48:00.000Z",
+    "updatedAt": "2024-03-25T15:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "cooperation_key": "coop920",
+    "from_bank_account_id": 1610,
+    "to_reserved_account_id": 1710,
+    "createdAt": "2024-04-25T14:48:00.000Z",
+    "updatedAt": "2024-04-25T15:00:00.000Z"
+  }
+]

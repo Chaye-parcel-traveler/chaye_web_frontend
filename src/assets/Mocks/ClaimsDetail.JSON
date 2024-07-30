@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "claims_alert_id": 301,
+    "member_id": 401,
+    "description": "Package was stolen from the front porch.",
+    "createdAt": "2023-07-25T14:48:00.000Z"
+  },
+  {
+    "id": 2,
+    "claims_alert_id": 302,
+    "member_id": 402,
+    "description": "Package was damaged during delivery.",
+    "createdAt": "2023-08-25T14:48:00.000Z"
+  },
+  {
+    "id": 3,
+    "claims_alert_id": 303,
+    "member_id": 403,
+    "description": "Package was lost in transit.",
+    "createdAt": "2023-09-25T14:48:00.000Z"
+  },
+  {
+    "id": 4,
+    "claims_alert_id": 304,
+    "member_id": 404,
+    "description": "Package was held by customs.",
+    "createdAt": "2023-10-25T14:48:00.000Z"
+  },
+  {
+    "id": 5,
+    "claims_alert_id": 305,
+    "member_id": 405,
+    "description": "Package was delivered to the wrong address.",
+    "createdAt": "2023-11-25T14:48:00.000Z"
+  },
+  {
+    "id": 6,
+    "claims_alert_id": 306,
+    "member_id": 406,
+    "description": "Package was returned to sender.",
+    "createdAt": "2023-12-25T14:48:00.000Z"
+  },
+  {
+    "id": 7,
+    "claims_alert_id": 307,
+    "member_id": 407,
+    "description": "Package was delayed due to weather.",
+    "createdAt": "2024-01-25T14:48:00.000Z"
+  },
+  {
+    "id": 8,
+    "claims_alert_id": 308,
+    "member_id": 408,
+    "description": "Package was opened and resealed.",
+    "createdAt": "2024-02-25T14:48:00.000Z"
+  },
+  {
+    "id": 9,
+    "claims_alert_id": 309,
+    "member_id": 409,
+    "description": "Package contents were missing.",
+    "createdAt": "2024-03-25T14:48:00.000Z"
+  },
+  {
+    "id": 10,
+    "claims_alert_id": 310,
+    "member_id": 410,
+    "description": "Package was left in a safe place.",
+    "createdAt": "2024-04-25T14:48:00.000Z"
+  }
+]

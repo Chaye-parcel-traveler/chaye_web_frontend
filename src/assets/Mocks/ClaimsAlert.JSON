@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "claim_by_member_id": 501,
+    "claim_cooperation_key": "key123",
+    "claim_package_state": "stolen",
+    "createdAt": "2023-07-25T14:48:00.000Z"
+  },
+  {
+    "id": 2,
+    "claim_by_member_id": 502,
+    "claim_cooperation_key": "key456",
+    "claim_package_state": "damaged",
+    "createdAt": "2023-08-25T14:48:00.000Z"
+  },
+  {
+    "id": 3,
+    "claim_by_member_id": 503,
+    "claim_cooperation_key": "key789",
+    "claim_package_state": "lost",
+    "createdAt": "2023-09-25T14:48:00.000Z"
+  },
+  {
+    "id": 4,
+    "claim_by_member_id": 504,
+    "claim_cooperation_key": "key101",
+    "claim_package_state": "customs",
+    "createdAt": "2023-10-25T14:48:00.000Z"
+  },
+  {
+    "id": 5,
+    "claim_by_member_id": 505,
+    "claim_cooperation_key": "key112",
+    "claim_package_state": "stolen",
+    "createdAt": "2023-11-25T14:48:00.000Z"
+  },
+  {
+    "id": 6,
+    "claim_by_member_id": 506,
+    "claim_cooperation_key": "key131",
+    "claim_package_state": "damaged",
+    "createdAt": "2023-12-25T14:48:00.000Z"
+  },
+  {
+    "id": 7,
+    "claim_by_member_id": 507,
+    "claim_cooperation_key": "key415",
+    "claim_package_state": "lost",
+    "createdAt": "2024-01-25T14:48:00.000Z"
+  },
+  {
+    "id": 8,
+    "claim_by_member_id": 508,
+    "claim_cooperation_key": "key161",
+    "claim_package_state": "customs",
+    "createdAt": "2024-02-25T14:48:00.000Z"
+  },
+  {
+    "id": 9,
+    "claim_by_member_id": 509,
+    "claim_cooperation_key": "key718",
+    "claim_package_state": "stolen",
+    "createdAt": "2024-03-25T14:48:00.000Z"
+  },
+  {
+    "id": 10,
+    "claim_by_member_id": 510,
+    "claim_cooperation_key": "key920",
+    "claim_package_state": "damaged",
+    "createdAt": "2024-04-25T14:48:00.000Z"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "applicant_claim_id": 601,
+    "carrier_claim_id": 701,
+    "state": "solved",
+    "createdAt": "2023-07-25T14:48:00.000Z",
+    "updatedAt": "2023-07-25T15:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "applicant_claim_id": 602,
+    "carrier_claim_id": 702,
+    "state": "urgent",
+    "createdAt": "2023-08-25T14:48:00.000Z",
+    "updatedAt": "2023-08-25T15:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "applicant_claim_id": 603,
+    "carrier_claim_id": 703,
+    "state": "solved",
+    "createdAt": "2023-09-25T14:48:00.000Z",
+    "updatedAt": "2023-09-25T15:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "applicant_claim_id": 604,
+    "carrier_claim_id": 704,
+    "state": "urgent",
+    "createdAt": "2023-10-25T14:48:00.000Z",
+    "updatedAt": "2023-10-25T15:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "applicant_claim_id": 605,
+    "carrier_claim_id": 705,
+    "state": "solved",
+    "createdAt": "2023-11-25T14:48:00.000Z",
+    "updatedAt": "2023-11-25T15:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "applicant_claim_id": 606,
+    "carrier_claim_id": 706,
+    "state": "urgent",
+    "createdAt": "2023-12-25T14:48:00.000Z",
+    "updatedAt": "2023-12-25T15:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "applicant_claim_id": 607,
+    "carrier_claim_id": 707,
+    "state": "solved",
+    "createdAt": "2024-01-25T14:48:00.000Z",
+    "updatedAt": "2024-01-25T15:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "applicant_claim_id": 608,
+    "carrier_claim_id": 708,
+    "state": "urgent",
+    "createdAt": "2024-02-25T14:48:00.000Z",
+    "updatedAt": "2024-02-25T15:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "applicant_claim_id": 609,
+    "carrier_claim_id": 709,
+    "state": "solved",
+    "createdAt": "2024-03-25T14:48:00.000Z",
+    "updatedAt": "2024-03-25T15:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "applicant_claim_id": 610,
+    "carrier_claim_id": 710,
+    "state": "urgent",
+    "createdAt": "2024-04-25T14:48:00.000Z",
+    "updatedAt": "2024-04-25T15:00:00.000Z"
+  }
+]
