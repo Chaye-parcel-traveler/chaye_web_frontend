@@ -1,8 +1,11 @@
-import React from 'react'
+import { useRef } from 'react';
 
 const Navigation = () => {
+  const sidebar = useRef<HTMLElement | null>(null);
+  const toggle = () => sidebar.current?.classList.toggle('close');
+
   return (
-    <nav className="sidebar close">
+    <nav className="sidebar close" ref={sidebar}>
       <header>
         <div className="image-text">
           <span className="image">
@@ -15,13 +18,13 @@ const Navigation = () => {
           </div>
         </div>
 
-        <i className="bx bx-chevron-right toggle"></i>
+        <i className="bx bx-chevron-right toggle" onClick={toggle}></i>
       </header>
 
       <div className="menu-bar">
         <div className="menu">
           <li className="search-box">
-            <i className="bx bx-search icon"></i>
+            <i className="bx bx-search icon" onClick={toggle}></i>
             <input type="text" placeholder="Rechercher..." />
           </li>
 
@@ -72,13 +75,13 @@ const Navigation = () => {
 
         <div className="bottom-content">
           <li className="">
-            <a href="loginSingup.html">
+            <a href="/login">
               <i className="bx bx-log-out bx-tada-hover bx-md icon"></i>
               <span className="text nav-text">Se deconnecter</span>
             </a>
           </li>
 
-          {/* <li className="mode">
+          <li className="mode">
             <div className="sun-moon">
               <i className="bx bx-moon icon moon"></i>
               <i className="bx bx-sun icon sun"></i>
@@ -88,11 +91,11 @@ const Navigation = () => {
             <div className="toggle-switch">
               <span className="switch"></span>
             </div>
-          </li> */}
+          </li>
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navigation
+export default Navigation;
