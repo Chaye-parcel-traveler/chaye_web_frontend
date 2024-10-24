@@ -9,7 +9,7 @@ const Login = () => {
         <div className="form login">
           <div className="form-content">
             <header>
-              <h2>Content de te revoir</h2>
+              {/* <h2>Content de vous revoir</h2> */}
               <h4
                 style={{
                   fontSize: '17px!important',
@@ -67,7 +67,7 @@ const Login = () => {
             <div className="form-link">
               <span>
                 Vous n’avez pas de compte ?
-                <a href="#" className="link signup-link">
+                <a href="/register" className="link signup-link">
                   {' '}
                   Créer votre compte{' '}
                 </a>
