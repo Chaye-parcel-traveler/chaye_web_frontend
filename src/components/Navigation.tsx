@@ -9,7 +9,9 @@ const Navigation = () => {
       <header>
         <div className="image-text">
           <span className="image">
-            <img src="images/logo.png" alt="Chaye" />
+            <a href="/">
+              <img src="images/logo.png" alt="Chaye" />
+            </a>
           </span>
 
           <div className="text logo-text">
