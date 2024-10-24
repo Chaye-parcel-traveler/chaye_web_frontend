@@ -3,7 +3,7 @@ import React from 'react';
 const UserOpinion = () => {
   return (
     <div className="container">
-      <h2 className="txtLeft margin-top-36">Avis</h2>
+      <h2 className="txtLeft margin-top-36">Vos avis</h2>
       <div className="box-chaye sansFond margin-top-25 ">
         <div className="container px-3">
           <div className="row">
