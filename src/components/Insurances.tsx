@@ -13,7 +13,7 @@ const Insurances = () => {
   };
 
   return (
-    <div className="container">
+    <div className="insurance-container container">
       <h2 className="txtLeft margin-top-36">Assurance</h2>
       <div className="box-chaye margin-top-25 ">
         <div className="displayFlex paddingAssurance">
