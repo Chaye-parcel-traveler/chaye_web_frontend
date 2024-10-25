@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ChoiceCarrierOrSender = () => {
   return (
     <div className="container">
@@ -12,12 +10,12 @@ const ChoiceCarrierOrSender = () => {
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-4">
-                  <a className="btnChaye" href="indexExpedier.html">
+                  <a className="btnChaye" href="/sender">
                     J'expédie
                   </a>
                 </div>
                 <div className="col-4">
-                  <a className="btnChaye" href="#">
+                  <a className="btnChaye" href="/carrier">
                     Je transporte
                   </a>
                 </div>
