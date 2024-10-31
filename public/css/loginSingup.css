@@ -60,6 +60,11 @@ box-shadow: 2px 1px 8px 0px rgba(65, 28, 13, 0.20);
     background: #EC634E!important;   
 }
 
+
+section.container.forms{
+  display: flex;
+}
+
 footer div.container{
   padding-top: 25px;
   padding-bottom: 25px;
