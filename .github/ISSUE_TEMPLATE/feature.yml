@@ -1,0 +1,48 @@
+name: Fonctionnalité
+description: Demander une fonctionnalité ou un changement fonctionnel frontend.
+title: "[FEATURE] "
+labels: ["type:feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Rédiger les besoins fonctionnels en français. Garder les tokens techniques en anglais.
+  - type: input
+    id: requirement
+    attributes:
+      label: Référence spec ou ticket
+      description: Exemple `LEG-002`, `FE-CGU-001`, ou lien vers `docs/traceability.md`.
+    validations:
+      required: true
+  - type: textarea
+    id: need
+    attributes:
+      label: Besoin fonctionnel
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critères d'acceptation
+      placeholder: |
+        - ...
+        - ...
+    validations:
+      required: true
+  - type: textarea
+    id: technical-notes
+    attributes:
+      label: Notes techniques
+      description: En anglais si cela décrit du code, des champs, commandes ou endpoints.
+    validations:
+      required: false
+  - type: checkboxes
+    id: risk
+    attributes:
+      label: Risques
+      options:
+        - label: Dépend d'un contrat backend
+        - label: Impact juridique ou conformité
+        - label: Impact sécurité ou auth
+        - label: Impact UX critique
+

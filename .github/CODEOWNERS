@@ -1,0 +1,15 @@
+# Default reviewer until GitHub teams are configured.
+* @jiraiya972
+
+# Frontend compliance and auth-sensitive areas.
+/src/Components/Member/ @jiraiya972
+/src/Components/Footer/ @jiraiya972
+/src/Components/Announcements/ @jiraiya972
+/src/Services/ @jiraiya972
+/src/setAuthToken.js @jiraiya972
+
+# Workflow and architecture documentation.
+/.github/ @jiraiya972
+/docs/spec-v3.1.md @jiraiya972
+/docs/adr/ @jiraiya972
+
