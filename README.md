@@ -147,13 +147,14 @@ flowchart TB
 Lecture conseillee avant de coder:
 
 1. `../chaye_documentations/README.md`
-2. `../chaye_documentations/product/README.md`
-3. `../chaye_documentations/workflows/README.md`
-4. `AGENTS.md`
-5. `../chaye_API/docs/spec-v3.1.md`
-6. `../chaye_API/docs/traceability.md`
-7. `docs/quality-gates.md`
-8. l'issue GitHub sur laquelle tu travailles
+2. `../chaye_documentations/produit/README.md`
+3. `../chaye_documentations/processus/README.md`
+4. `../chaye_documentations/sources-pdf/README.md`
+5. `AGENTS.md`
+6. `../chaye_API/docs/spec-v3.1.md`
+7. `../chaye_API/docs/traceability.md`
+8. `docs/quality-gates.md`
+9. l'issue GitHub sur laquelle tu travailles
 
 La specification produit transverse vit dans `../chaye_documentations`. Si une doc frontend, une doc API et la documentation transverse se contredisent, demande clarification et mets d'abord a jour `../chaye_documentations`.
 

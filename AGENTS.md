@@ -17,10 +17,11 @@ This file is the entry point for AI agents working on the web frontend.
 The transverse product and organization documentation now lives in French in:
 
 - `../chaye_documentations/README.md`
-- `../chaye_documentations/product/`
-- `../chaye_documentations/compliance/`
-- `../chaye_documentations/workflows/`
-- `../chaye_documentations/contracts/`
+- `../chaye_documentations/produit/`
+- `../chaye_documentations/conformite/`
+- `../chaye_documentations/processus/`
+- `../chaye_documentations/contrats/`
+- `../chaye_documentations/sources-pdf/`
 
 Use `../chaye_documentations` for product rules, compliance rules, team workflow, onboarding, and cross-repo decisions.
 
