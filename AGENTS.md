@@ -14,7 +14,17 @@ This file is the entry point for AI agents working on the web frontend.
 
 ## Product Source Of Truth
 
-The complete product documentation is maintained in the API repo:
+The transverse product and organization documentation now lives in French in:
+
+- `../chaye_documentations/README.md`
+- `../chaye_documentations/product/`
+- `../chaye_documentations/compliance/`
+- `../chaye_documentations/workflows/`
+- `../chaye_documentations/contracts/`
+
+Use `../chaye_documentations` for product rules, compliance rules, team workflow, onboarding, and cross-repo decisions.
+
+The API repo remains useful for backend-specific technical details:
 
 - `../chaye_API/docs/spec-v3.1.md`
 - `../chaye_API/docs/backlog.md`
@@ -35,13 +45,14 @@ Frontend-specific notes live in this repo:
 - `docs/adr/`
 - `docs/github-governance.md`
 
-When the API docs and frontend docs disagree, treat the API docs as the source of truth and update the frontend docs before coding.
+When `../chaye_documentations`, API docs, and frontend docs disagree, stop and update `../chaye_documentations` from the latest validated product decision before coding. Then update frontend docs only for frontend-specific details.
 
 ## Language Policy
 
 - GitHub issue titles, issue bodies, business rules, acceptance criteria, and functional specifications must be written in French.
 - Code, identifiers, field names, endpoints, commands, labels used for automation, and technical specifications must be written in English.
 - Keep technical tokens unchanged inside French text, for example `REACT_APP_API_URL`, `departingFrom`, `npm run build`, or `agent:ready`.
+- The `../chaye_documentations` repo lives in French. Always add an explanatory note when creating a new structural document there.
 
 ## GitHub Issues Policy
 

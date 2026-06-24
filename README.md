@@ -4,7 +4,9 @@ Bienvenue dans le frontend Chaye.
 
 Ce README sert a aider un nouveau dev a installer le projet, comprendre le workflow GitHub et contribuer sans se perdre dans tout le code existant.
 
-Les details plus complets sont dans `AGENTS.md` et dans `docs/`.
+La documentation produit transverse vit en francais dans `../chaye_documentations`.
+
+Les details techniques propres au frontend restent dans `AGENTS.md` et dans `docs/`.
 
 ## Vue Simple
 
@@ -144,13 +146,16 @@ flowchart TB
 
 Lecture conseillee avant de coder:
 
-1. `AGENTS.md`
-2. `../chaye_API/docs/spec-v3.1.md`
-3. `../chaye_API/docs/traceability.md`
-4. `docs/quality-gates.md`
-5. l'issue GitHub sur laquelle tu travailles
+1. `../chaye_documentations/README.md`
+2. `../chaye_documentations/product/README.md`
+3. `../chaye_documentations/workflows/README.md`
+4. `AGENTS.md`
+5. `../chaye_API/docs/spec-v3.1.md`
+6. `../chaye_API/docs/traceability.md`
+7. `docs/quality-gates.md`
+8. l'issue GitHub sur laquelle tu travailles
 
-La specification produit principale vit cote API. Si une doc frontend et une doc API se contredisent, demande clarification ou aligne la doc frontend sur l'API avant de coder.
+La specification produit transverse vit dans `../chaye_documentations`. Si une doc frontend, une doc API et la documentation transverse se contredisent, demande clarification et mets d'abord a jour `../chaye_documentations`.
 
 ## Workflow Avec Les Issues GitHub
 
@@ -335,3 +340,5 @@ flowchart LR
 ```
 
 Si une information manque, ajoute-la dans la doc pendant ta PR. Le but est que le prochain dev ait moins de questions que toi.
+
+Pour une information produit ou organisationnelle qui concerne plusieurs repos, mets a jour `../chaye_documentations`. Pour une information purement frontend, garde-la dans ce repo.
