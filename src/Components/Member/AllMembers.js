@@ -13,21 +13,18 @@ function AllMembers() {
   const reducer = (state, action) => {
     switch (action.type) {
       case 'FETCH_SUCCESS':
-        console.log('reducer FETCH_SUCCESS',state, action)
         return {
           loading: false,
           members: action.payload,
           error: '',
         };
       case 'FETCH_ERROR':
-        console.log('reducer FETCH_ERROR',state, action)
         return {
           loading: false,
           members: [],
           error: 'Something went wrong!!!!!',
         };
       default:
-        console.log('reducer default',state, action)
         return state;
     }
   };

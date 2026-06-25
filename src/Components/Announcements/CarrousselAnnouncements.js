@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import TinySlider from "tiny-slider-react";
 import 'tiny-slider/dist/tiny-slider.css';
+import apiClient from '../../lib/api';
 
 function CarrouselAnnouncements() {
     const settings = {
@@ -51,10 +51,8 @@ function CarrouselAnnouncements() {
     };
 
     const reducer = (state, action) => {
-        console.log('reducer', action)
         switch (action.type) {
             case 'FETCH_ANNOUNCEMENTS_SUCCESS':
-                console.log('yeahhh des annonces');
                 return {
                     ...state,
                     loadingAnnouncements: false,
@@ -88,7 +86,7 @@ function CarrouselAnnouncements() {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        axios
+        apiClient
             .get('/announcements')
             .then((response) => {
                 dispatch({ type: 'FETCH_ANNOUNCEMENTS_SUCCESS', payload: response.data });
@@ -96,16 +94,6 @@ function CarrouselAnnouncements() {
             .catch(() => {
                 dispatch({ type: 'FETCH_ANNOUNCEMENTS_ERROR' });
             });
-        /*
-                axios
-                    .get('http://localhost:5000/memberinfos', { withCredentials: true })
-                    .then((response) => {
-                        dispatch({ type: 'FETCH_MEMBERS_SUCCESS', payload: response.data });
-                    })
-                    .catch(() => {
-                        dispatch({ type: 'FETCH_MEMBERS_ERROR' });
-                    });
-        */
     }, []);
 
     return (
@@ -126,8 +114,8 @@ function CarrouselAnnouncements() {
                                                 <div className="author">
                                                     <img src="images/img.png" alt="Free template by TemplateUX" />
                                                     <div className="txt-alaune">
-                                                        <div><span>Destination</span>..............<span className="txtViolet">{announcement.arriving_at}</span></div>
-                                                        <div><span>Poids disponible</span>........<span className="txtViolet">{announcement.weight_availability}kg</span></div>
+                                                        <div><span>Destination</span>..............<span className="txtViolet">{announcement.arrivingAt || announcement.arriving_at}</span></div>
+                                                        <div><span>Poids disponible</span>........<span className="txtViolet">{announcement.weightAvailability || announcement.weight_availability}kg</span></div>
                                                         <div><span>Prix au kilo</span>........................<span className="txtViolet">{announcement.price}€</span></div>
                                                     </div>
                                                 </div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import axios from 'axios';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
@@ -16,6 +15,7 @@ import TextField from '@mui/material/TextField';
 import moment from 'moment/moment';
 import 'moment/locale/fr';
 import '../styles/message.css'; // Ajoutez un fichier CSS pour les styles personnalisés
+import apiClient, { getApiAssetUrl, getApiUrl } from '../../lib/api';
 
 moment().locale('fr');
 
@@ -23,11 +23,11 @@ function AllMessages() {
     const [userData, setUserData] = useState({}); // Initialisez avec un objet vide
 
     useEffect(() => {
-        axios.get('/me')
+        apiClient.get('/me')
             .then(response => {
                 setUserData(response.data);
             })
-            .catch(error => {
+            .catch(() => {
                 setUserData(false);
             });
     }, []);
@@ -62,7 +62,7 @@ function AllMessages() {
     const [membersState, membersDispatch] = useReducer(membersReducer, initialMembersState);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/memberinfos', { withCredentials: true })
+        apiClient.get('/memberinfos', { withCredentials: true })
             .then(response => {
                 membersDispatch({ type: 'FETCH_MEMBERS_SUCCESS', payload: response.data });
             }).catch(() => {
@@ -100,7 +100,7 @@ function AllMessages() {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/messages', { withCredentials: true })
+        apiClient.get('/messages', { withCredentials: true })
             .then(response => {
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
             }).catch(() => {
@@ -163,7 +163,7 @@ function AllMessages() {
                                                 return (
                                                     <div  key={member.email}>
                                                         <img
-                                                            src={`http://localhost:5000/${member.imagename}`}
+                                                            src={getApiAssetUrl(member.imagename)}
                                                             alt="Membre" className='rounded-circle' width={"70px"}
                                                         />
                                                         <h3 className='text-center'>{member.firstname}  {member.lastname}</h3>
@@ -245,10 +245,10 @@ function AllMessages() {
                     ))}
                 </DialogContent>
                 <DialogActions>
-                    <form className="form-message" action="http://localhost:5000/messages" method="post">
-                        <input type="hidden" name='memberId' className="form-control " value={userData.id} />
-                        <input type="hidden" name="sender" value={userData.email} />
-                        <input type="hidden" name="recipient" value={selectedRecipient} />
+                    <form className="form-message" action={getApiUrl('/messages')} method="post">
+                        <input type="hidden" name='memberId' className="form-control " value={userData.id || ''} readOnly />
+                        <input type="hidden" name="sender" value={userData.email || ''} readOnly />
+                        <input type="hidden" name="recipient" value={selectedRecipient || ''} readOnly />
                         <TextField
                             name="message"
                             label="Répondre"

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import '../styles/profile.css';
 import Header from '../Header/Header';
 import AllMessages from '../Message/AllMessages';
 import { useNavigate } from 'react-router-dom';
+import apiClient, { getApiAssetUrl } from '../../lib/api';
 
 function Profile() {
   const navigate = useNavigate()
@@ -15,20 +15,20 @@ function Profile() {
   const [member, setMember] = useState({});
 
   useEffect(() => {
-    axios
+    apiClient
       .get('/me')
       .then((response) => {
         setLoading(false);
         setError('');
         setMember(response.data);
       })
-      .catch((error) => {
+      .catch(() => {
         setLoading(false);
         setError('Something went wrong!');
         setMember({});
         navigate('/loginSignup')
       });
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -52,7 +52,7 @@ function Profile() {
               </div>
               <div className='profile'>
                 <div className='img-profile'>
-                  <img src={`/${member.imagename}`} className='rounded-circle' width={'120px'} height={'100px'} alt='toto' />
+                  <img src={getApiAssetUrl(member.imagename)} className='rounded-circle' width={'120px'} height={'100px'} alt='Profil' />
                 </div>
                 <h1>{member.lastname} {member.firstname}</h1>
                 <p><i className="fa-solid fa-location-dot"></i>{member.adress}</p>

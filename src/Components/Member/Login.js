@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 import Footer from '../Footer/Footer';
 import { useGoogleLogin } from '@react-oauth/google';
 import { login } from '../../Services/member'
-import { setAuthToken } from '../../setAuthToken';
+import apiClient, { getApiUrl, persistAuthToken } from '../../lib/api';
 
 
 function Login() {
@@ -23,37 +22,36 @@ function Login() {
 
   const googleLogin = useGoogleLogin({
     flow: 'auth-code',
-    redirect_uri: `${process.env.REACT_APP_API_URL}/auth/google/redirect`,
+    redirect_uri: getApiUrl('/auth/google/redirect'),
     ux_mode: 'redirect',
     onSuccess: async (codeResponse) => {
-      console.log(codeResponse);
       const qs = `code=${encodeURIComponent(codeResponse.code)}
         &scope=${encodeURIComponent(codeResponse.scope)}
         &authuser=${encodeURIComponent(codeResponse.authuser)}
         &prompt=${encodeURIComponent(codeResponse.prompt)}`;
-      const tokens = await axios.get(
-        `${process.env.REACT_APP_API_URL}/auth/google/callback?${qs}`);
-
-      console.log('tokens',tokens);
+      await apiClient.get(`/auth/google/callback?${qs}`);
     },
-    onError: errorResponse => console.log(errorResponse),
+    onError: () => {},
   });
 
   const handleLogin = async e => {
     e.preventDefault();
-    const response = await login({
-      email: inputs.email,
-      password: inputs.password
-    });
-    console.log('token', response)
-    setToken(response.token);
-    sessionStorage.setItem("token", response.token);
-    setAuthToken(response.token);
+    try {
+      const response = await login({
+        email: inputs.email,
+        password: inputs.password
+      });
 
-    const me = await axios.get('/me')
-    setUserData(me)
+      setToken(response.token);
+      persistAuthToken(response.token);
 
-    return navigate('/');
+      const me = await apiClient.get('/me')
+      setUserData(me)
+
+      return navigate('/');
+    } catch {
+      alert('Login incorrect')
+    }
   }
 
   return (

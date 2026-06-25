@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import { login } from '../../Services/member'
-import { setAuthToken } from '../../setAuthToken';
+import apiClient, { getApiUrl, persistAuthToken } from '../../lib/api';
 import './LoginSignup.css'
 
 
@@ -23,41 +22,34 @@ function Login() {
 
   const googleLogin = useGoogleLogin({
     flow: 'auth-code',
-    redirect_uri: `${process.env.REACT_APP_API_URL}/auth/google/redirect`,
+    redirect_uri: getApiUrl('/auth/google/redirect'),
     ux_mode: 'redirect',
     onSuccess: async (codeResponse) => {
-      console.log(codeResponse);
       const qs = `code=${encodeURIComponent(codeResponse.code)}
         &scope=${encodeURIComponent(codeResponse.scope)}
         &authuser=${encodeURIComponent(codeResponse.authuser)}
         &prompt=${encodeURIComponent(codeResponse.prompt)}`;
-      const tokens = await axios.get(
-        `${process.env.REACT_APP_API_URL}/auth/google/callback?${qs}`);
-
-      console.log('tokens', tokens);
+      await apiClient.get(`/auth/google/callback?${qs}`);
     },
-    onError: errorResponse => console.log(errorResponse),
+    onError: () => {},
   });
 
   const handleLogin = async e => {
     e.preventDefault();
-    console.log(inputs)
-    const response = await login({
-      email: inputs.email,
-      password: inputs.password
-    });
-    console.log('token', response)
-    if(response?.token) {
+    try {
+      const response = await login({
+        email: inputs.email,
+        password: inputs.password
+      });
 
       setToken(response.token);
-      sessionStorage.setItem("token", response.token);
-      setAuthToken(response.token);
+      persistAuthToken(response.token);
       
-      const me = await axios.get('/me')
+      const me = await apiClient.get('/me')
       setUserData(me)
       
       return navigate('/');
-    } else {
+    } catch {
       alert('Login incorrect')
     }
   }
@@ -74,8 +66,7 @@ function Login() {
       phone: inputs.phone,
       // status: status,
     }
-    const response = await axios.post(`/members`, formData)
-    console.log(response.data);
+    await apiClient.post(`/members`, formData)
     navigate('/loginSignup');
   }
 
@@ -93,7 +84,7 @@ function Login() {
     <div className='page-login' >
       <section className="logoChaye">
         <Link to="/">
-          <img src="images/logoChaye.png" />
+          <img src="images/logoChaye.png" alt="Chaye" />
         </Link>
       </section>
       <section className={`container container-login forms`}>
@@ -115,8 +106,8 @@ function Login() {
               </div>
 
               <div className="form-link" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div>  <input type="checkbox" id="scales" name="scales" checked /> <span href="#" className="serappeller">Se rappeler de moi</span></div>
-                <div> <a href="#" className="forgot-pass">Mot de passe oublié</a></div>
+                <div>  <input type="checkbox" id="scales" name="scales" defaultChecked /> <span className="serappeller">Se rappeler de moi</span></div>
+                <div> <button type="button" className="forgot-pass">Mot de passe oublié</button></div>
 
               </div>
 
@@ -126,30 +117,30 @@ function Login() {
             </form>
 
             <div className="form-link">
-              <span onClick={toggleSignup}>Vous n’avez pas de compte ? <a href="#" className="link signup-link"> Créer votre  compte </a></span>
+              <span>Vous n’avez pas de compte ? <button type="button" onClick={toggleSignup} className="link signup-link"> Créer votre  compte </button></span>
             </div>
           </div>
 
           <div className="line"></div>
 
           <div className="media-options">
-            <a href="#" className="field facebook">
+            <button type="button" className="field facebook">
               <i class='bx bxl-facebook facebook-icon'></i>
               <span>Se connecter avec Facebook</span>
-            </a>
+            </button>
           </div>
 
           <div className="media-options">
-            <a href="#" className="field google">
+            <button type="button" onClick={() => googleLogin()} className="field google">
               <img src="images/google.png" alt="" className="google-img" />
               <span>Se connecter avec Google</span>
-            </a>
+            </button>
           </div>
           <div className="media-options">
-            <a href="#" className="field apple">
+            <button type="button" className="field apple">
               <i class='bx bxl-apple apple-icon'></i>
               <span>Se connecter avec Apple</span>
-            </a>
+            </button>
           </div>
 
         </div>
@@ -199,31 +190,31 @@ function Login() {
             </form>
 
             <div className="form-link">
-              <span onClick={toggleSignup}>Vous avez déjà un compte ? <a href="#" className="link login-link">Se connecter</a></span>
+              <span>Vous avez déjà un compte ? <button type="button" onClick={toggleSignup} className="link login-link">Se connecter</button></span>
             </div>
           </div>
 
           <div className="line"></div>
 
           <div className="media-options">
-            <a href="#" className="field facebook">
+            <button type="button" className="field facebook">
               <i class='bx bxl-facebook facebook-icon'></i>
               <span>Se connecter avec Facebook</span>
-            </a>
+            </button>
           </div>
 
           <div className="media-options">
-            <a href="#" className="field google">
+            <button type="button" onClick={() => googleLogin()} className="field google">
               <img src="images/google.png" alt="" className="google-img" />
               <span>Se connecter avec Google</span>
-            </a>
+            </button>
           </div>
 
           <div className="media-options">
-            <a href="#" className="field apple">
+            <button type="button" className="field apple">
               <i class='bx bxl-apple apple-icon'></i>
               <span>Se connecter avec Apple</span>
-            </a>
+            </button>
           </div>
 
         </div>

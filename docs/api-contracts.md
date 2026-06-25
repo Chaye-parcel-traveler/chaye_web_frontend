@@ -26,7 +26,5 @@ http://localhost:3333
 
 ## Known Contract Issues
 
-- `AddAnnouncements.js` uses `departing_from`, `arriving_at`, `weight_availability`.
-- The backend expects `departingFrom`, `arrivingAt`, `weightAvailability`.
-- Some components call `http://localhost:5000`.
-
+- `AddAnnouncements.js` now sends `departingFrom`, `arrivingAt`, `weightAvailability`.
+- Frontend source code now uses the configured Axios base URL instead of hardcoded `http://localhost:5000` API calls.

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
-import axios from 'axios';
 import '../styles/comment.css';
+import apiClient, { getApiUrl } from '../../lib/api';
 
 
 function FormComment({ announcementId }) {
@@ -13,11 +13,10 @@ function FormComment({ announcementId }) {
     const [userData, setUserData] = useState('');
 
     useEffect(() => {
-        axios.get('/me')
+        apiClient.get('/me')
             .then(response => {
                 setUserData(response.data);
-                console.log(response.data);
-            }).catch(error => {
+            }).catch(() => {
                 setUserData(false);
             });
     }, []);
@@ -31,9 +30,9 @@ function FormComment({ announcementId }) {
                     <Modal.Title>Commentaires</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <form action="http://localhost:5000/comments" method="post">
-                        <input type="hidden" name='memberId' className="form-control" value={userData.id} />
-                        <input type="hidden" name='announcementId' className="form-control" value={announcementId} />
+                    <form action={getApiUrl('/comments')} method="post">
+                        <input type="hidden" name='memberId' className="form-control" value={userData.id || ''} readOnly />
+                        <input type="hidden" name='announcementId' className="form-control" value={announcementId} readOnly />
                         <label>Notez notre site</label>
                         <Stack spacing={1}>
                             <Rating name="ratingStars" defaultValue={1} precision={0.5} size="large" />

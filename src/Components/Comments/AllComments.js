@@ -1,9 +1,9 @@
 import React, { useEffect, useReducer } from 'react';
-import axios from 'axios';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
 import moment from 'moment/moment';
 import 'moment/locale/fr';
+import apiClient, { getApiAssetUrl } from '../../lib/api';
 
 moment.locale('fr');
 
@@ -53,8 +53,8 @@ function AllComments() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:5000/comments', { withCredentials: true })
+    apiClient
+      .get('/comments', { withCredentials: true })
       .then((response) => {
         dispatch({ type: 'FETCH_COMMENTS_SUCCESS', payload: response.data });
       })
@@ -62,8 +62,8 @@ function AllComments() {
         dispatch({ type: 'FETCH_COMMENTS_ERROR' });
       });
 
-    axios
-      .get('http://localhost:5000/memberinfos', { withCredentials: true })
+    apiClient
+      .get('/memberinfos', { withCredentials: true })
       .then((response) => {
         dispatch({ type: 'FETCH_MEMBERS_SUCCESS', payload: response.data });
       })
@@ -85,7 +85,7 @@ function AllComments() {
                   return (
                     <div key={member._id}>
                       <img
-                        src={`http://localhost:5000/${member.imagename}`}
+                        src={getApiAssetUrl(member.imagename)}
                         alt="Membre" className='rounded-circle'
                       />
                       <h3>{member.firstname}  {member.lastname}</h3>

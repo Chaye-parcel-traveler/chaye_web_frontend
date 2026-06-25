@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { logout } from '../../Services/member'
 import { Link } from 'react-router-dom';
+import apiClient, { clearAuthToken } from '../../lib/api';
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
   const [sideBarClose, setSideBarClose] = useState(true);
-  console.log('user', userData, isLoggedIn);
 
   useEffect(() => {
-    axios.get('/me')
+    apiClient.get('/me')
       .then(response => {
         setUserData(response.data);
         setIsLoggedIn(true);
@@ -22,11 +21,14 @@ function Navbar() {
     // Vous pouvez ajouter ici la logique de recherche en fonction de la valeur de e.target.value
   };
 
-  const handleLogout = async (e) => {
-    await logout();
-    sessionStorage.clear();
-    setUserData(null);
-    setIsLoggedIn(false);
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } finally {
+      clearAuthToken();
+      setUserData(null);
+      setIsLoggedIn(false);
+    }
   }
 
   const toggleSidebar = () => {

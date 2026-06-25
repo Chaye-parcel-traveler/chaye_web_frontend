@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from "react-router-dom";
 import Header from '../Header/Header';
 
 function AddPackage() {
-  let navigate = useNavigate();
-  const [inputs, setInputs] = useState({});
+  const [, setInputs] = useState({});
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -15,8 +12,6 @@ function AddPackage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    // await axios.post('/announcements', inputs);
-    // navigate('/announcements')
   }
 
   return (
@@ -107,36 +102,36 @@ function AddPackage() {
                   <div className="blog-info mt-n2">
                     <div className="mb-3">
 
-                      <input type="text" name="description" className="form-control"  aria-describedby="emailHelp" placeholder="Contenu du colis*" />
+                      <input type="text" name="description" className="form-control"  aria-describedby="emailHelp" placeholder="Contenu du colis*" onChange={handleChange} />
 
                     </div>
                     <div className="mb-3">
 
-                      <input type="text" name="weight" className="form-control"  aria-describedby="emailHelp" placeholder="Poids du colis en Kg *" />
+                      <input type="text" name="weight" className="form-control"  aria-describedby="emailHelp" placeholder="Poids du colis en Kg *" onChange={handleChange} />
 
                     </div>
                     <div className="mb-3">
 
-                      <input type="text" name="long" className="form-control"  aria-describedby="emailHelp" placeholder="Longueur du colis*" />
+                      <input type="text" name="long" className="form-control"  aria-describedby="emailHelp" placeholder="Longueur du colis*" onChange={handleChange} />
 
                     </div>
                     <div className="mb-3">
-                      <input type="text" name="lar" className="form-control"  aria-describedby="emailHelp" placeholder="Largeur  du colis*" />
-
-                    </div>
-                    <div className="mb-3">
-
-                      <input type="text" name="prof" className="form-control" aria-describedby="emailHelp" placeholder="Profondeur du colis" />
+                      <input type="text" name="lar" className="form-control"  aria-describedby="emailHelp" placeholder="Largeur  du colis*" onChange={handleChange} />
 
                     </div>
                     <div className="mb-3">
 
-                      <input type="number" name="price" className="form-control" aria-describedby="emailHelp" placeholder="Prix proposé*  " />
+                      <input type="text" name="prof" className="form-control" aria-describedby="emailHelp" placeholder="Profondeur du colis" onChange={handleChange} />
 
                     </div>
                     <div className="mb-3">
 
-                      <input type="date" name="long" className="form-control" aria-describedby="emailHelp" placeholder="Date limite d'expédition *" />
+                      <input type="number" name="price" className="form-control" aria-describedby="emailHelp" placeholder="Prix proposé*  " onChange={handleChange} />
+
+                    </div>
+                    <div className="mb-3">
+
+                      <input type="date" name="shippingLimitDate" className="form-control" aria-describedby="emailHelp" placeholder="Date limite d'expédition *" onChange={handleChange} />
 
                     </div>
                     <div className="container content mt-2">

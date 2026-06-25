@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap'; 
+import apiClient from '../../lib/api';
 
 function Message({ recipient }) {
   let navigate = useNavigate();
@@ -16,13 +16,12 @@ function Message({ recipient }) {
     const formData = new FormData();
     formData.append('recipient', recipient);
     formData.append('message', message);
-    axios
+    apiClient
       .post(`/messages`, formData ,{withCredentials:true})
-      .then((response) => {
-        console.log(response.data);
+      .then(() => {
         return navigate('/home');
       })
-      .catch(error => {
+      .catch(() => {
         setUserData(false);
       });
   }
@@ -43,9 +42,9 @@ function Message({ recipient }) {
         <Modal.Body>
           <form onSubmit={handleSubmit}>
             <div className="form-group col-8 m-auto">
-              <input type="hidden" name="sender" value={userData.email} />
-              <input type="hidden" name="recipient" value={recipient} />
-              <input type="hidden" name="memberId" value={userData.id} />
+              <input type="hidden" name="sender" value={userData.email || ''} readOnly />
+              <input type="hidden" name="recipient" value={recipient || ''} readOnly />
+              <input type="hidden" name="memberId" value={userData.id || ''} readOnly />
               <div>
                 <label htmlFor="texte" className="fst-italic">Message:</label>
                 <textarea name="message" className="form-control" rows="4" onChange={handelMessageChange} />

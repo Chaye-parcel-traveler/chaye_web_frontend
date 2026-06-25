@@ -1,31 +1,28 @@
-import axios from 'axios';
+import apiClient, { normalizeApiError } from '../lib/api';
 
 export async function login(credentials) {
     try {
-        const response = await axios.post('/login', credentials)
-        console.log('login', response.data)
+        const response = await apiClient.post('/login', credentials)
         return response.data
     } catch (error) {
-        console.error(error)
+        return Promise.reject(normalizeApiError(error))
     }
 }
 
 export async function logout() {
     try {
-        const response = await axios.post('/logout')
-        console.log('logout', response.data)
+        const response = await apiClient.post('/logout')
         return response.data
     } catch (error) {
-        console.error(error)
+        return Promise.reject(normalizeApiError(error))
     }
 }
 
 export async function fetchMembers() {
     try {
-        const response = await axios.get('/members')
-        console.log(response.data)
+        const response = await apiClient.get('/members')
         return response.data
     } catch (error) {
-        console.error(error)
+        return Promise.reject(normalizeApiError(error))
     }
 }

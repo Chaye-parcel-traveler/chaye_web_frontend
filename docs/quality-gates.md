@@ -2,7 +2,7 @@
 
 This document defines the checks every agent must run before handing frontend work back.
 
-Last updated: 2026-06-24.
+Last updated: 2026-06-25.
 
 ## Current Runtime Reality
 
@@ -16,6 +16,7 @@ Use Docker only to validate the production image build.
 Run these from `chaye_web_frontend/` after any frontend code change:
 
 ```bash
+npm run lint
 npm test -- --watchAll=false
 npm run build
 ```
@@ -24,6 +25,7 @@ Meaning:
 
 | Gate | Command | Purpose |
 | --- | --- | --- |
+| Lint | `npm run lint` | Runs ESLint on frontend source files. |
 | Tests | `npm test -- --watchAll=false` | Runs Create React App tests once. |
 | Build | `npm run build` | Verifies production bundle compilation. |
 
@@ -32,6 +34,7 @@ Meaning:
 For changes involving Axios calls, auth flow, forms, routes, or backend contracts:
 
 ```bash
+npm run lint
 npm test -- --watchAll=false
 npm run build
 ```
@@ -79,15 +82,11 @@ And confirm in the final response that no code tests were run because only docum
 
 The frontend repo currently lacks:
 
-- Dedicated lint script.
-- Dedicated CI workflow.
 - Docker Compose development service.
 - E2E tests.
 
 Recommended later tickets:
 
-- Add `npm run lint`.
-- Add GitHub Actions for test/build.
 - Add frontend Docker Compose service.
 - Add a focused E2E smoke test for signup, login, and announcement creation once backend contracts stabilize.
 
@@ -102,4 +101,3 @@ When a gate fails, agents must report:
 - The next recommended fix.
 
 Do not mark work complete if a required gate fails unless the failure is clearly pre-existing or infrastructure-related and that is documented.
-

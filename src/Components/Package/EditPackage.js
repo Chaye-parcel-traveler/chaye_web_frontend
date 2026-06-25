@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react';
 import '../styles/formule.css';
+import apiClient, { getApiAssetUrl } from '../../lib/api';
 
 function EditColis() {
   let navigate = useNavigate();
@@ -36,9 +36,9 @@ function EditColis() {
   };
 
 
-  useEffect((id) => {
-    axios
-      .get(`/package/${id}`, { withCredentials: true })
+  useEffect(() => {
+    apiClient
+      .get(`/package/${params.id}`, { withCredentials: true })
       .then((response) => {
         setContent(response.data.content);
         setWeight(response.data.weight);
@@ -46,9 +46,7 @@ function EditColis() {
         setDepartureCity(response.data.departureCity);
         setPicture(response.data.picture);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => {});
   }, [params.id]);
 
   const handleSubmit = (event) => {
@@ -61,15 +59,12 @@ function EditColis() {
     formData.append('departureCity', departureCity);
     formData.append('picture', picture);
 
-    axios
+    apiClient
       .put(`/editpackage/${params.id}`, formData)
       .then((response) => {
-        console.log(response.data);
         return navigate('/home');
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => {});
   };
 
   return (
@@ -83,12 +78,12 @@ function EditColis() {
 
         <Form.Field>
           <label className="form-label">Poids:</label>
-          <input className="form-control" type="string" id="input" onChange={handleWeightChange} value={weight}/>
+          <input className="form-control" type="text" id="input" onChange={handleWeightChange} value={weight}/>
         </Form.Field>
 
         <Form.Field>
           <label className="form-label">Taille:</label>
-          <input className="form-control" type="string" id="input" onChange={handleSizeChange} value={size} />
+          <input className="form-control" type="text" id="input" onChange={handleSizeChange} value={size} />
         </Form.Field>
         <Form.Field>
           <label className="form-label">Ville de départ:</label>
@@ -99,7 +94,7 @@ function EditColis() {
           <label className="form-label">Photo de contenu du colis ::</label>
           <input  className="form-control"type="file" id="input" onChange={handleFileChange} />
         </Form.Field>
-        <img src={`/${picture}`} width="150px" alt="imageColis" />
+        <img src={getApiAssetUrl(picture)} width="150px" alt="imageColis" />
 
         <Button id="btn" type="submit">
           Ajouter

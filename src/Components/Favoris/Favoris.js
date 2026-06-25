@@ -1,33 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Fab from '@mui/material/Fab';
 import moment from 'moment/moment';
 import 'moment/locale/fr';
 import Carousel from 'react-material-ui-carousel';
 import { Button } from '@mui/material';
+import apiClient, { getApiAssetUrl } from '../../lib/api';
 moment().locale('fr');
 
 function Favoris() {
     const [favoriteAnnouncements, setFavoriteAnnouncements] = useState([]);
     const [members, setMembers] = useState([]); 
     useEffect(() => {
-        axios.get('http://localhost:5000/favorites', { withCredentials: true })
+        apiClient.get('/favorites', { withCredentials: true })
             .then(response => {
                 setFavoriteAnnouncements(response.data);
             })
-            .catch(error => {
-                console.error('Erreur lors de la récupération des annonces favorites :', error);
-            });
+            .catch(() => {});
 
         // Récupérez les informations sur les membres ici
-        axios.get('http://localhost:5000/memberinfos', { withCredentials: true })
+        apiClient.get('/memberinfos', { withCredentials: true })
             .then(response => {
                 setMembers(response.data);
             })
-            .catch(error => {
-                console.error('Erreur lors de la récupération des informations sur les membres :', error);
-            });
+            .catch(() => {});
     }, []);
 
     return (
@@ -49,10 +45,9 @@ function Favoris() {
                             <div className="card-top">
                                 {members.map((member) => {
                                     if (member._id === announcement.memberId) {
-                                        console.log(member._id);
                                         return (
                                             <div key={member._id}>
-                                                <img src={`http://localhost:5000/${member.imagename}`} alt="Membre" />
+                                                <img src={getApiAssetUrl(member.imagename)} alt="Membre" />
                                             </div>
                                         );
                                     }
