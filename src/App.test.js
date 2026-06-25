@@ -1,8 +1,46 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+jest.mock('axios', () => {
+  const mockAxios = {
+    defaults: {
+      headers: {
+        common: {},
+      },
+    },
+    get: jest.fn(() => Promise.resolve({ data: [] })),
+    post: jest.fn(() => Promise.resolve({ data: {} })),
+  };
+
+  mockAxios.default = mockAxios;
+
+  return mockAxios;
+});
+
+jest.mock('@react-oauth/google', () => ({
+  GoogleOAuthProvider: ({ children }) => children,
+  useGoogleLogin: () => jest.fn(),
+}));
+
+jest.mock('aos', () => ({
+  init: jest.fn(),
+}));
+
+jest.mock('./Components/MainLayout', () => {
+  const React = require('react');
+
+  return function MockMainLayout() {
+    return React.createElement('main', { 'data-testid': 'main-layout' });
+  };
+});
+
+test('renders the Chaye app shell', () => {
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(screen.getByTestId('main-layout')).toBeInTheDocument();
 });

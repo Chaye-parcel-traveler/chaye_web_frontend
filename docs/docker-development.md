@@ -1,0 +1,89 @@
+# Chaye Web Frontend Docker Notes
+
+The frontend currently has a Dockerfile, but no Docker Compose development stack.
+
+## Current Dockerfile Behavior
+
+The Dockerfile:
+
+- Uses `node:16-alpine` for dependency install and build.
+- Runs `npm ci`.
+- Builds the React app with `npm run build`.
+- Accepts `REACT_APP_API_URL` as a build argument.
+- Serves the production build with `socialengine/nginx-spa:latest`.
+- Exposes port `80` in the production image.
+
+This is a production-style static build. It is not a hot-reload development container.
+
+## Production Build Check
+
+From `chaye_web_frontend/`:
+
+```bash
+docker build --build-arg REACT_APP_API_URL=http://localhost:3333 -t chaye-web-frontend .
+```
+
+Run the built image:
+
+```bash
+docker run --rm -p 3000:80 chaye-web-frontend
+```
+
+Then open:
+
+```text
+http://localhost:3000
+```
+
+## Host Development Fallback
+
+Until a frontend Docker Compose service exists, local development uses Create React App directly:
+
+```bash
+REACT_APP_API_URL=http://localhost:3333 npm start
+```
+
+The app normally runs at:
+
+```text
+http://localhost:3000
+```
+
+## API URL
+
+The app sets the Axios base URL from:
+
+```js
+process.env.REACT_APP_API_URL
+```
+
+Default API URL when the backend Docker Compose stack is running:
+
+```text
+http://localhost:3333
+```
+
+Known legacy issue:
+
+- Some components still call `http://localhost:5000` directly.
+- New code must not copy those hardcoded URLs.
+- When touching those screens, migrate calls to the configured Axios base URL.
+
+## Recommended Future Dev Compose
+
+If the team wants full Docker development for the frontend, add a compose service that:
+
+- Uses a Node image compatible with Create React App.
+- Mounts the repository into `/home/node/app`.
+- Preserves `node_modules` with a container volume.
+- Sets `REACT_APP_API_URL=http://localhost:3333`.
+- Runs `npm start`.
+- Exposes `3000:3000`.
+- Keeps hot reload working.
+
+## Agent Rules
+
+- Do not describe the current frontend Dockerfile as a development stack.
+- Use host `npm start` for hot-reload development until a compose service is added.
+- Use Docker only to validate the production image build.
+- Keep `REACT_APP_API_URL` documented when API ports or routing change.

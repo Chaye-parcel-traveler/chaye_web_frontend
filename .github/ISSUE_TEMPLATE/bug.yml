@@ -1,0 +1,35 @@
+name: Bug
+description: Signaler une anomalie frontend.
+title: "[BUG] "
+labels: ["type:bug"]
+body:
+  - type: textarea
+    id: observed
+    attributes:
+      label: Comportement observé
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportement attendu
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Étapes de reproduction
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: technical-context
+    attributes:
+      label: Contexte technique
+      description: Console, network request, route, payload, navigateur.
+    validations:
+      required: false
+

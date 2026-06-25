@@ -1,0 +1,50 @@
+name: Test and Build
+
+on:
+  push:
+    branches:
+      - task/lboi/use_chaye_api_backend
+  pull_request:
+    branches:
+      - task/lboi/use_chaye_api_backend
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6.0.3
+
+      - name: Install nodejs
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 16.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test -- --watchAll=false
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6.0.3
+
+      - name: Install nodejs
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 16.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build app
+        env:
+          REACT_APP_API_URL: http://localhost:3333
+          CI: false
+        run: npm run build
+
