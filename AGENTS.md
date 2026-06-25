@@ -62,6 +62,9 @@ When `../chaye_documentations`, API docs, and frontend docs disagree, stop and u
 - Before creating an issue, run `gh issue list --repo Chaye-parcel-traveler/chaye_web_frontend --state all --limit 100 --json number,title` and check for duplicates.
 - Issue titles and bodies must be written in French, while technical tokens stay in English.
 - Keep labels in English because they are used for filtering and automation, for example `agent:ready`, `area:frontend`, `blocked:backend-contract`.
+- Scope issues by verifiable product/UI capability, not by file, component, command, or isolated technical step.
+- Prefer `size:M` for agent-ready implementation work. Use `agent:too-small`, `agent:too-large`, or `agent:needs-scope` when an issue needs reshaping before implementation.
+- Every implementation issue should state included scope, excluded scope when useful, acceptance criteria, likely files, quality gates, risks, and dependencies.
 - Link issue work back to `docs/agent-tickets.md` when the ticket already exists there.
 - `scripts/create-agent-issues.sh` checks existing ticket IDs before creation and supports `DRY_RUN=true`.
 - Still review existing issues before bulk creation.

@@ -32,22 +32,25 @@ edit_issue 5 "[FE-LEGAL-001] Mettre à jour les mentions légales et l'accès de
 $'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- Les mentions légales sont accessibles depuis le footer et l\'écran de connexion.\n- Les données société manquantes restent clairement indiquées comme en attente.'
 
 edit_issue 6 "[FE-CGU-001] Ajouter la case CGU obligatoire à l'inscription" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-CGU-002\n\nCritères d\'acceptation:\n- La soumission est bloquée si la case n\'est pas cochée.\n- La version des CGU acceptée est envoyée au backend.'
+$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-CGU-001\n\nCritères d\'acceptation:\n- La soumission est bloquée si la case n\'est pas cochée.\n- La version des CGU acceptée est envoyée au backend.\n- L\'erreur backend reste visible.'
 
 edit_issue 7 "[FE-MINOR-001] Ajouter la date de naissance et le message mineur à l'inscription" \
 $'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-MINOR-001\n\nCritères d\'acceptation:\n- L\'inscription envoie la date de naissance.\n- Le message mineur existe.\n- L\'UX supporte la validation backend.'
 
-edit_issue 8 "[FE-REPORT-001] Ajouter un composant réutilisable de formulaire de signalement" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-REPORT-002\n\nCritères d\'acceptation:\n- Le formulaire gère le type de signalement et la description optionnelle.\n- Il soumet vers l\'endpoint backend.'
+edit_issue 8 "[FE-REPORT-001] Ajouter le signalement sur profil et annonces" \
+$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-REPORT-001\n\nPérimètre inclus:\n- Boutons `Signaler` sur les écrans profil et annonce.\n- Formulaire de signalement avec type et description optionnelle.\n- Appel à l\'endpoint backend.\n- Retour utilisateur en cas de succès.\n\nCritères d\'acceptation:\n- Les écrans profil et annonce exposent `Signaler`.\n- Le formulaire gère le type de signalement et la description optionnelle.\n- La soumission appelle l\'endpoint backend.\n- Un succès affiche un retour utilisateur.'
 
-edit_issue 9 "[FE-REPORT-002] Ajouter les actions de signalement sur profil et annonces" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: FE-REPORT-001\n\nCritères d\'acceptation:\n- Les écrans profil et annonce exposent `Signaler`.\n- Une soumission réussie affiche un retour utilisateur.'
+edit_issue 9 "[FE-REPORT-002] À fermer - fusionné dans FE-REPORT-001" \
+$'Ce ticket est devenu trop granulaire.\n\nLa capacité utile est maintenant suivie par FE-REPORT-001 (#8): ajouter le signalement sur profil et annonces.\n\nAction attendue:\n- Ne pas implémenter ce ticket séparément.\n- Fermer ce ticket après mise à jour des labels ou après validation équipe.\n\nRaison:\n- Une issue agentique doit livrer une capacité vérifiable, pas une sous-étape UI isolée.'
 
-edit_issue 10 "[FE-ADMIN-001] Ajouter la page admin de modération" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-MOD-001\n\nCritères d\'acceptation:\n- Une route/page admin existe.\n- Elle charge la liste des signalements avec filtres.\n- Elle gère l\'état interdit.'
+edit_issue 10 "[FE-ADMIN-001] Ajouter la modération admin frontend" \
+$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-MOD-001, API-MOD-002, API-SUSP-001\n\nPérimètre inclus:\n- Route/page admin.\n- Liste des signalements avec filtres.\n- État interdit pour les non-admins.\n- Actions classer sans suite, avertir et suspendre.\n\nCritères d\'acceptation:\n- Une route/page admin existe.\n- Elle liste les signalements avec filtres.\n- Elle gère l\'état interdit.\n- L\'admin peut classer sans suite, avertir ou suspendre via les endpoints backend.'
 
-edit_issue 11 "[FE-ADMIN-002] Ajouter les actions UI de modération" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: FE-ADMIN-001, API-MOD-002, API-SUSP-001\n\nCritères d\'acceptation:\n- L\'admin peut classer sans suite, avertir ou suspendre via les endpoints backend.'
+edit_issue 11 "[FE-ADMIN-002] À fermer - fusionné dans FE-ADMIN-001" \
+$'Ce ticket est devenu trop granulaire.\n\nLa capacité utile est maintenant suivie par FE-ADMIN-001 (#10): ajouter la modération admin frontend.\n\nAction attendue:\n- Ne pas implémenter ce ticket séparément.\n- Fermer ce ticket après mise à jour des labels ou après validation équipe.\n\nRaison:\n- Une page admin sans actions ne livre pas une capacité de modération complète.'
 
 edit_issue 12 "[FE-ACCOUNT-001] Afficher l'état de compte suspendu ou banni" \
 $'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-MEMBER-001, API-SUSP-001\n\nCritères d\'acceptation:\n- Les utilisateurs suspendus voient leur statut.\n- Les actions publier, réserver et envoyer un message sont indisponibles dans l\'UI.'
+
+edit_issue 13 "[FE-OPS-003] Activer la protection de branche GitHub" \
+$'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- La branche `task/lboi/use_chaye_api_backend` exige une PR avant merge.\n- Au moins 1 review est requise.\n- Les reviews CODEOWNERS sont requises.\n- Les conversations doivent être résolues.\n- Les force-pushes et suppressions sont interdits.\n- Les checks obligatoires sont `test` et `build`.\n\nNote technique:\nLe compte `gh` utilisé par l\'agent a `viewerPermission=WRITE`, pas `ADMIN`; un admin GitHub doit appliquer ce réglage.'
