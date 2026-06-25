@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/signup.css';
 import Footer from '../Footer/Footer';
+import apiClient from '../../lib/api';
 function SignUp() {
   let navigate = useNavigate();
   // const [file, setFile] = useState(null);
@@ -71,15 +71,12 @@ function SignUp() {
       phone: phone,
       // status: status,
     }
-    axios
+    apiClient
       .post(`/members`, formData)
       .then((response) => {
-        console.log(response.data);
         return navigate('/login');
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => {});
 
   };
 

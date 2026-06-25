@@ -12,7 +12,8 @@ This document is technical and intentionally written in English.
 
 ## Application Boundaries
 
-- `src/App.js`: route registration and global Axios base URL.
+- `src/App.js`: route registration.
+- `src/lib/api.js`: shared Axios client, auth token header handling, API URL helpers, and normalized API errors.
 - `src/Components/`: page and UI components.
 - `src/Services/`: API service wrappers.
 - `src/setAuthToken.js`: token header helper.
@@ -20,12 +21,9 @@ This document is technical and intentionally written in English.
 
 ## Current Risks
 
-- Some components still call `http://localhost:5000`.
-- Announcement form payload currently diverges from backend validators.
 - Social auth UI is inconsistent across screens.
 - There is no Docker Compose hot-reload frontend service yet.
 
 ## Agent Rule
 
 Do not add new direct `axios` calls with hardcoded hostnames. Prefer service wrappers or the configured Axios base URL.
-

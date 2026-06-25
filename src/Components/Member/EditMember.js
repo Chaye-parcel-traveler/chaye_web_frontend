@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import '../styles/signup.css';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
+import apiClient, { getApiAssetUrl } from '../../lib/api';
 
 function EditMember() {
   let navigate = useNavigate();
@@ -51,9 +51,9 @@ function EditMember() {
     setStatus(event.target.value);
   };
 
-  useEffect((id) => {
-    axios
-      .get(`/members/${id}`)
+  useEffect(() => {
+    apiClient
+      .get(`/members/${params.id}`)
       .then((response) => {
         setLastname(response.data.lastname);
         setFirstname(response.data.firstname);
@@ -64,9 +64,7 @@ function EditMember() {
         setStatus(response.data.status);
         setImagename(response.data.imagename);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => {});
   }, [params.id]);
 
   const handelSubmit = (event) => {
@@ -82,15 +80,12 @@ function EditMember() {
     formData.append('status', status);
     formData.append('imagename', imagename);
 
-      axios
+      apiClient
         .put(`/members/${params.id}`, formData)
         .then((response) => {
-          console.log(response.data);
           return navigate(`/profile/${params.id}`);
         })
-        .catch((error) => {
-          console.log(error);
-        });
+        .catch(() => {});
   };
 
   return (
@@ -141,7 +136,7 @@ function EditMember() {
             <div className="mb-3">
               <label className="form-label">Photo</label>
               <input type="file" className="form-control" onChange={handelFileChange} />
-              <img src={`http://localhost:5000/${imagename}`} width="150px" alt="Profil" />
+              <img src={getApiAssetUrl(imagename)} width="150px" alt="Profil" />
             </div>
             <div className="p-3 text-center">
               <input className="text-light fw-bold valider px-5 py-2" type="submit" value="Modifier" />

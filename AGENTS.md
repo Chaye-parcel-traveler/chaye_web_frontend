@@ -84,6 +84,7 @@ The current Dockerfile is for production image builds, not local hot-reload deve
 Run these from `chaye_web_frontend/` before handing work back:
 
 ```bash
+npm run lint
 npm test -- --watchAll=false
 npm run build
 ```

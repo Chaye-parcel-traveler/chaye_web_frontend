@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Header from '../Header/Header';
+import apiClient from '../../lib/api';
 
 function AddAnnouncements() {
   let navigate = useNavigate();
@@ -15,7 +15,7 @@ function AddAnnouncements() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    await axios.post('/announcements', {
+    await apiClient.post('/announcements', {
       ...inputs, 
       type: 'transport',
     });
@@ -42,7 +42,7 @@ function AddAnnouncements() {
                       </div>
                     </div>
                     <div className="wrapper-dropdown" id="dropdown">
-                      <input className="form-control" list="datalistOptions" name='departing_from' placeholder="Fort de France" onChange={handleChange} />
+                      <input className="form-control" list="datalistOptions" name='departingFrom' placeholder="Fort de France" onChange={handleChange} />
                       <datalist id="datalistOptions">
                         <option value="Fort de France" />
                         <option value="San Francisco" />
@@ -71,7 +71,7 @@ function AddAnnouncements() {
                       </div>
                     </div>
                     <div className="wrapper-dropdown" id="dropdown">
-                      <input className="form-control" list="datalistOptions" name='arriving_at' placeholder="Paris" onChange={handleChange} />
+                      <input className="form-control" list="datalistOptions" name='arrivingAt' placeholder="Paris" onChange={handleChange} />
                       <datalist id="datalistOptions">
                         <option value="Paris" />
                         <option value="Fort de France" />
@@ -115,7 +115,7 @@ function AddAnnouncements() {
                     </div>
                     <div className="mb-3">
 
-                      <input type="number" name="weight_availability" className="form-control" aria-describedby="emailHelp" placeholder="Kg disponible *"  onChange={handleChange} />
+                      <input type="number" name="weightAvailability" className="form-control" aria-describedby="emailHelp" placeholder="Kg disponible *"  onChange={handleChange} />
 
                     </div>
                     <div className="mb-3">

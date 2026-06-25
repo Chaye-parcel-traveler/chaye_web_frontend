@@ -2,8 +2,9 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 
-jest.mock('axios', () => {
-  const mockAxios = {
+jest.mock('./lib/api', () => ({
+  __esModule: true,
+  default: {
     defaults: {
       headers: {
         common: {},
@@ -11,12 +12,15 @@ jest.mock('axios', () => {
     },
     get: jest.fn(() => Promise.resolve({ data: [] })),
     post: jest.fn(() => Promise.resolve({ data: {} })),
-  };
-
-  mockAxios.default = mockAxios;
-
-  return mockAxios;
-});
+    put: jest.fn(() => Promise.resolve({ data: {} })),
+  },
+  clearAuthToken: jest.fn(),
+  getApiAssetUrl: (path) => path,
+  getApiUrl: (path) => path,
+  normalizeApiError: (error) => error,
+  persistAuthToken: jest.fn(),
+  setAuthToken: jest.fn(),
+}));
 
 jest.mock('@react-oauth/google', () => ({
   GoogleOAuthProvider: ({ children }) => children,

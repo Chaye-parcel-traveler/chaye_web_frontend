@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import axios from 'axios';
+import apiClient, { getApiAssetUrl } from '../../lib/api';
 //Moment (date)
 import moment from 'moment/moment';
 import 'moment/locale/fr'
@@ -32,11 +32,11 @@ function AllPackages() {
     const [state, dispatch] = useReducer(reducer, initialestate);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/packages', { withCredentials: true })
+        apiClient.get('/packages', { withCredentials: true })
             .then(response => {
                 dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
 
-            }).catch(error => {
+            }).catch(() => {
                 dispatch({ type: 'FETCH_ERROR' });
             });
     }, [])
@@ -46,7 +46,7 @@ function AllPackages() {
                 {state.loading ? 'loading...' : state.packages.map((packages, index) => (
                     <div className="card " key={index}>
                         <div className='card-top '>
-                            <img src={`http://localhost:5000/${packages.picture}`} alt="" />
+                            <img src={getApiAssetUrl(packages.picture)} alt="" />
                         </div>
                         <div className="card-body">
                             <p className="card-text ">
