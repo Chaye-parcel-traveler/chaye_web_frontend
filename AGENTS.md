@@ -4,7 +4,7 @@ This file is the entry point for AI agents working on the web frontend.
 
 ## Project Shape
 
-- Runtime: React 18 with Create React App.
+- Runtime: React 18 with Vite.
 - App entry: `src/App.js`.
 - Components: `src/Components/`.
 - API services: `src/Services/`.
@@ -52,7 +52,7 @@ When `../chaye_documentations`, API docs, and frontend docs disagree, stop and u
 
 - GitHub issue titles, issue bodies, business rules, acceptance criteria, and functional specifications must be written in French.
 - Code, identifiers, field names, endpoints, commands, labels used for automation, and technical specifications must be written in English.
-- Keep technical tokens unchanged inside French text, for example `REACT_APP_API_URL`, `departingFrom`, `npm run build`, or `agent:ready`.
+- Keep technical tokens unchanged inside French text, for example `VITE_API_URL`, `departingFrom`, `npm run build`, or `agent:ready`.
 - The `../chaye_documentations` repo lives in French. Always add an explanatory note when creating a new structural document there.
 
 ## GitHub Issues Policy
@@ -92,7 +92,7 @@ npm run build
 Docker production build check:
 
 ```bash
-docker build --build-arg REACT_APP_API_URL=http://localhost:3333 -t chaye-web-frontend .
+docker build --build-arg VITE_API_URL=http://localhost:3333 -t chaye-web-frontend .
 ```
 
 If tests are not useful for a touched area, still run the build and document any skipped verification.
@@ -107,4 +107,4 @@ See `docs/docker-development.md` before changing API URL handling or Docker beha
 - Keep form field names aligned with backend validators.
 - Prefer existing component structure unless a targeted refactor is needed.
 - Avoid large styling rewrites while implementing compliance features.
-- Use `REACT_APP_API_URL` for API calls. Existing hardcoded `http://localhost:5000` calls are legacy debt and should not be copied.
+- Use `VITE_API_URL` for API calls. Existing hardcoded `http://localhost:5000` calls are legacy debt and should not be copied.

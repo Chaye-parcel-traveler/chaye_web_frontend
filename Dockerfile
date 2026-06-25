@@ -1,4 +1,4 @@
-ARG NODE_IMAGE=node:16-alpine
+ARG NODE_IMAGE=node:20-alpine
 
 FROM $NODE_IMAGE AS base
 RUN apk --no-cache add dumb-init
@@ -13,12 +13,11 @@ RUN npm ci
 COPY --chown=node:node . .
 
 FROM dependencies AS build
-ARG REACT_APP_API_URL=${REACT_APP_API_URL}
-ENV REACT_APP_API_URL=${REACT_APP_API_URL}
+ARG VITE_API_URL
+ENV VITE_API_URL=${VITE_API_URL}
 RUN npm run build
 
 FROM socialengine/nginx-spa:latest AS production
-COPY --from=build /home/node/app/build /app
+COPY --from=build /home/node/app/dist /app
 EXPOSE 80
 RUN chmod -R 777 /app
-

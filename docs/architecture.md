@@ -5,19 +5,22 @@ This document is technical and intentionally written in English.
 ## Runtime
 
 - Framework: React 18.
-- Build tool: Create React App.
+- Build tool: Vite.
 - Routing: React Router.
 - API client: Axios.
+- Type checking: TypeScript is configured for new `.ts` and `.tsx` files without converting the existing JavaScript surface.
 - Styling: mixed Bootstrap, MUI, Semantic UI, and local CSS.
 
 ## Application Boundaries
 
 - `src/App.js`: route registration.
 - `src/lib/api.js`: shared Axios client, auth token header handling, API URL helpers, and normalized API errors.
+- `src/types/`: shared TypeScript contracts for API responses and core entities.
 - `src/Components/`: page and UI components.
 - `src/Services/`: API service wrappers.
 - `src/setAuthToken.js`: token header helper.
 - `public/`: static assets.
+- `index.html`: Vite HTML entrypoint.
 
 ## Current Risks
 

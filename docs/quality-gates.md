@@ -18,6 +18,7 @@ Run these from `chaye_web_frontend/` after any frontend code change:
 ```bash
 npm run lint
 npm test -- --watchAll=false
+npm run typecheck
 npm run build
 ```
 
@@ -26,7 +27,8 @@ Meaning:
 | Gate | Command | Purpose |
 | --- | --- | --- |
 | Lint | `npm run lint` | Runs ESLint on frontend source files. |
-| Tests | `npm test -- --watchAll=false` | Runs Create React App tests once. |
+| Tests | `npm test -- --watchAll=false` | Runs Vitest once. The legacy CRA `--watchAll=false` flag is accepted for workflow compatibility. |
+| Typecheck | `npm run typecheck` | Runs TypeScript without emitting files. |
 | Build | `npm run build` | Verifies production bundle compilation. |
 
 ## Required Gates For API Integration Changes
@@ -36,6 +38,7 @@ For changes involving Axios calls, auth flow, forms, routes, or backend contract
 ```bash
 npm run lint
 npm test -- --watchAll=false
+npm run typecheck
 npm run build
 ```
 
@@ -43,7 +46,7 @@ Also verify manually from code review that:
 
 - New API calls use Axios base URL, not hardcoded `localhost`.
 - Form field names match backend validators.
-- `REACT_APP_API_URL` remains the API URL source.
+- `VITE_API_URL` remains the API URL source.
 - Backend security controls are not replaced by frontend-only disabled buttons.
 
 ## Required Gates For Docker/Deployment Changes
@@ -51,7 +54,7 @@ Also verify manually from code review that:
 If `Dockerfile`, `captain-definition`, or API URL build behavior changes, run:
 
 ```bash
-docker build --build-arg REACT_APP_API_URL=http://localhost:3333 -t chaye-web-frontend .
+docker build --build-arg VITE_API_URL=http://localhost:3333 -t chaye-web-frontend .
 ```
 
 If practical, run the image:

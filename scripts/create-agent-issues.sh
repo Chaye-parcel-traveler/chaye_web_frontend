@@ -67,7 +67,7 @@ $'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n-
 "agent:ready" "area:frontend" "sprint:ops" "type:tech-debt"
 
 create_issue "[FE-OPS-002] Ajouter un service Docker Compose de développement frontend" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- Le serveur CRA démarre dans Docker sur le port 3000.\n- `REACT_APP_API_URL=http://localhost:3333` est configuré.\n- Le hot reload fonctionne.' \
+$'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- Le serveur Vite démarre dans Docker sur le port 3000.\n- `VITE_API_URL=http://localhost:3333` est configuré.\n- Le hot reload fonctionne.' \
 "agent:ready" "area:frontend" "sprint:ops" "type:tech-debt"
 
 create_issue "[FE-API-001] Remplacer les appels API hardcodés vers localhost" \
