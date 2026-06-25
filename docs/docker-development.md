@@ -6,10 +6,10 @@ The frontend currently has a Dockerfile, but no Docker Compose development stack
 
 The Dockerfile:
 
-- Uses `node:16-alpine` for dependency install and build.
+- Uses `node:20-alpine` for dependency install and build.
 - Runs `npm ci`.
-- Builds the React app with `npm run build`.
-- Accepts `REACT_APP_API_URL` as a build argument.
+- Builds the Vite React app with `npm run build`.
+- Accepts `VITE_API_URL` as a build argument.
 - Serves the production build with `socialengine/nginx-spa:latest`.
 - Exposes port `80` in the production image.
 
@@ -20,7 +20,7 @@ This is a production-style static build. It is not a hot-reload development cont
 From `chaye_web_frontend/`:
 
 ```bash
-docker build --build-arg REACT_APP_API_URL=http://localhost:3333 -t chaye-web-frontend .
+docker build --build-arg VITE_API_URL=http://localhost:3333 -t chaye-web-frontend .
 ```
 
 Run the built image:
@@ -37,10 +37,10 @@ http://localhost:3000
 
 ## Host Development Fallback
 
-Until a frontend Docker Compose service exists, local development uses Create React App directly:
+Until a frontend Docker Compose service exists, local development uses Vite directly:
 
 ```bash
-REACT_APP_API_URL=http://localhost:3333 npm start
+VITE_API_URL=http://localhost:3333 npm start
 ```
 
 The app normally runs at:
@@ -54,7 +54,7 @@ http://localhost:3000
 The app sets the Axios base URL from:
 
 ```js
-process.env.REACT_APP_API_URL
+import.meta.env.VITE_API_URL
 ```
 
 Default API URL when the backend Docker Compose stack is running:
@@ -73,10 +73,10 @@ Known legacy issue:
 
 If the team wants full Docker development for the frontend, add a compose service that:
 
-- Uses a Node image compatible with Create React App.
+- Uses a Node LTS image compatible with Vite.
 - Mounts the repository into `/home/node/app`.
 - Preserves `node_modules` with a container volume.
-- Sets `REACT_APP_API_URL=http://localhost:3333`.
+- Sets `VITE_API_URL=http://localhost:3333`.
 - Runs `npm start`.
 - Exposes `3000:3000`.
 - Keeps hot reload working.
@@ -86,4 +86,4 @@ If the team wants full Docker development for the frontend, add a compose servic
 - Do not describe the current frontend Dockerfile as a development stack.
 - Use host `npm start` for hot-reload development until a compose service is added.
 - Use Docker only to validate the production image build.
-- Keep `REACT_APP_API_URL` documented when API ports or routing change.
+- Keep `VITE_API_URL` documented when API ports or routing change.

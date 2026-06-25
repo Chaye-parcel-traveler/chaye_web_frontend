@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { vi } from 'vitest';
+
 import App from './App';
 
-jest.mock('./lib/api', () => ({
+vi.mock('./lib/api', () => ({
   __esModule: true,
   default: {
     defaults: {
@@ -10,34 +12,32 @@ jest.mock('./lib/api', () => ({
         common: {},
       },
     },
-    get: jest.fn(() => Promise.resolve({ data: [] })),
-    post: jest.fn(() => Promise.resolve({ data: {} })),
-    put: jest.fn(() => Promise.resolve({ data: {} })),
+    get: vi.fn(() => Promise.resolve({ data: [] })),
+    post: vi.fn(() => Promise.resolve({ data: {} })),
+    put: vi.fn(() => Promise.resolve({ data: {} })),
   },
-  clearAuthToken: jest.fn(),
+  clearAuthToken: vi.fn(),
   getApiAssetUrl: (path) => path,
   getApiUrl: (path) => path,
   normalizeApiError: (error) => error,
-  persistAuthToken: jest.fn(),
-  setAuthToken: jest.fn(),
+  persistAuthToken: vi.fn(),
+  setAuthToken: vi.fn(),
 }));
 
-jest.mock('@react-oauth/google', () => ({
+vi.mock('@react-oauth/google', () => ({
   GoogleOAuthProvider: ({ children }) => children,
-  useGoogleLogin: () => jest.fn(),
+  useGoogleLogin: () => vi.fn(),
 }));
 
-jest.mock('aos', () => ({
-  init: jest.fn(),
+vi.mock('aos', () => ({
+  default: {
+    init: vi.fn(),
+  },
 }));
 
-jest.mock('./Components/MainLayout', () => {
-  const React = require('react');
-
-  return function MockMainLayout() {
-    return React.createElement('main', { 'data-testid': 'main-layout' });
-  };
-});
+vi.mock('./Components/MainLayout', () => ({
+  default: () => <main data-testid="main-layout" />,
+}));
 
 test('renders the Chaye app shell', () => {
   render(

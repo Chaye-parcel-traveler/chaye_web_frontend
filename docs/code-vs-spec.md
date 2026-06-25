@@ -32,7 +32,7 @@ Existing components include:
 
 | Area | Finding | Impact |
 | --- | --- | --- |
-| API URL | Axios base URL comes from `REACT_APP_API_URL`. | Correct pattern for new code. |
+| API URL | Axios base URL comes from `VITE_API_URL`. | Correct pattern for new code. |
 | Hardcoded URLs | Some components use `http://localhost:5000`. | Legacy debt; incompatible with current Docker API URL. |
 | Announcement payload | `AddAnnouncements.js` uses snake_case field names. | Backend validator expects camelCase; request likely fails. |
 | Announcement type | UI says parcel shipping but posts `type: 'transport'`. | Business meaning is likely wrong. |
@@ -46,4 +46,3 @@ Existing components include:
 3. Fix announcement payload casing when touching announcement creation.
 4. Replace hardcoded `localhost:5000` calls with Axios base URL as screens are updated.
 5. Add report UI only after the backend report endpoint contract is stable.
-

@@ -20,7 +20,7 @@ edit_issue 1 "[FE-OPS-001] Ajouter une CI frontend pour les tests et le build" \
 $'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- GitHub Actions exécute `npm test -- --watchAll=false`.\n- GitHub Actions exécute `npm run build`.'
 
 edit_issue 2 "[FE-OPS-002] Ajouter un service Docker Compose de développement frontend" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- Le serveur CRA démarre dans Docker sur le port 3000.\n- `REACT_APP_API_URL=http://localhost:3333` est configuré.\n- Le hot reload fonctionne.'
+$'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- Le serveur Vite démarre dans Docker sur le port 3000.\n- `VITE_API_URL=http://localhost:3333` est configuré.\n- Le hot reload fonctionne.'
 
 edit_issue 3 "[FE-API-001] Remplacer les appels API hardcodés vers localhost" \
 $'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- Les écrans touchés utilisent la base URL Axios.\n- Aucun nouvel appel `http://localhost:5000` n\'est ajouté.'
@@ -51,4 +51,3 @@ $'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: FE-ADMIN-001, AP
 
 edit_issue 12 "[FE-ACCOUNT-001] Afficher l'état de compte suspendu ou banni" \
 $'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-MEMBER-001, API-SUSP-001\n\nCritères d\'acceptation:\n- Les utilisateurs suspendus voient leur statut.\n- Les actions publier, réserver et envoyer un message sont indisponibles dans l\'UI.'
-

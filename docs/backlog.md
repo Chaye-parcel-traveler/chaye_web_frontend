@@ -21,16 +21,16 @@ Status: todo.
 
 Scope:
 
-- Add Docker Compose support for CRA hot reload.
+- Add Docker Compose support for Vite hot reload.
 - Expose port `3000`.
-- Configure `REACT_APP_API_URL=http://localhost:3333`.
+- Configure `VITE_API_URL=http://localhost:3333`.
 - Avoid breaking the existing production Dockerfile.
 
 Acceptance criteria:
 
 - Frontend development can run through Docker.
 - The production Docker build still works.
-- API calls use `REACT_APP_API_URL`, not hardcoded localhost URLs.
+- API calls use `VITE_API_URL`, not hardcoded localhost URLs.
 
 ### AGENT-003-FE - Create frontend code vs spec audit
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const AUTH_TOKEN_STORAGE_KEY = 'token';
-const apiBaseUrl = process.env.REACT_APP_API_URL || '';
+const apiBaseUrl = import.meta.env.VITE_API_URL || '';
 
 function normalizePath(path) {
   if (!path) {

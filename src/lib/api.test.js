@@ -1,10 +1,14 @@
-const mockCreate = jest.fn();
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
-jest.mock('axios', () => ({
-  create: (...args) => mockCreate(...args),
+const mockCreate = vi.fn();
+
+vi.mock('axios', () => ({
+  default: {
+    create: (...args) => mockCreate(...args),
+  },
 }));
 
-function loadApi({ apiUrl = 'http://localhost:3333', token } = {}) {
+async function loadApi({ apiUrl = 'http://localhost:3333', token } = {}) {
   const mockClient = {
     defaults: {
       headers: {
@@ -13,7 +17,7 @@ function loadApi({ apiUrl = 'http://localhost:3333', token } = {}) {
     },
   };
 
-  process.env.REACT_APP_API_URL = apiUrl;
+  vi.stubEnv('VITE_API_URL', apiUrl);
   sessionStorage.clear();
 
   if (token) {
@@ -23,30 +27,28 @@ function loadApi({ apiUrl = 'http://localhost:3333', token } = {}) {
   mockCreate.mockReset();
   mockCreate.mockReturnValue(mockClient);
 
-  let apiModule;
-  jest.isolateModules(() => {
-    apiModule = require('./api');
-  });
+  vi.resetModules();
+  const apiModule = await import('./api');
 
   return { apiModule, mockClient };
 }
 
 describe('api client', () => {
   afterEach(() => {
-    delete process.env.REACT_APP_API_URL;
+    vi.unstubAllEnvs();
     sessionStorage.clear();
   });
 
-  it('configures the axios client with REACT_APP_API_URL', () => {
-    loadApi({ apiUrl: 'http://localhost:3333' });
+  it('configures the axios client with VITE_API_URL', async () => {
+    await loadApi({ apiUrl: 'http://localhost:3333' });
 
     expect(mockCreate).toHaveBeenCalledWith({
       baseURL: 'http://localhost:3333',
     });
   });
 
-  it('builds API URLs without hardcoding a localhost backend', () => {
-    const { apiModule } = loadApi({ apiUrl: 'https://api.example.test/' });
+  it('builds API URLs without hardcoding a localhost backend', async () => {
+    const { apiModule } = await loadApi({ apiUrl: 'https://api.example.test/' });
 
     expect(apiModule.getApiUrl('/members')).toBe(
       'https://api.example.test/members'
@@ -56,8 +58,8 @@ describe('api client', () => {
     );
   });
 
-  it('hydrates, persists, and clears the authorization token centrally', () => {
-    const { apiModule, mockClient } = loadApi({ token: 'initial-token' });
+  it('hydrates, persists, and clears the authorization token centrally', async () => {
+    const { apiModule, mockClient } = await loadApi({ token: 'initial-token' });
 
     expect(mockClient.defaults.headers.common.Authorization).toBe(
       'Bearer initial-token'

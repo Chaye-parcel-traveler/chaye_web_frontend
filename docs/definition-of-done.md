@@ -14,7 +14,7 @@ Ce document définit le minimum requis avant de considérer une issue frontend t
 
 Une issue frontend est terminée uniquement si:
 
-- Les appels API utilisent `REACT_APP_API_URL` ou la base URL Axios.
+- Les appels API utilisent `VITE_API_URL` ou la base URL Axios.
 - Aucun nouvel appel hardcodé à `http://localhost:5000` n'est ajouté.
 - Les noms de champs envoyés correspondent au contrat backend.
 - Les contrôles conformité/sécurité ne reposent pas uniquement sur des boutons désactivés.
@@ -24,6 +24,7 @@ Quality gates obligatoires:
 
 ```bash
 npm test -- --watchAll=false
+npm run typecheck
 npm run build
 ```
 
@@ -43,4 +44,3 @@ Mettre à jour au minimum un des fichiers suivants si le comportement change:
 - `docs/traceability.md`
 - `docs/code-vs-spec.md`
 - `docs/api-contracts.md`
-

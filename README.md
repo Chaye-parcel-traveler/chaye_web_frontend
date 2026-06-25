@@ -22,7 +22,7 @@ Elle sert a:
 ```mermaid
 flowchart LR
     User["Utilisateur"] --> Browser["Navigateur"]
-    Browser --> React["Frontend React<br/>Create React App"]
+    Browser --> React["Frontend React<br/>Vite"]
     React --> API["API Chaye<br/>http://localhost:3333"]
     API --> DB["MariaDB"]
 ```
@@ -35,7 +35,7 @@ Installe d'abord:
 
 - Docker Desktop;
 - Git;
-- Node.js compatible avec Create React App;
+- Node.js LTS compatible avec Vite;
 - GitHub CLI: `gh`;
 - un editeur de code.
 
@@ -66,7 +66,7 @@ sequenceDiagram
 
     Dev->>API: docker compose up -d --build
     API-->>Dev: API prete sur localhost:3333
-    Dev->>FE: REACT_APP_API_URL=http://localhost:3333 npm start
+    Dev->>FE: VITE_API_URL=http://localhost:3333 npm start
     FE-->>Browser: app prete sur localhost:3000
     Browser->>FE: ouvre l'application
     FE->>API: appels HTTP via Axios
@@ -100,7 +100,7 @@ npm install
 ### 3. Demarrer Le Frontend
 
 ```bash
-REACT_APP_API_URL=http://localhost:3333 npm start
+VITE_API_URL=http://localhost:3333 npm start
 ```
 
 Application attendue:
@@ -116,7 +116,7 @@ Le frontend a un `Dockerfile`, mais il sert aujourd'hui surtout a verifier l'ima
 Pour verifier l'image:
 
 ```bash
-docker build --build-arg REACT_APP_API_URL=http://localhost:3333 -t chaye-web-frontend .
+docker build --build-arg VITE_API_URL=http://localhost:3333 -t chaye-web-frontend .
 docker run --rm -p 3000:80 chaye-web-frontend
 ```
 
@@ -291,13 +291,13 @@ Pour un nouveau dev, le bon reflexe est:
 Le frontend doit utiliser:
 
 ```js
-process.env.REACT_APP_API_URL
+import.meta.env.VITE_API_URL
 ```
 
 En local:
 
 ```bash
-REACT_APP_API_URL=http://localhost:3333 npm start
+VITE_API_URL=http://localhost:3333 npm start
 ```
 
 Attention: certains anciens composants utilisent encore `http://localhost:5000` directement. Ne copie pas ce pattern. Quand tu touches ces fichiers, migre vers la configuration Axios base URL.
@@ -305,7 +305,7 @@ Attention: certains anciens composants utilisent encore `http://localhost:5000` 
 ```mermaid
 flowchart TD
     Component["Composant React"] --> Service["Service API ou Axios"]
-    Service --> BaseURL["REACT_APP_API_URL"]
+    Service --> BaseURL["VITE_API_URL"]
     BaseURL --> Backend["API Chaye"]
     Bad["URL hardcodee localhost:5000"] --> Avoid["A eviter"]
 ```
@@ -318,6 +318,7 @@ Une issue frontend est vraiment finie quand:
 - l'UI reste coherent avec l'existant;
 - les appels API utilisent le bon contrat;
 - `npm test -- --watchAll=false` passe;
+- `npm run typecheck` passe;
 - `npm run build` passe;
 - la PR explique clairement ce qui a ete fait.
 

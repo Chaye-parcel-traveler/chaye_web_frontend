@@ -7,7 +7,7 @@ This document is technical and intentionally written in English.
 The frontend must use:
 
 ```js
-process.env.REACT_APP_API_URL
+import.meta.env.VITE_API_URL
 ```
 
 or the configured Axios base URL.
