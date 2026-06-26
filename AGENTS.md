@@ -12,7 +12,7 @@ This file is the entry point for AI agents working on the web frontend.
 - Public assets: `public/`.
 - Frontend agent docs: `docs/`.
 
-## Product Source Of Truth
+## Sources Of Truth
 
 The transverse product and organization documentation now lives in French in:
 
@@ -25,28 +25,26 @@ The transverse product and organization documentation now lives in French in:
 
 Use `../chaye_documentations` for product rules, compliance rules, team workflow, onboarding, and cross-repo decisions.
 
-The API repo remains useful for backend-specific technical details:
+Use the API OpenAPI specification for public HTTP contracts:
 
-- `../chaye_API/docs/spec-v3.1.md`
-- `../chaye_API/docs/backlog.md`
-- `../chaye_API/docs/traceability.md`
+- `../chaye_API/docs/openapi/openapi.yaml`
 
-Frontend-specific notes live in this repo:
+Keep only executable frontend technical knowledge in this repository:
 
-- `docs/spec-v3.1.md`
-- `docs/backlog.md`
-- `docs/traceability.md`
-- `docs/docker-development.md`
-- `docs/code-vs-spec.md`
-- `docs/quality-gates.md`
-- `docs/agent-tickets.md`
-- `docs/definition-of-done.md`
 - `docs/architecture.md`
-- `docs/api-contracts.md`
-- `docs/adr/`
-- `docs/github-governance.md`
+- `docs/quality-gates.md`
+- `docs/adr/0002-api-client-policy.md`
 
-When `../chaye_documentations`, API docs, and frontend docs disagree, stop and update `../chaye_documentations` from the latest validated product decision before coding. Then update frontend docs only for frontend-specific details.
+GitHub Issues are the source of truth for backlog, status, dependencies, and implementation traceability.
+
+Do not recreate local backlog, ticket, traceability, code-vs-spec, product specification, or manual API contract files.
+
+When sources disagree, stop and update the owning source before coding:
+
+- functional or cross-repository decision: `../chaye_documentations`;
+- public HTTP contract: API OpenAPI;
+- implementation status: GitHub Issue;
+- frontend architecture or validation command: frontend technical docs.
 
 ## Language Policy
 
@@ -65,43 +63,59 @@ When `../chaye_documentations`, API docs, and frontend docs disagree, stop and u
 - Scope issues by verifiable product/UI capability, not by file, component, command, or isolated technical step.
 - Prefer `size:M` for agent-ready implementation work. Use `agent:too-small`, `agent:too-large`, or `agent:needs-scope` when an issue needs reshaping before implementation.
 - Every implementation issue should state included scope, excluded scope when useful, acceptance criteria, likely files, quality gates, risks, and dependencies.
-- Link issue work back to `docs/agent-tickets.md` when the ticket already exists there.
 - `scripts/create-agent-issues.sh` checks existing ticket IDs before creation and supports `DRY_RUN=true`.
 - Still review existing issues before bulk creation.
 - Use `scripts/update-agent-issues-french.sh` only to resynchronize existing issue titles/bodies with the French ticket policy.
 
 ## Required Workflow
 
-1. Find the related requirement ID in `../chaye_API/docs/traceability.md`.
-2. Check the frontend-specific notes in `docs/`.
-3. Keep UI changes narrow and aligned with existing routes/components.
-4. Do not invent legal company data, payment behavior, KYC provider details, or final branding assets.
-5. Update `docs/traceability.md` if frontend implementation state changes.
-6. Run the quality gates below.
-7. Open a PR using `.github/pull_request_template.md`.
+1. Read the GitHub Issue with `gh issue view`.
+2. Read the relevant functional decision in `../chaye_documentations`.
+3. Check API OpenAPI when the issue uses a backend contract.
+4. Keep UI changes narrow and aligned with existing routes/components.
+5. Do not invent legal company data, payment behavior, KYC provider details, or final branding assets.
+6. Report implementation status in the GitHub Issue or PR, not in a local Markdown tracker.
+7. Run Docker quality gates before any host fallback.
+8. Open a PR using `.github/pull_request_template.md`.
+
+## Documentation Policy
+
+A feature PR should contain code, tests, and UI screenshots when relevant.
+
+Do not modify Markdown by default in a feature PR. If more than one Markdown file changes, justify each file in the PR.
+
+Use separate PRs for:
+
+- `docs-sync`: functional or cross-repository documentation in `../chaye_documentations`;
+- `OPS`: `AGENTS.md`, quality gates, GitHub templates, CI, scripts, and workflow rules.
+
+Do not add a frontend Markdown copy of information already owned by GitHub Issues, OpenAPI, or `../chaye_documentations`.
 
 ## Quality Gates
 
-The current Dockerfile is for production image builds, not local hot-reload development.
+Docker is the required first validation runtime for this project.
 
-Run these from `chaye_web_frontend/` before handing work back:
+The current Dockerfile is for production image builds, not local hot-reload development. Until a frontend Docker Compose service exists, run checks in a one-shot Node container:
 
 ```bash
-npm run lint
-npm test -- --watchAll=false
-npm run build
+docker run --rm \
+  -v "$PWD":/app \
+  -v chaye_web_frontend_node_modules:/app/node_modules \
+  -w /app \
+  -e VITE_API_URL=http://host.docker.internal:3333 \
+  node:20-alpine \
+  sh -lc "npm ci && npm run lint && npm test -- --watchAll=false && npm run typecheck && npm run build"
 ```
 
-Docker production build check:
+Then validate the production image:
 
 ```bash
 docker build --build-arg VITE_API_URL=http://localhost:3333 -t chaye-web-frontend .
 ```
 
-If tests are not useful for a touched area, still run the build and document any skipped verification.
+Do not run host `npm` commands first. A host fallback is allowed only when Docker is unavailable or broken for infrastructure reasons. Document the reason and run the closest useful subset.
 
 See `docs/quality-gates.md` for the complete validation matrix and reporting rules.
-See `docs/docker-development.md` before changing API URL handling or Docker behavior.
 
 ## Frontend Rules
 
