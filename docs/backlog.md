@@ -136,6 +136,8 @@ Scope:
 - Prevent submit if unchecked.
 - Send accepted CGU version to backend.
 - Display backend validation errors.
+- Decide the source of the current CGU version before implementation: frontend config or public API legal config endpoint.
+- Decide how future authenticated reacceptance is triggered: `/me` indicator, dedicated endpoint, or temporary frontend flow.
 
 ### LEG-003-FE - Report form
 

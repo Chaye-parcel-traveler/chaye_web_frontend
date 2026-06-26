@@ -14,7 +14,7 @@ Status values:
 | ID | Frontend requirement | Current state | Target files or areas | Status |
 | --- | --- | --- | --- | --- |
 | LEG-001-FE | Legal notices accessible from footer and login screen. | Legal page components exist; links and V3.1 content need review. | `src/Components/Footer/`, `src/Components/Member/Login.js`, legal page components. | partial |
-| LEG-002-FE | Mandatory CGU checkbox during signup. | Signup exists; CGU acceptance flow not confirmed. | `src/Components/Member/SignUp.js`, auth/member service calls. | not started |
+| LEG-002-FE | Mandatory CGU checkbox during signup. | Signup forms currently call `POST /members` without `acceptedCguVersion`; API integration will fail until the field is sent. Source of current CGU version and future reacceptance trigger remain product decisions. | `src/Components/Member/SignUp.js`, `src/Components/Member/LoginSignup.js`, auth/member service calls, CGU version config or legal config endpoint. | not started |
 | LEG-003-FE | Report action and form. | No report UI confirmed. | Profile, announcements, future trip/message screens. | not started |
 | LEG-004-FE | Admin moderation back-office. | No admin moderation UI confirmed. | New or existing admin route/component. | not started |
 | LEG-005-FE | Suspended account state and disabled transactional actions. | No member status UI confirmed. | Profile, announcement creation, booking, messaging. | not started |

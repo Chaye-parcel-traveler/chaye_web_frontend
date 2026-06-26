@@ -22,7 +22,7 @@ Existing components include:
 | ID | Requirement | Current state | Gap |
 | --- | --- | --- | --- |
 | LEG-001-FE | Legal notices accessible from footer and login. | Footer link exists; `MentionsLegales` page exists. | Content has placeholders and generic wording; login screen access needs consistency review. |
-| LEG-002-FE | Mandatory CGU checkbox during signup. | Signup forms do not include CGU acceptance. | Add checkbox, block submit, send accepted CGU version. |
+| LEG-002-FE | Mandatory CGU checkbox during signup. | Signup forms do not include CGU acceptance and currently send `POST /members` without `acceptedCguVersion`. | Add checkbox, block submit, send accepted CGU version; decide where the current CGU version comes from. |
 | LEG-003-FE | Report action/form. | No report UI found. | Add report action on profile and announcement first. |
 | LEG-004-FE | Admin moderation page. | No admin moderation UI found. | Add after backend endpoints exist. |
 | LEG-005-FE | Suspended account state. | No member status UI found. | Display suspended/banned state and disable transactional actions. |
@@ -37,6 +37,8 @@ Existing components include:
 | Announcement payload | `AddAnnouncements.js` uses snake_case field names. | Backend validator expects camelCase; request likely fails. |
 | Announcement type | UI says parcel shipping but posts `type: 'transport'`. | Business meaning is likely wrong. |
 | Login/signup routing | Some links reference `/login` and `/signup`; active combined route is `/loginSignup`. | Navigation should be normalized. |
+| CGU version source | The API records `acceptedCguVersion` but does not expose the current CGU version. | Frontend implementation must use an explicit configured version or wait for a public legal config endpoint. |
+| CGU reacceptance trigger | `POST /auth/accept-cgu` exists on the API, but `/me` does not expose whether the user must re-accept. | Future reacceptance UX needs a product/API decision before it can be robust. |
 | Social auth | Google flow exists; other social buttons are inconsistent placeholders. | Needs cleanup before launch. |
 
 ## Priority Recommendations

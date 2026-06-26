@@ -39,6 +39,14 @@ Comportement attendu:
 - La version des CGU acceptée est envoyée au backend.
 - Lors d'une future mise à jour des CGU, un flux authentifié devra appeler l'endpoint d'acceptation.
 
+Décisions à prendre avant implémentation complète:
+
+- Source de `acceptedCguVersion`: configuration frontend versionnée ou endpoint public API.
+- Format de version CGU: date ISO, version sémantique ou identifiant documentaire.
+- Détection de réacceptation: indicateur dans `/me`, endpoint dédié ou parcours temporaire côté frontend.
+
+Référence transverse: `../chaye_documentations/conformite/cgu-workflow-front-api.md`.
+
 ### LEG-003 - Signalements
 
 Ajouter une action "Signaler" sur:
@@ -88,4 +96,3 @@ Les mineurs:
 - Les pages login, signup, profile, members, announcements, package, messages, footer et legal existent déjà comme composants.
 - L'application utilise plusieurs bibliothèques UI. Préférer la cohérence locale sur les écrans touchés au lieu d'introduire une nouvelle bibliothèque.
 - Le branding pourra évoluer vers l'identité colibri plus tard. Ne pas faire de refonte visuelle dans les tickets de conformité juridique.
-
