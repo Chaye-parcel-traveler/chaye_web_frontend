@@ -2,44 +2,53 @@
 
 This document defines the checks every agent must run before handing frontend work back.
 
-Last updated: 2026-06-25.
+Last updated: 2026-06-26.
 
 ## Current Runtime Reality
 
 The frontend does not currently have a Docker Compose hot-reload development stack.
 
-Use host commands for normal frontend validation.
-Use Docker only to validate the production image build.
+Agents must still test through Docker first.
+
+Use a one-shot Node container for normal frontend validation, then use Docker to validate the production image build.
+
+Host commands are only a documented fallback when Docker is unavailable or broken for infrastructure reasons.
 
 ## Required Gates For Code Changes
 
-Run these from `chaye_web_frontend/` after any frontend code change:
+Run this from `chaye_web_frontend/` after any frontend code change:
 
 ```bash
-npm run lint
-npm test -- --watchAll=false
-npm run typecheck
-npm run build
+docker run --rm \
+  -v "$PWD":/app \
+  -v chaye_web_frontend_node_modules:/app/node_modules \
+  -w /app \
+  -e VITE_API_URL=http://host.docker.internal:3333 \
+  node:20-alpine \
+  sh -lc "npm ci && npm run lint && npm test -- --watchAll=false && npm run typecheck && npm run build"
 ```
 
 Meaning:
 
 | Gate | Command | Purpose |
 | --- | --- | --- |
-| Lint | `npm run lint` | Runs ESLint on frontend source files. |
-| Tests | `npm test -- --watchAll=false` | Runs Vitest once. The legacy CRA `--watchAll=false` flag is accepted for workflow compatibility. |
-| Typecheck | `npm run typecheck` | Runs TypeScript without emitting files. |
-| Build | `npm run build` | Verifies production bundle compilation. |
+| Lint | `npm run lint` inside Docker | Runs ESLint on frontend source files. |
+| Tests | `npm test -- --watchAll=false` inside Docker | Runs Vitest once. The legacy CRA `--watchAll=false` flag is accepted for workflow compatibility. |
+| Typecheck | `npm run typecheck` inside Docker | Runs TypeScript without emitting files. |
+| Build | `npm run build` inside Docker | Verifies production bundle compilation. |
 
 ## Required Gates For API Integration Changes
 
 For changes involving Axios calls, auth flow, forms, routes, or backend contracts:
 
 ```bash
-npm run lint
-npm test -- --watchAll=false
-npm run typecheck
-npm run build
+docker run --rm \
+  -v "$PWD":/app \
+  -v chaye_web_frontend_node_modules:/app/node_modules \
+  -w /app \
+  -e VITE_API_URL=http://host.docker.internal:3333 \
+  node:20-alpine \
+  sh -lc "npm ci && npm run lint && npm test -- --watchAll=false && npm run typecheck && npm run build"
 ```
 
 Also verify manually from code review that:
@@ -51,7 +60,7 @@ Also verify manually from code review that:
 
 ## Required Gates For Docker/Deployment Changes
 
-If `Dockerfile`, `captain-definition`, or API URL build behavior changes, run:
+For all code changes, and especially if `Dockerfile`, `captain-definition`, or API URL build behavior changes, run:
 
 ```bash
 docker build --build-arg VITE_API_URL=http://localhost:3333 -t chaye-web-frontend .
@@ -98,7 +107,7 @@ Recommended later tickets:
 When a gate fails, agents must report:
 
 - The exact command.
-- Whether it was host or Docker execution.
+- Whether it was Docker execution or a documented host fallback.
 - The failure summary.
 - Whether it was caused by the current change or appears pre-existing.
 - The next recommended fix.

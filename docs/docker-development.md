@@ -37,7 +37,7 @@ http://localhost:3000
 
 ## Host Development Fallback
 
-Until a frontend Docker Compose service exists, local development uses Vite directly:
+Until a frontend Docker Compose service exists, interactive hot-reload development may use Vite directly only as a fallback:
 
 ```bash
 VITE_API_URL=http://localhost:3333 npm start
@@ -84,6 +84,9 @@ If the team wants full Docker development for the frontend, add a compose servic
 ## Agent Rules
 
 - Do not describe the current frontend Dockerfile as a development stack.
-- Use host `npm start` for hot-reload development until a compose service is added.
-- Use Docker only to validate the production image build.
+- Always run validation through Docker first.
+- For lint, tests, typecheck, and build, use the one-shot Node container documented in `docs/quality-gates.md`.
+- Use host `npm start` only for interactive hot-reload development when no Docker Compose service exists.
+- Host validation commands are only a last-resort fallback when Docker is unavailable or broken, and the reason must be documented.
+- Use the Docker production image build for deployment validation.
 - Keep `VITE_API_URL` documented when API ports or routing change.

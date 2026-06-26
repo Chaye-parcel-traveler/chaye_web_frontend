@@ -82,23 +82,27 @@ When `../chaye_documentations`, API docs, and frontend docs disagree, stop and u
 
 ## Quality Gates
 
-The current Dockerfile is for production image builds, not local hot-reload development.
+Docker is the required first validation runtime for this project.
 
-Run these from `chaye_web_frontend/` before handing work back:
+The current Dockerfile is for production image builds, not local hot-reload development. Until a frontend Docker Compose service exists, run frontend checks in a one-shot Node container before any host fallback:
 
 ```bash
-npm run lint
-npm test -- --watchAll=false
-npm run build
+docker run --rm \
+  -v "$PWD":/app \
+  -v chaye_web_frontend_node_modules:/app/node_modules \
+  -w /app \
+  -e VITE_API_URL=http://host.docker.internal:3333 \
+  node:20-alpine \
+  sh -lc "npm ci && npm run lint && npm test -- --watchAll=false && npm run typecheck && npm run build"
 ```
 
-Docker production build check:
+Then run the Docker production build check:
 
 ```bash
 docker build --build-arg VITE_API_URL=http://localhost:3333 -t chaye-web-frontend .
 ```
 
-If tests are not useful for a touched area, still run the build and document any skipped verification.
+Do not run host `npm` commands first. Host commands are a last-resort fallback only when Docker is unavailable or broken for infrastructure reasons. If a fallback is used, document why Docker could not be used and run only the closest useful subset.
 
 See `docs/quality-gates.md` for the complete validation matrix and reporting rules.
 See `docs/docker-development.md` before changing API URL handling or Docker behavior.
