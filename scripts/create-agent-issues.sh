@@ -72,45 +72,45 @@ create_label "type:tech-debt" "D4C5F9" "Technical debt"
 create_label "risk:legal" "D93F0B" "Legal/compliance risk"
 
 create_issue "[FE-OPS-001] Ajouter une CI frontend pour les tests et le build" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- GitHub Actions exécute `npm test -- --watchAll=false`.\n- GitHub Actions exécute `npm run build`.' \
+$'Critères d\'acceptation:\n- GitHub Actions exécute `npm test -- --watchAll=false`.\n- GitHub Actions exécute `npm run build`.' \
 "agent:ready" "size:S" "area:frontend" "sprint:ops" "type:tech-debt"
 
 create_issue "[FE-OPS-002] Ajouter un service Docker Compose de développement frontend" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- Le serveur Vite démarre dans Docker sur le port 3000.\n- `VITE_API_URL=http://localhost:3333` est configuré.\n- Le hot reload fonctionne.' \
+$'Critères d\'acceptation:\n- Le serveur Vite démarre dans Docker sur le port 3000.\n- `VITE_API_URL=http://localhost:3333` est configuré.\n- Le hot reload fonctionne.' \
 "agent:ready" "size:M" "area:frontend" "sprint:ops" "type:tech-debt"
 
 create_issue "[FE-API-001] Remplacer les appels API hardcodés vers localhost" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- Les écrans touchés utilisent la base URL Axios.\n- Aucun nouvel appel `http://localhost:5000` n\'est ajouté.' \
+$'Critères d\'acceptation:\n- Les écrans touchés utilisent la base URL Axios.\n- Aucun nouvel appel `http://localhost:5000` n\'est ajouté.' \
 "agent:ready" "size:M" "area:frontend" "area:api-client" "type:tech-debt"
 
 create_issue "[FE-ANN-001] Corriger le contrat du formulaire de création d'annonce" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- Le formulaire envoie `departingFrom`, `arrivingAt`, `weightAvailability`.\n- Le type d\'annonce correspond au sens de l\'UI.' \
+$'Critères d\'acceptation:\n- Le formulaire envoie `departingFrom`, `arrivingAt`, `weightAvailability`.\n- Le type d\'annonce correspond au sens de l\'UI.' \
 "agent:ready" "size:M" "area:frontend" "area:api-client" "type:tech-debt"
 
 create_issue "[FE-LEGAL-001] Mettre à jour les mentions légales et l'accès depuis la connexion" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- Les mentions légales sont accessibles depuis le footer et l\'écran de connexion.\n- Les données société manquantes restent clairement indiquées comme en attente.' \
+$'Critères d\'acceptation:\n- Les mentions légales sont accessibles depuis le footer et l\'écran de connexion.\n- Les données société manquantes restent clairement indiquées comme en attente.' \
 "agent:ready" "size:S" "area:frontend" "area:compliance" "sprint:legal-1" "risk:legal"
 
 create_issue "[FE-CGU-001] Ajouter la case CGU obligatoire à l'inscription" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-CGU-001\n\nCritères d\'acceptation:\n- La soumission est bloquée si la case n\'est pas cochée.\n- La version des CGU acceptée est envoyée au backend.\n- L\'erreur backend reste visible.' \
+$'Dépend de: API-CGU-001\n\nCritères d\'acceptation:\n- La soumission est bloquée si la case n\'est pas cochée.\n- La version des CGU acceptée est envoyée au backend.\n- L\'erreur backend reste visible.' \
 "agent:ready" "size:M" "area:frontend" "area:auth" "area:compliance" "sprint:legal-1" "risk:legal"
 
 create_issue "[FE-MINOR-001] Ajouter la date de naissance et le message mineur à l'inscription" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-MINOR-001\n\nCritères d\'acceptation:\n- L\'inscription envoie la date de naissance.\n- Le message mineur existe.\n- L\'UX supporte la validation backend.' \
+$'Dépend de: API-MINOR-001\n\nCritères d\'acceptation:\n- L\'inscription envoie la date de naissance.\n- Le message mineur existe.\n- L\'UX supporte la validation backend.' \
 "agent:ready" "size:M" "area:frontend" "area:auth" "area:compliance" "sprint:legal-1" "risk:legal"
 
 create_issue "[FE-REPORT-001] Ajouter le signalement sur profil et annonces" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-REPORT-001\n\nCritères d\'acceptation:\n- Les écrans profil et annonce exposent `Signaler`.\n- Le formulaire gère le type de signalement et la description optionnelle.\n- La soumission appelle l\'endpoint backend.\n- Un succès affiche un retour utilisateur.' \
+$'Dépend de: API-REPORT-001\n\nCritères d\'acceptation:\n- Les écrans profil et annonce exposent `Signaler`.\n- Le formulaire gère le type de signalement et la description optionnelle.\n- La soumission appelle l\'endpoint backend.\n- Un succès affiche un retour utilisateur.' \
 "agent:ready" "size:M" "area:frontend" "area:compliance" "sprint:legal-1" "risk:legal"
 
 create_issue "[FE-ADMIN-001] Ajouter la modération admin frontend" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-MOD-001, API-MOD-002, API-SUSP-001\n\nCritères d\'acceptation:\n- Une route/page admin existe.\n- Elle liste les signalements avec filtres.\n- Elle gère l\'état interdit.\n- L\'admin peut classer sans suite, avertir ou suspendre via les endpoints backend.' \
+$'Dépend de: API-MOD-001, API-MOD-002, API-SUSP-001\n\nCritères d\'acceptation:\n- Une route/page admin existe.\n- Elle liste les signalements avec filtres.\n- Elle gère l\'état interdit.\n- L\'admin peut classer sans suite, avertir ou suspendre via les endpoints backend.' \
 "blocked:backend-contract" "agent:needs-scope" "size:L" "area:frontend" "area:admin" "area:compliance" "sprint:legal-1" "risk:legal"
 
 create_issue "[FE-ACCOUNT-001] Afficher l'état de compte suspendu ou banni" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nDépend de: API-MEMBER-001, API-SUSP-001\n\nCritères d\'acceptation:\n- Les utilisateurs suspendus voient leur statut.\n- Les actions publier, réserver et envoyer un message sont indisponibles dans l\'UI.' \
+$'Dépend de: API-MEMBER-001, API-SUSP-001\n\nCritères d\'acceptation:\n- Les utilisateurs suspendus voient leur statut.\n- Les actions publier, réserver et envoyer un message sont indisponibles dans l\'UI.' \
 "blocked:backend-contract" "size:M" "area:frontend" "area:auth" "area:compliance" "sprint:legal-1" "risk:legal"
 
 create_issue "[FE-OPS-003] Activer la protection de branche GitHub" \
-$'Source: docs/agent-tickets.md#tickets-frontend\n\nCritères d\'acceptation:\n- La branche `task/lboi/use_chaye_api_backend` exige une PR avant merge.\n- Au moins 1 review est requise.\n- Les reviews CODEOWNERS sont requises.\n- Les conversations doivent être résolues.\n- Les force-pushes et suppressions sont interdits.\n- Les checks obligatoires sont `test` et `build`.\n\nNote technique:\nLe compte `gh` utilisé par l\'agent a `viewerPermission=WRITE`, pas `ADMIN`; un admin GitHub doit appliquer ce réglage.' \
+$'Critères d\'acceptation:\n- La branche `task/lboi/use_chaye_api_backend` exige une PR avant merge.\n- Au moins 1 review est requise.\n- Les reviews CODEOWNERS sont requises.\n- Les conversations doivent être résolues.\n- Les force-pushes et suppressions sont interdits.\n- Les checks obligatoires sont `test` et `build`.\n\nNote technique:\nLe compte `gh` utilisé par l\'agent a `viewerPermission=WRITE`, pas `ADMIN`; un admin GitHub doit appliquer ce réglage.' \
 "agent:needs-review" "size:S" "area:frontend" "sprint:ops" "type:tech-debt"

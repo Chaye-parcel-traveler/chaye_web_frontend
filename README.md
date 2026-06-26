@@ -35,15 +35,14 @@ Installe d'abord:
 
 - Docker Desktop;
 - Git;
-- Node.js LTS compatible avec Vite;
 - GitHub CLI: `gh`;
 - un editeur de code.
+
+Node.js LTS reste utile uniquement pour le hot reload local lorsque le service Docker de développement n'est pas disponible.
 
 Verifie:
 
 ```bash
-node --version
-npm --version
 docker --version
 gh auth status
 ```
@@ -151,12 +150,11 @@ Lecture conseillee avant de coder:
 3. `../chaye_documentations/processus/README.md`
 4. `../chaye_documentations/sources-pdf/README.md`
 5. `AGENTS.md`
-6. `../chaye_API/docs/spec-v3.1.md`
-7. `../chaye_API/docs/traceability.md`
-8. `docs/quality-gates.md`
-9. l'issue GitHub sur laquelle tu travailles
+6. `docs/architecture.md`
+7. `docs/quality-gates.md`
+8. l'issue GitHub sur laquelle tu travailles
 
-La specification produit transverse vit dans `../chaye_documentations`. Si une doc frontend, une doc API et la documentation transverse se contredisent, demande clarification et mets d'abord a jour `../chaye_documentations`.
+La specification produit transverse vit dans `../chaye_documentations`. Les contrats HTTP publics vivent dans `../chaye_API/docs/openapi/openapi.yaml`. Le statut du travail vit dans GitHub Issues.
 
 ## Workflow Avec Les Issues GitHub
 
@@ -217,9 +215,16 @@ Si tu decouvres un autre probleme, cree ou commente une autre issue.
 Avant de demander une review:
 
 ```bash
-npm test -- --watchAll=false
-npm run build
+docker run --rm \
+  -v "$PWD":/app \
+  -v chaye_web_frontend_node_modules:/app/node_modules \
+  -w /app \
+  -e VITE_API_URL=http://host.docker.internal:3333 \
+  node:20-alpine \
+  sh -lc "npm ci && npm run lint && npm test -- --watchAll=false && npm run typecheck && npm run build"
 ```
+
+Lance toujours les tests dans Docker en premier. Utilise les commandes `npm` sur l'hote uniquement si Docker est indisponible ou bloque pour une raison d'infrastructure, puis explique cette raison dans la PR.
 
 Si tu touches l'integration API, demarre aussi le backend Docker et teste le parcours dans le navigateur.
 
@@ -317,9 +322,8 @@ Une issue frontend est vraiment finie quand:
 - les criteres d'acceptation sont couverts;
 - l'UI reste coherent avec l'existant;
 - les appels API utilisent le bon contrat;
-- `npm test -- --watchAll=false` passe;
-- `npm run typecheck` passe;
-- `npm run build` passe;
+- lint, tests, typecheck et build passent dans Docker;
+- l'image de production Docker se construit;
 - la PR explique clairement ce qui a ete fait.
 
 ```mermaid
@@ -335,12 +339,12 @@ flowchart LR
 ```mermaid
 flowchart LR
     Need["J'ai une question"] --> Product{"Question produit ?"}
-    Product -- Oui --> Spec["../chaye_API/docs/spec-v3.1.md<br/>../chaye_API/docs/traceability.md"]
+    Product -- Oui --> Spec["../chaye_documentations"]
     Product -- Non --> Front{"Question frontend ?"}
-    Front -- Oui --> Docs["AGENTS.md<br/>docs/architecture.md<br/>docs/quality-gates.md"]
-    Front -- Non --> Issue["Issue GitHub<br/>discussion PR"]
+    Front -- Oui --> Docs["AGENTS.md<br/>architecture.md<br/>quality-gates.md"]
+    Front -- Non --> Contract{"Contrat HTTP ?"}
+    Contract -- Oui --> OpenAPI["API OpenAPI"]
+    Contract -- Non --> Issue["GitHub Issue<br/>discussion PR"]
 ```
 
-Si une information manque, ajoute-la dans la doc pendant ta PR. Le but est que le prochain dev ait moins de questions que toi.
-
-Pour une information produit ou organisationnelle qui concerne plusieurs repos, mets a jour `../chaye_documentations`. Pour une information purement frontend, garde-la dans ce repo.
+Ne crée pas une copie locale d'une information déjà portée par GitHub Issues, OpenAPI ou `../chaye_documentations`. Les PRs feature ne modifient pas les Markdown par défaut; les changements de workflow passent par une PR `OPS`.
