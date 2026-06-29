@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { logout } from '../../Services/member'
+import { useState, useEffect } from 'react';
+import { logout } from '../../Services/member';
 import { Link } from 'react-router-dom';
 import apiClient, { clearAuthToken } from '../../lib/api';
 
@@ -9,15 +9,17 @@ function Navbar() {
   const [sideBarClose, setSideBarClose] = useState(true);
 
   useEffect(() => {
-    apiClient.get('/me')
-      .then(response => {
+    apiClient
+      .get('/me')
+      .then((response) => {
         setUserData(response.data);
         setIsLoggedIn(true);
-      }).catch(error => {
+      })
+      .catch(() => {
         setUserData(false);
       });
   }, []);
-  const handleSearch = (e) => {
+  const handleSearch = () => {
     // Vous pouvez ajouter ici la logique de recherche en fonction de la valeur de e.target.value
   };
 
@@ -29,18 +31,20 @@ function Navbar() {
       setUserData(null);
       setIsLoggedIn(false);
     }
-  }
+  };
 
   const toggleSidebar = () => {
     setSideBarClose(!sideBarClose);
-  }
+  };
 
   return (
-    <nav className={`sidebar ${sideBarClose ? "close" : null}`}>
+    <nav className={`sidebar ${sideBarClose ? 'close' : null}`}>
       <header>
         <div className="image-text">
           <span className="image">
-            <Link to="/"><img src="images/logo.png" alt="Chaye" /></Link>
+            <Link to="/">
+              <img src="images/logo.png" alt="Chaye" />
+            </Link>
           </span>
 
           <div className="text logo-text">
@@ -54,9 +58,18 @@ function Navbar() {
 
       <div className="menu-bar">
         <div className="menu">
-          <li className="search-box" onClick={() => { setSideBarClose(false) }}>
+          <li
+            className="search-box"
+            onClick={() => {
+              setSideBarClose(false);
+            }}
+          >
             <i className="bx bx-search icon"></i>
-            <input type="text" placeholder="Rechercher..." onChange={handleSearch} />
+            <input
+              type="text"
+              placeholder="Rechercher..."
+              onChange={handleSearch}
+            />
           </li>
 
           <ul className="menu-links">
@@ -68,7 +81,9 @@ function Navbar() {
             </li>
 
             <li className="nav-link">
-              <Link to={isLoggedIn ? `/profile/${userData.id}` : '/loginSignup'}>
+              <Link
+                to={isLoggedIn ? `/profile/${userData.id}` : '/loginSignup'}
+              >
                 <i className="bx bx-tada-hover bxs-user-detail bx-md icon"></i>
                 <span className="text nav-text">Mon compte</span>
               </Link>
@@ -107,10 +122,8 @@ function Navbar() {
         <div className="bottom-content">
           {isLoggedIn && (
             <li onClick={handleLogout}>
-              
-                <i className="bx bx-log-out bx-tada-hover bx-md icon"></i>
-                <span className="text nav-text pointer" >Se deconnecter</span>
-              
+              <i className="bx bx-log-out bx-tada-hover bx-md icon"></i>
+              <span className="text nav-text pointer">Se deconnecter</span>
             </li>
           )}
           {/* <li className="mode">
@@ -128,6 +141,6 @@ function Navbar() {
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;

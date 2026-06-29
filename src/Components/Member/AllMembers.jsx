@@ -1,14 +1,13 @@
-import React, { useEffect, useReducer } from 'react'
-import { Table, Button } from 'semantic-ui-react'
-import { fetchMembers } from '../../Services/member'
+import React, { useEffect, useReducer } from 'react';
+import { Table, Button } from 'semantic-ui-react';
+import { fetchMembers } from '../../Services/member';
 
 function AllMembers() {
-
   const initialestate = {
     loading: true,
     error: '',
-    members: []
-  }
+    members: [],
+  };
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -28,12 +27,12 @@ function AllMembers() {
         return state;
     }
   };
-  const [state, dispatch] = useReducer(reducer, initialestate)
+  const [state, dispatch] = useReducer(reducer, initialestate);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const members = await fetchMembers()
+        const members = await fetchMembers();
         if (!members) {
           dispatch({ type: 'FETCH_ERROR' });
         } else {
@@ -44,51 +43,54 @@ function AllMembers() {
       }
     }
     fetchData();
-  }, [])
+  }, []);
 
   return (
     <React.Fragment>
-    <Table striped>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Nom</Table.HeaderCell>
-          <Table.HeaderCell>Prenom</Table.HeaderCell>
-          <Table.HeaderCell>E-mail</Table.HeaderCell>
-          <Table.HeaderCell>Adresse</Table.HeaderCell>
-          {/* <Table.HeaderCell>Status</Table.HeaderCell>
+      <Table striped>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Nom</Table.HeaderCell>
+            <Table.HeaderCell>Prenom</Table.HeaderCell>
+            <Table.HeaderCell>E-mail</Table.HeaderCell>
+            <Table.HeaderCell>Adresse</Table.HeaderCell>
+            {/* <Table.HeaderCell>Status</Table.HeaderCell>
           <Table.HeaderCell>Photos</Table.HeaderCell> */}
-          <Table.HeaderCell>Modifier</Table.HeaderCell>
-          <Table.HeaderCell>Supprimer</Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
+            <Table.HeaderCell>Modifier</Table.HeaderCell>
+            <Table.HeaderCell>Supprimer</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
           {state.loading ? (
             <Table.Row>
               <Table.Cell colSpan="8">Chargement en cours...</Table.Cell>
             </Table.Row>
           ) : (
             state.members.map((member, index) => (
-          <Table.Row key={index}>
-            <Table.Cell>{member.firstname}</Table.Cell>
-            <Table.Cell>{member.lastname}</Table.Cell>
-            <Table.Cell>{member.email}</Table.Cell>
-            <Table.Cell>{member.address}</Table.Cell>
-            {/* <Table.Cell>{member.status}</Table.Cell> */}
-            {/* <Table.Cell><img src={`/${member.imagename}`} width={'150px'} /></Table.Cell> */}
-            <Table.Cell><Button primary as='a' href={`/editMembre/${member._id}`}>Edit</Button></Table.Cell>
-            <Table.Cell>
-              {/* <form action={`/member/delete/${member._id}?_method=DELETE`} method="post">
+              <Table.Row key={index}>
+                <Table.Cell>{member.firstname}</Table.Cell>
+                <Table.Cell>{member.lastname}</Table.Cell>
+                <Table.Cell>{member.email}</Table.Cell>
+                <Table.Cell>{member.address}</Table.Cell>
+                {/* <Table.Cell>{member.status}</Table.Cell> */}
+                {/* <Table.Cell><img src={`/${member.imagename}`} width={'150px'} /></Table.Cell> */}
+                <Table.Cell>
+                  <Button primary as="a" href={`/editMembre/${member._id}`}>
+                    Edit
+                  </Button>
+                </Table.Cell>
+                <Table.Cell>
+                  {/* <form action={`/member/delete/${member._id}?_method=DELETE`} method="post">
                 <input type="hidden" name="_method" value="DELETE" /> */}
-                <Button positive>Supprimer</Button>
-              {/* </form> */}
-            </Table.Cell>
-          </Table.Row>
-        ))
-        )}
+                  <Button positive>Supprimer</Button>
+                  {/* </form> */}
+                </Table.Cell>
+              </Table.Row>
+            ))
+          )}
         </Table.Body>
-
-    </Table>
+      </Table>
     </React.Fragment>
   );
 }
-export default AllMembers
+export default AllMembers;

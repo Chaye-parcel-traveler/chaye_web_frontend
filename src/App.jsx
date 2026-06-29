@@ -26,31 +26,33 @@ function App() {
     AOS.init({
       duration: 800,
       easing: 'slide',
-      once: true
+      once: true,
     });
-  }, [])
+  }, []);
 
   return (
     <GoogleOAuthProvider clientId="871900328667-bq9ic36okos7jmctp2kc00f5q9q8bv5l.apps.googleusercontent.com">
-
       <div className="App">
         <Routes layout={<MainLayout />}>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
-            <Route path='/allmembers' element={<AllMembers />} />
-            <Route path='/editmember/:id' element={<EditMember />} />
-            <Route path='/profile/:id' element={<Profile />} />
-            <Route path='/addPackage' element={<AddPackage />} />
-            <Route path='/editPackage/:id' element={<EditPackage />} />
-            <Route path='/announcements' element={<Announcements />} />
-            <Route path='/addAnnouncement' element={<AddAnnouncements />} />
-            <Route path='/aboutUs' element={<AboutUs />} />
-            <Route path='/support' element={<Support />} />
-            <Route path='/faq' element={<Faq />} />
-            <Route path='/mentionlegale' element={<MentionsLegales />} />
-            <Route path='/politiqueDeConfidentialite' element={<PolitiqueDeConfidentialite />} />
+            <Route path="/allmembers" element={<AllMembers />} />
+            <Route path="/editmember/:id" element={<EditMember />} />
+            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/addPackage" element={<AddPackage />} />
+            <Route path="/editPackage/:id" element={<EditPackage />} />
+            <Route path="/announcements" element={<Announcements />} />
+            <Route path="/addAnnouncement" element={<AddAnnouncements />} />
+            <Route path="/aboutUs" element={<AboutUs />} />
+            <Route path="/support" element={<Support />} />
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/mentionlegale" element={<MentionsLegales />} />
+            <Route
+              path="/politiqueDeConfidentialite"
+              element={<PolitiqueDeConfidentialite />}
+            />
           </Route>
-          <Route path='/loginSignup' element={<LoginSignup />} />
+          <Route path="/loginSignup" element={<LoginSignup />} />
           {/* <Route path='/message' element={<Message />} /> */}
         </Routes>
       </div>

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import apiClient, { getApiAssetUrl } from '../../lib/api';
 
 function Profile() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // État pour le chargement
   const [loading, setLoading] = useState(true);
   // État pour les erreurs
@@ -26,7 +26,7 @@ function Profile() {
         setLoading(false);
         setError('Something went wrong!');
         setMember({});
-        navigate('/loginSignup')
+        navigate('/loginSignup');
       });
   }, [navigate]);
 
@@ -39,37 +39,68 @@ function Profile() {
   }
 
   return (
-    <div className='content'>
+    <div className="content">
       <div className="content-body">
         <Header />
         <React.Fragment>
           <div className="content-main">
-            <div className='content-profile'>
-              <div className='message'>
-                <h1 className='fw-bold m-3'>Mes messages </h1>
-                <hr className='tri-ligne mx-4'/>
-                <AllMessages/>
+            <div className="content-profile">
+              <div className="message">
+                <h1 className="fw-bold m-3">Mes messages </h1>
+                <hr className="tri-ligne mx-4" />
+                <AllMessages />
               </div>
-              <div className='profile'>
-                <div className='img-profile'>
-                  <img src={getApiAssetUrl(member.imagename)} className='rounded-circle' width={'120px'} height={'100px'} alt='Profil' />
+              <div className="profile">
+                <div className="img-profile">
+                  <img
+                    src={getApiAssetUrl(member.imagename)}
+                    className="rounded-circle"
+                    width={'120px'}
+                    height={'100px'}
+                    alt="Profil"
+                  />
                 </div>
-                <h1>{member.lastname} {member.firstname}</h1>
-                <p><i className="fa-solid fa-location-dot"></i>{member.adress}</p>
+                <h1>
+                  {member.lastname} {member.firstname}
+                </h1>
+                <p>
+                  <i className="fa-solid fa-location-dot"></i>
+                  {member.adress}
+                </p>
                 <hr />
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna
+                  aliqua.{' '}
+                </p>
                 <hr />
 
                 <h3>Contact info</h3>
-                <span>  <i className="fa-regular fa-envelope"></i> Email : {member.email}</span><br /><br />
-                <span> <i className="fa-solid fa-phone"></i>Phone : {member.phone}</span><br /><br />
-                <a className="py-3 m-3" href={`/editmember/${member._id}`}><br />
-                  <i className="fas fa-pencil-alt"></i> Modifier mes informations
+                <span>
+                  {' '}
+                  <i className="fa-regular fa-envelope"></i> Email :{' '}
+                  {member.email}
+                </span>
+                <br />
+                <br />
+                <span>
+                  {' '}
+                  <i className="fa-solid fa-phone"></i>Phone : {member.phone}
+                </span>
+                <br />
+                <br />
+                <a className="py-3 m-3" href={`/editmember/${member._id}`}>
+                  <br />
+                  <i className="fas fa-pencil-alt"></i> Modifier mes
+                  informations
                 </a>
 
-                <form action={`/members/${member._id}?_method=DELETE`} method='post'>
-                  <input type='hidden' name='_method' value='DELETE' />
-                  <button className="btn btn-danger m-3" type="submit" >
+                <form
+                  action={`/members/${member._id}?_method=DELETE`}
+                  method="post"
+                >
+                  <input type="hidden" name="_method" value="DELETE" />
+                  <button className="btn btn-danger m-3" type="submit">
                     <i className="fas fa-trash "></i>Supprimer mon compte
                   </button>
                 </form>
@@ -80,7 +111,7 @@ function Profile() {
         </React.Fragment>
       </div>
     </div>
-  )
+  );
 }
 
 export default Profile;

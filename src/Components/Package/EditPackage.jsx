@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react';
@@ -35,7 +35,6 @@ function EditColis() {
     setDepartureCity(event.target.value);
   };
 
-
   useEffect(() => {
     apiClient
       .get(`/package/${params.id}`, { withCredentials: true })
@@ -61,7 +60,7 @@ function EditColis() {
 
     apiClient
       .put(`/editpackage/${params.id}`, formData)
-      .then((response) => {
+      .then(() => {
         return navigate('/home');
       })
       .catch(() => {});
@@ -70,29 +69,61 @@ function EditColis() {
   return (
     <div className="Formulcontainer">
       <h1>Modifier Votre colis</h1>
-      <Form  className="col-formule bg-white container-fluid col-4 my-3 " onSubmit={handleSubmit}>
+      <Form
+        className="col-formule bg-white container-fluid col-4 my-3 "
+        onSubmit={handleSubmit}
+      >
         <Form.Field>
           <label className="form-label">Contenu:</label>
-          <input  className="form-control" type="text" id="input" onChange={handleContentChange} value={content} />
+          <input
+            className="form-control"
+            type="text"
+            id="input"
+            onChange={handleContentChange}
+            value={content}
+          />
         </Form.Field>
 
         <Form.Field>
           <label className="form-label">Poids:</label>
-          <input className="form-control" type="text" id="input" onChange={handleWeightChange} value={weight}/>
+          <input
+            className="form-control"
+            type="text"
+            id="input"
+            onChange={handleWeightChange}
+            value={weight}
+          />
         </Form.Field>
 
         <Form.Field>
           <label className="form-label">Taille:</label>
-          <input className="form-control" type="text" id="input" onChange={handleSizeChange} value={size} />
+          <input
+            className="form-control"
+            type="text"
+            id="input"
+            onChange={handleSizeChange}
+            value={size}
+          />
         </Form.Field>
         <Form.Field>
           <label className="form-label">Ville de départ:</label>
-          <input className="form-control" type="text" id="input" onChange={handleDepartureCityChange} value={departureCity} />
+          <input
+            className="form-control"
+            type="text"
+            id="input"
+            onChange={handleDepartureCityChange}
+            value={departureCity}
+          />
         </Form.Field>
 
         <Form.Field>
           <label className="form-label">Photo de contenu du colis ::</label>
-          <input  className="form-control"type="file" id="input" onChange={handleFileChange} />
+          <input
+            className="form-control"
+            type="file"
+            id="input"
+            onChange={handleFileChange}
+          />
         </Form.Field>
         <img src={getApiAssetUrl(picture)} width="150px" alt="imageColis" />
 

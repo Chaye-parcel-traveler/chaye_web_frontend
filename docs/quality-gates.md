@@ -2,13 +2,19 @@
 
 This document defines the checks every agent must run before handing frontend work back.
 
-Last updated: 2026-06-28.
+Last updated: 2026-06-29.
 
 ## Runtime Policy
 
 Local frontend commands must run through Docker Compose. Node.js and npm are not local prerequisites.
 
-GitHub Actions uses Node.js 24 directly through `actions/setup-node`. This keeps CI output split into explicit lint, test, typecheck, and build steps while matching the Node.js major used by Docker.
+GitHub Actions uses Node.js 24 directly through `actions/setup-node`. This keeps CI output split into explicit lint, format, test, typecheck, and build steps while matching the Node.js major used by Docker.
+
+## ESLint Version Policy
+
+ESLint stays on the latest version of major 9 supported by every declared React, React Hooks, JSX accessibility, and TypeScript ESLint plugin. Do not upgrade to ESLint 10 until all declared plugins support it. Reassess their compatibility before each ESLint major upgrade.
+
+Lint is a strict gate. `npm run lint` runs ESLint with `--max-warnings=0`, and lint rules must report actionable findings as errors. Do not add a global `eslint-disable` to hide existing debt.
 
 ## Required Gates For Code Changes
 
@@ -21,14 +27,15 @@ docker compose run --rm frontend-tools npm run check
 
 Meaning:
 
-| Gate      | Command                                                               | Purpose                                                    |
-| --------- | --------------------------------------------------------------------- | ---------------------------------------------------------- |
-| Install   | `docker compose run --rm frontend-tools npm ci`                       | Recreates dependencies from the lockfile under Node.js 24. |
-| Lint      | `docker compose run --rm frontend-tools npm run lint`                 | Runs ESLint on frontend source files.                      |
-| Tests     | `docker compose run --rm frontend-tools npm test -- --watchAll=false` | Runs Vitest once.                                          |
-| Typecheck | `docker compose run --rm frontend-tools npm run typecheck`            | Runs TypeScript without emitting files.                    |
-| Build     | `docker compose run --rm frontend-tools npm run build`                | Verifies production bundle compilation.                    |
-| All gates | `docker compose run --rm frontend-tools npm run check`                | Runs lint, typecheck, tests, and build in sequence.        |
+| Gate      | Command                                                               | Purpose                                                           |
+| --------- | --------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| Install   | `docker compose run --rm frontend-tools npm ci`                       | Recreates dependencies from the lockfile under Node.js 24.        |
+| Lint      | `docker compose run --rm frontend-tools npm run lint`                 | Runs ESLint and rejects any warning.                              |
+| Format    | `docker compose run --rm frontend-tools npm run format:check`         | Checks tracked sources, configurations, and technical documents.  |
+| Tests     | `docker compose run --rm frontend-tools npm test -- --watchAll=false` | Runs Vitest once.                                                 |
+| Typecheck | `docker compose run --rm frontend-tools npm run typecheck`            | Runs TypeScript without emitting files.                           |
+| Build     | `docker compose run --rm frontend-tools npm run build`                | Verifies production bundle compilation.                           |
+| All gates | `docker compose run --rm frontend-tools npm run check`                | Runs lint, format check, typecheck, tests, and build in sequence. |
 
 ## Required Gates For API Integration Changes
 
@@ -81,7 +88,7 @@ CI does not use Docker Compose. The workflow must:
 
 - install Node.js 24 with `actions/setup-node`;
 - run `npm ci`;
-- run lint, tests, typecheck, and build as separate steps;
+- run strict lint, format check, tests, typecheck, and build as separate steps;
 - build the production Docker image.
 
 ## Missing Gates To Add Later

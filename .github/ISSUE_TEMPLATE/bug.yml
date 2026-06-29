@@ -1,7 +1,7 @@
 name: Bug
 description: Signaler une anomalie frontend.
-title: "[BUG] "
-labels: ["type:bug"]
+title: '[BUG] '
+labels: ['type:bug']
 body:
   - type: textarea
     id: observed
@@ -32,4 +32,3 @@ body:
       description: Console, network request, route, payload, navigateur.
     validations:
       required: false
-

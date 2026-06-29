@@ -1,5 +1,5 @@
 /* Google Fonts - Poppins */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 /* * {
   margin: 0;
@@ -9,8 +9,8 @@
 }
 */
 .page-login {
-  font-family: "Poppins", sans-serif;
-  background-color: #EC634E;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ec634e;
 }
 
 .logoChaye {
@@ -25,7 +25,7 @@
 /*======= H ========*/
 h2 {
   color: #1f1f1f;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
   font-size: 30px;
   font-style: normal;
@@ -35,7 +35,7 @@ h2 {
 }
 
 .forgot-pass {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #ec634e !important;
   font-size: 11px;
   font-style: normal;
@@ -44,7 +44,7 @@ h2 {
 }
 
 .serappeller {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #949090 !important;
   font-size: 11px;
   font-style: normal;
@@ -60,12 +60,12 @@ h2 {
   align-items: center;
   margin: 0 auto;
   border-radius: 50px !important;
-  background: #4F4294 !important;
-  box-shadow: 2px 1px 8px 0px rgba(65, 28, 13, 0.20);
+  background: #4f4294 !important;
+  box-shadow: 2px 1px 8px 0px rgba(65, 28, 13, 0.2);
 }
 
 .btnValider:hover {
-  background: #EC634E !important;
+  background: #ec634e !important;
 }
 
 .container-login {
@@ -75,7 +75,7 @@ h2 {
   justify-content: center;
   /* column-gap: 30px; */
   margin: 0 auto;
-  background-color: #EC634E;
+  background-color: #ec634e;
 }
 
 .form {
@@ -85,8 +85,8 @@ h2 {
   padding: 42px;
   border-radius: 6px;
   border-radius: 32px;
-  background: #FFF;
-  box-shadow: 0px 4px 40px 0px rgba(0, 0, 0, 0.10);
+  background: #fff;
+  box-shadow: 0px 4px 40px 0px rgba(0, 0, 0, 0.1);
 }
 
 /*
@@ -180,7 +180,7 @@ form {
 }
 
 .form a {
-  color: #EC634E;
+  color: #ec634e;
   text-decoration: none;
 }
 
@@ -197,7 +197,7 @@ form {
 }
 
 .line::before {
-  content: "Ou inscrivez-vous en utilisant";
+  content: 'Ou inscrivez-vous en utilisant';
   position: absolute;
   right: -27%;
   left: 49%;
@@ -236,7 +236,6 @@ a.apple {
 }
 
 a.apple .apple-icon {
-
   color: #fff;
   font-size: 30px;
   border-radius: 50%;
@@ -244,7 +243,6 @@ a.apple .apple-icon {
   align-items: center;
   justify-content: center;
   left: 15px !important;
-
 }
 
 .facebook-icon,

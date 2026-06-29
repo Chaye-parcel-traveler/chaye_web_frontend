@@ -48,7 +48,9 @@ describe('api client', () => {
   });
 
   it('builds API URLs without hardcoding a localhost backend', async () => {
-    const { apiModule } = await loadApi({ apiUrl: 'https://api.example.test/' });
+    const { apiModule } = await loadApi({
+      apiUrl: 'https://api.example.test/',
+    });
 
     expect(apiModule.getApiUrl('/members')).toBe(
       'https://api.example.test/members'
