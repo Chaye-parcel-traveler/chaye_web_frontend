@@ -143,11 +143,11 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    App["src/App.js<br/>Routes principales"] --> Components["src/Components<br/>Pages et blocs UI"]
+    App["src/App.jsx<br/>Routes principales"] --> Components["src/Components<br/>Pages et blocs UI"]
     Components --> Services["src/Services<br/>Appels API reutilisables"]
     Components --> Assets["public<br/>Images et fichiers publics"]
     App --> Auth["src/setAuthToken.js<br/>Token auth Axios"]
-    Tests["src/*.test.js<br/>Tests React"] --> App
+    Tests["src/*.test.jsx<br/>Tests React"] --> App
 ```
 
 Lecture conseillee avant de coder:

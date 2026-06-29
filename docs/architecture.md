@@ -16,7 +16,7 @@ This document is technical and intentionally written in English.
 
 ## Application Boundaries
 
-- `src/App.js`: route registration.
+- `src/App.jsx`: route registration.
 - `src/lib/api.js`: shared Axios client, auth token header handling, API URL helpers, and normalized API errors.
 - `src/types/`: shared TypeScript contracts for API responses and core entities.
 - `src/Components/`: page and UI components.
@@ -28,7 +28,6 @@ This document is technical and intentionally written in English.
 ## Current Risks
 
 - Social auth UI is inconsistent across screens.
-- Existing React source still uses JSX in `.js` files and requires the compatibility transform in `vite.config.ts`.
 
 ## Agent Rule
 
