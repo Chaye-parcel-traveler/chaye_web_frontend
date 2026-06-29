@@ -33,7 +33,7 @@ function HomePage() {
       {/*
                     <div className='d-flex justify-content-between'>
                         <h2 className='titre'>A la une</h2>
-                        <h4 className='text-danger fw-bold text-decoration-underline'>FavoritesPage</h4>
+                        <h4 className='text-danger fw-bold text-decoration-underline'>Favoris</h4>
                     </div>
                     <FavoritesPage />
 

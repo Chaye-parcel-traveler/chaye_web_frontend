@@ -9,7 +9,7 @@ function InsurancePanel() {
   return (
     <React.Fragment>
       <div className="container">
-        <h2 className="txtLeft margin-top-36">InsurancePanel</h2>
+        <h2 className="txtLeft margin-top-36">Assurance</h2>
         <div className="box-chaye margin-top-25 ">
           <div className="displayFlex paddingAssurance">
             <div>
@@ -55,7 +55,7 @@ function InsurancePanel() {
             <img
               src="images/logochayeassurance.png"
               style={{ display: 'block', margin: '0 auto' }}
-              alt="logo Chaye InsurancePanel"
+              alt="logo Chaye Assurance"
             />
           </div>
         </div>
