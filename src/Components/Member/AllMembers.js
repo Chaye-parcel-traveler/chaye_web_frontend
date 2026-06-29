@@ -39,7 +39,7 @@ function AllMembers() {
         } else {
           dispatch({ type: 'FETCH_SUCCESS', payload: members });
         }
-      } catch (error) {
+      } catch {
         dispatch({ type: 'FETCH_ERROR' });
       }
     }

@@ -5,11 +5,14 @@ This document is technical and intentionally written in English.
 ## Runtime
 
 - Framework: React 18.
-- Build tool: Vite.
+- Runtime: Node.js 24.
+- Build tool: Vite 8.
 - Routing: React Router.
 - API client: Axios.
 - Type checking: TypeScript is configured for new `.ts` and `.tsx` files without converting the existing JavaScript surface.
 - Styling: mixed Bootstrap, MUI, Semantic UI, and local CSS.
+- Local execution: Docker Compose for development, dependencies, quality gates, and production image builds.
+- CI execution: GitHub Actions with Node.js 24.
 
 ## Application Boundaries
 
@@ -25,7 +28,7 @@ This document is technical and intentionally written in English.
 ## Current Risks
 
 - Social auth UI is inconsistent across screens.
-- There is no Docker Compose hot-reload frontend service yet.
+- Existing React source still uses JSX in `.js` files and requires the compatibility transform in `vite.config.ts`.
 
 ## Agent Rule
 

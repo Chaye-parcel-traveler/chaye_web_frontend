@@ -25,8 +25,9 @@ Use English for code-level details, API contracts, fields, commands, and impleme
 Coller les commandes lancées et leur résultat.
 
 ```text
-docker run --rm ... npm ci && npm run lint && npm test -- --watchAll=false && npm run typecheck && npm run build
-docker build --build-arg VITE_API_URL=http://localhost:3333 -t chaye-web-frontend .
+docker compose run --rm frontend-tools npm ci
+docker compose run --rm frontend-tools npm run check
+docker compose build frontend-production
 ```
 
 ## Risques et revue

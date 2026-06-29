@@ -38,7 +38,7 @@ Installe d'abord:
 - GitHub CLI: `gh`;
 - un editeur de code.
 
-Node.js LTS reste utile uniquement pour le hot reload local lorsque le service Docker de développement n'est pas disponible.
+Node.js et npm ne sont pas requis sur la machine locale. Le frontend utilise Node.js 24 dans Docker Compose.
 
 Verifie:
 
@@ -65,7 +65,7 @@ sequenceDiagram
 
     Dev->>API: docker compose up -d --build
     API-->>Dev: API prete sur localhost:3333
-    Dev->>FE: VITE_API_URL=http://localhost:3333 npm start
+    Dev->>FE: docker compose up --build frontend-dev
     FE-->>Browser: app prete sur localhost:3000
     Browser->>FE: ouvre l'application
     FE->>API: appels HTTP via Axios
@@ -93,13 +93,14 @@ Depuis ce dossier:
 
 ```bash
 cd ../chaye_web_frontend
-npm install
+docker compose build frontend-tools
+docker compose run --rm frontend-tools npm ci
 ```
 
 ### 3. Demarrer Le Frontend
 
 ```bash
-VITE_API_URL=http://localhost:3333 npm start
+docker compose up --build frontend-dev
 ```
 
 Application attendue:
@@ -110,26 +111,32 @@ http://localhost:3000
 
 ## Docker Cote Frontend
 
-Le frontend a un `Dockerfile`, mais il sert aujourd'hui surtout a verifier l'image de production. Il ne remplace pas encore le mode dev avec hot reload.
+Docker Compose est l'interface locale obligatoire pour le developpement, les tests et les builds. Le service `frontend-dev` fournit le hot reload. Le service `frontend-tools` execute les commandes npm dans Node.js 24 sans installer Node.js sur l'hote.
 
-Pour verifier l'image:
+Commandes principales:
 
 ```bash
-docker build --build-arg VITE_API_URL=http://localhost:3333 -t chaye-web-frontend .
-docker run --rm -p 3000:80 chaye-web-frontend
+docker compose up --build frontend-dev
+docker compose run --rm frontend-tools npm run lint
+docker compose run --rm frontend-tools npm run typecheck
+docker compose run --rm frontend-tools npm test -- --watchAll=false
+docker compose run --rm frontend-tools npm run build
+docker compose run --rm frontend-tools npm run check
 ```
 
-Puis ouvre:
+Pour verifier l'image de production:
 
-```text
-http://localhost:3000
+```bash
+docker compose build frontend-production
+docker compose up frontend-production
 ```
 
 ```mermaid
 flowchart TB
-    DevMode["Developpement quotidien"] --> NpmStart["npm start<br/>hot reload"]
-    ProdCheck["Verification image"] --> DockerBuild["docker build"]
-    DockerBuild --> Nginx["Image nginx statique"]
+    DockerCompose["Docker Compose local"] --> DevMode["frontend-dev<br/>hot reload"]
+    DockerCompose --> Tools["frontend-tools<br/>lint, test, typecheck, build"]
+    DockerCompose --> ProdCheck["frontend-production"]
+    ProdCheck --> Nginx["Image nginx statique"]
 ```
 
 ## Comprendre Le Repo
@@ -215,16 +222,12 @@ Si tu decouvres un autre probleme, cree ou commente une autre issue.
 Avant de demander une review:
 
 ```bash
-docker run --rm \
-  -v "$PWD":/app \
-  -v chaye_web_frontend_node_modules:/app/node_modules \
-  -w /app \
-  -e VITE_API_URL=http://host.docker.internal:3333 \
-  node:20-alpine \
-  sh -lc "npm ci && npm run lint && npm test -- --watchAll=false && npm run typecheck && npm run build"
+docker compose run --rm frontend-tools npm ci
+docker compose run --rm frontend-tools npm run check
+docker compose build frontend-production
 ```
 
-Lance toujours les tests dans Docker en premier. Utilise les commandes `npm` sur l'hote uniquement si Docker est indisponible ou bloque pour une raison d'infrastructure, puis explique cette raison dans la PR.
+En local, n'execute pas les commandes `npm` directement sur l'hote. Utilise toujours le service `frontend-tools`.
 
 Si tu touches l'integration API, demarre aussi le backend Docker et teste le parcours dans le navigateur.
 
@@ -302,7 +305,7 @@ import.meta.env.VITE_API_URL
 En local:
 
 ```bash
-VITE_API_URL=http://localhost:3333 npm start
+VITE_API_URL=http://localhost:3333 docker compose up --build frontend-dev
 ```
 
 Attention: certains anciens composants utilisent encore `http://localhost:5000` directement. Ne copie pas ce pattern. Quand tu touches ces fichiers, migre vers la configuration Axios base URL.
@@ -322,8 +325,8 @@ Une issue frontend est vraiment finie quand:
 - les criteres d'acceptation sont couverts;
 - l'UI reste coherent avec l'existant;
 - les appels API utilisent le bon contrat;
-- lint, tests, typecheck et build passent dans Docker;
-- l'image de production Docker se construit;
+- `docker compose run --rm frontend-tools npm run check` passe;
+- `docker compose build frontend-production` passe;
 - la PR explique clairement ce qui a ete fait.
 
 ```mermaid
