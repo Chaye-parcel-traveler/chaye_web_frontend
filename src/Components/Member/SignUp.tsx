@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/signup.css';
 import Footer from '../Footer/Footer';
@@ -20,27 +21,27 @@ function SignUp() {
   //   setImagename(event.target.files[0].name);
   // };
 
-  const handelLastnameChange = (event) => {
+  const handelLastnameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setLastname(event.target.value);
   };
 
-  const handelFirstnameChange = (event) => {
+  const handelFirstnameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFirstname(event.target.value);
   };
 
-  const handelEmailChange = (event) => {
+  const handelEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  const handelPasswordChange = (event) => {
+  const handelPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
-  const handelAdressChange = (event) => {
+  const handelAdressChange = (event: ChangeEvent<HTMLInputElement>) => {
     setAdress(event.target.value);
   };
 
-  const handelPhoneChange = (event) => {
+  const handelPhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPhone(event.target.value);
   };
 
@@ -48,7 +49,7 @@ function SignUp() {
   //   setStatus(event.target.value);
   // };
 
-  const handelSubmit = (event) => {
+  const handelSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // const formData = new FormData();

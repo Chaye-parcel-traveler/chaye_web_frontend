@@ -33,7 +33,7 @@ function App() {
   return (
     <GoogleOAuthProvider clientId="871900328667-bq9ic36okos7jmctp2kc00f5q9q8bv5l.apps.googleusercontent.com">
       <div className="App">
-        <Routes layout={<MainLayout />}>
+        <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="/allmembers" element={<AllMembers />} />

@@ -2,21 +2,22 @@ import { useState, useEffect } from 'react';
 import { logout } from '../../Services/member';
 import { Link } from 'react-router-dom';
 import apiClient, { clearAuthToken } from '../../lib/api';
+import type { Member } from '../../types/entities';
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<Member | null>(null);
   const [sideBarClose, setSideBarClose] = useState(true);
 
   useEffect(() => {
     apiClient
-      .get('/me')
+      .get<Member>('/me')
       .then((response) => {
         setUserData(response.data);
         setIsLoggedIn(true);
       })
       .catch(() => {
-        setUserData(false);
+        setUserData(null);
       });
   }, []);
   const handleSearch = () => {
@@ -82,7 +83,11 @@ function Navbar() {
 
             <li className="nav-link">
               <Link
-                to={isLoggedIn ? `/profile/${userData.id}` : '/loginSignup'}
+                to={
+                  isLoggedIn && userData
+                    ? `/profile/${userData.id}`
+                    : '/loginSignup'
+                }
               >
                 <i className="bx bx-tada-hover bxs-user-detail bx-md icon"></i>
                 <span className="text nav-text">Mon compte</span>

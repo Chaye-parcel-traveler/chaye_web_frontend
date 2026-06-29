@@ -4,11 +4,27 @@ import Rating from '@mui/material/Rating';
 import moment from 'moment/moment';
 import 'moment/locale/fr';
 import apiClient, { getApiAssetUrl } from '../../lib/api';
+import type { Comment, Member } from '../../types/entities';
 
 moment.locale('fr');
 
+type CommentsState = {
+  loadingComments: boolean;
+  errorComments: string;
+  comments: Comment[];
+  loadingMembers: boolean;
+  errorMembers: string;
+  members: Member[];
+};
+
+type CommentsAction =
+  | { type: 'FETCH_COMMENTS_SUCCESS'; payload: Comment[] }
+  | { type: 'FETCH_COMMENTS_ERROR' }
+  | { type: 'FETCH_MEMBERS_SUCCESS'; payload: Member[] }
+  | { type: 'FETCH_MEMBERS_ERROR' };
+
 function AllComments() {
-  const initialState = {
+  const initialState: CommentsState = {
     loadingComments: true,
     errorComments: '',
     comments: [],
@@ -17,7 +33,10 @@ function AllComments() {
     members: [],
   };
 
-  const reducer = (state, action) => {
+  const reducer = (
+    state: CommentsState,
+    action: CommentsAction
+  ): CommentsState => {
     switch (action.type) {
       case 'FETCH_COMMENTS_SUCCESS':
         return {
@@ -54,7 +73,7 @@ function AllComments() {
 
   useEffect(() => {
     apiClient
-      .get('/comments', { withCredentials: true })
+      .get<Comment[]>('/comments', { withCredentials: true })
       .then((response) => {
         dispatch({ type: 'FETCH_COMMENTS_SUCCESS', payload: response.data });
       })
@@ -63,7 +82,7 @@ function AllComments() {
       });
 
     apiClient
-      .get('/memberinfos', { withCredentials: true })
+      .get<Member[]>('/memberinfos', { withCredentials: true })
       .then((response) => {
         dispatch({ type: 'FETCH_MEMBERS_SUCCESS', payload: response.data });
       })
@@ -99,7 +118,7 @@ function AllComments() {
                 <Stack spacing={1}>
                   <Rating
                     name="ratingStars"
-                    value={comment.ratingStars}
+                    value={comment.ratingStars ?? null}
                     size="medium"
                     readOnly
                   />

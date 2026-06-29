@@ -10,6 +10,19 @@ export default [
   {
     ignores: ['build/**', 'dist/**', 'coverage/**', 'node_modules/**'],
   },
+  {
+    files: ['src/**/*.{js,jsx}'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'Program',
+          message:
+            'Application source files must use TypeScript (.ts or .tsx).',
+        },
+      ],
+    },
+  },
   js.configs.recommended,
   {
     files: ['src/**/*.{js,jsx,ts,tsx}'],
@@ -68,6 +81,7 @@ export default [
     },
     rules: {
       'no-unused-vars': 'off',
+      '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

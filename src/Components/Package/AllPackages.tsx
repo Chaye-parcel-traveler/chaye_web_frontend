@@ -3,15 +3,30 @@ import apiClient, { getApiAssetUrl } from '../../lib/api';
 //Moment (date)
 import moment from 'moment/moment';
 import 'moment/locale/fr';
+import type { Package } from '../../types/entities';
+
 moment().locale('fr');
+
+type PackagesState = {
+  loading: boolean;
+  error: string;
+  packages: Package[];
+};
+
+type PackagesAction =
+  { type: 'FETCH_SUCCESS'; payload: Package[] } | { type: 'FETCH_ERROR' };
+
 function AllPackages() {
-  const initialestate = {
+  const initialestate: PackagesState = {
     loading: true,
     error: '',
     packages: [],
   };
 
-  const reducer = (state, action) => {
+  const reducer = (
+    state: PackagesState,
+    action: PackagesAction
+  ): PackagesState => {
     switch (action.type) {
       case 'FETCH_SUCCESS':
         return {
@@ -33,7 +48,7 @@ function AllPackages() {
 
   useEffect(() => {
     apiClient
-      .get('/packages', { withCredentials: true })
+      .get<Package[]>('/packages', { withCredentials: true })
       .then((response) => {
         dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
       })

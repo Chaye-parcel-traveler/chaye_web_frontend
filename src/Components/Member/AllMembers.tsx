@@ -1,15 +1,28 @@
 import React, { useEffect, useReducer } from 'react';
 import { Table, Button } from 'semantic-ui-react';
 import { fetchMembers } from '../../Services/member';
+import type { Member } from '../../types/entities';
+
+type MembersState = {
+  loading: boolean;
+  error: string;
+  members: Member[];
+};
+
+type MembersAction =
+  { type: 'FETCH_SUCCESS'; payload: Member[] } | { type: 'FETCH_ERROR' };
 
 function AllMembers() {
-  const initialestate = {
+  const initialestate: MembersState = {
     loading: true,
     error: '',
     members: [],
   };
 
-  const reducer = (state, action) => {
+  const reducer = (
+    state: MembersState,
+    action: MembersAction
+  ): MembersState => {
     switch (action.type) {
       case 'FETCH_SUCCESS':
         return {
@@ -63,7 +76,7 @@ function AllMembers() {
         <Table.Body>
           {state.loading ? (
             <Table.Row>
-              <Table.Cell colSpan="8">Chargement en cours...</Table.Cell>
+              <Table.Cell colSpan={8}>Chargement en cours...</Table.Cell>
             </Table.Row>
           ) : (
             state.members.map((member, index) => (

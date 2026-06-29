@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
+import type { ReactNode } from 'react';
 
 import App from './App';
 
@@ -17,15 +18,15 @@ vi.mock('./lib/api', () => ({
     put: vi.fn(() => Promise.resolve({ data: {} })),
   },
   clearAuthToken: vi.fn(),
-  getApiAssetUrl: (path) => path,
-  getApiUrl: (path) => path,
-  normalizeApiError: (error) => error,
+  getApiAssetUrl: (path: string) => path,
+  getApiUrl: (path: string) => path,
+  normalizeApiError: (error: unknown) => error,
   persistAuthToken: vi.fn(),
   setAuthToken: vi.fn(),
 }));
 
 vi.mock('@react-oauth/google', () => ({
-  GoogleOAuthProvider: ({ children }) => children,
+  GoogleOAuthProvider: ({ children }: { children: ReactNode }) => children,
   useGoogleLogin: () => vi.fn(),
 }));
 

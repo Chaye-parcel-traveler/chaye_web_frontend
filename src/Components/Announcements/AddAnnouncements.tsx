@@ -1,19 +1,20 @@
 import { useState } from 'react';
+import type { ChangeEvent, MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import apiClient from '../../lib/api';
 
 function AddAnnouncements() {
   let navigate = useNavigate();
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState<Record<string, string>>({});
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     await apiClient.post('/announcements', {
       ...inputs,
@@ -81,7 +82,7 @@ function AddAnnouncements() {
                         className="setting-description-text mb-3"
                         style={{ marginLeft: '15px' }}
                       >
-                        <h10>Arrivée à :</h10>
+                        <h1>Arrivée à :</h1>
                       </div>
                     </div>
                     <div className="wrapper-dropdown" id="dropdown">

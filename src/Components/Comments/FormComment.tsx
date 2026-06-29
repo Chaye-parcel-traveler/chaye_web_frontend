@@ -4,21 +4,26 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import '../styles/comment.css';
 import apiClient, { getApiUrl } from '../../lib/api';
+import type { Member } from '../../types/entities';
 
-function FormComment({ announcementId }) {
+type FormCommentProps = {
+  announcementId: number | string;
+};
+
+function FormComment({ announcementId }: FormCommentProps) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [userData, setUserData] = useState('');
+  const [userData, setUserData] = useState<Partial<Member>>({});
 
   useEffect(() => {
     apiClient
-      .get('/me')
+      .get<Member>('/me')
       .then((response) => {
         setUserData(response.data);
       })
       .catch(() => {
-        setUserData(false);
+        setUserData({});
       });
   }, []);
   return (

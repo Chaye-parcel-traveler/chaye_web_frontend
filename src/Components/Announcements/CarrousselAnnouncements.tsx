@@ -3,6 +3,22 @@ import { Link } from 'react-router-dom';
 import TinySlider from 'tiny-slider-react';
 import 'tiny-slider/dist/tiny-slider.css';
 import apiClient from '../../lib/api';
+import type { Announcement, Member } from '../../types/entities';
+
+type AnnouncementsState = {
+  loadingAnnouncements: boolean;
+  errorAnnouncements: string;
+  announcements: Announcement[];
+  loadingMembers: boolean;
+  errorMembers: string;
+  members: Member[];
+};
+
+type AnnouncementsAction =
+  | { type: 'FETCH_ANNOUNCEMENTS_SUCCESS'; payload: Announcement[] }
+  | { type: 'FETCH_ANNOUNCEMENTS_ERROR' }
+  | { type: 'FETCH_MEMBERS_SUCCESS'; payload: Member[] }
+  | { type: 'FETCH_MEMBERS_ERROR' };
 
 function CarrouselAnnouncements() {
   const settings = {
@@ -41,7 +57,7 @@ function CarrouselAnnouncements() {
     },
   };
 
-  const initialState = {
+  const initialState: AnnouncementsState = {
     loadingAnnouncements: true,
     errorAnnouncements: '',
     announcements: [],
@@ -50,7 +66,10 @@ function CarrouselAnnouncements() {
     members: [],
   };
 
-  const reducer = (state, action) => {
+  const reducer = (
+    state: AnnouncementsState,
+    action: AnnouncementsAction
+  ): AnnouncementsState => {
     switch (action.type) {
       case 'FETCH_ANNOUNCEMENTS_SUCCESS':
         return {
@@ -87,7 +106,7 @@ function CarrouselAnnouncements() {
 
   useEffect(() => {
     apiClient
-      .get('/announcements')
+      .get<Announcement[]>('/announcements')
       .then((response) => {
         dispatch({
           type: 'FETCH_ANNOUNCEMENTS_SUCCESS',
@@ -173,7 +192,9 @@ function CarrouselAnnouncements() {
               </a>
             </div>
             <div className="col-4">
-              <Link className="btnChaye-orange">Carte intéractive</Link>
+              <Link className="btnChaye-orange" to="/carte">
+                Carte intéractive
+              </Link>
             </div>
           </div>
         </div>

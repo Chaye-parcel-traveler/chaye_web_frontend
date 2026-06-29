@@ -5,10 +5,11 @@ This file is the entry point for AI agents working on the web frontend.
 ## Project Shape
 
 - Runtime: React 18 with Vite.
-- App entry: `src/App.jsx`.
+- Language: TypeScript 6. New application code must use `.ts` or `.tsx`.
+- App entry: `src/App.tsx`.
 - Components: `src/Components/`.
 - API services: `src/Services/`.
-- Shared auth token helper: `src/setAuthToken.js`.
+- Shared auth token helper: `src/setAuthToken.ts`.
 - Public assets: `public/`.
 - Frontend agent docs: `docs/`.
 

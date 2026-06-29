@@ -6,14 +6,18 @@ import 'moment/locale/fr';
 import Carousel from 'react-material-ui-carousel';
 import { Button } from '@mui/material';
 import apiClient, { getApiAssetUrl } from '../../lib/api';
+import type { Announcement, Member } from '../../types/entities';
+
 moment().locale('fr');
 
 function Favoris() {
-  const [favoriteAnnouncements, setFavoriteAnnouncements] = useState([]);
-  const [members, setMembers] = useState([]);
+  const [favoriteAnnouncements, setFavoriteAnnouncements] = useState<
+    Announcement[]
+  >([]);
+  const [members, setMembers] = useState<Member[]>([]);
   useEffect(() => {
     apiClient
-      .get('/favorites', { withCredentials: true })
+      .get<Announcement[]>('/favorites', { withCredentials: true })
       .then((response) => {
         setFavoriteAnnouncements(response.data);
       })
@@ -21,7 +25,7 @@ function Favoris() {
 
     // Récupérez les informations sur les membres ici
     apiClient
-      .get('/memberinfos', { withCredentials: true })
+      .get<Member[]>('/memberinfos', { withCredentials: true })
       .then((response) => {
         setMembers(response.data);
       })
@@ -31,9 +35,8 @@ function Favoris() {
   return (
     <div className="carousel-container">
       <Carousel
-        showArrows={true}
-        renderArrow={({ onClick, className, style, next, prev }) => (
-          <Button onClick={onClick} className={className} style={style}>
+        NavButton={({ onClick, className, style, next, prev }) => (
+          <Button onClick={() => onClick()} className={className} style={style}>
             {next && 'Next'}
             {prev && 'Previous'}
           </Button>
