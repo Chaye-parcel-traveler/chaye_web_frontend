@@ -16,30 +16,53 @@ import moment from 'moment/moment';
 import 'moment/locale/fr';
 import '../styles/message.css'; // Ajoutez un fichier CSS pour les styles personnalisés
 import apiClient, { getApiAssetUrl, getApiUrl } from '../../lib/api';
+import type { Member, Message as ChatMessage } from '../../types/entities';
 
 moment().locale('fr');
 
+type MembersState = {
+  loading: boolean;
+  error: string;
+  members: Member[];
+};
+
+type MembersAction =
+  | { type: 'FETCH_MEMBERS_SUCCESS'; payload: Member[] }
+  | { type: 'FETCH_MEMBERS_ERROR' };
+
+type MessagesState = {
+  loading: boolean;
+  error: string;
+  messages: ChatMessage[];
+};
+
+type MessagesAction =
+  { type: 'FETCH_SUCCESS'; payload: ChatMessage[] } | { type: 'FETCH_ERROR' };
+
 function AllMessages() {
-  const [userData, setUserData] = useState({}); // Initialisez avec un objet vide
+  const [userData, setUserData] = useState<Partial<Member>>({});
 
   useEffect(() => {
     apiClient
-      .get('/me')
+      .get<Member>('/me')
       .then((response) => {
         setUserData(response.data);
       })
       .catch(() => {
-        setUserData(false);
+        setUserData({});
       });
   }, []);
 
-  const initialMembersState = {
+  const initialMembersState: MembersState = {
     loading: true,
     error: '',
     members: [],
   };
 
-  const membersReducer = (state, action) => {
+  const membersReducer = (
+    state: MembersState,
+    action: MembersAction
+  ): MembersState => {
     switch (action.type) {
       case 'FETCH_MEMBERS_SUCCESS':
         return {
@@ -67,7 +90,7 @@ function AllMessages() {
 
   useEffect(() => {
     apiClient
-      .get('/memberinfos', { withCredentials: true })
+      .get<Member[]>('/memberinfos', { withCredentials: true })
       .then((response) => {
         membersDispatch({
           type: 'FETCH_MEMBERS_SUCCESS',
@@ -79,13 +102,16 @@ function AllMessages() {
       });
   }, []);
 
-  const initialState = {
+  const initialState: MessagesState = {
     loading: true,
     error: '',
     messages: [],
   };
 
-  const reducer = (state, action) => {
+  const reducer = (
+    state: MessagesState,
+    action: MessagesAction
+  ): MessagesState => {
     switch (action.type) {
       case 'FETCH_SUCCESS':
         return {
@@ -110,7 +136,7 @@ function AllMessages() {
 
   useEffect(() => {
     apiClient
-      .get('/messages', { withCredentials: true })
+      .get<ChatMessage[]>('/messages', { withCredentials: true })
       .then((response) => {
         dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
       })
@@ -121,17 +147,17 @@ function AllMessages() {
 
   // Trier les messages par date (du plus récent au plus ancien)
   const sortedMessages = [...state.messages].sort(
-    (a, b) => new Date(b.datetime) - new Date(a.datetime)
+    (a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime()
   );
 
   // Créer un objet pour stocker le dernier message par destinataire
-  const lastMessagesByRecipient = {};
+  const lastMessagesByRecipient: Record<string, ChatMessage> = {};
 
   sortedMessages.forEach((message) => {
     if (userData && userData.email === message.recipient) {
       if (
         !lastMessagesByRecipient[message.sender] ||
-        message.datetime > lastMessagesByRecipient[message.sender]?.datetime
+        message.datetime > lastMessagesByRecipient[message.sender].datetime
       ) {
         lastMessagesByRecipient[message.sender] = message;
       }
@@ -142,10 +168,14 @@ function AllMessages() {
   const filteredMessages = Object.values(lastMessagesByRecipient);
 
   const [openReplyDialog, setOpenReplyDialog] = useState(false); // État pour la boîte de dialogue
-  const [selectedRecipient, setSelectedRecipient] = useState(null);
-  const [messagesWithRecipient, setMessagesWithRecipient] = useState([]);
+  const [selectedRecipient, setSelectedRecipient] = useState<string | null>(
+    null
+  );
+  const [messagesWithRecipient, setMessagesWithRecipient] = useState<
+    ChatMessage[]
+  >([]);
 
-  const handleOpenReplyDialog = (recipient) => {
+  const handleOpenReplyDialog = (recipient: string) => {
     setSelectedRecipient(recipient);
 
     // Filtrer les messages entre l'utilisateur actuel et le destinataire sélectionné

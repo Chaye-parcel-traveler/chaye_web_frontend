@@ -1,15 +1,32 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-const mockCreate = vi.fn();
+type MockClient = {
+  defaults: {
+    headers: {
+      common: Record<string, string>;
+    };
+  };
+};
+
+const mockCreate = vi.fn<(config: { baseURL: string }) => MockClient>();
 
 vi.mock('axios', () => ({
   default: {
-    create: (...args) => mockCreate(...args),
+    create: (config: { baseURL: string }) => mockCreate(config),
+    isAxiosError: () => false,
   },
 }));
 
-async function loadApi({ apiUrl = 'http://localhost:3333', token } = {}) {
-  const mockClient = {
+type LoadApiOptions = {
+  apiUrl?: string;
+  token?: string;
+};
+
+async function loadApi({
+  apiUrl = 'http://localhost:3333',
+  token,
+}: LoadApiOptions = {}) {
+  const mockClient: MockClient = {
     defaults: {
       headers: {
         common: {},
@@ -76,5 +93,18 @@ describe('api client', () => {
     apiModule.clearAuthToken();
     expect(sessionStorage.getItem('token')).toBeNull();
     expect(mockClient.defaults.headers.common.Authorization).toBeUndefined();
+  });
+
+  it('normalizes unknown API errors without an untyped fallback', async () => {
+    const { apiModule } = await loadApi();
+
+    expect(
+      apiModule.normalizeApiError(new Error('Network unavailable'))
+    ).toEqual({
+      message: 'Network unavailable',
+    });
+    expect(apiModule.normalizeApiError('unexpected failure')).toEqual({
+      message: 'Une erreur est survenue.',
+    });
   });
 });

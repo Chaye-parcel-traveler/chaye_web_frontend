@@ -1,9 +1,10 @@
 import axios from 'axios';
+import type { ApiErrorPayload, NormalizedApiError } from '../types/api';
 
 const AUTH_TOKEN_STORAGE_KEY = 'token';
 const apiBaseUrl = import.meta.env.VITE_API_URL || '';
 
-function normalizePath(path) {
+function normalizePath(path: string): string {
   if (!path) {
     return '';
   }
@@ -15,7 +16,7 @@ function normalizePath(path) {
   return path.startsWith('/') ? path : `/${path}`;
 }
 
-export function getApiUrl(path = '') {
+export function getApiUrl(path = ''): string {
   const normalizedPath = normalizePath(path);
 
   if (!apiBaseUrl || /^https?:\/\//i.test(normalizedPath)) {
@@ -25,11 +26,11 @@ export function getApiUrl(path = '') {
   return `${apiBaseUrl.replace(/\/$/, '')}${normalizedPath}`;
 }
 
-export function getApiAssetUrl(path) {
-  return getApiUrl(path);
+export function getApiAssetUrl(path?: string | null): string {
+  return getApiUrl(path ?? '');
 }
 
-export function getStoredAuthToken() {
+export function getStoredAuthToken(): string | null {
   return sessionStorage.getItem(AUTH_TOKEN_STORAGE_KEY);
 }
 
@@ -37,7 +38,7 @@ const apiClient = axios.create({
   baseURL: apiBaseUrl,
 });
 
-export function setAuthToken(token) {
+export function setAuthToken(token: string | null): void {
   if (token) {
     apiClient.defaults.headers.common.Authorization = `Bearer ${token}`;
     return;
@@ -46,7 +47,7 @@ export function setAuthToken(token) {
   delete apiClient.defaults.headers.common.Authorization;
 }
 
-export function persistAuthToken(token) {
+export function persistAuthToken(token: string | null): void {
   if (token) {
     sessionStorage.setItem(AUTH_TOKEN_STORAGE_KEY, token);
   } else {
@@ -56,21 +57,26 @@ export function persistAuthToken(token) {
   setAuthToken(token);
 }
 
-export function clearAuthToken() {
+export function clearAuthToken(): void {
   persistAuthToken(null);
 }
 
-export function normalizeApiError(error) {
-  const message =
-    error?.response?.data?.message ||
-    error?.response?.data?.error ||
-    error?.message ||
-    'Une erreur est survenue.';
+export function normalizeApiError(error: unknown): NormalizedApiError {
+  if (axios.isAxiosError<ApiErrorPayload>(error)) {
+    return {
+      message:
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        'Une erreur est survenue.',
+      status: error.response?.status,
+      details: error.response?.data,
+    };
+  }
 
   return {
-    message,
-    status: error?.response?.status,
-    details: error?.response?.data,
+    message:
+      error instanceof Error ? error.message : 'Une erreur est survenue.',
   };
 }
 

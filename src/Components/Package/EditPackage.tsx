@@ -1,57 +1,64 @@
 import { useEffect, useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react';
 import '../styles/formule.css';
 import apiClient, { getApiAssetUrl } from '../../lib/api';
+import type { Package } from '../../types/entities';
 
 function EditColis() {
   let navigate = useNavigate();
   const params = useParams();
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [content, setContent] = useState('');
   const [weight, setWeight] = useState('');
   const [size, setSize] = useState('');
   const [picture, setPicture] = useState('');
   const [departureCity, setDepartureCity] = useState('');
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-    setPicture(event.target.files[0].name);
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setPicture(selectedFile.name);
+    }
   };
 
-  const handleContentChange = (event) => {
+  const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
     setContent(event.target.value);
   };
 
-  const handleWeightChange = (event) => {
+  const handleWeightChange = (event: ChangeEvent<HTMLInputElement>) => {
     setWeight(event.target.value);
   };
 
-  const handleSizeChange = (event) => {
+  const handleSizeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSize(event.target.value);
   };
-  const handleDepartureCityChange = (event) => {
+  const handleDepartureCityChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDepartureCity(event.target.value);
   };
 
   useEffect(() => {
     apiClient
-      .get(`/package/${params.id}`, { withCredentials: true })
+      .get<Package>(`/package/${params.id}`, { withCredentials: true })
       .then((response) => {
-        setContent(response.data.content);
-        setWeight(response.data.weight);
-        setSize(response.data.size);
-        setDepartureCity(response.data.departureCity);
-        setPicture(response.data.picture);
+        setContent(response.data.content ?? '');
+        setWeight(String(response.data.weight ?? ''));
+        setSize(String(response.data.size ?? ''));
+        setDepartureCity(response.data.departureCity ?? '');
+        setPicture(response.data.picture ?? '');
       })
       .catch(() => {});
   }, [params.id]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append('file', file);
+    if (file) {
+      formData.append('file', file);
+    }
     formData.append('content', content);
     formData.append('weight', weight);
     formData.append('size', size);

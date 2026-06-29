@@ -1,17 +1,19 @@
 import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 import Footer from '../Footer/Footer';
 import { useGoogleLogin } from '@react-oauth/google';
 import { login } from '../../Services/member';
 import apiClient, { getApiUrl, persistAuthToken } from '../../lib/api';
+import type { Member } from '../../types/entities';
 
 function Login() {
-  const [, setToken] = useState();
-  const [, setUserData] = useState();
-  const [inputs, setInputs] = useState({});
+  const [, setToken] = useState<string | null>(null);
+  const [, setUserData] = useState<Member | null>(null);
+  const [inputs, setInputs] = useState<Record<string, string>>({});
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
@@ -24,16 +26,16 @@ function Login() {
     redirect_uri: getApiUrl('/auth/google/redirect'),
     ux_mode: 'redirect',
     onSuccess: async (codeResponse) => {
-      const qs = `code=${encodeURIComponent(codeResponse.code)}
-        &scope=${encodeURIComponent(codeResponse.scope)}
-        &authuser=${encodeURIComponent(codeResponse.authuser)}
-        &prompt=${encodeURIComponent(codeResponse.prompt)}`;
+      const qs = new URLSearchParams({
+        code: codeResponse.code,
+        scope: codeResponse.scope,
+      });
       await apiClient.get(`/auth/google/callback?${qs}`);
     },
     onError: () => {},
   });
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await login({
@@ -44,8 +46,8 @@ function Login() {
       setToken(response.token);
       persistAuthToken(response.token);
 
-      const me = await apiClient.get('/me');
-      setUserData(me);
+      const me = await apiClient.get<Member>('/me');
+      setUserData(me.data);
 
       return navigate('/');
     } catch {

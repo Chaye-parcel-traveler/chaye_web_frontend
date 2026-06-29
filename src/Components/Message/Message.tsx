@@ -1,17 +1,23 @@
 import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 import apiClient from '../../lib/api';
+import type { Member } from '../../types/entities';
 
-function Message({ recipient }) {
+type MessageProps = {
+  recipient: string;
+};
+
+function Message({ recipient }: MessageProps) {
   let navigate = useNavigate();
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState<Partial<Member>>({});
   const [show, setShow] = useState(false);
-  const [message, setMessage] = useState(false);
+  const [message, setMessage] = useState('');
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append('recipient', recipient);
@@ -22,11 +28,11 @@ function Message({ recipient }) {
         return navigate('/home');
       })
       .catch(() => {
-        setUserData(false);
+        setUserData({});
       });
   };
 
-  const handelMessageChange = (event) => {
+  const handelMessageChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(event.target.value);
   };
 
@@ -69,7 +75,7 @@ function Message({ recipient }) {
                 <textarea
                   name="message"
                   className="form-control"
-                  rows="4"
+                  rows={4}
                   onChange={handelMessageChange}
                 />
               </div>

@@ -1,17 +1,19 @@
 import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import { login } from '../../Services/member';
 import apiClient, { getApiUrl, persistAuthToken } from '../../lib/api';
 import './LoginSignup.css';
+import type { Member } from '../../types/entities';
 
 function Login() {
-  const [, setToken] = useState();
-  const [, setUserData] = useState();
-  const [inputs, setInputs] = useState({});
+  const [, setToken] = useState<string | null>(null);
+  const [, setUserData] = useState<Member | null>(null);
+  const [inputs, setInputs] = useState<Record<string, string>>({});
   const [showSignUp, setShowSignUp] = useState(false);
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
@@ -24,16 +26,16 @@ function Login() {
     redirect_uri: getApiUrl('/auth/google/redirect'),
     ux_mode: 'redirect',
     onSuccess: async (codeResponse) => {
-      const qs = `code=${encodeURIComponent(codeResponse.code)}
-        &scope=${encodeURIComponent(codeResponse.scope)}
-        &authuser=${encodeURIComponent(codeResponse.authuser)}
-        &prompt=${encodeURIComponent(codeResponse.prompt)}`;
+      const qs = new URLSearchParams({
+        code: codeResponse.code,
+        scope: codeResponse.scope,
+      });
       await apiClient.get(`/auth/google/callback?${qs}`);
     },
     onError: () => {},
   });
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await login({
@@ -44,15 +46,15 @@ function Login() {
       setToken(response.token);
       persistAuthToken(response.token);
 
-      const me = await apiClient.get('/me');
-      setUserData(me);
+      const me = await apiClient.get<Member>('/me');
+      setUserData(me.data);
 
       return navigate('/');
     } catch {
       alert('Login incorrect');
     }
   };
-  const handleSignup = async (e) => {
+  const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = {
@@ -210,7 +212,7 @@ function Login() {
             <form onSubmit={handleSignup}>
               <div className="field input-field">
                 <input
-                  type="Name"
+                  type="text"
                   placeholder="Prénom"
                   className="input"
                   name="lastname"
@@ -220,7 +222,7 @@ function Login() {
 
               <div className="field input-field">
                 <input
-                  type="FirstName"
+                  type="text"
                   placeholder="Nom"
                   className="input"
                   name="firstname"
@@ -230,7 +232,7 @@ function Login() {
 
               <div className="field input-field">
                 <input
-                  type="Address"
+                  type="text"
                   placeholder="Adresse"
                   className="input"
                   name="address"
@@ -240,7 +242,7 @@ function Login() {
 
               <div className="field input-field">
                 <input
-                  type="Phone"
+                  type="tel"
                   placeholder="Téléphone"
                   className="input"
                   name="phone"
@@ -263,7 +265,7 @@ function Login() {
 
               <div className="field input-field">
                 <input
-                  type=" "
+                  type="password"
                   placeholder="Créer votre mot de passe"
                   className="password"
                   name="password"

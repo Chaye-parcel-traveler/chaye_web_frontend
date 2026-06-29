@@ -1,16 +1,17 @@
 import { useState } from 'react';
+import type { ChangeEvent, MouseEvent } from 'react';
 import Header from '../Header/Header';
 
 function AddPackage() {
-  const [, setInputs] = useState({});
+  const [, setInputs] = useState<Record<string, string>>({});
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
   };
 
@@ -73,7 +74,7 @@ function AddPackage() {
                         className="setting-description-text mb-3"
                         style={{ marginLeft: '15px' }}
                       >
-                        <h10>Arrivée à :</h10>
+                        <h1>Arrivée à :</h1>
                       </div>
                     </div>
                     <div className="wrapper-dropdown" id="dropdown">

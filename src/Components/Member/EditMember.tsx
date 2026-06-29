@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import '../styles/signup.css';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import apiClient, { getApiAssetUrl } from '../../lib/api';
+import type { Member } from '../../types/entities';
 
 function EditMember() {
   let navigate = useNavigate();
   const params = useParams();
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [lastname, setLastname] = useState('');
   const [firstname, setFirstname] = useState('');
   const [email, setEmail] = useState('');
@@ -18,59 +20,64 @@ function EditMember() {
   const [status, setStatus] = useState('');
   const [imagename, setImagename] = useState('');
 
-  const handelFileChange = (event) => {
-    setFile(event.target.files[0]);
-    setImagename(event.target.files[0].name);
+  const handelFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setImagename(selectedFile.name);
+    }
   };
 
-  const handelLastnameChange = (event) => {
+  const handelLastnameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setLastname(event.target.value);
   };
 
-  const handelFirstnameChange = (event) => {
+  const handelFirstnameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFirstname(event.target.value);
   };
 
-  const handelEmailChange = (event) => {
+  const handelEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  const handelPasswordChange = (event) => {
+  const handelPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
-  const handelAdressChange = (event) => {
+  const handelAdressChange = (event: ChangeEvent<HTMLInputElement>) => {
     setAdress(event.target.value);
   };
 
-  const handelPhoneChange = (event) => {
+  const handelPhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPhone(event.target.value);
   };
 
-  const handelStatusChange = (event) => {
+  const handelStatusChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setStatus(event.target.value);
   };
 
   useEffect(() => {
     apiClient
-      .get(`/members/${params.id}`)
+      .get<Member>(`/members/${params.id}`)
       .then((response) => {
-        setLastname(response.data.lastname);
-        setFirstname(response.data.firstname);
-        setEmail(response.data.email);
-        setPassword(response.data.password);
-        setAdress(response.data.adress);
-        setPhone(response.data.phone);
-        setStatus(response.data.status);
-        setImagename(response.data.imagename);
+        setLastname(response.data.lastname ?? '');
+        setFirstname(response.data.firstname ?? '');
+        setEmail(response.data.email ?? '');
+        setPassword('');
+        setAdress(response.data.adress ?? '');
+        setPhone(response.data.phone ?? '');
+        setStatus(response.data.status ?? '');
+        setImagename(response.data.imagename ?? '');
       })
       .catch(() => {});
   }, [params.id]);
 
-  const handelSubmit = (event) => {
+  const handelSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append('file', file);
+    if (file) {
+      formData.append('file', file);
+    }
     formData.append('lastname', lastname);
     formData.append('firstname', firstname);
     formData.append('email', email);

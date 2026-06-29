@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import AllMessages from '../Message/AllMessages';
 import { useNavigate } from 'react-router-dom';
 import apiClient, { getApiAssetUrl } from '../../lib/api';
+import type { Member } from '../../types/entities';
 
 function Profile() {
   const navigate = useNavigate();
@@ -12,11 +13,11 @@ function Profile() {
   // État pour les erreurs
   const [error, setError] = useState('');
   // État pour les données des membres
-  const [member, setMember] = useState({});
+  const [member, setMember] = useState<Partial<Member>>({});
 
   useEffect(() => {
     apiClient
-      .get('/me')
+      .get<Member>('/me')
       .then((response) => {
         setLoading(false);
         setError('');
