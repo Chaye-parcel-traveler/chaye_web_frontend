@@ -75,7 +75,7 @@ When sources disagree, stop and update the owning source before coding:
 4. Keep UI changes narrow and aligned with existing routes/components.
 5. Do not invent legal company data, payment behavior, KYC provider details, or final branding assets.
 6. Report implementation status in the GitHub Issue or PR, not in a local Markdown tracker.
-7. Run Docker quality gates before any host fallback.
+7. Run local quality gates through Docker Compose.
 8. Open a PR using `.github/pull_request_template.md`.
 
 ## Documentation Policy
@@ -93,27 +93,20 @@ Do not add a frontend Markdown copy of information already owned by GitHub Issue
 
 ## Quality Gates
 
-Docker is the required first validation runtime for this project.
-
-The current Dockerfile is for production image builds, not local hot-reload development. Until a frontend Docker Compose service exists, run checks in a one-shot Node container:
+Docker Compose is the required local development and validation runtime for this project. Do not install or run Node.js directly on the host.
 
 ```bash
-docker run --rm \
-  -v "$PWD":/app \
-  -v chaye_web_frontend_node_modules:/app/node_modules \
-  -w /app \
-  -e VITE_API_URL=http://host.docker.internal:3333 \
-  node:20-alpine \
-  sh -lc "npm ci && npm run lint && npm test -- --watchAll=false && npm run typecheck && npm run build"
+docker compose run --rm frontend-tools npm ci
+docker compose run --rm frontend-tools npm run check
 ```
 
 Then validate the production image:
 
 ```bash
-docker build --build-arg VITE_API_URL=http://localhost:3333 -t chaye-web-frontend .
+docker compose build frontend-production
 ```
 
-Do not run host `npm` commands first. A host fallback is allowed only when Docker is unavailable or broken for infrastructure reasons. Document the reason and run the closest useful subset.
+GitHub Actions uses Node.js 24 through `actions/setup-node` and runs each quality gate directly. Docker Compose is for local execution; it is not used inside CI.
 
 See `docs/quality-gates.md` for the complete validation matrix and reporting rules.
 

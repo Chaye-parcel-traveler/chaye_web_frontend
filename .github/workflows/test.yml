@@ -18,7 +18,7 @@ jobs:
       - name: Install nodejs
         uses: actions/setup-node@v6.4.0
         with:
-          node-version: 22.x
+          node-version: 24.x
           cache: npm
 
       - name: Install dependencies
@@ -30,6 +30,9 @@ jobs:
       - name: Run tests
         run: npm test -- --watchAll=false
 
+      - name: Run typecheck
+        run: npm run typecheck
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -39,7 +42,7 @@ jobs:
       - name: Install nodejs
         uses: actions/setup-node@v6.4.0
         with:
-          node-version: 22.x
+          node-version: 24.x
           cache: npm
 
       - name: Install dependencies
@@ -47,6 +50,8 @@ jobs:
 
       - name: Build app
         env:
-          REACT_APP_API_URL: http://localhost:3333
-          CI: false
+          VITE_API_URL: http://localhost:3333
         run: npm run build
+
+      - name: Build production Docker image
+        run: docker build --build-arg VITE_API_URL=http://localhost:3333 -t chaye-web-frontend .
