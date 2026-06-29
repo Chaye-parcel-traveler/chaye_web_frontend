@@ -33,6 +33,9 @@ jobs:
       - name: Run tests
         run: npm test -- --watchAll=false
 
+      - name: Verify coverage baseline
+        run: npm run coverage
+
       - name: Run typecheck
         run: npm run typecheck
 

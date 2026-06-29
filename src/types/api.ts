@@ -21,7 +21,8 @@ export type LoginCredentials = {
 };
 
 export type AuthSession = {
-  token: string;
+  type?: string;
+  value: string;
 };
 
 export type PaginatedResponse<T> = {
