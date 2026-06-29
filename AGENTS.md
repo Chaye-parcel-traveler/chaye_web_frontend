@@ -5,7 +5,7 @@ This file is the entry point for AI agents working on the web frontend.
 ## Project Shape
 
 - Runtime: React 18 with Vite.
-- App entry: `src/App.js`.
+- App entry: `src/App.jsx`.
 - Components: `src/Components/`.
 - API services: `src/Services/`.
 - Shared auth token helper: `src/setAuthToken.js`.
