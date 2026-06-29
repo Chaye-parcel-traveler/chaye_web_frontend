@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
-import { login } from '../../Services/member'
+import { login } from '../../Services/member';
 import apiClient, { getApiUrl, persistAuthToken } from '../../lib/api';
-import './LoginSignup.css'
-
+import './LoginSignup.css';
 
 function Login() {
   const [, setToken] = useState();
@@ -15,8 +14,8 @@ function Login() {
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setInputs(values => ({ ...values, [name]: value }))
-  }
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
 
   let navigate = useNavigate();
 
@@ -34,26 +33,26 @@ function Login() {
     onError: () => {},
   });
 
-  const handleLogin = async e => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await login({
         email: inputs.email,
-        password: inputs.password
+        password: inputs.password,
       });
 
       setToken(response.token);
       persistAuthToken(response.token);
-      
-      const me = await apiClient.get('/me')
-      setUserData(me)
-      
+
+      const me = await apiClient.get('/me');
+      setUserData(me);
+
       return navigate('/');
     } catch {
-      alert('Login incorrect')
+      alert('Login incorrect');
     }
-  }
-  const handleSignup = async e => {
+  };
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     const formData = {
@@ -65,10 +64,10 @@ function Login() {
       address: inputs.address,
       phone: inputs.phone,
       // status: status,
-    }
-    await apiClient.post(`/members`, formData)
+    };
+    await apiClient.post(`/members`, formData);
     navigate('/loginSignup');
-  }
+  };
 
   //   links.forEach(link => {
   //     link.addEventListener("click", e => {
@@ -78,10 +77,10 @@ function Login() {
   // })
   const toggleSignup = () => {
     setShowSignUp(!showSignUp);
-  }
+  };
 
   return (
-    <div className='page-login' >
+    <div className="page-login">
       <section className="logoChaye">
         <Link to="/">
           <img src="images/logoChaye.png" alt="Chaye" />
@@ -92,23 +91,57 @@ function Login() {
           <div className="form-content">
             <header>
               <h2>Content de te revoir</h2>
-              <h4 style={{ fontSize: '17px!important', fontFamily: 'Poppins, sans-serif' }} >Connectez-vous à votre compte</h4>
-
+              <h4
+                style={{
+                  fontSize: '17px!important',
+                  fontFamily: 'Poppins, sans-serif',
+                }}
+              >
+                Connectez-vous à votre compte
+              </h4>
             </header>
             <form onSubmit={handleLogin}>
               <div className="field input-field">
-                <input type="email" name="email" placeholder="Email" className="input" onChange={handleChange} />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  className="input"
+                  onChange={handleChange}
+                />
               </div>
 
               <div className="field input-field">
-                <input type="password" name="password" placeholder="Mot de passe" className="password" onChange={handleChange} />
-                <i class='bx bx-hide eye-icon'></i>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Mot de passe"
+                  className="password"
+                  onChange={handleChange}
+                />
+                <i className="bx bx-hide eye-icon"></i>
               </div>
 
-              <div className="form-link" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div>  <input type="checkbox" id="scales" name="scales" defaultChecked /> <span className="serappeller">Se rappeler de moi</span></div>
-                <div> <button type="button" className="forgot-pass">Mot de passe oublié</button></div>
-
+              <div
+                className="form-link"
+                style={{ display: 'flex', justifyContent: 'space-between' }}
+              >
+                <div>
+                  {' '}
+                  <input
+                    type="checkbox"
+                    id="scales"
+                    name="scales"
+                    defaultChecked
+                  />{' '}
+                  <span className="serappeller">Se rappeler de moi</span>
+                </div>
+                <div>
+                  {' '}
+                  <button type="button" className="forgot-pass">
+                    Mot de passe oublié
+                  </button>
+                </div>
               </div>
 
               <div className="field button-field">
@@ -117,7 +150,17 @@ function Login() {
             </form>
 
             <div className="form-link">
-              <span>Vous n’avez pas de compte ? <button type="button" onClick={toggleSignup} className="link signup-link"> Créer votre  compte </button></span>
+              <span>
+                Vous n’avez pas de compte ?{' '}
+                <button
+                  type="button"
+                  onClick={toggleSignup}
+                  className="link signup-link"
+                >
+                  {' '}
+                  Créer votre compte{' '}
+                </button>
+              </span>
             </div>
           </div>
 
@@ -125,58 +168,107 @@ function Login() {
 
           <div className="media-options">
             <button type="button" className="field facebook">
-              <i class='bx bxl-facebook facebook-icon'></i>
+              <i className="bx bxl-facebook facebook-icon"></i>
               <span>Se connecter avec Facebook</span>
             </button>
           </div>
 
           <div className="media-options">
-            <button type="button" onClick={() => googleLogin()} className="field google">
+            <button
+              type="button"
+              onClick={() => googleLogin()}
+              className="field google"
+            >
               <img src="images/google.png" alt="" className="google-img" />
               <span>Se connecter avec Google</span>
             </button>
           </div>
           <div className="media-options">
             <button type="button" className="field apple">
-              <i class='bx bxl-apple apple-icon'></i>
+              <i className="bx bxl-apple apple-icon"></i>
               <span>Se connecter avec Apple</span>
             </button>
           </div>
-
         </div>
 
         {/* <!-- Signup Form --> */}
 
         <div className={`form signup ${showSignUp ? '' : 'd-none'}`}>
           <div className="form-content">
-            <header> <h2>S’enregistrer</h2>
-              <h4 style={{ fontSize: '17px!important', fontFamily: 'Poppins, sans-serif' }}>Créez votre nouveau compte</h4></header>
+            <header>
+              {' '}
+              <h2>S’enregistrer</h2>
+              <h4
+                style={{
+                  fontSize: '17px!important',
+                  fontFamily: 'Poppins, sans-serif',
+                }}
+              >
+                Créez votre nouveau compte
+              </h4>
+            </header>
             <form onSubmit={handleSignup}>
               <div className="field input-field">
-                <input type="Name" placeholder="Prénom" className="input" name="lastname" onChange={handleChange} />
+                <input
+                  type="Name"
+                  placeholder="Prénom"
+                  className="input"
+                  name="lastname"
+                  onChange={handleChange}
+                />
               </div>
 
               <div className="field input-field">
-                <input type="FirstName" placeholder="Nom" className="input" name="firstname" onChange={handleChange} />
+                <input
+                  type="FirstName"
+                  placeholder="Nom"
+                  className="input"
+                  name="firstname"
+                  onChange={handleChange}
+                />
               </div>
 
               <div className="field input-field">
-                <input type="Address" placeholder="Adresse" className="input" name="address" onChange={handleChange} />
+                <input
+                  type="Address"
+                  placeholder="Adresse"
+                  className="input"
+                  name="address"
+                  onChange={handleChange}
+                />
               </div>
 
               <div className="field input-field">
-                <input type="Phone" placeholder="Téléphone" className="input" name="phone" onChange={handleChange} />
+                <input
+                  type="Phone"
+                  placeholder="Téléphone"
+                  className="input"
+                  name="phone"
+                  onChange={handleChange}
+                />
               </div>
 
               {/* <div className="field input-field">
                 <input type="Flag" placeholder="Pays" className="input" onChange={handleChange} />
               </div> */}
               <div className="field input-field">
-                <input type="email" placeholder="Email" className="input" name="email" onChange={handleChange} />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="input"
+                  name="email"
+                  onChange={handleChange}
+                />
               </div>
 
               <div className="field input-field">
-                <input type=" " placeholder="Créer votre mot de passe" className="password" name="password" onChange={handleChange} />
+                <input
+                  type=" "
+                  placeholder="Créer votre mot de passe"
+                  className="password"
+                  name="password"
+                  onChange={handleChange}
+                />
               </div>
 
               {/* <div className="field input-field">
@@ -190,7 +282,16 @@ function Login() {
             </form>
 
             <div className="form-link">
-              <span>Vous avez déjà un compte ? <button type="button" onClick={toggleSignup} className="link login-link">Se connecter</button></span>
+              <span>
+                Vous avez déjà un compte ?{' '}
+                <button
+                  type="button"
+                  onClick={toggleSignup}
+                  className="link login-link"
+                >
+                  Se connecter
+                </button>
+              </span>
             </div>
           </div>
 
@@ -198,13 +299,17 @@ function Login() {
 
           <div className="media-options">
             <button type="button" className="field facebook">
-              <i class='bx bxl-facebook facebook-icon'></i>
+              <i className="bx bxl-facebook facebook-icon"></i>
               <span>Se connecter avec Facebook</span>
             </button>
           </div>
 
           <div className="media-options">
-            <button type="button" onClick={() => googleLogin()} className="field google">
+            <button
+              type="button"
+              onClick={() => googleLogin()}
+              className="field google"
+            >
               <img src="images/google.png" alt="" className="google-img" />
               <span>Se connecter avec Google</span>
             </button>
@@ -212,14 +317,13 @@ function Login() {
 
           <div className="media-options">
             <button type="button" className="field apple">
-              <i class='bx bxl-apple apple-icon'></i>
+              <i className="bx bxl-apple apple-icon"></i>
               <span>Se connecter avec Apple</span>
             </button>
           </div>
-
         </div>
       </section>
-    </div >
+    </div>
   );
 }
 

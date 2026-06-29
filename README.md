@@ -118,6 +118,7 @@ Commandes principales:
 ```bash
 docker compose up --build frontend-dev
 docker compose run --rm frontend-tools npm run lint
+docker compose run --rm frontend-tools npm run format:check
 docker compose run --rm frontend-tools npm run typecheck
 docker compose run --rm frontend-tools npm test -- --watchAll=false
 docker compose run --rm frontend-tools npm run build
@@ -299,7 +300,7 @@ Pour un nouveau dev, le bon reflexe est:
 Le frontend doit utiliser:
 
 ```js
-import.meta.env.VITE_API_URL
+import.meta.env.VITE_API_URL;
 ```
 
 En local:

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import apiClient from '../../lib/api';
 
@@ -10,39 +10,50 @@ function AddAnnouncements() {
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setInputs(values => ({ ...values, [name]: value }))
-  }
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     await apiClient.post('/announcements', {
-      ...inputs, 
+      ...inputs,
       type: 'transport',
     });
-    navigate('/announcements')
-  }
+    navigate('/announcements');
+  };
 
   return (
-    <div className='content'>
+    <div className="content">
       <div className="content-body">
         <Header />
         <div className="container">
-
-          <div className="box-chaye margin-top-25 bgPurple" style={{ position: 'relative' }}>
-            <h2 className="txtCenter margin-top-36 txtwhite margin-bottom-40 ">J’expédie un colis</h2>
+          <div
+            className="box-chaye margin-top-25 bgPurple"
+            style={{ position: 'relative' }}
+          >
+            <h2 className="txtCenter margin-top-36 txtwhite margin-bottom-40 ">
+              J’expédie un colis
+            </h2>
             <div className="displayFlex ">
               <div className="container">
-
                 <div className="DisplayVol">
-
                   <div>
                     <div className="setting-description p-2">
-                      <div className="setting-description-text mb-3" style={{ marginLeft: '15px' }}>
+                      <div
+                        className="setting-description-text mb-3"
+                        style={{ marginLeft: '15px' }}
+                      >
                         <h1>Départ de</h1>
                       </div>
                     </div>
                     <div className="wrapper-dropdown" id="dropdown">
-                      <input className="form-control" list="datalistOptions" name='departingFrom' placeholder="Fort de France" onChange={handleChange} />
+                      <input
+                        className="form-control"
+                        list="datalistOptions"
+                        name="departingFrom"
+                        placeholder="Fort de France"
+                        onChange={handleChange}
+                      />
                       <datalist id="datalistOptions">
                         <option value="Fort de France" />
                         <option value="San Francisco" />
@@ -66,12 +77,21 @@ function AddAnnouncements() {
 
                   <div>
                     <div className="setting-description p-2">
-                      <div className="setting-description-text mb-3" style={{ marginLeft: '15px' }}>
+                      <div
+                        className="setting-description-text mb-3"
+                        style={{ marginLeft: '15px' }}
+                      >
                         <h10>Arrivée à :</h10>
                       </div>
                     </div>
                     <div className="wrapper-dropdown" id="dropdown">
-                      <input className="form-control" list="datalistOptions" name='arrivingAt' placeholder="Paris" onChange={handleChange} />
+                      <input
+                        className="form-control"
+                        list="datalistOptions"
+                        name="arrivingAt"
+                        placeholder="Paris"
+                        onChange={handleChange}
+                      />
                       <datalist id="datalistOptions">
                         <option value="Paris" />
                         <option value="Fort de France" />
@@ -95,41 +115,53 @@ function AddAnnouncements() {
                 </div>
               </div>
             </div>
-
-
           </div>
-
         </div>
         <section className="section gray-bg" id="blog">
           <div className="container">
-
             <div className="row">
               <div className="col">
                 <div className="blog-grid">
-
                   <div className="blog-info mt-n2">
                     <div className="mb-3">
-
-                      <input type="text" name="description" className="form-control" aria-describedby="emailHelp" placeholder="Description"  onChange={handleChange} />
-
+                      <input
+                        type="text"
+                        name="description"
+                        className="form-control"
+                        aria-describedby="emailHelp"
+                        placeholder="Description"
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="mb-3">
-
-                      <input type="number" name="weightAvailability" className="form-control" aria-describedby="emailHelp" placeholder="Kg disponible *"  onChange={handleChange} />
-
+                      <input
+                        type="number"
+                        name="weightAvailability"
+                        className="form-control"
+                        aria-describedby="emailHelp"
+                        placeholder="Kg disponible *"
+                        onChange={handleChange}
+                      />
                     </div>
                     <div className="mb-3">
-
-                      <input type="number" name="price" className="form-control" aria-describedby="emailHelp" placeholder="Prix au kilo"  onChange={handleChange} />
-
+                      <input
+                        type="number"
+                        name="price"
+                        className="form-control"
+                        aria-describedby="emailHelp"
+                        placeholder="Prix au kilo"
+                        onChange={handleChange}
+                      />
                     </div>
 
                     <div className="container content mt-2">
                       <div className="row align-items-center content">
-
                         <div className="col-12 text-center">
-
-                          <button type="button" onClick={handleSubmit} className="btn btn-secondary px-4 py-3">
+                          <button
+                            type="button"
+                            onClick={handleSubmit}
+                            className="btn btn-secondary px-4 py-3"
+                          >
                             Publier votre annonce
                           </button>
                         </div>
@@ -139,11 +171,10 @@ function AddAnnouncements() {
                 </div>
               </div>
             </div>
-
           </div>
         </section>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }
 

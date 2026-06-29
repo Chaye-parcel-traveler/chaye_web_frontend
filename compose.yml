@@ -7,7 +7,7 @@ services:
       VITE_API_URL: ${VITE_API_URL:-http://localhost:3333}
     init: true
     ports:
-      - "${FRONTEND_PORT:-3000}:3000"
+      - '${FRONTEND_PORT:-3000}:3000'
     volumes:
       - type: bind
         source: .
@@ -21,7 +21,7 @@ services:
       context: .
       target: tools
     environment:
-      CI: "true"
+      CI: 'true'
       VITE_API_URL: ${VITE_API_URL:-http://localhost:3333}
     init: true
     volumes:
@@ -39,7 +39,7 @@ services:
       args:
         VITE_API_URL: ${VITE_API_URL:-http://localhost:3333}
     ports:
-      - "${FRONTEND_PORT:-3000}:80"
+      - '${FRONTEND_PORT:-3000}:80'
 
 volumes:
   frontend_node_modules:

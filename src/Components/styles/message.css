@@ -1,5 +1,5 @@
 .boxMessage {
-  background-color: #4F4294;
+  background-color: #4f4294;
   color: white;
   margin: auto;
   width: 80%;
@@ -27,7 +27,7 @@
 
 .sent-message {
   align-self: flex-end;
-  background-color: #DCF8C6;
+  background-color: #dcf8c6;
   border-radius: 8px;
   padding: 8px 16px;
   max-width: 70%;
@@ -37,7 +37,7 @@
 }
 
 .received-message {
-  background-color: #E5E5EA;
+  background-color: #e5e5ea;
   border-radius: 8px;
   padding: 8px 16px;
   max-width: 70%;

@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 import Footer from '../Footer/Footer';
 import { useGoogleLogin } from '@react-oauth/google';
-import { login } from '../../Services/member'
+import { login } from '../../Services/member';
 import apiClient, { getApiUrl, persistAuthToken } from '../../lib/api';
-
 
 function Login() {
   const [, setToken] = useState();
@@ -15,8 +14,8 @@ function Login() {
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setInputs(values => ({...values, [name]: value}))
-  }
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
 
   let navigate = useNavigate();
 
@@ -34,30 +33,32 @@ function Login() {
     onError: () => {},
   });
 
-  const handleLogin = async e => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await login({
         email: inputs.email,
-        password: inputs.password
+        password: inputs.password,
       });
 
       setToken(response.token);
       persistAuthToken(response.token);
 
-      const me = await apiClient.get('/me')
-      setUserData(me)
+      const me = await apiClient.get('/me');
+      setUserData(me);
 
       return navigate('/');
     } catch {
-      alert('Login incorrect')
+      alert('Login incorrect');
     }
-  }
+  };
 
   return (
     <div className="content-image">
       <div className=" d-flex justify-content-center">
-        <a href="/"><img src={"/img/logo.png"} alt="Logo" className="Logo" /></a>
+        <a href="/">
+          <img src={'/img/logo.png'} alt="Logo" className="Logo" />
+        </a>
       </div>
       <div className="container">
         <div className="row justify-content-center">
@@ -67,40 +68,79 @@ function Login() {
               <p className="text-center">Connectez-vous à votre compte</p>
               <form className="login" onSubmit={handleLogin}>
                 <div className="mb-3">
-                  <input className="form-control" type="email" id="email" name="email" placeholder="Email" value={inputs.email || ""} 
-        onChange={handleChange}/>
+                  <input
+                    className="form-control"
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    value={inputs.email || ''}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="mb-3">
-                  <input className="form-control" type="password" id="password" name="password" placeholder="Mot de passe" value={inputs.password || ""} 
-        onChange={handleChange}/>
+                  <input
+                    className="form-control"
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Mot de passe"
+                    value={inputs.password || ''}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="mb-3 d-flex justify-content-between">
                   <div>
-                    <input type="checkbox" id="rappeler" name="rappeler" className="form-check-input" />
-                    <label htmlFor="rappeler" className="form-check-label">Se rappeler de moi</label>
+                    <input
+                      type="checkbox"
+                      id="rappeler"
+                      name="rappeler"
+                      className="form-check-input"
+                    />
+                    <label htmlFor="rappeler" className="form-check-label">
+                      Se rappeler de moi
+                    </label>
                   </div>
-                  <a className="text-danger" href="/login">Mot de passe oublié?</a>
+                  <a className="text-danger" href="/login">
+                    Mot de passe oublié?
+                  </a>
                 </div>
                 <div className="text-center mb-3">
-                  <input className="btn btn-primary fw-bold valider" type="submit" value="Valider" />
+                  <input
+                    className="btn btn-primary fw-bold valider"
+                    type="submit"
+                    value="Valider"
+                  />
                 </div>
-                <h6 className="text-center text-secondary">Ou inscrivez-vous en utilisant</h6>
+                <h6 className="text-center text-secondary">
+                  Ou inscrivez-vous en utilisant
+                </h6>
                 <hr />
                 <div className="reseSocio text-center fs-2">
-                <a href="#top" onClick={() => googleLogin()} ><i className="me-3 fa-brands fa-google"></i></a>
-                  <a href="https://www.facebook.com"><i className="me-3 fab fa-facebook"></i></a>
-                  <a href="https://www.icloud.com/mail"><i className="fab fa-apple"></i></a>
+                  <a href="#top" onClick={() => googleLogin()}>
+                    <i className="me-3 fa-brands fa-google"></i>
+                  </a>
+                  <a href="https://www.facebook.com">
+                    <i className="me-3 fab fa-facebook"></i>
+                  </a>
+                  <a href="https://www.icloud.com/mail">
+                    <i className="fab fa-apple"></i>
+                  </a>
                 </div>
-                <p className="text-center py-3">Vous n'avez pas de compte? <a className="text-danger" href="/signup">Créez votre compte</a></p>
+                <p className="text-center py-3">
+                  Vous n'avez pas de compte?{' '}
+                  <a className="text-danger" href="/signup">
+                    Créez votre compte
+                  </a>
+                </p>
               </form>
             </div>
           </div>
         </div>
       </div>
-        <div className='footerfixe'>
-        <Footer/>
-        </div>
-  
+      <div className="footerfixe">
+        <Footer />
+      </div>
     </div>
   );
 }
