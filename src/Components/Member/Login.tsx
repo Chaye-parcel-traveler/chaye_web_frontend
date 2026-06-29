@@ -43,8 +43,8 @@ function Login() {
         password: inputs.password,
       });
 
-      setToken(response.token);
-      persistAuthToken(response.token);
+      setToken(response.value);
+      persistAuthToken(response.value);
 
       const me = await apiClient.get<Member>('/me');
       setUserData(me.data);

@@ -43,8 +43,8 @@ function Login() {
         password: inputs.password,
       });
 
-      setToken(response.token);
-      persistAuthToken(response.token);
+      setToken(response.value);
+      persistAuthToken(response.value);
 
       const me = await apiClient.get<Member>('/me');
       setUserData(me.data);
@@ -102,11 +102,12 @@ function Login() {
                 Connectez-vous à votre compte
               </h4>
             </header>
-            <form onSubmit={handleLogin}>
+            <form aria-label="Formulaire de connexion" onSubmit={handleLogin}>
               <div className="field input-field">
                 <input
                   type="email"
                   name="email"
+                  aria-label="Adresse e-mail de connexion"
                   placeholder="Email"
                   className="input"
                   onChange={handleChange}
@@ -117,6 +118,7 @@ function Login() {
                 <input
                   type="password"
                   name="password"
+                  aria-label="Mot de passe de connexion"
                   placeholder="Mot de passe"
                   className="password"
                   onChange={handleChange}

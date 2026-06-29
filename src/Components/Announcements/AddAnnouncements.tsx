@@ -2,11 +2,12 @@ import { useState } from 'react';
 import type { ChangeEvent, MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
-import apiClient from '../../lib/api';
+import apiClient, { normalizeApiError } from '../../lib/api';
 
 function AddAnnouncements() {
   let navigate = useNavigate();
   const [inputs, setInputs] = useState<Record<string, string>>({});
+  const [error, setError] = useState('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
@@ -16,11 +17,17 @@ function AddAnnouncements() {
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    await apiClient.post('/announcements', {
-      ...inputs,
-      type: 'transport',
-    });
-    navigate('/announcements');
+    setError('');
+
+    try {
+      await apiClient.post('/announcements', {
+        ...inputs,
+        type: 'transport',
+      });
+      navigate('/announcements');
+    } catch (requestError) {
+      setError(normalizeApiError(requestError).message);
+    }
   };
 
   return (
@@ -124,6 +131,7 @@ function AddAnnouncements() {
               <div className="col">
                 <div className="blog-grid">
                   <div className="blog-info mt-n2">
+                    {error && <div role="alert">{error}</div>}
                     <div className="mb-3">
                       <input
                         type="text"
