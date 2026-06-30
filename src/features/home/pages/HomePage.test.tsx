@@ -1,0 +1,37 @@
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { vi } from 'vitest';
+
+import HomePage from './HomePage';
+
+vi.mock('../../announcements/components/AnnouncementCarousel', () => ({
+  default: () => <section aria-label="Annonces à la une" />,
+}));
+
+test('renders the home screen labels and canonical action links', () => {
+  render(
+    <MemoryRouter
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
+      <HomePage />
+    </MemoryRouter>
+  );
+
+  expect(
+    screen.getByRole('heading', { name: 'Que veux tu faire ?' })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole('heading', { name: 'Assurance' })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole('img', { name: 'logo Chaye Assurance' })
+  ).toBeVisible();
+  expect(screen.getByRole('link', { name: "J'expédie" })).toHaveAttribute(
+    'href',
+    '/packages/new'
+  );
+  expect(screen.getByRole('link', { name: 'Je transporte' })).toHaveAttribute(
+    'href',
+    '/announcements/new'
+  );
+});

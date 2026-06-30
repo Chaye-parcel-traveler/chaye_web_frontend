@@ -15,16 +15,6 @@ export type NormalizedApiError = {
   details?: unknown;
 };
 
-export type LoginCredentials = {
-  email: string;
-  password: string;
-};
-
-export type AuthSession = {
-  type?: string;
-  value: string;
-};
-
 export type PaginatedResponse<T> = {
   data: T[];
   meta?: {

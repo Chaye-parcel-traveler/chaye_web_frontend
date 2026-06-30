@@ -17,14 +17,22 @@ This document is technical and intentionally written in English.
 
 ## Application Boundaries
 
-- `src/App.tsx`: route registration.
-- `src/lib/api.ts`: shared Axios client, auth token header handling, API URL helpers, and normalized API errors.
-- `src/types/`: shared TypeScript contracts for API responses and core entities.
-- `src/Components/`: page and UI components.
-- `src/Services/`: API service wrappers.
-- `src/setAuthToken.ts`: token header helper.
+- `src/main.tsx`: browser entrypoint.
+- `src/app/`: application composition, providers, route registration, layouts, canonical URLs, and legacy redirects.
+- `src/features/`: business capabilities with colocated pages, components, API modules, types, and component styles.
+- `src/components/`: UI components shared across features.
+- `src/lib/api-client.ts`: shared Axios client, auth token header handling, API URL helpers, and normalized API errors.
+- `src/styles/`: styles that are genuinely shared across features.
+- `src/types/`: shared TypeScript API infrastructure contracts only.
 - `public/`: static assets.
 - `index.html`: Vite HTML entrypoint.
+
+Dependencies should flow from shared modules to features and then to `app`.
+Feature-to-feature imports are limited to existing screen composition; new
+cross-feature dependencies should be composed from `app`.
+
+Canonical frontend URLs use English, lowercase path segments. Historical URLs
+remain registered only as compatibility redirects in `src/app/router.tsx`.
 
 ## Current Risks
 
