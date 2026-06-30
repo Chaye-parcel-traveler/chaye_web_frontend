@@ -93,14 +93,14 @@ function Navbar() {
             </li>
 
             <li className="nav-link">
-              <Link to={'/'}>
+              <Link to={'/support'}>
                 <i className="bx bx-tada-hover bxs-help-circle bx-md icon"></i>
                 <span className="text nav-text">Support</span>
               </Link>
             </li>
 
             <li className="nav-link">
-              <Link to={'/'}>
+              <Link to={'/about'}>
                 <i className="bx bx-tada-hover bxs-info-circle bx-md icon"></i>
                 <span className="text nav-text">À propos de nous </span>
               </Link>

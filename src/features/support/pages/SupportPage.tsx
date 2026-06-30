@@ -9,7 +9,7 @@ function SupportPage() {
 
         <div className="content-main">
           <div className="support-container">
-            <h1>SupportPage Chaye - Livraison de Colis entre Particuliers</h1>
+            <h1>Support Chaye - Livraison de Colis entre Particuliers</h1>
             <p>
               Bienvenue sur la page de support de Chaye. Nous sommes là pour
               vous aider à faciliter vos livraisons de colis entre particuliers.
