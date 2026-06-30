@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Manage Frontend Delivery'
+  short_description: 'Manage frontend issues, PRs, and docs'
+  default_prompt: 'Use $manage-frontend-delivery to manage a Chaye frontend issue, pull request, or documentation update.'
