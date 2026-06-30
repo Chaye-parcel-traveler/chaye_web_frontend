@@ -1,0 +1,133 @@
+name: Deploy to CapRover staging
+
+on:
+  push:
+    branches:
+      - task/lboi/use_chaye_api_backend
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch, tag, or commit SHA to deploy
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-frontend-staging
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate manual workflow source
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          WORKFLOW_BRANCH: ${{ github.ref_name }}
+        run: |
+          if [ "$WORKFLOW_BRANCH" != "$DEFAULT_BRANCH" ]; then
+            echo "::error::Run this workflow from the default branch and use the ref input to select the code to deploy."
+            exit 1
+          fi
+
+      - name: Check out code to deploy
+        uses: actions/checkout@v6.0.3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.ref || github.sha }}
+
+      - name: Resolve deployment revision
+        id: revision
+        env:
+          REQUESTED_REF: ${{ github.event_name == 'workflow_dispatch' && inputs.ref || github.ref_name }}
+        run: |
+          echo "requested_ref=$REQUESTED_REF" >> "$GITHUB_OUTPUT"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: 24.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Run tests
+        run: npm test -- --watchAll=false
+
+      - name: Run typecheck
+        run: npm run typecheck
+
+      - name: Build application
+        env:
+          VITE_API_URL: http://localhost:3333
+        run: npm run build
+
+      - name: Create deployment archive
+        run: |
+          tar --create --file deploy.tar \
+            src \
+            public \
+            index.html \
+            package.json \
+            package-lock.json \
+            tsconfig.json \
+            vite.config.ts \
+            Dockerfile \
+            nginx.conf \
+            captain-definition
+
+      - name: Validate deployment archive
+        run: |
+          if tar --list --file deploy.tar | grep --extended-regexp --quiet '(^|/)(\.git|node_modules|dist|coverage)(/|$)|\.env.*local'; then
+            echo "::error::The deployment archive contains a forbidden path."
+            exit 1
+          fi
+          tar --list --file deploy.tar
+
+      - name: Deploy archive to CapRover
+        uses: caprover/deploy-from-github@v1.2.0
+        with:
+          server: ${{ vars.CAPROVER_SERVER }}
+          app: ${{ vars.CAPROVER_APP }}
+          token: ${{ secrets.CAPROVER_APP_TOKEN }}
+
+      - name: Smoke test deployed frontend
+        env:
+          FRONTEND_URL: ${{ vars.FRONTEND_URL }}
+        run: |
+          curl \
+            --fail \
+            --location \
+            --silent \
+            --show-error \
+            --output /dev/null \
+            --retry 12 \
+            --retry-all-errors \
+            --retry-delay 10 \
+            --max-time 15 \
+            "$FRONTEND_URL"
+
+      - name: Write deployment summary
+        env:
+          DEPLOYED_SHA: ${{ steps.revision.outputs.sha }}
+          REQUESTED_REF: ${{ steps.revision.outputs.requested_ref }}
+          FRONTEND_URL: ${{ vars.FRONTEND_URL }}
+        run: |
+          {
+            echo "## CapRover staging deployment"
+            echo
+            echo "- Ref: \`$REQUESTED_REF\`"
+            echo "- SHA: \`$DEPLOYED_SHA\`"
+            echo "- URL: $FRONTEND_URL"
+          } >> "$GITHUB_STEP_SUMMARY"

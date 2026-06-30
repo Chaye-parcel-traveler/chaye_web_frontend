@@ -20,7 +20,7 @@ EXPOSE 3000
 CMD ["npm", "start"]
 
 FROM source AS build
-ARG VITE_API_URL
+ARG VITE_API_URL=${VITE_API_URL}
 ENV VITE_API_URL=${VITE_API_URL}
 RUN npm run build
 
