@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Implement Frontend Change'
+  short_description: 'Implement and verify Chaye frontend changes'
+  default_prompt: 'Use $implement-frontend-change to implement a scoped Chaye frontend change with tests.'

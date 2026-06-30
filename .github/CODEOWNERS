@@ -2,14 +2,13 @@
 * @jiraiya972
 
 # Frontend compliance and auth-sensitive areas.
-/src/Components/Member/ @jiraiya972
-/src/Components/Footer/ @jiraiya972
-/src/Components/Announcements/ @jiraiya972
-/src/Services/ @jiraiya972
-/src/setAuthToken.js @jiraiya972
+/src/features/auth/ @jiraiya972
+/src/features/legal/ @jiraiya972
+/src/features/members/ @jiraiya972
+/src/lib/api-client.ts @jiraiya972
 
-# Workflow and architecture documentation.
+# Workflow and agent guidance.
 /.github/ @jiraiya972
 /AGENTS.md @jiraiya972
-/docs/quality-gates.md @jiraiya972
-/docs/adr/ @jiraiya972
+/.agents/ @jiraiya972
+/README.md @jiraiya972
