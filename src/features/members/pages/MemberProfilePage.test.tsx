@@ -17,10 +17,7 @@ vi.mock('../../messaging/components/ConversationPanel', () => ({
 
 function renderProfile() {
   return render(
-    <MemoryRouter
-      initialEntries={['/members/42']}
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
+    <MemoryRouter initialEntries={['/members/42']}>
       <Routes>
         <Route path="/members/:id" element={<MemberProfilePage />} />
         <Route path="/auth" element={<h1>Connexion</h1>} />

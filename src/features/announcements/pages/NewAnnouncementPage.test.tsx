@@ -13,10 +13,7 @@ vi.mock('../../../components/Header', () => ({
 
 function renderAnnouncementForm() {
   return render(
-    <MemoryRouter
-      initialEntries={['/announcements/new']}
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
+    <MemoryRouter initialEntries={['/announcements/new']}>
       <Routes>
         <Route path="/announcements/new" element={<NewAnnouncementPage />} />
         <Route path="/announcements" element={<h1>Annonces</h1>} />

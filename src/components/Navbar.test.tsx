@@ -11,9 +11,7 @@ test('uses canonical destinations and preserves the sidebar layout contract', as
   server.use(http.get('*/me', () => new HttpResponse(null, { status: 401 })));
 
   render(
-    <MemoryRouter
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
+    <MemoryRouter>
       <Navbar />
     </MemoryRouter>
   );

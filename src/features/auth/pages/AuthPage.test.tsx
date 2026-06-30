@@ -13,10 +13,7 @@ vi.mock('@react-oauth/google', () => ({
 
 function renderLogin() {
   return render(
-    <MemoryRouter
-      initialEntries={['/auth']}
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
+    <MemoryRouter initialEntries={['/auth']}>
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/" element={<h1>Accueil</h1>} />
