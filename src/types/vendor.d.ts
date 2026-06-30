@@ -13,18 +13,3 @@ declare module 'aos' {
 
   export default AOS;
 }
-
-declare module 'moment/locale/fr';
-
-declare module 'tiny-slider-react' {
-  import type { ComponentType, ReactNode } from 'react';
-
-  type TinySliderProps = {
-    children?: ReactNode;
-    className?: string;
-    settings?: Record<string, unknown>;
-  };
-
-  const TinySlider: ComponentType<TinySliderProps>;
-  export default TinySlider;
-}

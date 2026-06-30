@@ -1,15 +1,9 @@
 import { useEffect, useState } from 'react';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import Fab from '@mui/material/Fab';
-import moment from 'moment/moment';
-import 'moment/locale/fr';
-import Carousel from 'react-material-ui-carousel';
-import { Button } from '@mui/material';
+import { Carousel } from 'react-bootstrap';
 import apiClient, { getApiAssetUrl } from '../../../lib/api-client';
+import { formatFrenchDate } from '../../../lib/date-format';
 import type { Announcement } from '../../announcements/announcement.types';
 import type { Member } from '../../members/member.types';
-
-moment().locale('fr');
 
 function FavoritesPage() {
   const [favoriteAnnouncements, setFavoriteAnnouncements] = useState<
@@ -35,64 +29,54 @@ function FavoritesPage() {
 
   return (
     <div className="carousel-container">
-      <Carousel
-        NavButton={({ onClick, className, style, next, prev }) => (
-          <Button onClick={() => onClick()} className={className} style={style}>
-            {next && 'Next'}
-            {prev && 'Previous'}
-          </Button>
-        )}
-      >
+      <Carousel>
         {favoriteAnnouncements.length === 0 ? (
           <div>Loading...</div>
         ) : (
-          favoriteAnnouncements.map((announcement, index) => (
-            <div className="card-annonce" key={index}>
-              <div className="card-top">
-                {members.map((member) => {
-                  if (member._id === announcement.memberId) {
-                    return (
-                      <div key={member._id}>
-                        <img
-                          src={getApiAssetUrl(member.imagename)}
-                          alt="Membre"
-                        />
-                      </div>
-                    );
-                  }
-                  return null;
-                })}
-                <Fab
-                  className="text-danger text-end"
-                  size="small"
-                  disabled
-                  aria-label="like"
-                >
-                  <FavoriteIcon />
-                </Fab>
-                <br />
-              </div>
-              <div className="card-body">
-                <p className="card-text ">
-                  Destination ................
-                  <b className="violet">{announcement.destination}</b> <br />
-                  Prix ...............
-                  <b className="violet">{announcement.priceKilo}€</b>
+          favoriteAnnouncements.map((announcement) => (
+            <Carousel.Item key={announcement.id}>
+              <div className="card-annonce">
+                <div className="card-top">
+                  {members.map((member) => {
+                    if (member._id === announcement.memberId) {
+                      return (
+                        <div key={member._id}>
+                          <img
+                            src={getApiAssetUrl(member.imagename)}
+                            alt="Membre"
+                          />
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                  <span className="text-danger text-end" aria-label="Favori">
+                    ♥
+                  </span>
                   <br />
-                  Départ ...............
-                  <b className="violet">
-                    {' '}
-                    {moment(announcement.departureDate).format('L')}
-                  </b>
-                  <br />
-                  Arrivé ................
-                  <b className="violet">
-                    {' '}
-                    {moment(announcement.arrivalDate).format('L')}
-                  </b>
-                </p>
+                </div>
+                <div className="card-body">
+                  <p className="card-text ">
+                    Destination ................
+                    <b className="violet">{announcement.destination}</b> <br />
+                    Prix ...............
+                    <b className="violet">{announcement.priceKilo}€</b>
+                    <br />
+                    Départ ...............
+                    <b className="violet">
+                      {' '}
+                      {formatFrenchDate(announcement.departureDate)}
+                    </b>
+                    <br />
+                    Arrivé ................
+                    <b className="violet">
+                      {' '}
+                      {formatFrenchDate(announcement.arrivalDate)}
+                    </b>
+                  </p>
+                </div>
               </div>
-            </div>
+            </Carousel.Item>
           ))
         )}
       </Carousel>

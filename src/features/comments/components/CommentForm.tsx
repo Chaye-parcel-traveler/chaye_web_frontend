@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
 import './CommentForm.css';
+import StarRating from '../../../components/StarRating';
 import apiClient, { getApiUrl } from '../../../lib/api-client';
 import type { Member } from '../../members/member.types';
 
@@ -51,15 +50,8 @@ function CommentForm({ announcementId }: CommentFormProps) {
               value={announcementId}
               readOnly
             />
-            <label>Notez notre site</label>
-            <Stack spacing={1}>
-              <Rating
-                name="ratingStars"
-                defaultValue={1}
-                precision={0.5}
-                size="large"
-              />
-            </Stack>
+            <label htmlFor="ratingStars">Notez notre site</label>
+            <StarRating name="ratingStars" />
             <div className="comment">
               <h3>Laissez un commentaire :</h3>
               <textarea id="commentText" name="content" />

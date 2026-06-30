@@ -1,25 +1,10 @@
-import React, { useEffect, useReducer, useState } from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import TextField from '@mui/material/TextField';
-import moment from 'moment/moment';
-import 'moment/locale/fr';
+import { useEffect, useReducer, useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
 import './ConversationPanel.css';
 import apiClient, { getApiAssetUrl, getApiUrl } from '../../../lib/api-client';
+import { formatFrenchDateTime } from '../../../lib/date-format';
 import type { Member } from '../../members/member.types';
 import type { Message as ChatMessage } from '../message.types';
-
-moment().locale('fr');
 
 type MembersState = {
   loading: boolean;
@@ -197,14 +182,14 @@ function ConversationPanel() {
 
   return (
     <div>
-      <List sx={{ width: '100%' }}>
+      <div className="list-group">
         {state.loading || membersState.loading
           ? 'Loading...'
           : filteredMessages.map((message, index) => {
               return (
                 <div className="boxMessage rounded mb-4" key={index}>
-                  <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
+                  <div className="d-flex align-items-start gap-3 p-3">
+                    <div>
                       {membersState.members.map((member) => {
                         if (member.email === message.sender) {
                           return (
@@ -223,37 +208,16 @@ function ConversationPanel() {
                         }
                         return null;
                       })}
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={
-                        <React.Fragment>
-                          <Typography
-                            sx={{
-                              fontWeight: 'bold',
-                              color: 'white',
-                              fontSize: '16px',
-                            }}
-                            component="span"
-                            variant="body2"
-                          >
-                            {message.message}
-                          </Typography>
-                        </React.Fragment>
-                      }
-                    />
-                  </ListItem>
+                    </div>
+                    <strong>{message.message}</strong>
+                  </div>
 
-                  <Divider />
+                  <hr />
                   <div className="text-center">
                     <Button
-                      variant="outlined"
+                      variant="primary"
                       onClick={() => handleOpenReplyDialog(message.sender)}
-                      sx={{
-                        backgroundColor: '#EC634E',
-                        color: 'white',
-                        borderColor: '#EC634E',
-                        margin: '8px',
-                      }}
+                      className="m-2"
                     >
                       Répondre
                     </Button>
@@ -261,42 +225,25 @@ function ConversationPanel() {
                 </div>
               );
             })}
-      </List>
+      </div>
 
-      <Dialog open={openReplyDialog} onClose={handleCloseReplyDialog}>
-        <DialogTitle>Répondre au message</DialogTitle>
-        <DialogContent>
+      <Modal show={openReplyDialog} onHide={handleCloseReplyDialog}>
+        <Modal.Header closeButton>
+          <Modal.Title>Répondre au message</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           {messagesWithRecipient.map((message, index) => (
             <div
               key={index}
               className={`message-container ${message.sender === userData.email ? 'sent-message' : 'received-message'}`}
             >
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={message.sender}
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: 'inline' }}
-                        component="span"
-                        variant="body2"
-                        color="text-primary"
-                      >
-                        {message.message}
-                      </Typography>
-                      <br />
-                      {moment(message.datetime).format('LLL')}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
+              <strong>{message.sender}</strong>
+              <p>{message.message}</p>
+              <small>{formatFrenchDateTime(message.datetime)}</small>
             </div>
           ))}
-        </DialogContent>
-        <DialogActions>
+        </Modal.Body>
+        <Modal.Footer>
           <form
             className="form-message"
             action={getApiUrl('/messages')}
@@ -321,26 +268,21 @@ function ConversationPanel() {
               value={selectedRecipient || ''}
               readOnly
             />
-            <TextField
+            <label className="form-label" htmlFor="reply-message">
+              Répondre
+            </label>
+            <textarea
+              className="form-control"
+              id="reply-message"
               name="message"
-              label="Répondre"
-              variant="outlined"
-              fullWidth
-              multiline
               rows={4}
-              style={{ width: '400px' }}
             />
-            <Button
-              type="submit"
-              variant="contained"
-              color="success"
-              className="send-button"
-            >
+            <Button type="submit" variant="success" className="send-button">
               Envoyer
             </Button>
           </form>
-        </DialogActions>
-      </Dialog>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

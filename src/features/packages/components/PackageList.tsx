@@ -1,11 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import apiClient, { getApiAssetUrl } from '../../../lib/api-client';
-//Moment (date)
-import moment from 'moment/moment';
-import 'moment/locale/fr';
+import { formatFrenchDateTime } from '../../../lib/date-format';
 import type { Package } from '../package.types';
-
-moment().locale('fr');
 
 type PackagesState = {
   loading: boolean;
@@ -81,7 +77,7 @@ function PackageList() {
                   </p>
                   <span className="text-secondary text-center">
                     {' '}
-                    {moment(packages.creationDate).format('LLL')}
+                    {formatFrenchDateTime(packages.creationDate)}
                   </span>
                   <br />
                 </div>
