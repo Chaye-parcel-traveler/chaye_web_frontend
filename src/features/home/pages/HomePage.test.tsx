@@ -10,9 +10,7 @@ vi.mock('../../announcements/components/AnnouncementCarousel', () => ({
 
 test('renders the home screen labels and canonical action links', () => {
   render(
-    <MemoryRouter
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
+    <MemoryRouter>
       <HomePage />
     </MemoryRouter>
   );

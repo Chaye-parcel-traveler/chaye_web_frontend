@@ -14,10 +14,7 @@ vi.mock('../features/packages/pages/NewPackagePage', () => ({
 
 function renderRoute(path: string) {
   return render(
-    <MemoryRouter
-      initialEntries={[path]}
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
+    <MemoryRouter initialEntries={[path]}>
       <AppRouter />
     </MemoryRouter>
   );

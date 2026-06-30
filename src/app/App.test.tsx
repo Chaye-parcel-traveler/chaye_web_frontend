@@ -22,9 +22,7 @@ vi.mock('./layouts/MainLayout', () => ({
 
 test('renders the Chaye app shell', () => {
   render(
-    <MemoryRouter
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
+    <MemoryRouter>
       <App />
     </MemoryRouter>
   );
