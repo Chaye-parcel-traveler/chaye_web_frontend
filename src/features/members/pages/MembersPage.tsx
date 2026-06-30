@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import { Table, Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import { fetchMembers } from '../api/members.api';
 import type { Member } from '../member.types';
 
@@ -60,49 +60,47 @@ function MembersPage() {
 
   return (
     <React.Fragment>
-      <Table striped>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Nom</Table.HeaderCell>
-            <Table.HeaderCell>Prenom</Table.HeaderCell>
-            <Table.HeaderCell>E-mail</Table.HeaderCell>
-            <Table.HeaderCell>Adresse</Table.HeaderCell>
-            {/* <Table.HeaderCell>Status</Table.HeaderCell>
-          <Table.HeaderCell>Photos</Table.HeaderCell> */}
-            <Table.HeaderCell>Modifier</Table.HeaderCell>
-            <Table.HeaderCell>Supprimer</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>E-mail</th>
+            <th>Adresse</th>
+            <th>Modifier</th>
+            <th>Supprimer</th>
+          </tr>
+        </thead>
+        <tbody>
           {state.loading ? (
-            <Table.Row>
-              <Table.Cell colSpan={8}>Chargement en cours...</Table.Cell>
-            </Table.Row>
+            <tr>
+              <td colSpan={6}>Chargement en cours...</td>
+            </tr>
           ) : (
-            state.members.map((member, index) => (
-              <Table.Row key={index}>
-                <Table.Cell>{member.firstname}</Table.Cell>
-                <Table.Cell>{member.lastname}</Table.Cell>
-                <Table.Cell>{member.email}</Table.Cell>
-                <Table.Cell>{member.address}</Table.Cell>
-                {/* <Table.Cell>{member.status}</Table.Cell> */}
-                {/* <Table.Cell><img src={`/${member.imagename}`} width={'150px'} /></Table.Cell> */}
-                <Table.Cell>
-                  <Button primary as="a" href={`/members/${member._id}/edit`}>
-                    Edit
-                  </Button>
-                </Table.Cell>
-                <Table.Cell>
-                  {/* <form action={`/member/delete/${member._id}?_method=DELETE`} method="post">
-                <input type="hidden" name="_method" value="DELETE" /> */}
-                  <Button positive>Supprimer</Button>
-                  {/* </form> */}
-                </Table.Cell>
-              </Table.Row>
+            state.members.map((member) => (
+              <tr key={member._id}>
+                <td>{member.firstname}</td>
+                <td>{member.lastname}</td>
+                <td>{member.email}</td>
+                <td>{member.address}</td>
+                <td>
+                  <Link
+                    className="btn btn-primary"
+                    to={`/members/${member._id}/edit`}
+                  >
+                    Modifier
+                  </Link>
+                </td>
+                <td>
+                  <button className="btn btn-success" type="button">
+                    Supprimer
+                  </button>
+                </td>
+              </tr>
             ))
           )}
-        </Table.Body>
-      </Table>
+        </tbody>
+      </table>
     </React.Fragment>
   );
 }

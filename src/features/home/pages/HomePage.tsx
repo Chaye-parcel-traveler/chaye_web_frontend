@@ -1,11 +1,7 @@
-import moment from 'moment/moment';
-import 'moment/locale/fr';
 import InsurancePanel from '../../insurance/components/InsurancePanel';
 
 import Header from '../../../components/Header';
 import AnnouncementCarousel from '../../announcements/components/AnnouncementCarousel';
-
-moment().locale('fr');
 
 function HomePage() {
   return (

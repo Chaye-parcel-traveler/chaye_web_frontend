@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Form, Button } from 'semantic-ui-react';
 import './EditPackagePage.css';
 import apiClient, { getApiAssetUrl } from '../../../lib/api-client';
 import type { Package } from '../package.types';
@@ -76,68 +75,78 @@ function EditPackagePage() {
   return (
     <div className="Formulcontainer">
       <h1>Modifier Votre colis</h1>
-      <Form
+      <form
         className="col-formule bg-white container-fluid col-4 my-3 "
         onSubmit={handleSubmit}
       >
-        <Form.Field>
-          <label className="form-label">Contenu:</label>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="package-content">
+            Contenu:
+          </label>
           <input
             className="form-control"
             type="text"
-            id="input"
+            id="package-content"
             onChange={handleContentChange}
             value={content}
           />
-        </Form.Field>
+        </div>
 
-        <Form.Field>
-          <label className="form-label">Poids:</label>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="package-weight">
+            Poids:
+          </label>
           <input
             className="form-control"
             type="text"
-            id="input"
+            id="package-weight"
             onChange={handleWeightChange}
             value={weight}
           />
-        </Form.Field>
+        </div>
 
-        <Form.Field>
-          <label className="form-label">Taille:</label>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="package-size">
+            Taille:
+          </label>
           <input
             className="form-control"
             type="text"
-            id="input"
+            id="package-size"
             onChange={handleSizeChange}
             value={size}
           />
-        </Form.Field>
-        <Form.Field>
-          <label className="form-label">Ville de départ:</label>
+        </div>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="departure-city">
+            Ville de départ:
+          </label>
           <input
             className="form-control"
             type="text"
-            id="input"
+            id="departure-city"
             onChange={handleDepartureCityChange}
             value={departureCity}
           />
-        </Form.Field>
+        </div>
 
-        <Form.Field>
-          <label className="form-label">Photo de contenu du colis ::</label>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="package-picture">
+            Photo de contenu du colis :
+          </label>
           <input
             className="form-control"
             type="file"
-            id="input"
+            id="package-picture"
             onChange={handleFileChange}
           />
-        </Form.Field>
+        </div>
         <img src={getApiAssetUrl(picture)} width="150px" alt="imageColis" />
 
-        <Button id="btn" type="submit">
+        <button className="btn btn-primary" id="btn" type="submit">
           Ajouter
-        </Button>
-      </Form>
+        </button>
+      </form>
     </div>
   );
 }

@@ -1,13 +1,9 @@
 import { useEffect, useReducer } from 'react';
-import Stack from '@mui/material/Stack';
-import Rating from '@mui/material/Rating';
-import moment from 'moment/moment';
-import 'moment/locale/fr';
+import StarRating from '../../../components/StarRating';
 import apiClient, { getApiAssetUrl } from '../../../lib/api-client';
+import { formatFrenchDateTime } from '../../../lib/date-format';
 import type { Member } from '../../members/member.types';
 import type { Comment } from '../comment.types';
-
-moment.locale('fr');
 
 type CommentsState = {
   loadingComments: boolean;
@@ -116,17 +112,14 @@ function CommentList() {
                   }
                   return null;
                 })}
-                <Stack spacing={1}>
-                  <Rating
-                    name="ratingStars"
-                    value={comment.ratingStars ?? null}
-                    size="medium"
-                    readOnly
-                  />
-                </Stack>
+                <StarRating
+                  name={`rating-${comment.id ?? index}`}
+                  value={comment.ratingStars}
+                  readOnly
+                />
                 <p className="card-text">{comment.content}</p>
                 <p className="text-secondary card-text">
-                  {moment(comment.creationDate).format('LLL')}
+                  {formatFrenchDateTime(comment.creationDate)}
                 </p>
               </div>
             </div>

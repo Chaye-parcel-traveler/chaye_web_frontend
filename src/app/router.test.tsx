@@ -24,11 +24,12 @@ function renderRoute(path: string) {
 }
 
 describe('application routes', () => {
-  it('renders a canonical URL', () => {
+  it('loads a canonical route asynchronously', async () => {
     renderRoute('/packages/new');
 
+    expect(screen.getByText('Chargement…')).toBeInTheDocument();
     expect(
-      screen.getByRole('heading', { name: 'Nouveau colis' })
+      await screen.findByRole('heading', { name: 'Nouveau colis' })
     ).toBeInTheDocument();
   });
 
