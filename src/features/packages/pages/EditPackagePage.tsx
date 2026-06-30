@@ -1,152 +1,195 @@
-import { useEffect, useState } from 'react';
-import type { ChangeEvent, FormEvent } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import './EditPackagePage.css';
-import apiClient, { getApiAssetUrl } from '../../../lib/api-client';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { useForm, useWatch } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import FormError from '../../../components/FormError';
+import apiClient, {
+  getApiAssetUrl,
+  normalizeApiError,
+} from '../../../lib/api-client';
+import { editPackageSchema } from '../package.schemas';
+import type { EditPackageOutput, EditPackageValues } from '../package.schemas';
 import type { Package } from '../package.types';
+import './EditPackagePage.css';
 
 function EditPackagePage() {
-  let navigate = useNavigate();
-  const params = useParams();
-  const [file, setFile] = useState<File | null>(null);
-  const [content, setContent] = useState('');
-  const [weight, setWeight] = useState('');
-  const [size, setSize] = useState('');
-  const [picture, setPicture] = useState('');
-  const [departureCity, setDepartureCity] = useState('');
-
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      setPicture(selectedFile.name);
-    }
-  };
-
-  const handleContentChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setContent(event.target.value);
-  };
-
-  const handleWeightChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setWeight(event.target.value);
-  };
-
-  const handleSizeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSize(event.target.value);
-  };
-  const handleDepartureCityChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setDepartureCity(event.target.value);
-  };
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const form = useForm<EditPackageValues, unknown, EditPackageOutput>({
+    resolver: zodResolver(editPackageSchema),
+    defaultValues: {
+      content: '',
+      weight: '',
+      size: '',
+      departureCity: '',
+      picture: '',
+      file: undefined,
+    },
+  });
+  const picture = useWatch({ control: form.control, name: 'picture' });
 
   useEffect(() => {
+    let active = true;
     apiClient
-      .get<Package>(`/package/${params.id}`, { withCredentials: true })
+      .get<Package>(`/package/${id}`, { withCredentials: true })
       .then((response) => {
-        setContent(response.data.content ?? '');
-        setWeight(String(response.data.weight ?? ''));
-        setSize(String(response.data.size ?? ''));
-        setDepartureCity(response.data.departureCity ?? '');
-        setPicture(response.data.picture ?? '');
+        if (!active) {
+          return;
+        }
+        form.reset({
+          content: response.data.content ?? '',
+          weight: String(response.data.weight ?? ''),
+          size: String(response.data.size ?? ''),
+          departureCity: response.data.departureCity ?? '',
+          picture: response.data.picture ?? '',
+          file: undefined,
+        });
       })
-      .catch(() => {});
-  }, [params.id]);
+      .catch((error) => {
+        if (active) {
+          form.setError('root.load', {
+            message: normalizeApiError(error).message,
+          });
+        }
+      });
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    return () => {
+      active = false;
+    };
+  }, [form, id]);
+
+  const handleSubmit = form.handleSubmit(async (values) => {
+    form.clearErrors('root');
     const formData = new FormData();
-    if (file) {
-      formData.append('file', file);
+    if (values.file) {
+      formData.append('file', values.file);
     }
-    formData.append('content', content);
-    formData.append('weight', weight);
-    formData.append('size', size);
-    formData.append('departureCity', departureCity);
-    formData.append('picture', picture);
+    formData.append('content', values.content);
+    formData.append('weight', String(values.weight));
+    formData.append('size', values.size);
+    formData.append('departureCity', values.departureCity);
+    formData.append('picture', values.picture);
 
-    apiClient
-      .put(`/editpackage/${params.id}`, formData)
-      .then(() => {
-        return navigate('/');
-      })
-      .catch(() => {});
-  };
+    try {
+      await apiClient.put(`/editpackage/${id}`, formData);
+      navigate('/');
+    } catch (error) {
+      form.setError('root.server', {
+        message: normalizeApiError(error).message,
+      });
+    }
+  });
 
   return (
     <div className="Formulcontainer">
-      <h1>Modifier Votre colis</h1>
+      <h1>Modifier votre colis</h1>
       <form
-        className="col-formule bg-white container-fluid col-4 my-3 "
+        aria-label="Formulaire de modification de colis"
+        className="col-formule bg-white container-fluid col-4 my-3"
         onSubmit={handleSubmit}
+        noValidate
       >
-        <div className="mb-3">
-          <label className="form-label" htmlFor="package-content">
-            Contenu:
-          </label>
-          <input
-            className="form-control"
-            type="text"
-            id="package-content"
-            onChange={handleContentChange}
-            value={content}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label" htmlFor="package-weight">
-            Poids:
-          </label>
-          <input
-            className="form-control"
-            type="text"
-            id="package-weight"
-            onChange={handleWeightChange}
-            value={weight}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label className="form-label" htmlFor="package-size">
-            Taille:
-          </label>
-          <input
-            className="form-control"
-            type="text"
-            id="package-size"
-            onChange={handleSizeChange}
-            value={size}
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label" htmlFor="departure-city">
-            Ville de départ:
-          </label>
-          <input
-            className="form-control"
-            type="text"
-            id="departure-city"
-            onChange={handleDepartureCityChange}
-            value={departureCity}
-          />
-        </div>
-
+        <FormError
+          message={
+            form.formState.errors.root?.server?.message ??
+            form.formState.errors.root?.load?.message
+          }
+        />
+        <EditPackageField
+          form={form}
+          name="content"
+          label="Contenu"
+          type="text"
+        />
+        <EditPackageField
+          form={form}
+          name="weight"
+          label="Poids"
+          type="number"
+        />
+        <EditPackageField form={form} name="size" label="Taille" type="text" />
+        <EditPackageField
+          form={form}
+          name="departureCity"
+          label="Ville de départ"
+          type="text"
+        />
         <div className="mb-3">
           <label className="form-label" htmlFor="package-picture">
-            Photo de contenu du colis :
+            Photo du contenu du colis
           </label>
           <input
             className="form-control"
             type="file"
             id="package-picture"
-            onChange={handleFileChange}
+            accept="image/*"
+            onChange={(event) => {
+              const selectedFile = event.target.files?.[0];
+              form.setValue('file', selectedFile, { shouldValidate: true });
+              if (selectedFile) {
+                form.setValue('picture', selectedFile.name);
+              }
+            }}
+          />
+          <FormError
+            id="package-picture-error"
+            message={form.formState.errors.file?.message}
           />
         </div>
-        <img src={getApiAssetUrl(picture)} width="150px" alt="imageColis" />
-
-        <button className="btn btn-primary" id="btn" type="submit">
-          Ajouter
+        {picture && (
+          <img
+            src={getApiAssetUrl(picture)}
+            width="150"
+            alt="Contenu actuel du colis"
+          />
+        )}
+        <button
+          className="btn btn-primary"
+          id="btn"
+          type="submit"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? 'Enregistrement…' : 'Enregistrer'}
         </button>
       </form>
+    </div>
+  );
+}
+
+type EditPackageFieldName = 'content' | 'weight' | 'size' | 'departureCity';
+type EditPackageForm = ReturnType<
+  typeof useForm<EditPackageValues, unknown, EditPackageOutput>
+>;
+
+function EditPackageField({
+  form,
+  name,
+  label,
+  type,
+}: {
+  form: EditPackageForm;
+  name: EditPackageFieldName;
+  label: string;
+  type: string;
+}) {
+  const error = form.formState.errors[name]?.message;
+  const fieldId = `edit-package-${name}`;
+
+  return (
+    <div className="mb-3">
+      <label className="form-label" htmlFor={fieldId}>
+        {label}
+      </label>
+      <input
+        className="form-control"
+        type={type}
+        id={fieldId}
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? `${fieldId}-error` : undefined}
+        {...form.register(name)}
+      />
+      <FormError id={`${fieldId}-error`} message={error} />
     </div>
   );
 }

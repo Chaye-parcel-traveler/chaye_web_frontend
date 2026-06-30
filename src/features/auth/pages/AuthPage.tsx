@@ -1,28 +1,45 @@
-import { useState } from 'react';
-import type { ChangeEvent, FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useGoogleLogin } from '@react-oauth/google';
-import { login } from '../api/auth.api';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+
+import FormError from '../../../components/FormError';
 import apiClient, {
   getApiUrl,
+  normalizeApiError,
   persistAuthToken,
 } from '../../../lib/api-client';
-import './AuthPage.css';
 import type { Member } from '../../members/member.types';
+import { login } from '../api/auth.api';
+import {
+  createMemberPayloadSchema,
+  loginSchema,
+  signupSchema,
+} from '../auth.schemas';
+import type { LoginValues, SignupValues } from '../auth.schemas';
+import './AuthPage.css';
 
 function AuthPage() {
-  const [, setToken] = useState<string | null>(null);
-  const [, setUserData] = useState<Member | null>(null);
-  const [inputs, setInputs] = useState<Record<string, string>>({});
+  const navigate = useNavigate();
   const [showSignUp, setShowSignUp] = useState(false);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
-
-  let navigate = useNavigate();
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
+  const loginForm = useForm<LoginValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: '', password: '' },
+  });
+  const signupForm = useForm<SignupValues>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: {
+      firstname: '',
+      lastname: '',
+      address: '',
+      phone: '',
+      birthDate: '',
+      email: '',
+      password: '',
+    },
+  });
 
   const googleLogin = useGoogleLogin({
     flow: 'auth-code',
@@ -38,50 +55,49 @@ function AuthPage() {
     onError: () => {},
   });
 
-  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleLogin = loginForm.handleSubmit(async (values) => {
+    loginForm.clearErrors('root');
     try {
-      const response = await login({
-        email: inputs.email,
-        password: inputs.password,
-      });
-
-      setToken(response.value);
+      const response = await login(loginSchema.parse(values));
       persistAuthToken(response.value);
-
-      const me = await apiClient.get<Member>('/me');
-      setUserData(me.data);
-
-      return navigate('/');
-    } catch {
-      alert('Login incorrect');
+      await apiClient.get<Member>('/me');
+      navigate('/');
+    } catch (error) {
+      loginForm.setError('root.server', {
+        message: normalizeApiError(error).message,
+      });
     }
-  };
-  const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  });
 
-    const formData = {
-      // file: file,
-      lastname: inputs.lastname,
-      firstname: inputs.firstname,
-      email: inputs.email,
-      password: inputs.password,
-      address: inputs.address,
-      phone: inputs.phone,
-      // status: status,
-    };
-    await apiClient.post(`/members`, formData);
-    navigate('/auth');
-  };
+  const handleSignup = signupForm.handleSubmit(async (values) => {
+    signupForm.clearErrors('root');
+    const payloadResult = createMemberPayloadSchema.safeParse({
+      ...values,
+      acceptedCguVersion: import.meta.env.VITE_CURRENT_CGU_VERSION ?? '',
+    });
 
-  //   links.forEach(link => {
-  //     link.addEventListener("click", e => {
-  //        e.preventDefault(); //preventing form submit
-  //        forms.classList.toggle("show-signup");
-  //     })
-  // })
+    if (!payloadResult.success) {
+      signupForm.setError('root.server', {
+        message: payloadResult.error.issues[0]?.message,
+      });
+      return;
+    }
+
+    try {
+      await apiClient.post('/members', payloadResult.data);
+      signupForm.reset();
+      setShowSignUp(false);
+    } catch (error) {
+      signupForm.setError('root.server', {
+        message: normalizeApiError(error).message,
+      });
+    }
+  });
+
   const toggleSignup = () => {
-    setShowSignUp(!showSignUp);
+    loginForm.clearErrors();
+    signupForm.clearErrors();
+    setShowSignUp((visible) => !visible);
   };
 
   return (
@@ -91,71 +107,101 @@ function AuthPage() {
           <img src="images/logoChaye.png" alt="Chaye" />
         </Link>
       </section>
-      <section className={`container container-login forms`}>
+      <section className="container container-login forms">
         <div className={`form login ${showSignUp ? 'd-none' : ''}`}>
           <div className="form-content">
             <header>
               <h2>Content de te revoir</h2>
-              <h4
-                style={{
-                  fontSize: '17px!important',
-                  fontFamily: 'Poppins, sans-serif',
-                }}
-              >
-                Connectez-vous à votre compte
-              </h4>
+              <h4>Connectez-vous à votre compte</h4>
             </header>
             <form aria-label="Formulaire de connexion" onSubmit={handleLogin}>
+              <FormError
+                message={loginForm.formState.errors.root?.server?.message}
+              />
               <div className="field input-field">
+                <label className="visually-hidden" htmlFor="login-email">
+                  Adresse e-mail de connexion
+                </label>
                 <input
+                  id="login-email"
                   type="email"
-                  name="email"
-                  aria-label="Adresse e-mail de connexion"
+                  autoComplete="email"
                   placeholder="Email"
                   className="input"
-                  onChange={handleChange}
+                  aria-invalid={Boolean(loginForm.formState.errors.email)}
+                  aria-describedby={
+                    loginForm.formState.errors.email
+                      ? 'login-email-error'
+                      : undefined
+                  }
+                  {...loginForm.register('email')}
+                />
+                <FormError
+                  id="login-email-error"
+                  message={loginForm.formState.errors.email?.message}
                 />
               </div>
-
               <div className="field input-field">
+                <label className="visually-hidden" htmlFor="login-password">
+                  Mot de passe de connexion
+                </label>
                 <input
-                  type="password"
-                  name="password"
-                  aria-label="Mot de passe de connexion"
+                  id="login-password"
+                  type={showLoginPassword ? 'text' : 'password'}
+                  autoComplete="current-password"
                   placeholder="Mot de passe"
                   className="password"
-                  onChange={handleChange}
+                  aria-invalid={Boolean(loginForm.formState.errors.password)}
+                  aria-describedby={
+                    loginForm.formState.errors.password
+                      ? 'login-password-error'
+                      : undefined
+                  }
+                  {...loginForm.register('password')}
                 />
-                <i className="bx bx-hide eye-icon"></i>
+                <button
+                  type="button"
+                  className="password-toggle"
+                  aria-label={
+                    showLoginPassword
+                      ? 'Masquer le mot de passe'
+                      : 'Afficher le mot de passe'
+                  }
+                  aria-pressed={showLoginPassword}
+                  onClick={() => setShowLoginPassword((visible) => !visible)}
+                >
+                  <i
+                    className={`bx ${showLoginPassword ? 'bx-show' : 'bx-hide'}`}
+                    aria-hidden="true"
+                  ></i>
+                </button>
+                <FormError
+                  id="login-password-error"
+                  message={loginForm.formState.errors.password?.message}
+                />
               </div>
-
               <div
                 className="form-link"
                 style={{ display: 'flex', justifyContent: 'space-between' }}
               >
-                <div>
-                  {' '}
-                  <input
-                    type="checkbox"
-                    id="scales"
-                    name="scales"
-                    defaultChecked
-                  />{' '}
+                <label>
+                  <input type="checkbox" defaultChecked />{' '}
                   <span className="serappeller">Se rappeler de moi</span>
-                </div>
-                <div>
-                  {' '}
-                  <button type="button" className="forgot-pass">
-                    Mot de passe oublié
-                  </button>
-                </div>
+                </label>
+                <button type="button" className="forgot-pass">
+                  Mot de passe oublié
+                </button>
               </div>
-
               <div className="field button-field">
-                <button className="btnValider">Valider</button>
+                <button
+                  className="btnValider"
+                  disabled={loginForm.formState.isSubmitting}
+                  type="submit"
+                >
+                  {loginForm.formState.isSubmitting ? 'Connexion…' : 'Valider'}
+                </button>
               </div>
             </form>
-
             <div className="form-link">
               <span>
                 Vous n’avez pas de compte ?{' '}
@@ -164,130 +210,104 @@ function AuthPage() {
                   onClick={toggleSignup}
                   className="link signup-link"
                 >
-                  {' '}
-                  Créer votre compte{' '}
+                  Créer votre compte
                 </button>
               </span>
             </div>
           </div>
-
-          <div className="line"></div>
-
-          <div className="media-options">
-            <button type="button" className="field facebook">
-              <i className="bx bxl-facebook facebook-icon"></i>
-              <span>Se connecter avec Facebook</span>
-            </button>
-          </div>
-
-          <div className="media-options">
-            <button
-              type="button"
-              onClick={() => googleLogin()}
-              className="field google"
-            >
-              <img src="images/google.png" alt="" className="google-img" />
-              <span>Se connecter avec Google</span>
-            </button>
-          </div>
-          <div className="media-options">
-            <button type="button" className="field apple">
-              <i className="bx bxl-apple apple-icon"></i>
-              <span>Se connecter avec Apple</span>
-            </button>
-          </div>
+          <SocialLogin googleLogin={googleLogin} />
         </div>
-
-        {/* <!-- Signup Form --> */}
 
         <div className={`form signup ${showSignUp ? '' : 'd-none'}`}>
           <div className="form-content">
             <header>
-              {' '}
               <h2>S’enregistrer</h2>
-              <h4
-                style={{
-                  fontSize: '17px!important',
-                  fontFamily: 'Poppins, sans-serif',
-                }}
-              >
-                Créez votre nouveau compte
-              </h4>
+              <h4>Créez votre nouveau compte</h4>
             </header>
-            <form onSubmit={handleSignup}>
-              <div className="field input-field">
-                <input
-                  type="text"
-                  placeholder="Prénom"
-                  className="input"
-                  name="lastname"
-                  onChange={handleChange}
+            <form aria-label="Formulaire d’inscription" onSubmit={handleSignup}>
+              <FormError
+                message={signupForm.formState.errors.root?.server?.message}
+              />
+              <SignupField
+                form={signupForm}
+                name="firstname"
+                label="Prénom"
+                autoComplete="given-name"
+              />
+              <SignupField
+                form={signupForm}
+                name="lastname"
+                label="Nom"
+                autoComplete="family-name"
+              />
+              <SignupField
+                form={signupForm}
+                name="address"
+                label="Adresse"
+                autoComplete="street-address"
+              />
+              <SignupField
+                form={signupForm}
+                name="phone"
+                label="Téléphone"
+                type="tel"
+                autoComplete="tel"
+              />
+              <SignupField
+                form={signupForm}
+                name="birthDate"
+                label="Date de naissance"
+                type="date"
+                autoComplete="bday"
+              />
+              <SignupField
+                form={signupForm}
+                name="email"
+                label="Email"
+                type="email"
+                autoComplete="email"
+              />
+              <SignupField
+                form={signupForm}
+                name="password"
+                label="Créer votre mot de passe"
+                type="password"
+                autoComplete="new-password"
+              />
+              <div className="form-link">
+                <label htmlFor="accepts-cgu">
+                  <input
+                    id="accepts-cgu"
+                    type="checkbox"
+                    aria-invalid={Boolean(
+                      signupForm.formState.errors.acceptsCgu
+                    )}
+                    aria-describedby={
+                      signupForm.formState.errors.acceptsCgu
+                        ? 'accepts-cgu-error'
+                        : undefined
+                    }
+                    {...signupForm.register('acceptsCgu')}
+                  />{' '}
+                  J’accepte les conditions générales
+                </label>
+                <FormError
+                  id="accepts-cgu-error"
+                  message={signupForm.formState.errors.acceptsCgu?.message}
                 />
               </div>
-
-              <div className="field input-field">
-                <input
-                  type="text"
-                  placeholder="Nom"
-                  className="input"
-                  name="firstname"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="field input-field">
-                <input
-                  type="text"
-                  placeholder="Adresse"
-                  className="input"
-                  name="address"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="field input-field">
-                <input
-                  type="tel"
-                  placeholder="Téléphone"
-                  className="input"
-                  name="phone"
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* <div className="field input-field">
-                <input type="Flag" placeholder="Pays" className="input" onChange={handleChange} />
-              </div> */}
-              <div className="field input-field">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="input"
-                  name="email"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="field input-field">
-                <input
-                  type="password"
-                  placeholder="Créer votre mot de passe"
-                  className="password"
-                  name="password"
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* <div className="field input-field">
-                <input type="password" placeholder="Confirmer votre mot de passe" className="password" />
-                <i class='bx bx-hide eye-icon'></i>
-              </div> */}
-
               <div className="field button-field">
-                <button className="btnValider">Valider</button>
+                <button
+                  className="btnValider"
+                  disabled={signupForm.formState.isSubmitting}
+                  type="submit"
+                >
+                  {signupForm.formState.isSubmitting
+                    ? 'Inscription…'
+                    : 'Valider'}
+                </button>
               </div>
             </form>
-
             <div className="form-link">
               <span>
                 Vous avez déjà un compte ?{' '}
@@ -301,36 +321,81 @@ function AuthPage() {
               </span>
             </div>
           </div>
-
-          <div className="line"></div>
-
-          <div className="media-options">
-            <button type="button" className="field facebook">
-              <i className="bx bxl-facebook facebook-icon"></i>
-              <span>Se connecter avec Facebook</span>
-            </button>
-          </div>
-
-          <div className="media-options">
-            <button
-              type="button"
-              onClick={() => googleLogin()}
-              className="field google"
-            >
-              <img src="images/google.png" alt="" className="google-img" />
-              <span>Se connecter avec Google</span>
-            </button>
-          </div>
-
-          <div className="media-options">
-            <button type="button" className="field apple">
-              <i className="bx bxl-apple apple-icon"></i>
-              <span>Se connecter avec Apple</span>
-            </button>
-          </div>
+          <SocialLogin googleLogin={googleLogin} />
         </div>
       </section>
     </div>
+  );
+}
+
+type SignupFieldProps = {
+  form: ReturnType<typeof useForm<SignupValues>>;
+  name:
+    | 'firstname'
+    | 'lastname'
+    | 'address'
+    | 'phone'
+    | 'birthDate'
+    | 'email'
+    | 'password';
+  label: string;
+  type?: string;
+  autoComplete: string;
+};
+
+function SignupField({
+  form,
+  name,
+  label,
+  type = 'text',
+  autoComplete,
+}: SignupFieldProps) {
+  const error = form.formState.errors[name]?.message;
+  const errorId = `signup-${name}-error`;
+
+  return (
+    <div className="field input-field">
+      <label className="visually-hidden" htmlFor={`signup-${name}`}>
+        {label}
+      </label>
+      <input
+        id={`signup-${name}`}
+        type={type}
+        autoComplete={autoComplete}
+        placeholder={label}
+        className="input"
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? errorId : undefined}
+        {...form.register(name)}
+      />
+      <FormError id={errorId} message={error} />
+    </div>
+  );
+}
+
+function SocialLogin({ googleLogin }: { googleLogin: () => void }) {
+  return (
+    <>
+      <div className="line"></div>
+      <div className="media-options">
+        <button type="button" className="field facebook">
+          <i className="bx bxl-facebook facebook-icon"></i>
+          <span>Se connecter avec Facebook</span>
+        </button>
+      </div>
+      <div className="media-options">
+        <button type="button" onClick={googleLogin} className="field google">
+          <img src="images/google.png" alt="" className="google-img" />
+          <span>Se connecter avec Google</span>
+        </button>
+      </div>
+      <div className="media-options">
+        <button type="button" className="field apple">
+          <i className="bx bxl-apple apple-icon"></i>
+          <span>Se connecter avec Apple</span>
+        </button>
+      </div>
+    </>
   );
 }
 

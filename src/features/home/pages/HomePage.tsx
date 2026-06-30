@@ -54,7 +54,7 @@ function HomePage() {
         <div className="container">
           <div className="row cat-layout margin-top-25">
             <div className="col">
-              <a href="single.html" className="h-entry mb-30 v-height gradient">
+              <div className="h-entry mb-30 v-height gradient">
                 <div
                   className="featured-img"
                   style={{ backgroundImage: `url("images/caraibes.png")` }}
@@ -63,10 +63,10 @@ function HomePage() {
                 <div className="text">
                   <h2>Caraïbes</h2>
                 </div>
-              </a>
+              </div>
             </div>
             <div className="col">
-              <a href="single.html" className="h-entry mb-30 v-height gradient">
+              <div className="h-entry mb-30 v-height gradient">
                 <div
                   className="featured-img"
                   style={{ backgroundImage: `url("images/europe.png")` }}
@@ -75,12 +75,12 @@ function HomePage() {
                 <div className="text">
                   <h2>Europe</h2>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
           <div className="row cat-layout">
             <div className="col">
-              <a href="single.html" className="h-entry mb-30 v-height gradient">
+              <div className="h-entry mb-30 v-height gradient">
                 <div
                   className="featured-img"
                   style={{ backgroundImage: `url("images/amerique.png")` }}
@@ -89,10 +89,10 @@ function HomePage() {
                 <div className="text">
                   <h2>Amérique</h2>
                 </div>
-              </a>
+              </div>
             </div>
             <div className="col">
-              <a href="single.html" className="h-entry mb-30 v-height gradient">
+              <div className="h-entry mb-30 v-height gradient">
                 <div
                   className="featured-img"
                   style={{ backgroundImage: `url("images/afrique.png")` }}
@@ -101,10 +101,10 @@ function HomePage() {
                 <div className="text">
                   <h2>Afrique</h2>
                 </div>
-              </a>
+              </div>
             </div>
             <div className="col">
-              <a href="single.html" className="h-entry mb-30 v-height gradient">
+              <div className="h-entry mb-30 v-height gradient">
                 <div
                   className="featured-img"
                   style={{ backgroundImage: `url("images/asie.png")` }}
@@ -113,7 +113,7 @@ function HomePage() {
                 <div className="text">
                   <h2>Asie</h2>
                 </div>
-              </a>
+              </div>
             </div>
           </div>
         </div>

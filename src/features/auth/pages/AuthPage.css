@@ -1,6 +1,3 @@
-/* Google Fonts - Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-
 /* * {
   margin: 0;
   padding: 0;
@@ -41,6 +38,8 @@ h2 {
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  border: 0;
+  background: transparent;
 }
 
 .serappeller {
@@ -125,6 +124,21 @@ form {
   border-radius: 6px;
 }
 
+.form .input-field {
+  height: auto;
+  min-height: 50px;
+}
+
+.form .input-field > input {
+  height: 50px;
+}
+
+.form .input-field > [role='alert'] {
+  font-size: 0.8rem;
+  line-height: 1.2;
+  text-align: left;
+}
+
 .field input,
 .field button {
   height: 100%;
@@ -145,15 +159,24 @@ form {
   border-bottom-width: 2px;
 }
 
-.eye-icon {
+.field .password-toggle {
   position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
+  top: 5px;
+  right: 5px;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0;
+  border: 0;
+  background: transparent;
   font-size: 18px;
   color: #8b8b8b;
   cursor: pointer;
-  padding: 5px;
+  z-index: 1;
+}
+
+.field .password-toggle:hover,
+.field .password-toggle:focus-visible {
+  color: #4f4294;
 }
 
 .field button {
@@ -184,6 +207,15 @@ form {
   text-decoration: none;
 }
 
+.form .link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ec634e;
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .form-content a:hover {
   text-decoration: underline;
 }
@@ -207,18 +239,21 @@ form {
   padding: 0 15px;
 }
 
-.media-options a {
+.media-options .field {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid #cacaca;
+  cursor: pointer;
 }
 
-a.facebook {
+.media-options .facebook {
   color: #fff;
   background-color: #4267b2;
+  border-color: #4267b2;
 }
 
-a.facebook .facebook-icon {
+.media-options .facebook .facebook-icon {
   height: 28px;
   width: 28px;
   color: #0171d3;
@@ -230,12 +265,13 @@ a.facebook .facebook-icon {
   background-color: #fff;
 }
 
-a.apple {
+.media-options .apple {
   color: #fff;
   background-color: #090a0a;
+  border-color: #090a0a;
 }
 
-a.apple .apple-icon {
+.media-options .apple .apple-icon {
   color: #fff;
   font-size: 30px;
   border-radius: 50%;
@@ -260,11 +296,13 @@ img.google-img {
   object-fit: cover;
 }
 
-a.google {
+.media-options .google {
+  color: #232836;
+  background-color: #fff;
   border: 1px solid #cacaca;
 }
 
-a.google span {
+.media-options .google span {
   font-weight: 500;
   opacity: 0.6;
   color: #232836;

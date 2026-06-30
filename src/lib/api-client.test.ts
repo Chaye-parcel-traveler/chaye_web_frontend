@@ -103,6 +103,15 @@ describe('api client', () => {
     ).toEqual({
       message: 'Network unavailable',
     });
+    expect(
+      apiModule.normalizeApiError({
+        message: 'Invalid credentials',
+        status: 401,
+      })
+    ).toEqual({
+      message: 'Invalid credentials',
+      status: 401,
+    });
     expect(apiModule.normalizeApiError('unexpected failure')).toEqual({
       message: 'Une erreur est survenue.',
     });

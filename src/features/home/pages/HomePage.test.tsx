@@ -34,4 +34,16 @@ test('renders the home screen labels and canonical action links', () => {
     'href',
     '/announcements/new'
   );
+  for (const category of [
+    'Caraïbes',
+    'Europe',
+    'Amérique',
+    'Afrique',
+    'Asie',
+  ]) {
+    expect(
+      screen.queryByRole('link', { name: category })
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: category })).toBeInTheDocument();
+  }
 });

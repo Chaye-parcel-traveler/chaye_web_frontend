@@ -14,6 +14,7 @@ afterEach(() => {
   server.resetHandlers();
   clearAuthToken();
   sessionStorage.clear();
+  vi.unstubAllEnvs();
   vi.restoreAllMocks();
 });
 

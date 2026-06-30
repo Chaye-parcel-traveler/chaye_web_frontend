@@ -74,6 +74,20 @@ export function normalizeApiError(error: unknown): NormalizedApiError {
     };
   }
 
+  if (
+    typeof error === 'object' &&
+    error !== null &&
+    'message' in error &&
+    typeof error.message === 'string'
+  ) {
+    return {
+      message: error.message,
+      ...('status' in error && typeof error.status === 'number'
+        ? { status: error.status }
+        : {}),
+    };
+  }
+
   return {
     message:
       error instanceof Error ? error.message : 'Une erreur est survenue.',
