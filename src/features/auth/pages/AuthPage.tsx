@@ -23,6 +23,7 @@ import './AuthPage.css';
 function AuthPage() {
   const navigate = useNavigate();
   const [showSignUp, setShowSignUp] = useState(false);
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
   const loginForm = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
@@ -146,7 +147,7 @@ function AuthPage() {
                 </label>
                 <input
                   id="login-password"
-                  type="password"
+                  type={showLoginPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   placeholder="Mot de passe"
                   className="password"
@@ -158,6 +159,22 @@ function AuthPage() {
                   }
                   {...loginForm.register('password')}
                 />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  aria-label={
+                    showLoginPassword
+                      ? 'Masquer le mot de passe'
+                      : 'Afficher le mot de passe'
+                  }
+                  aria-pressed={showLoginPassword}
+                  onClick={() => setShowLoginPassword((visible) => !visible)}
+                >
+                  <i
+                    className={`bx ${showLoginPassword ? 'bx-show' : 'bx-hide'}`}
+                    aria-hidden="true"
+                  ></i>
+                </button>
                 <FormError
                   id="login-password-error"
                   message={loginForm.formState.errors.password?.message}

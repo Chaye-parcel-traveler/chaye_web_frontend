@@ -134,6 +134,25 @@ describe('login form', () => {
     ).toHaveFocus();
     expect(requestCount).toBe(0);
   });
+
+  it('lets the user reveal and mask the login password', async () => {
+    const user = userEvent.setup();
+    renderLogin();
+    const loginForm = within(
+      screen.getByRole('form', { name: 'Formulaire de connexion' })
+    );
+    const password = loginForm.getByLabelText('Mot de passe de connexion');
+
+    expect(password).toHaveAttribute('type', 'password');
+    await user.click(
+      loginForm.getByRole('button', { name: 'Afficher le mot de passe' })
+    );
+    expect(password).toHaveAttribute('type', 'text');
+    await user.click(
+      loginForm.getByRole('button', { name: 'Masquer le mot de passe' })
+    );
+    expect(password).toHaveAttribute('type', 'password');
+  });
 });
 
 describe('signup form', () => {

@@ -54,7 +54,13 @@ function Navbar() {
           </div>
         </div>
 
-        <i className="bx bx-chevron-right toggle" onClick={toggleSidebar}></i>
+        <button
+          type="button"
+          className="bx bx-chevron-right toggle"
+          onClick={toggleSidebar}
+          aria-label={sideBarClose ? 'Ouvrir le menu' : 'Fermer le menu'}
+          aria-expanded={!sideBarClose}
+        ></button>
       </header>
 
       <div className="menu-bar">
@@ -74,14 +80,14 @@ function Navbar() {
           </li>
 
           <ul className="menu-links">
-            <li className="nav-link">
+            <li className="menu-item">
               <Link to={'/announcements'}>
                 <i className="bx bx-tada-hover bxs-widget bx-md icon"></i>
                 <span className="text nav-text">Annonces</span>
               </Link>
             </li>
 
-            <li className="nav-link">
+            <li className="menu-item">
               <Link
                 to={
                   isLoggedIn && userData ? `/members/${userData.id}` : '/auth'
@@ -92,31 +98,39 @@ function Navbar() {
               </Link>
             </li>
 
-            <li className="nav-link">
+            <li className="menu-item">
               <Link to={'/support'}>
                 <i className="bx bx-tada-hover bxs-help-circle bx-md icon"></i>
                 <span className="text nav-text">Support</span>
               </Link>
             </li>
 
-            <li className="nav-link">
+            <li className="menu-item">
               <Link to={'/about'}>
                 <i className="bx bx-tada-hover bxs-info-circle bx-md icon"></i>
                 <span className="text nav-text">À propos de nous </span>
               </Link>
             </li>
 
-            <li className="nav-link">
-              <span aria-disabled="true">
+            <li className="menu-item">
+              <span
+                className="nav-item-content"
+                aria-disabled="true"
+                aria-label="Mes messages, bientôt disponible"
+              >
                 <i className="bx bxs-bell bx-tada-hover bx-md icon"></i>
-                <span className="text nav-text">Mes messages (bientôt)</span>
+                <span className="text nav-text">Mes messages</span>
               </span>
             </li>
 
-            <li className="nav-link">
-              <span aria-disabled="true">
+            <li className="menu-item">
+              <span
+                className="nav-item-content"
+                aria-disabled="true"
+                aria-label="Portefeuille, bientôt disponible"
+              >
                 <i className="bx bxs-wallet bx-tada-hover bx-md icon"></i>
-                <span className="text nav-text">Portefeuille (bientôt)</span>
+                <span className="text nav-text">Portefeuille</span>
               </span>
             </li>
           </ul>
