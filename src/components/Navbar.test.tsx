@@ -31,4 +31,10 @@ test('uses canonical destinations for available navigation items', async () => {
   expect(
     screen.getByRole('link', { name: /À propos de nous/ })
   ).toHaveAttribute('href', '/about');
+  expect(
+    screen.queryByRole('link', { name: /Mes messages/ })
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole('link', { name: /Portefeuille/ })
+  ).not.toBeInTheDocument();
 });

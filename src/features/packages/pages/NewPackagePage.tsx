@@ -1,201 +1,139 @@
-import { useState } from 'react';
-import type { ChangeEvent, MouseEvent } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+
+import FormError from '../../../components/FormError';
 import Header from '../../../components/Header';
+import { newPackageSchema } from '../package.schemas';
+import type { NewPackageOutput, NewPackageValues } from '../package.schemas';
 
 function NewPackagePage() {
-  const [, setInputs] = useState<Record<string, string>>({});
+  const form = useForm<NewPackageValues, unknown, NewPackageOutput>({
+    resolver: zodResolver(newPackageSchema),
+    defaultValues: {
+      departingFrom: '',
+      arrivingAt: '',
+      description: '',
+      weight: '',
+      length: '',
+      width: '',
+      depth: '',
+      price: '',
+      shippingLimitDate: '',
+    },
+  });
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
-
-  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-  };
+  const handleSubmit = form.handleSubmit(() => {
+    form.setError('root.server', {
+      message:
+        "La création de colis n'est pas encore disponible dans l’API Chaye.",
+    });
+  });
 
   return (
     <div className="content">
       <div className="content-body">
         <Header />
-        <div className="container">
-          <div
-            className="box-chaye margin-top-25 bgPurple"
-            style={{ position: 'relative' }}
-          >
-            <h2 className="txtCenter margin-top-36 txtwhite margin-bottom-40 ">
-              J’expédie un colis
-            </h2>
-            <div className="displayFlex ">
-              <div className="container">
-                <div className="DisplayVol">
-                  <div>
-                    <div className="setting-description p-2">
-                      <div
-                        className="setting-description-text mb-3"
-                        style={{ marginLeft: '15px' }}
-                      >
-                        <h1>Départ de</h1>
-                      </div>
-                    </div>
-                    <div className="wrapper-dropdown" id="dropdown">
-                      <input
-                        className="form-control"
-                        list="datalistOptions"
-                        name="departing_from"
-                        placeholder="Fort de France"
-                        onChange={handleChange}
-                      />
-                      <datalist id="datalistOptions">
-                        <option value="Fort de France" />
-                        <option value="San Francisco" />
-                        <option value="New York" />
-                        <option value="Seattle" />
-                        <option value="Los Angeles" />
-                        <option value="Chicago" />
-                      </datalist>
-                      {/* <span className="selected-display" id="destination">Guadeloupe</span>
-                      <svg className="arrow" id="drp-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-all ml-auto rotate-180">
-                        <path d="M7 14.5l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                      </svg>
-                      <ul className="dropdown">
-                        <li className="item">Option 1</li>
-                        <li className="item">Option 2</li>
-                        <li className="item">Option 3</li>
-                        <li className="item">Option 4</li>
-                      </ul> */}
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="setting-description p-2">
-                      <div
-                        className="setting-description-text mb-3"
-                        style={{ marginLeft: '15px' }}
-                      >
-                        <h1>Arrivée à :</h1>
-                      </div>
-                    </div>
-                    <div className="wrapper-dropdown" id="dropdown">
-                      <input
-                        className="form-control"
-                        list="datalistOptions"
-                        name="arriving_at"
-                        placeholder="Paris"
-                        onChange={handleChange}
-                      />
-                      <datalist id="datalistOptions">
-                        <option value="Paris" />
-                        <option value="Fort de France" />
-                        <option value="San Francisco" />
-                        <option value="New York" />
-                        <option value="Seattle" />
-                        <option value="Los Angeles" />
-                      </datalist>
-                      {/* <span className="selected-display" id="destination">Paris</span>
-                      <svg className="arrow" id="drp-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-all ml-auto rotate-180">
-                        <path d="M7 14.5l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                      </svg>
-                      <ul className="dropdown">
-                        <li className="item">Special Option 1</li>
-                        <li className="item">Special Option 2</li>
-                        <li className="item">Special Option 3</li>
-                        <li className="item">Special Option 4</li>
-                      </ul> */}
-                    </div>
+        <form
+          aria-label="Formulaire de création de colis"
+          onSubmit={handleSubmit}
+          noValidate
+        >
+          <div className="container">
+            <div
+              className="box-chaye margin-top-25 bgPurple"
+              style={{ position: 'relative' }}
+            >
+              <h2 className="txtCenter margin-top-36 txtwhite margin-bottom-40">
+                J’expédie un colis
+              </h2>
+              <div className="displayFlex">
+                <div className="container">
+                  <div className="DisplayVol">
+                    <PackageField
+                      form={form}
+                      name="departingFrom"
+                      label="Départ de"
+                      placeholder="Fort de France"
+                    />
+                    <PackageField
+                      form={form}
+                      name="arrivingAt"
+                      label="Arrivée à"
+                      placeholder="Paris"
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <section className="section gray-bg" id="blog">
-          <div className="container">
-            <div className="row">
-              <div className="col">
-                <div className="blog-grid">
-                  <div className="blog-info mt-n2">
-                    <div className="mb-3">
-                      <input
-                        type="text"
+          <section className="section gray-bg" id="blog">
+            <div className="container">
+              <div className="row">
+                <div className="col">
+                  <div className="blog-grid">
+                    <div className="blog-info mt-n2">
+                      <FormError
+                        message={form.formState.errors.root?.server?.message}
+                      />
+                      <PackageField
+                        form={form}
                         name="description"
-                        className="form-control"
-                        aria-describedby="emailHelp"
+                        label="Contenu du colis"
                         placeholder="Contenu du colis*"
-                        onChange={handleChange}
                       />
-                    </div>
-                    <div className="mb-3">
-                      <input
-                        type="text"
+                      <PackageField
+                        form={form}
                         name="weight"
-                        className="form-control"
-                        aria-describedby="emailHelp"
+                        label="Poids du colis en kg"
                         placeholder="Poids du colis en Kg *"
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <input
-                        type="text"
-                        name="long"
-                        className="form-control"
-                        aria-describedby="emailHelp"
-                        placeholder="Longueur du colis*"
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <input
-                        type="text"
-                        name="lar"
-                        className="form-control"
-                        aria-describedby="emailHelp"
-                        placeholder="Largeur  du colis*"
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <input
-                        type="text"
-                        name="prof"
-                        className="form-control"
-                        aria-describedby="emailHelp"
-                        placeholder="Profondeur du colis"
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <input
                         type="number"
+                      />
+                      <PackageField
+                        form={form}
+                        name="length"
+                        label="Longueur du colis"
+                        placeholder="Longueur du colis*"
+                        type="number"
+                      />
+                      <PackageField
+                        form={form}
+                        name="width"
+                        label="Largeur du colis"
+                        placeholder="Largeur du colis*"
+                        type="number"
+                      />
+                      <PackageField
+                        form={form}
+                        name="depth"
+                        label="Profondeur du colis"
+                        placeholder="Profondeur du colis*"
+                        type="number"
+                      />
+                      <PackageField
+                        form={form}
                         name="price"
-                        className="form-control"
-                        aria-describedby="emailHelp"
-                        placeholder="Prix proposé*  "
-                        onChange={handleChange}
+                        label="Prix proposé"
+                        placeholder="Prix proposé*"
+                        type="number"
                       />
-                    </div>
-                    <div className="mb-3">
-                      <input
-                        type="date"
+                      <PackageField
+                        form={form}
                         name="shippingLimitDate"
-                        className="form-control"
-                        aria-describedby="emailHelp"
-                        placeholder="Date limite d'expédition *"
-                        onChange={handleChange}
+                        label="Date limite d’expédition"
+                        placeholder=""
+                        type="date"
                       />
-                    </div>
-                    <div className="container content mt-2">
-                      <div className="row align-items-center content">
-                        <div className="col-12 text-center">
-                          <button
-                            type="button"
-                            onClick={handleSubmit}
-                            className="btn btn-secondary px-4 py-3"
-                          >
-                            Publier votre annonce
-                          </button>
+                      <div className="container content mt-2">
+                        <div className="row align-items-center content">
+                          <div className="col-12 text-center">
+                            <button
+                              type="submit"
+                              disabled={form.formState.isSubmitting}
+                              className="btn btn-secondary px-4 py-3"
+                            >
+                              Publier votre colis
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -203,9 +141,49 @@ function NewPackagePage() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </form>
       </div>
+    </div>
+  );
+}
+
+type PackageFieldName = keyof NewPackageValues;
+type PackageForm = ReturnType<
+  typeof useForm<NewPackageValues, unknown, NewPackageOutput>
+>;
+
+function PackageField({
+  form,
+  name,
+  label,
+  placeholder,
+  type = 'text',
+}: {
+  form: PackageForm;
+  name: PackageFieldName;
+  label: string;
+  placeholder: string;
+  type?: string;
+}) {
+  const error = form.formState.errors[name]?.message;
+  const id = `package-${name}`;
+
+  return (
+    <div className="mb-3">
+      <label className="form-label" htmlFor={id}>
+        {label}
+      </label>
+      <input
+        id={id}
+        className="form-control"
+        type={type}
+        placeholder={placeholder}
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? `${id}-error` : undefined}
+        {...form.register(name)}
+      />
+      <FormError id={`${id}-error`} message={error} />
     </div>
   );
 }

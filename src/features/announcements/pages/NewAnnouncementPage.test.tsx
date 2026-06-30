@@ -63,9 +63,9 @@ describe('announcement creation form', () => {
       departingFrom: 'Fort-de-France',
       arrivingAt: 'Paris',
       description: 'Deux valises',
-      weightAvailability: '15',
-      price: '8',
-      type: 'transport',
+      weightAvailability: 15,
+      price: 8,
+      type: 'shipping',
     });
   });
 
@@ -91,5 +91,27 @@ describe('announcement creation form', () => {
     expect(
       screen.getByRole('button', { name: 'Publier votre annonce' })
     ).toBeInTheDocument();
+  });
+
+  it('blocks an invalid payload and focuses the first field', async () => {
+    const user = userEvent.setup();
+    let requestCount = 0;
+    server.use(
+      http.post('*/announcements', () => {
+        requestCount += 1;
+        return HttpResponse.json({ id: 7 }, { status: 201 });
+      })
+    );
+
+    renderAnnouncementForm();
+    await user.click(
+      screen.getByRole('button', { name: 'Publier votre annonce' })
+    );
+
+    expect(
+      await screen.findByText('Le lieu de départ est requis.')
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText('Départ de')).toHaveFocus();
+    expect(requestCount).toBe(0);
   });
 });

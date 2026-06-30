@@ -40,4 +40,18 @@ describe('application routes', () => {
       await screen.findByRole('heading', { name: 'Nouveau colis' })
     ).toBeInTheDocument();
   });
+
+  it.each(['/carte', '/single.html', '/route-inconnue'])(
+    'renders a useful 404 page for unavailable URL %s',
+    async (path) => {
+      renderRoute(path);
+
+      expect(
+        await screen.findByRole('heading', { name: 'Page introuvable' })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('link', { name: 'Retour à l’accueil' })
+      ).toHaveAttribute('href', '/');
+    }
+  );
 });

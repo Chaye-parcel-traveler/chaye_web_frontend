@@ -25,6 +25,9 @@ const MemberProfilePage = lazy(
   () => import('../features/members/pages/MemberProfilePage')
 );
 const MembersPage = lazy(() => import('../features/members/pages/MembersPage'));
+const NotFoundPage = lazy(
+  () => import('../features/navigation/pages/NotFoundPage')
+);
 const EditPackagePage = lazy(
   () => import('../features/packages/pages/EditPackagePage')
 );
@@ -98,6 +101,7 @@ function AppRouter() {
             path="/politiqueDeConfidentialite"
             element={<Navigate replace to="/privacy-policy" />}
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/loginSignup" element={<Navigate replace to="/auth" />} />

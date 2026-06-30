@@ -125,6 +125,21 @@ form {
   border-radius: 6px;
 }
 
+.form .input-field {
+  height: auto;
+  min-height: 50px;
+}
+
+.form .input-field > input {
+  height: 50px;
+}
+
+.form .input-field > [role='alert'] {
+  font-size: 0.8rem;
+  line-height: 1.2;
+  text-align: left;
+}
+
 .field input,
 .field button {
   height: 100%;

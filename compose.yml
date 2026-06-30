@@ -5,6 +5,7 @@ services:
       target: development
     environment:
       VITE_API_URL: ${VITE_API_URL:-http://localhost:3333}
+      VITE_CURRENT_CGU_VERSION: ${VITE_CURRENT_CGU_VERSION:-}
     init: true
     ports:
       - '${FRONTEND_PORT:-3000}:3000'
@@ -23,6 +24,7 @@ services:
     environment:
       CI: 'true'
       VITE_API_URL: ${VITE_API_URL:-http://localhost:3333}
+      VITE_CURRENT_CGU_VERSION: ${VITE_CURRENT_CGU_VERSION:-}
     init: true
     volumes:
       - type: bind
@@ -38,6 +40,7 @@ services:
       target: production
       args:
         VITE_API_URL: ${VITE_API_URL:-http://localhost:3333}
+        VITE_CURRENT_CGU_VERSION: ${VITE_CURRENT_CGU_VERSION:-}
     ports:
       - '${FRONTEND_PORT:-3000}:80'
 

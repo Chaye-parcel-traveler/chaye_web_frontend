@@ -107,17 +107,17 @@ function Navbar() {
             </li>
 
             <li className="nav-link">
-              <Link to={'/'}>
+              <span aria-disabled="true">
                 <i className="bx bxs-bell bx-tada-hover bx-md icon"></i>
-                <span className="text nav-text">Mes messages </span>
-              </Link>
+                <span className="text nav-text">Mes messages (bientôt)</span>
+              </span>
             </li>
 
             <li className="nav-link">
-              <Link to={'/'}>
+              <span aria-disabled="true">
                 <i className="bx bxs-wallet bx-tada-hover bx-md icon"></i>
-                <span className="text nav-text">Portefeuille</span>
-              </Link>
+                <span className="text nav-text">Portefeuille (bientôt)</span>
+              </span>
             </li>
           </ul>
         </div>

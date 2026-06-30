@@ -142,9 +142,9 @@ function AnnouncementCarousel() {
               </Link>
             </div>
             <div className="col-4">
-              <Link className="btnChaye-orange" to="/carte">
-                Carte intéractive
-              </Link>
+              <span className="btnChaye-orange" aria-disabled="true">
+                Carte interactive (bientôt)
+              </span>
             </div>
           </div>
         </div>
