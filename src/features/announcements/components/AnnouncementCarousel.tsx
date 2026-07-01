@@ -96,7 +96,11 @@ function AnnouncementCarousel() {
             ) : (
               <Carousel className="wide-slider-testimonial" interval={3500}>
                 {state.announcements.map((announcement) => (
-                  <Carousel.Item key={announcement.id} className="item">
+                  <Carousel.Item
+                    key={announcement.id}
+                    className="item"
+                    data-testid="announcement-card"
+                  >
                     <blockquote className="block-testimonial">
                       <div className="author">
                         <img
