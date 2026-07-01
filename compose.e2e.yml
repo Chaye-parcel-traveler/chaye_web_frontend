@@ -67,6 +67,7 @@ services:
       E2E_FRONTEND_URL: ${E2E_FRONTEND_URL:-http://127.0.0.1:3000}
       E2E_API_URL: ${E2E_API_URL:-http://api-e2e:3333}
       VITE_API_URL: ${VITE_API_URL:-http://api-e2e:3333}
+      VITE_CURRENT_CGU_VERSION: ${VITE_CURRENT_CGU_VERSION:-e2e}
       E2E_CONTROL_DIR: /e2e-control
     command: ['sh', 'scripts/run-e2e.sh']
     init: true

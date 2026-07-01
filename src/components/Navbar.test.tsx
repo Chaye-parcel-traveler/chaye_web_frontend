@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
 import { MemoryRouter } from 'react-router-dom';
 
+import { persistAuthToken } from '../lib/api-client';
 import { server } from '../test/mocks/server';
 import Navbar from './Navbar';
 
@@ -54,4 +55,38 @@ test('uses canonical destinations and preserves the sidebar layout contract', as
   expect(
     screen.getByRole('button', { name: 'Fermer le menu' })
   ).toHaveAttribute('aria-expanded', 'true');
+});
+
+test('logs out through a stable button and clears the session token', async () => {
+  const user = userEvent.setup();
+  let logoutAuthorization: string | null = null;
+  persistAuthToken('session-token');
+  server.use(
+    http.get('*/me', () =>
+      HttpResponse.json({
+        id: 42,
+        email: 'lea@example.test',
+        firstname: 'Léa',
+        lastname: 'Martin',
+      })
+    ),
+    http.post('*/logout', ({ request }) => {
+      logoutAuthorization = request.headers.get('authorization');
+      return HttpResponse.json({ message: 'Logged out' });
+    })
+  );
+
+  render(
+    <MemoryRouter>
+      <Navbar />
+    </MemoryRouter>
+  );
+
+  const logoutButton = await screen.findByTestId('logout-button');
+  expect(logoutButton).toHaveAccessibleName('Se déconnecter');
+  await user.click(logoutButton);
+
+  expect(logoutAuthorization).toBe('Bearer session-token');
+  expect(sessionStorage.getItem('token')).toBeNull();
+  expect(screen.queryByTestId('logout-button')).not.toBeInTheDocument();
 });

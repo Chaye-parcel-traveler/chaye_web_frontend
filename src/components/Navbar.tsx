@@ -138,9 +138,19 @@ function Navbar() {
 
         <div className="bottom-content">
           {isLoggedIn && (
-            <li onClick={handleLogout}>
-              <i className="bx bx-log-out bx-tada-hover bx-md icon"></i>
-              <span className="text nav-text pointer">Se deconnecter</span>
+            <li>
+              <button
+                type="button"
+                className="logout-button"
+                data-testid="logout-button"
+                onClick={handleLogout}
+              >
+                <i
+                  className="bx bx-log-out bx-tada-hover bx-md icon"
+                  aria-hidden="true"
+                ></i>
+                <span className="text nav-text pointer">Se déconnecter</span>
+              </button>
             </li>
           )}
           {/* <li className="mode">

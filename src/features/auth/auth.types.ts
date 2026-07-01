@@ -5,5 +5,6 @@ export type LoginCredentials = {
 
 export type AuthSession = {
   type?: string;
-  value: string;
+  token?: string;
+  value?: string;
 };

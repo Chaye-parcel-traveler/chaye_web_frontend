@@ -59,7 +59,11 @@ function AuthPage() {
     loginForm.clearErrors('root');
     try {
       const response = await login(loginSchema.parse(values));
-      persistAuthToken(response.value);
+      const token = response.token ?? response.value;
+      if (!token) {
+        throw new Error('La réponse de connexion ne contient pas de jeton.');
+      }
+      persistAuthToken(token);
       await apiClient.get<Member>('/me');
       navigate('/');
     } catch (error) {
@@ -114,7 +118,11 @@ function AuthPage() {
               <h2>Content de te revoir</h2>
               <h4>Connectez-vous à votre compte</h4>
             </header>
-            <form aria-label="Formulaire de connexion" onSubmit={handleLogin}>
+            <form
+              aria-label="Formulaire de connexion"
+              data-testid="login-form"
+              onSubmit={handleLogin}
+            >
               <FormError
                 message={loginForm.formState.errors.root?.server?.message}
               />
@@ -224,7 +232,11 @@ function AuthPage() {
               <h2>S’enregistrer</h2>
               <h4>Créez votre nouveau compte</h4>
             </header>
-            <form aria-label="Formulaire d’inscription" onSubmit={handleSignup}>
+            <form
+              aria-label="Formulaire d’inscription"
+              data-testid="signup-form"
+              onSubmit={handleSignup}
+            >
               <FormError
                 message={signupForm.formState.errors.root?.server?.message}
               />

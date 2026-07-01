@@ -51,6 +51,7 @@ function NewAnnouncementPage() {
         <Header />
         <form
           aria-label="Formulaire de création d’annonce"
+          data-testid="announcement-form"
           onSubmit={handleSubmit}
           noValidate
         >

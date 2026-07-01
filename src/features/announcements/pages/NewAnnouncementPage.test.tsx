@@ -48,6 +48,7 @@ describe('announcement creation form', () => {
     );
 
     renderAnnouncementForm();
+    expect(screen.getByTestId('announcement-form')).toBeInTheDocument();
     const user = await fillAnnouncementForm();
     await user.click(
       screen.getByRole('button', { name: 'Publier votre annonce' })
