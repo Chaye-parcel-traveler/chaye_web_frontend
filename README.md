@@ -1,6 +1,6 @@
 # Chaye Web Frontend
 
-Application web Chaye basée sur React 18, TypeScript, Vite et Axios.
+Application web Chaye basée sur React 19, TypeScript, Vite et Axios.
 
 ## Sources de vérité
 
@@ -38,6 +38,44 @@ docker compose up frontend-production
 
 `npm run check` exécute lint, format check, typecheck, tests et build. Les
 commandes npm locales doivent passer par `frontend-tools`.
+
+## Tests E2E locaux
+
+Prérequis : les dépôts `chaye_web_frontend` et `chaye_API` sont placés dans le
+même répertoire parent. La stack utilise Chromium, l'API AdonisJS et une
+MariaDB éphémère indépendante de la base de développement.
+
+Construire les images lors de la première exécution ou après un changement de
+dépendances :
+
+```bash
+docker compose -f compose.e2e.yml build
+```
+
+Lancer les tests headless :
+
+```bash
+docker compose -f compose.e2e.yml run --rm e2e
+```
+
+Chaque lancement remet le schéma à zéro, applique les migrations et le seed,
+puis arrête l'API lorsque Playwright termine. Deux lancements consécutifs ne
+réutilisent donc pas les données du précédent.
+
+La base est exposée sur `127.0.0.1:3307`, l'API sur
+`http://127.0.0.1:3333` et le navigateur utilise les noms de services Docker.
+Le chemin du dépôt API peut être remplacé avec `E2E_API_DIR`.
+
+Nettoyer systématiquement les services et les données après l'exécution :
+
+```bash
+docker compose -f compose.e2e.yml down --volumes --remove-orphans
+```
+
+En cas d'échec, les traces, screenshots et vidéos sont conservés dans
+`test-results/`. Le rapport HTML est écrit dans `playwright-report/`. Les
+scripts `e2e:ui` et `e2e:headed` existent, mais leur exécution graphique dans
+Docker n'est pas garantie.
 
 ## Structure
 

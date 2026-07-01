@@ -1,4 +1,4 @@
-ARG NODE_IMAGE=node:24-alpine
+ARG NODE_IMAGE=node:24-bookworm-slim
 
 FROM $NODE_IMAGE AS base
 RUN mkdir -p /home/node/app && chown node:node /home/node/app
@@ -11,6 +11,15 @@ RUN mkdir -p node_modules
 FROM base AS dependencies
 COPY --chown=node:node ./package*.json ./
 RUN npm ci
+
+FROM dependencies AS e2e
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+USER root
+RUN npx playwright install --with-deps chromium \
+  && chown -R node:node /ms-playwright
+USER node
+COPY --chown=node:node . .
+CMD ["npm", "run", "e2e"]
 
 FROM dependencies AS source
 COPY --chown=node:node . .
