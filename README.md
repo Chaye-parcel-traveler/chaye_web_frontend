@@ -59,17 +59,18 @@ docker compose -f compose.e2e.yml run --rm e2e
 ```
 
 Chaque lancement remet le schéma à zéro, applique les migrations et le seed,
-puis arrête l'API lorsque Playwright termine. Deux lancements consécutifs ne
-réutilisent donc pas les données du précédent.
+puis arrête l'API et MariaDB lorsque Playwright termine. Deux lancements
+consécutifs ne réutilisent donc pas les données du précédent.
 
 La base est exposée sur `127.0.0.1:3307`, l'API sur
 `http://127.0.0.1:3333` et le navigateur utilise les noms de services Docker.
 Le chemin du dépôt API peut être remplacé avec `E2E_API_DIR`.
 
-Nettoyer systématiquement les services et les données après l'exécution :
+Compose conserve les conteneurs arrêtés afin de pouvoir les relancer. Pour
+supprimer également ces conteneurs, le réseau et les données temporaires :
 
 ```bash
-docker compose -f compose.e2e.yml down --volumes --remove-orphans
+docker compose -f compose.e2e.yml down --volumes
 ```
 
 En cas d'échec, les traces, screenshots et vidéos sont conservés dans

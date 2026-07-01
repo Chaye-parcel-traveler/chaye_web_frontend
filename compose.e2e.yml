@@ -33,6 +33,7 @@ services:
       MYSQL_PORT: 3306
       MYSQL_USER: chayeuser
       MYSQL_PASSWORD: chayepwd
+      MYSQL_ROOT_PASSWORD: chaye-e2e-root
       MYSQL_DB_NAME: chayedb_e2e
       E2E_CONTROL_DIR: /e2e-control
     command: ['sh', 'scripts/e2e-server.sh']
