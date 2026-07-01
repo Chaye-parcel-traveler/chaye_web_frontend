@@ -26,11 +26,16 @@
   "scripts": {
     "start": "vite --host 0.0.0.0",
     "build": "vite build",
+    "preview": "vite preview",
     "lint": "eslint src --max-warnings=0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "node scripts/run-vitest.mjs",
     "coverage": "node scripts/run-vitest.mjs --coverage",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "e2e:headed": "playwright test --headed",
+    "e2e:install": "playwright install chromium",
     "typecheck": "tsc --noEmit",
     "check": "npm run lint && npm run format:check && npm run typecheck && npm test -- --watchAll=false && npm run build"
   },
@@ -48,6 +53,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@playwright/test": "^1.61.1",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
