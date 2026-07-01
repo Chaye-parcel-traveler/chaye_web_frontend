@@ -32,7 +32,7 @@ describe('login form', () => {
         loginPayload = await request.json();
         return HttpResponse.json({
           type: 'bearer',
-          value: 'session-token',
+          token: 'session-token',
         });
       }),
       http.get('*/me', ({ request }) => {
@@ -54,6 +54,7 @@ describe('login form', () => {
     const loginForm = within(
       screen.getByRole('form', { name: 'Formulaire de connexion' })
     );
+    expect(screen.getByTestId('login-form')).toBeInTheDocument();
     await user.type(
       loginForm.getByRole('textbox', { name: 'Adresse e-mail de connexion' }),
       'lea@example.test'
@@ -161,6 +162,7 @@ describe('signup form', () => {
     const signupForm = within(
       screen.getByRole('form', { name: 'Formulaire d’inscription' })
     );
+    expect(screen.getByTestId('signup-form')).toBeInTheDocument();
     await user.type(signupForm.getByLabelText('Prénom'), 'Léa');
     await user.type(signupForm.getByLabelText('Nom'), 'Martin');
     await user.type(signupForm.getByLabelText('Adresse'), '1 rue Victor-Hugo');
