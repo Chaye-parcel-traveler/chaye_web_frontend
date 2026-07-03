@@ -5,9 +5,9 @@ import Navbar from '../../components/Navbar';
 
 const MainLayout = () => {
   const { pathname } = useLocation();
-  const isHomePage = pathname === '/';
+  const isModernPublicPage = pathname === '/' || pathname === '/announcements';
 
-  if (isHomePage) {
+  if (isModernPublicPage) {
     return (
       <div className="landing-layout">
         <Outlet />

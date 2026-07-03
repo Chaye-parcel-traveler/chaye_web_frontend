@@ -1,24 +1,21 @@
 import { Link } from 'react-router-dom';
+import BrandFooter from '../../../components/BrandFooter';
+import BrandHeader from '../../../components/BrandHeader';
 import './HomePage.css';
 
 function HomePage() {
   return (
     <div className="chaye-home">
-      <header className="chaye-home__header">
-        <Link className="chaye-home__brand" to="/" aria-label="Accueil Chayé">
-          Chayé<span aria-hidden="true">.</span>
-        </Link>
-
-        <nav aria-label="Navigation de la page d’accueil">
-          <a href="#fonctionnement">Comment ça marche</a>
-          <a href="#confiance">Confiance</a>
-          <a href="#destinations">Destinations</a>
-        </nav>
-
-        <Link className="chaye-home__login" to="/auth">
-          Se connecter
-        </Link>
-      </header>
+      <BrandHeader
+        actionLabel="Se connecter"
+        actionTo="/auth"
+        links={[
+          { label: 'Comment ça marche', to: '#fonctionnement' },
+          { label: 'Confiance', to: '#confiance' },
+          { label: 'Destinations', to: '#destinations' },
+        ]}
+        variant="overlay"
+      />
 
       <main>
         <section className="chaye-hero" aria-labelledby="home-title">
@@ -229,17 +226,7 @@ function HomePage() {
         </section>
       </main>
 
-      <footer className="chaye-home__footer">
-        <Link className="chaye-home__brand" to="/">
-          Chayé<span aria-hidden="true">.</span>
-        </Link>
-        <p>La confiance voyage avec vous.</p>
-        <nav aria-label="Liens légaux">
-          <Link to="/legal-notice">Mentions légales</Link>
-          <Link to="/privacy-policy">Confidentialité</Link>
-        </nav>
-        <span>© 2026 Chayé</span>
-      </footer>
+      <BrandFooter />
     </div>
   );
 }

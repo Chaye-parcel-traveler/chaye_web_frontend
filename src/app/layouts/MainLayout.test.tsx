@@ -18,6 +18,10 @@ function renderLayout(path: string) {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<main>Accueil éditorial</main>} />
+          <Route
+            path="announcements"
+            element={<main>Liste des trajets</main>}
+          />
           <Route path="about" element={<h1>À propos</h1>} />
         </Route>
       </Routes>
@@ -29,6 +33,16 @@ test('keeps the homepage free of the application sidebar and footer', () => {
   renderLayout('/');
 
   expect(screen.getByText('Accueil éditorial')).toBeInTheDocument();
+  expect(
+    screen.queryByRole('navigation', { name: 'Navigation applicative' })
+  ).not.toBeInTheDocument();
+  expect(screen.queryByText('Pied de page applicatif')).not.toBeInTheDocument();
+});
+
+test('uses the modern public shell for the trip list', () => {
+  renderLayout('/announcements');
+
+  expect(screen.getByText('Liste des trajets')).toBeInTheDocument();
   expect(
     screen.queryByRole('navigation', { name: 'Navigation applicative' })
   ).not.toBeInTheDocument();
