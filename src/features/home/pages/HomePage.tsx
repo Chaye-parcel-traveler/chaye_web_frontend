@@ -1,111 +1,245 @@
-import InsurancePanel from '../../insurance/components/InsurancePanel';
-
-import Header from '../../../components/Header';
-import AnnouncementCarousel from '../../announcements/components/AnnouncementCarousel';
+import { Link } from 'react-router-dom';
+import './HomePage.css';
 
 function HomePage() {
   return (
-    <div>
-      <div className="text">Ouvrir le menu</div>
+    <div className="chaye-home">
+      <header className="chaye-home__header">
+        <Link className="chaye-home__brand" to="/" aria-label="Accueil Chayé">
+          Chayé<span aria-hidden="true">.</span>
+        </Link>
 
-      {/*-- block video--> */}
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            {/*--mettre la video--> */}
-            <div className="box-video">
-              <span className="box-text-video">le content video</span>
+        <nav aria-label="Navigation de la page d’accueil">
+          <a href="#fonctionnement">Comment ça marche</a>
+          <a href="#confiance">Confiance</a>
+          <a href="#destinations">Destinations</a>
+        </nav>
+
+        <Link className="chaye-home__login" to="/auth">
+          Se connecter
+        </Link>
+      </header>
+
+      <main>
+        <section className="chaye-hero" aria-labelledby="home-title">
+          <div className="chaye-hero__content">
+            <p className="chaye-home__eyebrow">
+              Transport collaboratif de colis
+            </p>
+            <h1 id="home-title">La confiance voyage avec vous.</h1>
+            <p className="chaye-hero__intro">
+              Envoyez vos colis entre la France, les territoires d’outre-mer et
+              l’Afrique francophone grâce à des voyageurs vérifiés.
+            </p>
+
+            <div className="chaye-hero__actions">
+              <Link
+                className="chaye-button chaye-button--primary"
+                to="/packages/new"
+              >
+                J’expédie un colis
+                <i className="bx bx-right-arrow-alt" aria-hidden="true"></i>
+              </Link>
+              <Link
+                className="chaye-button chaye-button--secondary"
+                to="/announcements/new"
+              >
+                Je propose un trajet
+              </Link>
             </div>
-            {/*--fin de mettre la video--> */}
+
+            <p className="chaye-hero__reassurance">
+              <i className="bx bx-check-shield" aria-hidden="true"></i>
+              Identités vérifiées · Paiement protégé · Suivi du colis
+            </p>
           </div>
-        </div>
-      </div>
-      {/*-- fin block video--> */}
+          <a
+            className="chaye-hero__scroll"
+            href="#fonctionnement"
+            aria-label="Découvrir le fonctionnement"
+          >
+            <span aria-hidden="true"></span>
+            Découvrir
+          </a>
+        </section>
 
-      {/*-- block choix--> */}
-      <Header />
-      {/*-- fin block choix--> */}
-      <InsurancePanel />
-      {/*---Block AlaUne-->*/}
-      <AnnouncementCarousel />
-      {/*---Block avis--*/}
-      <div className="container">
-        <h2 className="txtLeft margin-top-36">Avis</h2>
-        <div className="box-chaye sansFond margin-top-25 ">
-          {/* <CommentList /> */}
-        </div>
-      </div>
+        <section
+          className="chaye-process chaye-home__section"
+          id="fonctionnement"
+          aria-labelledby="process-title"
+        >
+          <div className="chaye-home__section-heading">
+            <p className="chaye-home__eyebrow">Simple et humain</p>
+            <h2 id="process-title">
+              Un même réseau, deux façons de participer.
+            </h2>
+            <p>
+              Chayé met en relation ceux qui ont un colis à envoyer et ceux qui
+              ont de la place dans leurs bagages.
+            </p>
+          </div>
 
-      {/* categories */}
-      <div className="container">
-        <h2 className="txtLeft margin-top-36">Catégories</h2>
-        <div className="container">
-          <div className="row cat-layout margin-top-25">
-            <div className="col">
-              <div className="h-entry mb-30 v-height gradient">
-                <div
-                  className="featured-img"
-                  style={{ backgroundImage: `url("images/caraibes.png")` }}
-                ></div>
-
-                <div className="text">
-                  <h2>Caraïbes</h2>
-                </div>
+          <ol className="chaye-process__steps">
+            <li>
+              <span>01</span>
+              <div>
+                <h3>Publiez votre besoin</h3>
+                <p>
+                  Renseignez le trajet, les dates, le poids et le contenu du
+                  colis.
+                </p>
               </div>
-            </div>
-            <div className="col">
-              <div className="h-entry mb-30 v-height gradient">
-                <div
-                  className="featured-img"
-                  style={{ backgroundImage: `url("images/europe.png")` }}
-                ></div>
-
-                <div className="text">
-                  <h2>Europe</h2>
-                </div>
+            </li>
+            <li>
+              <span>02</span>
+              <div>
+                <h3>Choisissez en confiance</h3>
+                <p>
+                  Consultez les trajets compatibles et échangez avant de vous
+                  engager.
+                </p>
               </div>
+            </li>
+            <li>
+              <span>03</span>
+              <div>
+                <h3>Suivez jusqu’à l’arrivée</h3>
+                <p>
+                  Chaque étape est tracée, de la prise en charge à la
+                  confirmation de livraison.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </section>
+
+        <section
+          className="chaye-trust"
+          id="confiance"
+          aria-labelledby="trust-title"
+        >
+          <div className="chaye-trust__visual" aria-hidden="true">
+            <div className="chaye-trust__route">
+              <span>France</span>
+              <i className="bx bxs-plane-alt"></i>
+              <span>Fort-de-France</span>
             </div>
           </div>
-          <div className="row cat-layout">
-            <div className="col">
-              <div className="h-entry mb-30 v-height gradient">
-                <div
-                  className="featured-img"
-                  style={{ backgroundImage: `url("images/amerique.png")` }}
-                ></div>
 
-                <div className="text">
-                  <h2>Amérique</h2>
-                </div>
-              </div>
-            </div>
-            <div className="col">
-              <div className="h-entry mb-30 v-height gradient">
-                <div
-                  className="featured-img"
-                  style={{ backgroundImage: `url("images/afrique.png")` }}
-                ></div>
+          <div className="chaye-trust__content">
+            <p className="chaye-home__eyebrow">La sécurité à chaque étape</p>
+            <h2 id="trust-title">Un lien humain, un cadre rassurant.</h2>
+            <p className="chaye-trust__lead">
+              Vous gardez la visibilité et le contrôle, du premier échange à la
+              remise au destinataire.
+            </p>
 
-                <div className="text">
-                  <h2>Afrique</h2>
+            <ul>
+              <li>
+                <i className="bx bx-id-card" aria-hidden="true"></i>
+                <div>
+                  <strong>Communauté vérifiée</strong>
+                  <span>
+                    Email et téléphone confirmés avant la transaction.
+                  </span>
                 </div>
-              </div>
-            </div>
-            <div className="col">
-              <div className="h-entry mb-30 v-height gradient">
-                <div
-                  className="featured-img"
-                  style={{ backgroundImage: `url("images/asie.png")` }}
-                ></div>
-
-                <div className="text">
-                  <h2>Asie</h2>
+              </li>
+              <li>
+                <i className="bx bx-lock-alt" aria-hidden="true"></i>
+                <div>
+                  <strong>Paiement protégé</strong>
+                  <span>
+                    Les fonds sont libérés après la livraison confirmée.
+                  </span>
                 </div>
-              </div>
-            </div>
+              </li>
+              <li>
+                <i className="bx bx-package" aria-hidden="true"></i>
+                <div>
+                  <strong>Contenu déclaré</strong>
+                  <span>
+                    Chaque colis est décrit et accepté avant sa prise en charge.
+                  </span>
+                </div>
+              </li>
+            </ul>
           </div>
-        </div>
-      </div>
+        </section>
+
+        <section
+          className="chaye-corridors chaye-home__section"
+          id="destinations"
+          aria-labelledby="corridors-title"
+        >
+          <div className="chaye-corridors__intro">
+            <p className="chaye-home__eyebrow">
+              Deux corridors, une communauté
+            </p>
+            <h2 id="corridors-title">
+              Plus proche des familles, ici comme là-bas.
+            </h2>
+          </div>
+
+          <div className="chaye-corridors__routes">
+            <article>
+              <div className="chaye-corridors__number">01</div>
+              <div>
+                <p>Corridor outre-mer</p>
+                <h3>France ↔ Antilles & territoires ultramarins</h3>
+                <span>
+                  Martinique · Guadeloupe · Guyane · Réunion · Mayotte
+                </span>
+              </div>
+            </article>
+            <article>
+              <div className="chaye-corridors__number">02</div>
+              <div>
+                <p>Corridor Afrique francophone</p>
+                <h3>France ↔ Afrique de l’Ouest & centrale</h3>
+                <span>Sénégal · Mali · Côte d’Ivoire · Cameroun · Guinée</span>
+              </div>
+            </article>
+          </div>
+
+          <Link className="chaye-text-link" to="/announcements">
+            Explorer les trajets disponibles
+            <i className="bx bx-right-arrow-alt" aria-hidden="true"></i>
+          </Link>
+        </section>
+
+        <section className="chaye-final-cta" aria-labelledby="final-cta-title">
+          <p className="chaye-home__eyebrow">
+            Prêt à faire voyager l’essentiel ?
+          </p>
+          <h2 id="final-cta-title">Le prochain trajet commence ici.</h2>
+          <div>
+            <Link
+              className="chaye-button chaye-button--light"
+              to="/packages/new"
+            >
+              Envoyer un colis
+            </Link>
+            <Link
+              className="chaye-button chaye-button--outline"
+              to="/announcements/new"
+            >
+              Proposer un trajet
+            </Link>
+          </div>
+        </section>
+      </main>
+
+      <footer className="chaye-home__footer">
+        <Link className="chaye-home__brand" to="/">
+          Chayé<span aria-hidden="true">.</span>
+        </Link>
+        <p>La confiance voyage avec vous.</p>
+        <nav aria-label="Liens légaux">
+          <Link to="/legal-notice">Mentions légales</Link>
+          <Link to="/privacy-policy">Confidentialité</Link>
+        </nav>
+        <span>© 2026 Chayé</span>
+      </footer>
     </div>
   );
 }
