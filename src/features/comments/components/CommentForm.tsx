@@ -30,9 +30,14 @@ function CommentForm({ announcementId }: CommentFormProps) {
       <Button variant="primary" onClick={handleShow}>
         Commenter
       </Button>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Commentaires</Modal.Title>
+      <Modal
+        animation={import.meta.env.MODE !== 'test'}
+        aria-labelledby="comment-dialog-title"
+        show={show}
+        onHide={handleClose}
+      >
+        <Modal.Header closeButton closeLabel="Fermer">
+          <Modal.Title id="comment-dialog-title">Commentaires</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form action={getApiUrl('/comments')} method="post">
@@ -53,7 +58,9 @@ function CommentForm({ announcementId }: CommentFormProps) {
             <label htmlFor="ratingStars">Notez notre site</label>
             <StarRating name="ratingStars" />
             <div className="comment">
-              <h3>Laissez un commentaire :</h3>
+              <label className="h3" htmlFor="commentText">
+                Laissez un commentaire :
+              </label>
               <textarea id="commentText" name="content" />
             </div>
             <Button className="sumau" type="submit">

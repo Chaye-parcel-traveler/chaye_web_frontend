@@ -43,9 +43,14 @@ function MessageForm({ recipient }: MessageFormProps) {
       <Button variant="primary" onClick={handleShow}>
         message
       </Button>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Message</Modal.Title>
+      <Modal
+        animation={import.meta.env.MODE !== 'test'}
+        aria-labelledby="message-dialog-title"
+        show={show}
+        onHide={handleClose}
+      >
+        <Modal.Header closeButton closeLabel="Fermer">
+          <Modal.Title id="message-dialog-title">Message</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit}>
@@ -69,10 +74,11 @@ function MessageForm({ recipient }: MessageFormProps) {
                 readOnly
               />
               <div>
-                <label htmlFor="texte" className="fst-italic">
+                <label htmlFor="message-text" className="fst-italic">
                   Message:
                 </label>
                 <textarea
+                  id="message-text"
                   name="message"
                   className="form-control"
                   rows={4}

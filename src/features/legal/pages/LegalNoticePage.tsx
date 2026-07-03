@@ -1,6 +1,7 @@
 import './LegalNoticePage.css';
 import Footer from '../../../components/Footer';
 import Header from '../../../components/Header';
+import { Link } from 'react-router-dom';
 function LegalNoticePage() {
   return (
     <div className="content">
@@ -31,7 +32,7 @@ function LegalNoticePage() {
           <h2>4. Politique de confidentialité</h2>
           <p>
             Vous pouvez consulter notre politique de confidentialité{' '}
-            <a href="/privacy-policy">ici</a>.
+            <Link to="/privacy-policy">ici</Link>.
           </p>
 
           <h2>5. Cookies</h2>
@@ -60,7 +61,7 @@ function LegalNoticePage() {
           <h2>8. Support</h2>
           <p>
             Pour toute question ou assistance, vous pouvez nous contacter via
-            notre page de <a href="/support">support</a>.
+            notre page de <Link to="/support">support</Link>.
           </p>
         </div>
         <Footer />

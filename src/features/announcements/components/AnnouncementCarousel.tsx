@@ -94,7 +94,13 @@ function AnnouncementCarousel() {
               state.announcements.length === 0 ? (
               `Pas d'annonces`
             ) : (
-              <Carousel className="wide-slider-testimonial" interval={3500}>
+              <Carousel
+                className="wide-slider-testimonial"
+                indicators={false}
+                interval={3500}
+                nextLabel="Annonce suivante"
+                prevLabel="Annonce précédente"
+              >
                 {state.announcements.map((announcement) => (
                   <Carousel.Item
                     key={announcement.id}
@@ -105,7 +111,11 @@ function AnnouncementCarousel() {
                       <div className="author">
                         <img
                           src="images/img.png"
-                          alt="Free template by TemplateUX"
+                          alt={`Annonce à destination de ${
+                            announcement.arrivingAt ??
+                            announcement.arriving_at ??
+                            'destination non précisée'
+                          }`}
                         />
                         <div className="txt-alaune">
                           <div>

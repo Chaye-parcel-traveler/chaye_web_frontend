@@ -52,6 +52,10 @@ describe('protected profile route', () => {
       await screen.findByRole('heading', { name: 'Martin Léa' })
     ).toBeInTheDocument();
     expect(screen.getByText(/lea@example\.test/)).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /Modifier mes informations/ })
+    ).toHaveAttribute('href', '/members/42/edit');
+    expect(screen.getByAltText('Profil de Léa Martin')).toBeInTheDocument();
   });
 
   it('redirects to login when no session is present', async () => {

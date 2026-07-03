@@ -62,7 +62,7 @@ function ConversationPanel() {
           ...state,
           loading: false,
           members: [],
-          error: 'Something went wrong with members!',
+          error: 'Impossible de charger les membres.',
         };
       default:
         return state;
@@ -111,7 +111,7 @@ function ConversationPanel() {
           ...state,
           loading: false,
           messages: [],
-          error: 'Something went wrong with messages!',
+          error: 'Impossible de charger les messages.',
         };
       default:
         return state;
@@ -183,53 +183,62 @@ function ConversationPanel() {
   return (
     <div>
       <div className="list-group">
-        {state.loading || membersState.loading
-          ? 'Loading...'
-          : filteredMessages.map((message, index) => {
-              return (
-                <div className="boxMessage rounded mb-4" key={index}>
-                  <div className="d-flex align-items-start gap-3 p-3">
-                    <div>
-                      {membersState.members.map((member) => {
-                        if (member.email === message.sender) {
-                          return (
-                            <div key={member.email}>
-                              <img
-                                src={getApiAssetUrl(member.imagename)}
-                                alt="Membre"
-                                className="rounded-circle"
-                                width={'70px'}
-                              />
-                              <h3 className="text-center">
-                                {member.firstname} {member.lastname}
-                              </h3>
-                            </div>
-                          );
-                        }
-                        return null;
-                      })}
-                    </div>
-                    <strong>{message.message}</strong>
+        {state.error || membersState.error ? (
+          <p role="alert">{state.error || membersState.error}</p>
+        ) : state.loading || membersState.loading ? (
+          <p role="status">Chargement des messages…</p>
+        ) : (
+          filteredMessages.map((message, index) => {
+            return (
+              <div className="boxMessage rounded mb-4" key={index}>
+                <div className="d-flex align-items-start gap-3 p-3">
+                  <div>
+                    {membersState.members.map((member) => {
+                      if (member.email === message.sender) {
+                        const memberName =
+                          `${member.firstname ?? ''} ${member.lastname ?? ''}`.trim();
+                        return (
+                          <div key={member.email}>
+                            <img
+                              src={getApiAssetUrl(member.imagename)}
+                              alt={`Profil de ${memberName}`}
+                              className="rounded-circle"
+                              width="70"
+                            />
+                            <h3 className="text-center">{memberName}</h3>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })}
                   </div>
-
-                  <hr />
-                  <div className="text-center">
-                    <Button
-                      variant="primary"
-                      onClick={() => handleOpenReplyDialog(message.sender)}
-                      className="m-2"
-                    >
-                      Répondre
-                    </Button>
-                  </div>
+                  <strong>{message.message}</strong>
                 </div>
-              );
-            })}
+
+                <hr />
+                <div className="text-center">
+                  <Button
+                    variant="primary"
+                    onClick={() => handleOpenReplyDialog(message.sender)}
+                    className="m-2"
+                  >
+                    Répondre
+                  </Button>
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
 
-      <Modal show={openReplyDialog} onHide={handleCloseReplyDialog}>
-        <Modal.Header closeButton>
-          <Modal.Title>Répondre au message</Modal.Title>
+      <Modal
+        animation={import.meta.env.MODE !== 'test'}
+        aria-labelledby="reply-dialog-title"
+        show={openReplyDialog}
+        onHide={handleCloseReplyDialog}
+      >
+        <Modal.Header closeButton closeLabel="Fermer">
+          <Modal.Title id="reply-dialog-title">Répondre au message</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {messagesWithRecipient.map((message, index) => (

@@ -34,7 +34,7 @@ function PackageList() {
         return {
           loading: false,
           packages: [],
-          error: 'Something went wrong!!!!!',
+          error: 'Impossible de charger les colis.',
         };
       default:
         return state;
@@ -55,34 +55,41 @@ function PackageList() {
   return (
     <React.Fragment>
       <div className="annonce">
-        {state.loading
-          ? 'loading...'
-          : state.packages.map((packages, index) => (
-              <div className="card " key={index}>
-                <div className="card-top ">
-                  <img src={getApiAssetUrl(packages.picture)} alt="" />
-                </div>
-                <div className="card-body">
-                  <p className="card-text ">
-                    Départ ...........
-                    <b className="violet">{packages.departureCity}</b> <br />
-                    Contenu ..........{' '}
-                    <b className="violet">{packages.content}</b>
-                    <br />
-                    Dimensions.........{' '}
-                    <b className="violet">
-                      {packages.weight} kg x{packages.size} cm
-                    </b>
-                    <br />
-                  </p>
-                  <span className="text-secondary text-center">
-                    {' '}
-                    {formatFrenchDateTime(packages.creationDate)}
-                  </span>
-                  <br />
-                </div>
+        {state.error ? (
+          <p role="alert">{state.error}</p>
+        ) : state.loading ? (
+          <p role="status">Chargement des colis…</p>
+        ) : (
+          state.packages.map((packages, index) => (
+            <div className="card " key={index}>
+              <div className="card-top ">
+                <img
+                  src={getApiAssetUrl(packages.picture)}
+                  alt={`Colis contenant ${packages.content ?? 'un contenu non précisé'}`}
+                />
               </div>
-            ))}
+              <div className="card-body">
+                <p className="card-text ">
+                  Départ ...........
+                  <b className="violet">{packages.departureCity}</b> <br />
+                  Contenu ..........{' '}
+                  <b className="violet">{packages.content}</b>
+                  <br />
+                  Dimensions.........{' '}
+                  <b className="violet">
+                    {packages.weight} kg x{packages.size} cm
+                  </b>
+                  <br />
+                </p>
+                <span className="text-secondary text-center">
+                  {' '}
+                  {formatFrenchDateTime(packages.creationDate)}
+                </span>
+                <br />
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </React.Fragment>
   );

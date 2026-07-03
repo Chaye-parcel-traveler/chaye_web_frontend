@@ -17,6 +17,13 @@ test('uses canonical destinations and preserves the sidebar layout contract', as
     </MemoryRouter>
   );
 
+  expect(
+    screen.getByRole('navigation', { name: 'Navigation principale' })
+  ).toBeInTheDocument();
+  expect(screen.getByRole('searchbox', { name: 'Rechercher' })).toHaveAttribute(
+    'id',
+    'navigation-search'
+  );
   expect(screen.getByRole('link', { name: /Annonces/ })).toHaveAttribute(
     'href',
     '/announcements'
@@ -51,6 +58,7 @@ test('uses canonical destinations and preserves the sidebar layout contract', as
 
   const toggle = screen.getByRole('button', { name: 'Ouvrir le menu' });
   expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  expect(toggle).toHaveAttribute('aria-controls', 'primary-navigation');
   await user.click(toggle);
   expect(
     screen.getByRole('button', { name: 'Fermer le menu' })

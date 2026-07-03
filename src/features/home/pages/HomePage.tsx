@@ -26,18 +26,6 @@ function HomePage() {
       <Header />
       {/*-- fin block choix--> */}
       <InsurancePanel />
-      {/*
-                    <div className='d-flex justify-content-between'>
-                        <h2 className='titre'>A la une</h2>
-                        <h4 className='text-danger fw-bold text-decoration-underline'>Favoris</h4>
-                    </div>
-                    <FavoritesPage />
-
-                    <div className="btnAnnonce">
-                        <a href="/announcements" className="btn" >Voir tous les annonces</a>
-                        <a href="/carte" className="btn" >Carte intéractive</a>
-                    </div>
-                    */}
       {/*---Block AlaUne-->*/}
       <AnnouncementCarousel />
       {/*---Block avis--*/}

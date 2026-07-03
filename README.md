@@ -92,6 +92,19 @@ Docker n'est pas garantie.
 Les dépendances vont des modules partagés vers les features, puis vers `app`.
 Les nouvelles dépendances directes entre features sont à éviter.
 
+## Convention UI
+
+Bootstrap 5, importé depuis npm dans `src/main.tsx`, fournit les styles et la
+grille de base. React-Bootstrap est utilisé pour les composants interactifs qui
+bénéficient de sa gestion des rôles, du clavier et du focus. Un composant React
+local simple reste préférable lorsqu'aucun composant React-Bootstrap adapté
+n'existe.
+
+MUI, Emotion, Semantic UI et les bibliothèques de carrousel concurrentes ne
+doivent pas être réintroduits. Les navigations internes utilisent `Link` ou
+`NavLink` de React Router ; les éléments `a` sont réservés aux destinations
+externes, téléchargements et protocoles non gérés par l'application.
+
 ## Contribution
 
 1. Partir d'une issue GitHub avec un périmètre et des critères vérifiables.

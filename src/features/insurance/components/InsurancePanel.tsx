@@ -21,16 +21,19 @@ function InsurancePanel() {
                 notre plateforme collaborative, vous pouvez désormais expédier
                 vos colis en toute tranquillité.
               </p>
-              <span
+              <button
+                type="button"
                 onClick={toggleShowMore}
-                style={{ color: 'blue!important' }}
+                className="btn btn-link p-0"
+                aria-expanded={showMore}
+                aria-controls="insurance-details"
               >
                 {showMore ? 'Réduire' : 'Lire la suite'}
-              </span>
+              </button>
             </div>
             <div className="savoirplus">
               {showMore && (
-                <p className="txtP">
+                <p className="txtP" id="insurance-details">
                   Nous savons à quel point la prise en charge de votre envoi est
                   importante, c'est pourquoi nous nous engageons à veiller sur
                   votre précieux colis à chaque étape du trajet. Avec notre

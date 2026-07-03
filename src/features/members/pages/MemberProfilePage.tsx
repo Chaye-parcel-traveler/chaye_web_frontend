@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './MemberProfilePage.css';
 import Header from '../../../components/Header';
 import ConversationPanel from '../../messaging/components/ConversationPanel';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import apiClient, { getApiAssetUrl } from '../../../lib/api-client';
 import type { Member } from '../member.types';
 
@@ -39,6 +39,8 @@ function MemberProfilePage() {
     return <h1>{error}</h1>;
   }
 
+  const memberId = member._id ?? member.id;
+
   return (
     <div className="content">
       <div className="content-body">
@@ -58,7 +60,7 @@ function MemberProfilePage() {
                     className="rounded-circle"
                     width={'120px'}
                     height={'100px'}
-                    alt="Profil"
+                    alt={`Profil de ${member.firstname ?? ''} ${member.lastname ?? ''}`.trim()}
                   />
                 </div>
                 <h1>
@@ -90,11 +92,11 @@ function MemberProfilePage() {
                 </span>
                 <br />
                 <br />
-                <a className="py-3 m-3" href={`/members/${member._id}/edit`}>
+                <Link className="py-3 m-3" to={`/members/${memberId}/edit`}>
                   <br />
                   <i className="fas fa-pencil-alt"></i> Modifier mes
                   informations
-                </a>
+                </Link>
 
                 <form
                   action={`/members/${member._id}?_method=DELETE`}

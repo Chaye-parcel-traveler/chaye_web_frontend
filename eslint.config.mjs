@@ -54,6 +54,24 @@ export default [
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
+      ...jsxA11y.configs.recommended.rules,
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                '@emotion/*',
+                '@mui/*',
+                'react-material-ui-carousel',
+                'semantic-ui-*',
+              ],
+              message:
+                'Use Bootstrap, React-Bootstrap, or a local React component.',
+            },
+          ],
+        },
+      ],
       'no-extra-semi': 'off',
       'no-unused-vars': [
         'error',
