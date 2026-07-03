@@ -32,14 +32,14 @@ const Navigation = () => {
 
           <ul className="menu-links">
             <li className="nav-link">
-              <a href="#">
+              <a href="/annonces">
                 <i className="bx bx-tada-hover bxs-widget bx-md icon"></i>
                 <span className="text nav-text">Annonces</span>
               </a>
             </li>
 
             <li className="nav-link">
-              <a href="#">
+              <a href="/profil">
                 <i className="bx bx-tada-hover bxs-user-detail bx-md icon"></i>
                 <span className="text nav-text">Mon compte</span>
               </a>
@@ -70,6 +70,13 @@ const Navigation = () => {
               <a href="#">
                 <i className="bx bxs-wallet bx-tada-hover bx-md icon"></i>
                 <span className="text nav-text">Portefeuille</span>
+              </a>
+            </li>
+
+            <li className="nav-link">
+              <a href="/admin">
+                <i className="bx bx-tada-hover bxs-shield bx-md icon"></i>
+                <span className="text nav-text">Admin</span>
               </a>
             </li>
           </ul>

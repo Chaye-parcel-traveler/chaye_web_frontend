@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ReportButton from './ReportButton';
 
 const HeadlineNews = () => {
   return (
@@ -34,6 +35,13 @@ const HeadlineNews = () => {
                         </div>
                       </div>
                     </div>
+                    <ReportAction>
+                      <ReportButton
+                        targetType="announcement"
+                        targetId={`headline-${index + 1}`}
+                        targetLabel="cette annonce"
+                      />
+                    </ReportAction>
                   </blockquote>
                 </Item>
               ))}
@@ -55,7 +63,7 @@ const HeadlineNews = () => {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-4">
-              <a className="btnChaye-purple" href="tous_les_annonces.html">
+              <a className="btnChaye-purple" href="/annonces">
                 Voir tous les annonces
               </a>
             </div>
@@ -93,6 +101,12 @@ const WST = styled.div`
 
 const Item = styled.div`
   scroll-snap-align: start;
+`;
+
+const ReportAction = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
 `;
 
 export default HeadlineNews;

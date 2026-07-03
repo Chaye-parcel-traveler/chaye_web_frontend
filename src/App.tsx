@@ -5,11 +5,16 @@ import Register from './components/Register';
 import Navigation from './components/Navigation';
 import SenderFormular from './components/SendFormular/SenderFormular';
 import CarrierFormular from './components/CarrierFormular';
+import Announces from './components/Announces';
+import ProfileManager from './components/ProfileManager';
+import AdminModeration from './components/AdminModeration';
+import AccountStatusNotice from './components/AccountStatusNotice';
 
 function App() {
   return (
     <>
       <Navigation />
+      <AccountStatusNotice />
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -17,7 +22,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/carrier" element={<CarrierFormular />} />
           <Route path="/sender" element={<SenderFormular />} />
-          {/* <Route path="/profil" element={<ProfilManager />} /> */}
+          <Route path="/annonces" element={<Announces />} />
+          <Route path="/profil" element={<ProfileManager />} />
+          <Route path="/admin" element={<AdminModeration />} />
         </Routes>
       </Router>
     </>
