@@ -39,12 +39,15 @@ function Navbar() {
   };
 
   return (
-    <nav className={`sidebar ${sideBarClose ? 'close' : null}`}>
+    <nav
+      aria-label="Navigation principale"
+      className={`sidebar ${sideBarClose ? 'close' : ''}`}
+    >
       <header>
         <div className="image-text">
           <span className="image">
             <Link to="/">
-              <img src="images/logo.png" alt="Chaye" />
+              <img src="/images/logo.png" alt="Accueil Chaye" />
             </Link>
           </span>
 
@@ -60,54 +63,70 @@ function Navbar() {
           onClick={toggleSidebar}
           aria-label={sideBarClose ? 'Ouvrir le menu' : 'Fermer le menu'}
           aria-expanded={!sideBarClose}
+          aria-controls="primary-navigation"
         ></button>
       </header>
 
-      <div className="menu-bar">
+      <div className="menu-bar" id="primary-navigation">
         <div className="menu">
-          <li
-            className="search-box"
-            onClick={() => {
-              setSideBarClose(false);
-            }}
-          >
-            <i className="bx bx-search icon"></i>
-            <input
-              type="text"
-              placeholder="Rechercher..."
-              onChange={handleSearch}
-            />
-          </li>
+          <ul className="list-unstyled">
+            <li className="search-box">
+              <i className="bx bx-search icon" aria-hidden="true"></i>
+              <label className="visually-hidden" htmlFor="navigation-search">
+                Rechercher
+              </label>
+              <input
+                id="navigation-search"
+                type="search"
+                placeholder="Rechercher..."
+                onChange={handleSearch}
+                onFocus={() => setSideBarClose(false)}
+              />
+            </li>
+          </ul>
 
           <ul className="menu-links">
             <li className="menu-item">
-              <Link to={'/announcements'}>
-                <i className="bx bx-tada-hover bxs-widget bx-md icon"></i>
+              <Link aria-label="Annonces" to="/announcements">
+                <i
+                  className="bx bx-tada-hover bxs-widget bx-md icon"
+                  aria-hidden="true"
+                ></i>
                 <span className="text nav-text">Annonces</span>
               </Link>
             </li>
 
             <li className="menu-item">
               <Link
+                aria-label="Mon compte"
                 to={
                   isLoggedIn && userData ? `/members/${userData.id}` : '/auth'
                 }
               >
-                <i className="bx bx-tada-hover bxs-user-detail bx-md icon"></i>
+                <i
+                  className="bx bx-tada-hover bxs-user-detail bx-md icon"
+                  aria-hidden="true"
+                ></i>
                 <span className="text nav-text">Mon compte</span>
               </Link>
             </li>
 
             <li className="menu-item">
-              <Link to={'/support'}>
-                <i className="bx bx-tada-hover bxs-help-circle bx-md icon"></i>
+              <Link aria-label="Support" to="/support">
+                <i
+                  className="bx bx-tada-hover bxs-help-circle bx-md icon"
+                  aria-hidden="true"
+                ></i>
                 <span className="text nav-text">Support</span>
               </Link>
             </li>
 
             <li className="menu-item">
-              <Link to={'/about'}>
-                <i className="bx bx-tada-hover bxs-info-circle bx-md icon"></i>
+              <Link aria-label="À propos de nous" to="/about">
+                <i
+                  className="bx bx-tada-hover bxs-info-circle bx-md icon"
+                  aria-hidden="true"
+                ></i>
                 <span className="text nav-text">À propos de nous </span>
               </Link>
             </li>
@@ -118,7 +137,10 @@ function Navbar() {
                 aria-disabled="true"
                 aria-label="Mes messages, bientôt disponible"
               >
-                <i className="bx bxs-bell bx-tada-hover bx-md icon"></i>
+                <i
+                  className="bx bxs-bell bx-tada-hover bx-md icon"
+                  aria-hidden="true"
+                ></i>
                 <span className="text nav-text">Mes messages</span>
               </span>
             </li>
@@ -129,7 +151,10 @@ function Navbar() {
                 aria-disabled="true"
                 aria-label="Portefeuille, bientôt disponible"
               >
-                <i className="bx bxs-wallet bx-tada-hover bx-md icon"></i>
+                <i
+                  className="bx bxs-wallet bx-tada-hover bx-md icon"
+                  aria-hidden="true"
+                ></i>
                 <span className="text nav-text">Portefeuille</span>
               </span>
             </li>
@@ -138,20 +163,22 @@ function Navbar() {
 
         <div className="bottom-content">
           {isLoggedIn && (
-            <li>
-              <button
-                type="button"
-                className="logout-button"
-                data-testid="logout-button"
-                onClick={handleLogout}
-              >
-                <i
-                  className="bx bx-log-out bx-tada-hover bx-md icon"
-                  aria-hidden="true"
-                ></i>
-                <span className="text nav-text pointer">Se déconnecter</span>
-              </button>
-            </li>
+            <ul className="list-unstyled">
+              <li>
+                <button
+                  type="button"
+                  className="logout-button"
+                  data-testid="logout-button"
+                  onClick={handleLogout}
+                >
+                  <i
+                    className="bx bx-log-out bx-tada-hover bx-md icon"
+                    aria-hidden="true"
+                  ></i>
+                  <span className="text nav-text pointer">Se déconnecter</span>
+                </button>
+              </li>
+            </ul>
           )}
           {/* <li className="mode">
                 <div className="sun-moon">

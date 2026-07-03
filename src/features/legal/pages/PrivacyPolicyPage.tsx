@@ -1,5 +1,6 @@
 import './PrivacyPolicyPage.css';
 import Header from '../../../components/Header';
+import { Link } from 'react-router-dom';
 
 function PrivacyPolicyPage() {
   return (
@@ -64,7 +65,7 @@ function PrivacyPolicyPage() {
           <p>
             Pour toute question concernant notre politique de confidentialité,
             vous pouvez nous contacter via notre page de{' '}
-            <a href="/support">support</a>.
+            <Link to="/support">support</Link>.
           </p>
         </div>
       </div>

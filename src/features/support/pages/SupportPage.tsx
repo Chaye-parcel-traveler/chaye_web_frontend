@@ -1,5 +1,6 @@
 import './SupportPage.css';
 import Header from '../../../components/Header';
+import { Link } from 'react-router-dom';
 
 function SupportPage() {
   return (
@@ -44,8 +45,8 @@ function SupportPage() {
             </p>
             <h2>FAQ (Foire aux questions) :</h2>
             <p>
-              Consultez notre <a href="/faq">FAQ</a> pour obtenir des réponses
-              aux questions courantes sur l'utilisation de Chaye.
+              Consultez notre <Link to="/faq">FAQ</Link> pour obtenir des
+              réponses aux questions courantes sur l'utilisation de Chaye.
             </p>
           </div>
         </div>

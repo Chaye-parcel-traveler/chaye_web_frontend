@@ -29,7 +29,11 @@ function FavoritesPage() {
 
   return (
     <div className="carousel-container">
-      <Carousel>
+      <Carousel
+        indicators={false}
+        nextLabel="Favori suivant"
+        prevLabel="Favori précédent"
+      >
         {favoriteAnnouncements.length === 0 ? (
           <div>Loading...</div>
         ) : (
@@ -43,7 +47,7 @@ function FavoritesPage() {
                         <div key={member._id}>
                           <img
                             src={getApiAssetUrl(member.imagename)}
-                            alt="Membre"
+                            alt={`Profil de ${member.firstname ?? ''} ${member.lastname ?? ''}`.trim()}
                           />
                         </div>
                       );

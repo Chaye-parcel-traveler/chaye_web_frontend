@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../../../styles/forms.css';
-import { useNavigate } from 'react-router-dom';
 import Footer from '../../../components/Footer';
 import apiClient, { getApiAssetUrl } from '../../../lib/api-client';
 import type { Member } from '../member.types';
@@ -98,9 +97,9 @@ function EditMemberPage() {
   return (
     <div className="content-image2">
       <div className=" d-flex justify-content-center">
-        <a href="/">
+        <Link to="/">
           <img src={'/img/logo.png'} alt="Logo" className="Logo" />
-        </a>
+        </Link>
       </div>
       <div className="content-signUp bg-white container-fluid col-4 my-3 ">
         <div className="m-5 ">
@@ -112,8 +111,11 @@ function EditMemberPage() {
           <form className="signUp" onSubmit={handelSubmit}>
             <input type="hidden" name="_method" value="PUT" />
             <div className="mb-3 ">
-              <label className="form-label">Nom</label>
+              <label className="form-label" htmlFor="member-lastname">
+                Nom
+              </label>
               <input
+                id="member-lastname"
                 type="text"
                 className="form-control "
                 name="lastname"
@@ -122,8 +124,11 @@ function EditMemberPage() {
               />
             </div>
             <div className="mb-3">
-              <label className="form-label">Prénom </label>
+              <label className="form-label" htmlFor="member-firstname">
+                Prénom
+              </label>
               <input
+                id="member-firstname"
                 type="text"
                 className="form-control"
                 name="firstname"
@@ -132,8 +137,11 @@ function EditMemberPage() {
               />
             </div>
             <div className="mb-3">
-              <label className="form-label">Email </label>
+              <label className="form-label" htmlFor="member-email">
+                Email
+              </label>
               <input
+                id="member-email"
                 type="email"
                 className="form-control"
                 name="email"
@@ -143,8 +151,11 @@ function EditMemberPage() {
             </div>
 
             <div className="mb-3">
-              <label className="form-label">Mot de passe </label>
+              <label className="form-label" htmlFor="member-password">
+                Mot de passe
+              </label>
               <input
+                id="member-password"
                 type="password"
                 className="form-control"
                 name="password"
@@ -152,8 +163,11 @@ function EditMemberPage() {
               />
             </div>
             <div className="mb-3">
-              <label className="form-label">Adress </label>
+              <label className="form-label" htmlFor="member-address">
+                Adresse
+              </label>
               <input
+                id="member-address"
                 type="text"
                 className="form-control"
                 name="adress"
@@ -162,8 +176,11 @@ function EditMemberPage() {
               />
             </div>
             <div className="mb-3">
-              <label className="form-label">Téléphone </label>
+              <label className="form-label" htmlFor="member-phone">
+                Téléphone
+              </label>
               <input
+                id="member-phone"
                 type="text"
                 className="form-control"
                 name="phone"
@@ -172,8 +189,11 @@ function EditMemberPage() {
               />
             </div>
             <div className="mb-3">
-              <label className="form-label">Status </label>
+              <label className="form-label" htmlFor="member-status">
+                Statut
+              </label>
               <select
+                id="member-status"
                 name="status"
                 className="form-select"
                 onChange={handelStatusChange}
@@ -185,8 +205,11 @@ function EditMemberPage() {
               </select>
             </div>
             <div className="mb-3">
-              <label className="form-label">Photo</label>
+              <label className="form-label" htmlFor="member-picture">
+                Photo
+              </label>
               <input
+                id="member-picture"
                 type="file"
                 className="form-control"
                 onChange={handelFileChange}

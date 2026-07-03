@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function Footer() {
   return (
     <footer className="">
@@ -6,10 +8,10 @@ function Footer() {
       </div>
       <ul className="lienFooter ">
         <li>
-          <a href="/legal-notice">Mentions légales</a>
+          <Link to="/legal-notice">Mentions légales</Link>
         </li>
         <li>
-          <a href="/privacy-policy">Politiques de confidentialité</a>
+          <Link to="/privacy-policy">Politiques de confidentialité</Link>
         </li>
         <li>
           <span>Tous droits reservés</span>

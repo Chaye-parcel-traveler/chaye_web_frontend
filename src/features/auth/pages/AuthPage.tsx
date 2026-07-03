@@ -391,7 +391,7 @@ function SocialLogin({ googleLogin }: { googleLogin: () => void }) {
       <div className="line"></div>
       <div className="media-options">
         <button type="button" className="field facebook">
-          <i className="bx bxl-facebook facebook-icon"></i>
+          <i className="bx bxl-facebook facebook-icon" aria-hidden="true"></i>
           <span>Se connecter avec Facebook</span>
         </button>
       </div>
@@ -403,7 +403,7 @@ function SocialLogin({ googleLogin }: { googleLogin: () => void }) {
       </div>
       <div className="media-options">
         <button type="button" className="field apple">
-          <i className="bx bxl-apple apple-icon"></i>
+          <i className="bx bxl-apple apple-icon" aria-hidden="true"></i>
           <span>Se connecter avec Apple</span>
         </button>
       </div>
