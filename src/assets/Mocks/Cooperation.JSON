@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "keygen": "key123",
+    "announcementId": 2201,
+    "applicantId": 2301,
+    "carrierId": 2401,
+    "status": "IN_PROGRESS",
+    "createdAt": "2023-07-25T14:48:00.000Z",
+    "updatedAt": "2023-07-25T15:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "keygen": "key456",
+    "announcementId": 2202,
+    "applicantId": 2302,
+    "carrierId": 2402,
+    "status": "COMPLETED",
+    "createdAt": "2023-08-25T14:48:00.000Z",
+    "updatedAt": "2023-08-25T15:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "keygen": "key789",
+    "announcementId": 2203,
+    "applicantId": 2303,
+    "carrierId": 2403,
+    "status": "IN_PROGRESS",
+    "createdAt": "2023-09-25T14:48:00.000Z",
+    "updatedAt": "2023-09-25T15:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "keygen": "key101",
+    "announcementId": 2204,
+    "applicantId": 2304,
+    "carrierId": 2404,
+    "status": "COMPLETED",
+    "createdAt": "2023-10-25T14:48:00.000Z",
+    "updatedAt": "2023-10-25T15:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "keygen": "key112",
+    "announcementId": 2205,
+    "applicantId": 2305,
+    "carrierId": 2405,
+    "status": "IN_PROGRESS",
+    "createdAt": "2023-11-25T14:48:00.000Z",
+    "updatedAt": "2023-11-25T15:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "keygen": "key131",
+    "announcementId": 2206,
+    "applicantId": 2306,
+    "carrierId": 2406,
+    "status": "COMPLETED",
+    "createdAt": "2023-12-25T14:48:00.000Z",
+    "updatedAt": "2023-12-25T15:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "keygen": "key415",
+    "announcementId": 2207,
+    "applicantId": 2307,
+    "carrierId": 2407,
+    "status": "IN_PROGRESS",
+    "createdAt": "2024-01-25T14:48:00.000Z",
+    "updatedAt": "2024-01-25T15:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "keygen": "key161",
+    "announcementId": 2208,
+    "applicantId": 2308,
+    "carrierId": 2408,
+    "status": "COMPLETED",
+    "createdAt": "2024-02-25T14:48:00.000Z",
+    "updatedAt": "2024-02-25T15:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "keygen": "key718",
+    "announcementId": 2209,
+    "applicantId": 2309,
+    "carrierId": 2409,
+    "status": "IN_PROGRESS",
+    "createdAt": "2024-03-25T14:48:00.000Z",
+    "updatedAt": "2024-03-25T15:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "keygen": "key920",
+    "announcementId": 2210,
+    "applicantId": 2310,
+    "carrierId": 2410,
+    "status": "COMPLETED",
+    "createdAt": "2024-04-25T14:48:00.000Z",
+    "updatedAt": "2024-04-25T15:00:00.000Z"
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "bank_account_id": 1801,
+    "wallet": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    "createdAt": "2023-07-25T14:48:00.000Z",
+    "updatedAt": "2023-07-25T15:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "bank_account_id": 1802,
+    "wallet": "12cbQLTFMXRnSzktFkuoG3eHoMeFtpTu3S",
+    "createdAt": "2023-08-25T14:48:00.000Z",
+    "updatedAt": "2023-08-25T15:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "bank_account_id": 1803,
+    "wallet": "1Ez69SnzzmePmZX3WpEzMKTrcBF2gpNQ55",
+    "createdAt": "2023-09-25T14:48:00.000Z",
+    "updatedAt": "2023-09-25T15:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "bank_account_id": 1804,
+    "wallet": "1Cdid9KFAaatwczBwBttQcwXYCpvK8h7FK",
+    "createdAt": "2023-10-25T14:48:00.000Z",
+    "updatedAt": "2023-10-25T15:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "bank_account_id": 1805,
+    "wallet": "1CounterpartyXXXXXXXXXXXXXXXUWLpVr",
+    "createdAt": "2023-11-25T14:48:00.000Z",
+    "updatedAt": "2023-11-25T15:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "bank_account_id": 1806,
+    "wallet": "1dice8EMZmqKvrGE4Qc9bUFf9PX3xaYDp",
+    "createdAt": "2023-12-25T14:48:00.000Z",
+    "updatedAt": "2023-12-25T15:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "bank_account_id": 1807,
+    "wallet": "1BoatSLRHtKNngkdXEeobR76b53LETtpyT",
+    "createdAt": "2024-01-25T14:48:00.000Z",
+    "updatedAt": "2024-01-25T15:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "bank_account_id": 1808,
+    "wallet": "1CounterpartyXXXXXXXXXXXXXXXUWLpVr",
+    "createdAt": "2024-02-25T14:48:00.000Z",
+    "updatedAt": "2024-02-25T15:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "bank_account_id": 1809,
+    "wallet": "1dice8EMZmqKvrGE4Qc9bUFf9PX3xaYDp",
+    "createdAt": "2024-03-25T14:48:00.000Z",
+    "updatedAt": "2024-03-25T15:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "bank_account_id": 1810,
+    "wallet": "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
+    "createdAt": "2024-04-25T14:48:00.000Z",
+    "updatedAt": "2024-04-25T15:00:00.000Z"
+  }
+]

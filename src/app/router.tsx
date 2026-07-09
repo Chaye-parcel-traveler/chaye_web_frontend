@@ -1,22 +1,39 @@
 import { lazy, Suspense } from 'react';
-import { Navigate, Route, Routes, useParams } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes, useParams } from 'react-router-dom';
 
 import MainLayout from './layouts/MainLayout';
+import AccountStatusNotice from '../components/AccountStatusNotice';
+import Navigation from '../components/Navigation';
 
 const AboutPage = lazy(() => import('../features/about/pages/AboutPage'));
 const AnnouncementsPage = lazy(
   () => import('../features/announcements/pages/AnnouncementsPage')
 );
+const AdminModeration = lazy(() => import('../components/AdminModeration'));
 const NewAnnouncementPage = lazy(
   () => import('../features/announcements/pages/NewAnnouncementPage')
 );
 const AuthPage = lazy(() => import('../features/auth/pages/AuthPage'));
+const CarrierFormular = lazy(() => import('../components/CarrierFormular'));
 const HomePage = lazy(() => import('../features/home/pages/HomePage'));
 const LegalNoticePage = lazy(
   () => import('../features/legal/pages/LegalNoticePage')
 );
+const LegacyAnnounces = lazy(() => import('../components/Announces'));
+const LegacyHome = lazy(() => import('../components/Home'));
+const LegacyLogin = lazy(() => import('../components/Login'));
+const LegacyRegister = lazy(() => import('../components/Register'));
+const MessageThread = lazy(() => import('../components/MessageThread'));
+const MessagesList = lazy(() => import('../components/MessagesList'));
 const PrivacyPolicyPage = lazy(
   () => import('../features/legal/pages/PrivacyPolicyPage')
+);
+const ProfileAnnouncements = lazy(
+  () => import('../components/ProfileAnnouncements')
+);
+const ProfileManager = lazy(() => import('../components/ProfileManager'));
+const SenderFormular = lazy(
+  () => import('../components/SendFormular/SenderFormular')
 );
 const EditMemberPage = lazy(
   () => import('../features/members/pages/EditMemberPage')
@@ -50,6 +67,16 @@ function EditMemberRedirect() {
 function EditPackageRedirect() {
   const { id } = useParams();
   return <Navigate replace to={`/packages/${id}/edit`} />;
+}
+
+function FunctionalLayout() {
+  return (
+    <>
+      <Navigation />
+      <AccountStatusNotice />
+      <Outlet />
+    </>
+  );
 }
 
 function AppRouter() {
@@ -102,6 +129,22 @@ function AppRouter() {
             element={<Navigate replace to="/privacy-policy" />}
           />
           <Route path="*" element={<NotFoundPage />} />
+        </Route>
+        <Route element={<FunctionalLayout />}>
+          <Route path="/fonctionnality-bases" element={<LegacyHome />} />
+          <Route path="/login" element={<LegacyLogin />} />
+          <Route path="/register" element={<LegacyRegister />} />
+          <Route path="/carrier" element={<CarrierFormular />} />
+          <Route path="/sender" element={<SenderFormular />} />
+          <Route path="/annonces" element={<LegacyAnnounces />} />
+          <Route path="/profil" element={<ProfileManager />} />
+          <Route path="/profil/annonces" element={<ProfileAnnouncements />} />
+          <Route path="/profil/messages" element={<MessagesList />} />
+          <Route
+            path="/profil/messages/:discussionId"
+            element={<MessageThread />}
+          />
+          <Route path="/admin" element={<AdminModeration />} />
         </Route>
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/loginSignup" element={<Navigate replace to="/auth" />} />

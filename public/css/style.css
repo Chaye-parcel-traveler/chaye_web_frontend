@@ -15,6 +15,7 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -122,16 +123,6 @@ h2 {
   margin-top: 10px;
 }
 
-.sidebar .menu-links {
-  margin: 0;
-  padding: 0;
-}
-
-.sidebar .menu-item {
-  width: 100%;
-  padding: 0;
-}
-
 .sidebar header .image,
 .sidebar .icon {
   min-width: 60px;
@@ -164,7 +155,6 @@ h2 {
 
 .sidebar.close .text {
   opacity: 0;
-  visibility: hidden;
 }
 /* =========================== */
 
@@ -198,9 +188,21 @@ header .image-text .profession {
   justify-content: center;
 }
 
+.sidebar header .brand-logo {
+  align-items: center;
+  display: inline-flex;
+  height: 54px;
+  justify-content: center;
+  width: 54px;
+}
+
 .sidebar header .image img {
-  width: 40px;
-  border-radius: 6px;
+  border-radius: 0;
+  display: block;
+  height: 48px;
+  max-width: 48px;
+  object-fit: contain;
+  width: auto;
 }
 
 .sidebar header .toggle {
@@ -218,8 +220,6 @@ header .image-text .profession {
   justify-content: center;
   font-size: 22px;
   cursor: pointer;
-  border: 0;
-  padding: 0;
   transition: var(--tran-05);
 }
 
@@ -254,8 +254,7 @@ body.dark .sidebar header .toggle {
   font-weight: 500;
   transition: var(--tran-05);
 }
-.sidebar li > a,
-.sidebar .nav-item-content {
+.sidebar li a {
   list-style: none;
   height: 100%;
   background-color: transparent;
@@ -268,41 +267,15 @@ body.dark .sidebar header .toggle {
   transition: var(--tran-03);
 }
 
-.sidebar .nav-item-content {
-  cursor: default;
-}
-
-.sidebar .logout-button {
-  align-items: center;
-  background: transparent;
-  border: 0;
-  color: inherit;
-  cursor: pointer;
-  display: flex;
-  height: 100%;
-  padding: 0;
-  text-align: left;
-  width: 100%;
-}
-
-.sidebar .logout-button:hover {
+.sidebar li a:hover {
   background-color: var(--color-purple);
 }
-
-.sidebar .logout-button:hover .icon,
-.sidebar .logout-button:hover .text {
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text {
   color: var(--color-white);
 }
-
-.sidebar li > a:hover {
-  background-color: var(--color-purple);
-}
-.sidebar li > a:hover .icon,
-.sidebar li > a:hover .text {
-  color: var(--color-white);
-}
-body.dark .sidebar li > a:hover .icon,
-body.dark .sidebar li > a:hover .text {
+body.dark .sidebar li a:hover .icon,
+body.dark .sidebar li a:hover .text {
   color: var(--text-color);
 }
 
@@ -398,7 +371,7 @@ body.dark .switch::before {
 
 .sidebar.close ~ .home {
   left: 78px;
-  height: 100vh;
+  height: fit-content;
   width: calc(100% - 78px);
 }
 body.dark .home .text {
@@ -464,6 +437,11 @@ body.dark .home .text {
   align-items: center;
 }
 .btnChaye:hover {
+  background: var(--color-purple);
+  color: #fff;
+}
+
+.btnChaye-active {
   background: var(--color-purple);
   color: #fff;
 }
@@ -1265,8 +1243,7 @@ svg {
   border-radius: 5px;
   background: #ffffff;
   padding: 70px 70px;
-  /* margin: -160px 20px 0; */
-  margin-top: -7.25rem !important;
+  margin: -160px 20px 0;
   position: relative;
   width: 560px;
 }

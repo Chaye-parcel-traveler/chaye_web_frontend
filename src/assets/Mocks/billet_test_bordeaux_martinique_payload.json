@@ -1,0 +1,22 @@
+{
+  "qr_code_payload": {
+    "type": "TEST_BOARDING_PASS",
+    "passengerName": "TEST / JONATHAN",
+    "departureAirportCode": "BOD",
+    "departureAirportName": "Bordeaux-Mérignac",
+    "arrivalAirportCode": "FDF",
+    "arrivalAirportName": "Martinique Aimé Césaire",
+    "flightNumber": "CY972",
+    "departureDate": "2026-09-18",
+    "departureTime": "08:45",
+    "boardingTime": "08:05",
+    "arrivalTime": "14:20",
+    "gate": "A12",
+    "seat": "12A",
+    "bookingReference": "TEST7B",
+    "baggage": "1 PC",
+    "validity": "SPECIMEN_TEST_ONLY_NON_VALID_FOR_TRAVEL"
+  },
+  "data_matrix_payload": "TESTBP|PAX=TEST/JONATHAN|FROM=BOD|TO=FDF|FLT=CY972|DATE=20260918|DEP=0845|BDG=0805|GATE=A12|SEAT=12A|REF=TEST7B",
+  "note": "SPECIMEN / TEST ONLY / NON VALABLE POUR VOYAGE"
+}

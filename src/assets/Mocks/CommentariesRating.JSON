@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "cooperation_key": "coop123",
+    "member_id": 801,
+    "rating_stars": 5,
+    "content": "Excellent service, very satisfied.",
+    "member_cooperation_status": "sender",
+    "createdAt": "2023-07-25T14:48:00.000Z",
+    "updatedAt": "2023-07-25T15:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "cooperation_key": "coop456",
+    "member_id": 802,
+    "rating_stars": 4,
+    "content": "Good service, but room for improvement.",
+    "member_cooperation_status": "carrier",
+    "createdAt": "2023-08-25T14:48:00.000Z",
+    "updatedAt": "2023-08-25T15:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "cooperation_key": "coop789",
+    "member_id": 803,
+    "rating_stars": 3,
+    "content": "Average service.",
+    "member_cooperation_status": "recipient",
+    "createdAt": "2023-09-25T14:48:00.000Z",
+    "updatedAt": "2023-09-25T15:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "cooperation_key": "coop101",
+    "member_id": 804,
+    "rating_stars": 5,
+    "content": "Fantastic service, highly recommend.",
+    "member_cooperation_status": "sender",
+    "createdAt": "2023-10-25T14:48:00.000Z",
+    "updatedAt": "2023-10-25T15:00:00.000Z"
+  },
+  {
+    "id": 5,
+    "cooperation_key": "coop112",
+    "member_id": 805,
+    "rating_stars": 2,
+    "content": "Below average service.",
+    "member_cooperation_status": "carrier",
+    "createdAt": "2023-11-25T14:48:00.000Z",
+    "updatedAt": "2023-11-25T15:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "cooperation_key": "coop131",
+    "member_id": 806,
+    "rating_stars": 1,
+    "content": "Very poor service.",
+    "member_cooperation_status": "recipient",
+    "createdAt": "2023-12-25T14:48:00.000Z",
+    "updatedAt": "2023-12-25T15:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "cooperation_key": "coop415",
+    "member_id": 807,
+    "rating_stars": 4,
+    "content": "Good service, will use again.",
+    "member_cooperation_status": "sender",
+    "createdAt": "2024-01-25T14:48:00.000Z",
+    "updatedAt": "2024-01-25T15:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "cooperation_key": "coop161",
+    "member_id": 808,
+    "rating_stars": 3,
+    "content": "Service was okay.",
+    "member_cooperation_status": "carrier",
+    "createdAt": "2024-02-25T14:48:00.000Z",
+    "updatedAt": "2024-02-25T15:00:00.000Z"
+  },
+  {
+    "id": 9,
+    "cooperation_key": "coop718",
+    "member_id": 809,
+    "rating_stars": 5,
+    "content": "Exceptional service.",
+    "member_cooperation_status": "recipient",
+    "createdAt": "2024-03-25T14:48:00.000Z",
+    "updatedAt": "2024-03-25T15:00:00.000Z"
+  },
+  {
+    "id": 10,
+    "cooperation_key": "coop920",
+    "member_id": 810,
+    "rating_stars": 2,
+    "content": "Not satisfied with the service.",
+    "member_cooperation_status": "sender",
+    "createdAt": "2024-04-25T14:48:00.000Z",
+    "updatedAt": "2024-04-25T15:00:00.000Z"
+  }
+]
