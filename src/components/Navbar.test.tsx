@@ -15,6 +15,7 @@ const renderNavbar = (path = '/') =>
 
 beforeEach(() => {
   window.localStorage.clear();
+  window.sessionStorage.clear();
 });
 
 test('uses canonical destinations and preserves the sidebar layout contract', async () => {
@@ -114,7 +115,7 @@ test('logs out through a stable button and clears the stored legacy session', as
   expect(authButton).toHaveAccessibleName('Se déconnecter');
   await user.click(authButton);
 
-  expect(window.localStorage.getItem('chaye_auth_token')).toBeNull();
+  expect(window.sessionStorage.getItem('token')).toBeNull();
   expect(window.localStorage.getItem('chaye_auth_member')).toBeNull();
   expect(screen.getByRole('link', { name: /Créer un compte/ })).toHaveAttribute(
     'href',

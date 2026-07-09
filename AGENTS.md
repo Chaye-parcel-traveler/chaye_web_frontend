@@ -41,6 +41,7 @@ Run locally through Docker Compose:
 ```bash
 docker compose run --rm frontend-tools npm ci
 docker compose run --rm frontend-tools npm run check
+docker compose run --rm frontend-tools npm run coverage
 docker compose build frontend-production
 ```
 

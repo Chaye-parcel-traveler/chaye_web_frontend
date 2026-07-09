@@ -1,4 +1,9 @@
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3333';
+import apiClient, {
+  clearAuthToken,
+  getStoredAuthToken,
+  normalizeApiError,
+  persistAuthToken,
+} from '../../lib/api-client';
 
 type HttpMethod = 'DELETE' | 'GET' | 'PATCH' | 'POST';
 
@@ -178,7 +183,6 @@ export type TchatMessage = {
   updatedAt?: string;
 };
 
-const AUTH_TOKEN_KEY = 'chaye_auth_token';
 const AUTH_MEMBER_KEY = 'chaye_auth_member';
 const AUTH_EVENT = 'chaye-auth-changed';
 
@@ -205,21 +209,21 @@ const request = async <T>(
   path: string,
   options: RequestOptions
 ): Promise<T> => {
-  const headers = new Headers({
+  const headers: Record<string, string> = {
     Accept: 'application/json',
     ...options.headers,
-  });
+  };
 
   if (
     options.body &&
     !(options.body instanceof FormData) &&
     !(options.body instanceof URLSearchParams)
   ) {
-    headers.set('Content-Type', 'application/json');
+    headers['Content-Type'] = 'application/json';
   }
 
   if (options.auth) {
-    if (!headers.has('Authorization')) {
+    if (!headers.Authorization) {
       const token = getAuthToken();
 
       if (!token) {
@@ -228,32 +232,22 @@ const request = async <T>(
         );
       }
 
-      headers.set('Authorization', `Bearer ${token}`);
+      headers.Authorization = `Bearer ${token}`;
     }
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
-    method: options.method,
-    headers,
-    body:
-      options.body &&
-      !(options.body instanceof FormData) &&
-      !(options.body instanceof URLSearchParams)
-        ? JSON.stringify(options.body)
-        : options.body,
-  });
+  try {
+    const response = await apiClient.request<T>({
+      data: options.body,
+      headers,
+      method: options.method,
+      url: path,
+    });
 
-  if (!response.ok) {
-    const payload = await response.json().catch(() => null);
-    const message =
-      payload?.message ??
-      payload?.error ??
-      payload?.errors?.[0]?.message ??
-      'La requête a échoué.';
-    throw new Error(message);
+    return response.data;
+  } catch (error) {
+    throw new Error(normalizeApiError(error).message);
   }
-
-  return response.json().catch(() => undefined as T);
 };
 
 type LooseRecord = Record<string, unknown>;
@@ -585,7 +579,7 @@ const normalizeNullableTchatMessage = (value: unknown) => {
   return normalizeTchatMessage(value);
 };
 
-export const getAuthToken = () => window.localStorage.getItem(AUTH_TOKEN_KEY);
+export const getAuthToken = () => getStoredAuthToken();
 
 export const getStoredMember = () => parseStoredMember();
 
@@ -601,7 +595,7 @@ export const getStoredSession = (): AuthSession | null => {
 };
 
 export const saveAuthSession = (session: AuthSession) => {
-  window.localStorage.setItem(AUTH_TOKEN_KEY, session.token);
+  persistAuthToken(session.token);
   window.localStorage.setItem(AUTH_MEMBER_KEY, JSON.stringify(session.member));
   window.localStorage.setItem('chaye_account_status', session.member.status);
   window.localStorage.setItem('chaye_account_status_reason', '');
@@ -609,7 +603,7 @@ export const saveAuthSession = (session: AuthSession) => {
 };
 
 export const clearAuthSession = () => {
-  window.localStorage.removeItem(AUTH_TOKEN_KEY);
+  clearAuthToken();
   window.localStorage.removeItem(AUTH_MEMBER_KEY);
   window.localStorage.removeItem('chaye_account_status');
   window.localStorage.removeItem('chaye_account_status_reason');

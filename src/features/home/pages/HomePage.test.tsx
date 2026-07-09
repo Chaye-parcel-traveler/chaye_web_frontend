@@ -1,9 +1,15 @@
 import { render, screen } from '@testing-library/react';
+import { HttpResponse, http } from 'msw';
 import { MemoryRouter } from 'react-router-dom';
 
+import { server } from '../../../test/mocks/server';
 import HomePage from './HomePage';
 
 test('renders the fonctionnality_bases home sections and action links', () => {
+  server.use(
+    http.get('*/announcements', () => HttpResponse.json([], { status: 200 }))
+  );
+
   render(
     <MemoryRouter>
       <HomePage />
