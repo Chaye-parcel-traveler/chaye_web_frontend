@@ -1,7 +1,35 @@
+import { FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginMember } from './API/apiManager';
 import LogoChayeSection from './LogoChayeSection';
 import SignInOrUpBy from './SignInOrUpBy';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('codex@chaye.test');
+  const [password, setPassword] = useState('ChayeDemo2026!');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState<'error' | 'idle'>('idle');
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setMessage('');
+
+    try {
+      await loginMember(email, password);
+      navigate('/annonces');
+    } catch (error) {
+      setStatus('error');
+      setMessage(
+        error instanceof Error ? error.message : 'Connexion impossible.',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <LogoChayeSection />
@@ -9,7 +37,6 @@ const Login = () => {
         <div className="form login">
           <div className="form-content">
             <header>
-              {/* <h2>Content de vous revoir</h2> */}
               <h4
                 style={{
                   fontSize: '17px!important',
@@ -19,9 +46,16 @@ const Login = () => {
                 Connectez-vous à votre compte
               </h4>
             </header>
-            <form action="#">
+            <form onSubmit={handleSubmit}>
               <div className="field input-field">
-                <input type="email" placeholder="Email" className="input" />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="input"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
+                />
               </div>
 
               <div className="field input-field">
@@ -29,6 +63,9 @@ const Login = () => {
                   type="password"
                   placeholder="Mot de passe"
                   className="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
                 />
                 <i className="bx bx-hide eye-icon"></i>
               </div>
@@ -38,28 +75,36 @@ const Login = () => {
                 style={{ display: 'flex', justifyContent: 'space-between' }}
               >
                 <div>
-                  {' '}
                   <input
                     type="checkbox"
-                    id="scales"
-                    name="scales"
+                    id="remember"
+                    name="remember"
                     checked
-                  />{' '}
+                    readOnly
+                  />
                   <span className="serappeller">Se rappeler de moi</span>
                 </div>
                 <div>
-                  {' '}
                   <a href="#" className="forgot-pass">
                     Mot de passe oublié
                   </a>
                 </div>
               </div>
 
+              {message ? (
+                <p
+                  className={
+                    status === 'error' ? 'form-submit-message error' : ''
+                  }
+                  style={{ marginTop: 14 }}
+                >
+                  {message}
+                </p>
+              ) : null}
+
               <div className="field button-field">
-                <button className="btnValider">
-                  <a href="#" style={{ textDecoration: 'none', color: '#fff' }}>
-                    Valider
-                  </a>
+                <button className="btnValider" disabled={isSubmitting}>
+                  {isSubmitting ? 'Connexion...' : 'Valider'}
                 </button>
               </div>
             </form>
@@ -68,8 +113,7 @@ const Login = () => {
               <span>
                 Vous n’avez pas de compte ?
                 <a href="/register" className="link signup-link">
-                  {' '}
-                  Créer votre compte{' '}
+                  Créer votre compte
                 </a>
               </span>
             </div>

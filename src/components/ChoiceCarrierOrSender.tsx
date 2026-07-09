@@ -1,3 +1,7 @@
+/* eslint-disable react/no-unescaped-entities */
+
+import { NavLink } from 'react-router-dom';
+
 const ChoiceCarrierOrSender = () => {
   return (
     <div className="container">
@@ -10,14 +14,24 @@ const ChoiceCarrierOrSender = () => {
             <div className="container">
               <div className="row justify-content-center">
                 <div className="col-4">
-                  <a className="btnChaye" href="/sender">
+                  <NavLink
+                    className={({ isActive }) =>
+                      `btnChaye${isActive ? ' btnChaye-active' : ''}`
+                    }
+                    to="/sender"
+                  >
                     J'expédie
-                  </a>
+                  </NavLink>
                 </div>
                 <div className="col-4">
-                  <a className="btnChaye" href="/carrier">
+                  <NavLink
+                    className={({ isActive }) =>
+                      `btnChaye${isActive ? ' btnChaye-active' : ''}`
+                    }
+                    to="/carrier"
+                  >
                     Je transporte
-                  </a>
+                  </NavLink>
                 </div>
               </div>
             </div>

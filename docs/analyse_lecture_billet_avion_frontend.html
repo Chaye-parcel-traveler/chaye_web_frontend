@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Analyse MVP lecture de billet avion - React + Vite</title>
+    <style>
+      @page {
+        margin: 22mm 18mm;
+      }
+
+      body {
+        color: #1f1f1f;
+        font-family: Arial, sans-serif;
+        font-size: 12pt;
+        line-height: 1.48;
+      }
+
+      h1 {
+        color: #4f4294;
+        font-size: 24pt;
+        margin: 0 0 8mm;
+      }
+
+      h2 {
+        border-bottom: 1px solid #ddd;
+        color: #4f4294;
+        font-size: 16pt;
+        margin: 10mm 0 4mm;
+        padding-bottom: 2mm;
+      }
+
+      h3 {
+        color: #ef604f;
+        font-size: 13pt;
+        margin: 6mm 0 2mm;
+      }
+
+      p {
+        margin: 0 0 4mm;
+      }
+
+      ul,
+      ol {
+        margin: 0 0 4mm 7mm;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 2mm;
+      }
+
+      code,
+      pre {
+        font-family: "DejaVu Sans Mono", monospace;
+      }
+
+      pre {
+        background: #f5f3fb;
+        border-left: 4px solid #4f4294;
+        border-radius: 4px;
+        padding: 4mm;
+        white-space: pre-wrap;
+      }
+
+      .meta {
+        color: #666;
+        font-size: 10pt;
+        margin-bottom: 10mm;
+      }
+
+      .callout {
+        background: #fff1ef;
+        border-left: 4px solid #ef604f;
+        border-radius: 4px;
+        margin: 5mm 0;
+        padding: 4mm;
+      }
+
+      .ok {
+        background: #edf8ef;
+        border-left-color: #299c46;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Analyse MVP lecture de billet avion - React + Vite</h1>
+    <p class="meta">
+      Projet Chaye Web Frontend - synthese des recommandations techniques pour
+      le pre-remplissage du formulaire transport.
+    </p>
+
+    <h2>Objectif</h2>
+    <p>
+      L'objectif est d'aider un utilisateur qui publie une annonce transport a
+      pre-remplir son formulaire a partir d'une photo de billet d'avion. Le
+      frontend lit d'abord un code-barres si disponible, puis utilise l'OCR en
+      fallback si aucun code exploitable n'est detecte.
+    </p>
+
+    <pre>photo billet
+  -> reduction image
+  -> lecture barcode
+  -> fallback OCR
+  -> parsing TypeScript
+  -> pre-remplissage formulaire transport
+  -> confirmation utilisateur</pre>
+
+    <h2>Faisabilite Frontend</h2>
+    <p>
+      C'est faisable dans le frontend React + Vite du projet, mais cela doit
+      rester une aide au pre-remplissage, pas une validation automatique. Le
+      resultat doit toujours etre verifie par l'utilisateur avant publication.
+    </p>
+    <p>
+      Le cas d'usage concerne principalement le formulaire
+      <code>Je transporte</code>, car il contient deja les champs pertinents :
+      aeroport de depart, aeroport d'arrivee, heure de depart du vol, heure
+      d'arrivee du vol et justificatif de billet.
+    </p>
+
+    <h2>Formats de codes a lire</h2>
+    <h3>QR code</h3>
+    <p>
+      Format tres courant pouvant contenir une URL, du texte ou des donnees
+      structurees. Il est utile a supporter, meme si ce n'est pas toujours le
+      format principal des cartes d'embarquement.
+    </p>
+
+    <h3>PDF417</h3>
+    <p>
+      Code-barres 2D rectangulaire tres utilise dans les documents de transport,
+      cartes d'embarquement, permis et pieces administratives. Il est pertinent
+      pour les boarding passes.
+    </p>
+
+    <h3>Aztec</h3>
+    <p>
+      Code 2D compact souvent utilise pour les billets de transport, notamment
+      train, avion et evenements. Il se lit bien meme imprime petit et demande
+      moins de marge blanche qu'un QR code classique.
+    </p>
+
+    <h3>Data Matrix</h3>
+    <p>
+      Code 2D compact, frequemment utilise en industrie, logistique, sante et
+      documents officiels. Moins visible pour le grand public, mais raisonnable a
+      supporter dans un scanner polyvalent.
+    </p>
+
+    <p class="callout ok">
+      Pour un billet d'avion, il faut essayer le barcode avant l'OCR. Si le code
+      est lu, on recupere une donnee structuree, beaucoup plus fiable qu'un texte
+      extrait depuis une photo.
+    </p>
+
+    <h2>Choix Techniques Recommandes</h2>
+    <h3>barcode-detector / ponyfill</h3>
+    <p>
+      Bon choix pour un MVP. Le projet repose sur ZXing-C++ WebAssembly et prend
+      en charge les formats utiles : <code>aztec</code>,
+      <code>data_matrix</code>, <code>pdf417</code> et
+      <code>qr_code</code>. Derniere release observee : v3.2.0, 1 juin 2026.
+    </p>
+
+    <h3>tesseract.js</h3>
+    <p>
+      Bon fallback OCR cote navigateur. Le projet est actif, fonctionne en
+      browser et Node, et repose sur WebAssembly. Derniere release observee :
+      v7.0.0, 15 decembre 2025.
+    </p>
+
+    <h3>zxing-wasm</h3>
+    <p>
+      Alternative solide si l'on veut plus de controle sur le chargement du
+      moteur WebAssembly que via le ponyfill <code>barcode-detector</code>.
+      Derniere release observee : v3.1.0, 1 juin 2026.
+    </p>
+
+    <h3>Compression / redimensionnement image</h3>
+    <p>
+      <code>browser-image-compression</code> est fonctionnel, mais sa derniere
+      release GitHub visible date de mars 2023. Il n'est pas forcement deprecie,
+      mais il ne repond pas idealement au critere "maintenu regulierement".
+    </p>
+    <p>
+      Meilleurs choix pour ce projet : une fonction maison avec
+      <code>canvas</code> / <code>createImageBitmap</code> pour le MVP, ou
+      <code>pica</code> si la qualite et la performance du resize deviennent un
+      sujet.
+    </p>
+
+    <h2>Stack Proposee Pour Le MVP</h2>
+    <ul>
+      <li><code>barcode-detector</code> ou <code>zxing-wasm</code> pour lire les codes 2D.</li>
+      <li><code>tesseract.js</code> pour l'OCR fallback.</li>
+      <li>Resize image via fonction maison canvas, ou <code>pica</code> si besoin.</li>
+      <li>Parsing TypeScript maison, base sur regex et cas reels.</li>
+      <li>Confirmation manuelle obligatoire avant publication.</li>
+    </ul>
+
+    <h2>Limites Du Frontend Seul</h2>
+    <ul>
+      <li>OCR lent sur mobile bas de gamme.</li>
+      <li>Photo floue, reflets ou mauvais angle peuvent produire de mauvais resultats.</li>
+      <li>Certains billets masquent ou compressent le barcode.</li>
+      <li>Confusions OCR possibles : <code>O</code> / <code>0</code>, <code>I</code> / <code>1</code>, <code>FDF</code> / <code>F0F</code>.</li>
+      <li>Les donnees lues doivent etre confirmees par l'utilisateur.</li>
+    </ul>
+
+    <h2>Pourquoi Un Backend Plus Tard</h2>
+    <p>
+      Pour une version produit tres fiable, notamment avec contraintes
+      juridiques, qualite OCR et tracabilite, le traitement devrait passer par
+      le backend AdonisJS.
+    </p>
+    <pre>Frontend
+  upload temporaire image billet
+        ↓
+Backend AdonisJS
+  appelle Google Cloud Vision / AWS Textract / Azure AI Vision
+        ↓
+Backend extrait les donnees
+        ↓
+Backend supprime l'image brute
+        ↓
+Frontend recoit uniquement le JSON pre-rempli</pre>
+
+    <p>
+      La raison principale est la securite : une cle Google, AWS ou Azure ne doit
+      jamais etre placee dans Vite, car elle serait visible dans le navigateur.
+      Le backend garde la cle secrete, controle les acces, peut journaliser les
+      traitements et supprimer l'image brute apres analyse.
+    </p>
+
+    <h2>Conclusion</h2>
+    <p class="callout ok">
+      Pour le projet actuel, le MVP frontend est faisable et pertinent. La bonne
+      strategie est : barcode d'abord, OCR ensuite, pre-remplissage du formulaire
+      transport, puis validation manuelle. Pour une version juridiquement et
+      produit plus robuste, il faudra deplacer le traitement sensible cote
+      backend.
+    </p>
+  </body>
+</html>

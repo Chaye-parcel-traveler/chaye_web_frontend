@@ -1,22 +1,47 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { getStoredMember, logoutMember, onAuthChange } from './API/apiManager';
 
 const Navigation = () => {
   const sidebar = useRef<HTMLElement | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [memberName, setMemberName] = useState(() => {
+    const member = getStoredMember();
+    return member ? `${member.firstname} ${member.lastname}` : '';
+  });
   const toggle = () => sidebar.current?.classList.toggle('close');
+
+  useEffect(() => {
+    const syncMember = () => {
+      const member = getStoredMember();
+      setMemberName(member ? `${member.firstname} ${member.lastname}` : '');
+    };
+
+    syncMember();
+    return onAuthChange(syncMember);
+  }, []);
+
+  const handleLogout = () => {
+    logoutMember();
+    navigate('/login');
+  };
 
   return (
     <nav className="sidebar close" ref={sidebar}>
       <header>
         <div className="image-text">
           <span className="image">
-            <a href="/">
+            <Link to="/" aria-label="Accueil Chaye" className="brand-logo">
               <img src="images/logo.png" alt="Chaye" />
-            </a>
+            </Link>
           </span>
 
           <div className="text logo-text">
             <span className="name">Chaye</span>
-            {/* <span className="profession">New Edge</span> */}
+            {memberName ? (
+              <span className="profession">{memberName}</span>
+            ) : null}
           </div>
         </div>
 
@@ -32,17 +57,17 @@ const Navigation = () => {
 
           <ul className="menu-links">
             <li className="nav-link">
-              <a href="/annonces">
+              <Link to="/annonces">
                 <i className="bx bx-tada-hover bxs-widget bx-md icon"></i>
                 <span className="text nav-text">Annonces</span>
-              </a>
+              </Link>
             </li>
 
             <li className="nav-link">
-              <a href="/profil">
+              <Link to="/profil">
                 <i className="bx bx-tada-hover bxs-user-detail bx-md icon"></i>
                 <span className="text nav-text">Mon compte</span>
-              </a>
+              </Link>
             </li>
 
             <li className="nav-link">
@@ -55,15 +80,15 @@ const Navigation = () => {
             <li className="nav-link">
               <a href="#">
                 <i className="bx bx-tada-hover bxs-info-circle bx-md icon"></i>
-                <span className="text nav-text">À propos de nous </span>
+                <span className="text nav-text">À propos de nous</span>
               </a>
             </li>
 
             <li className="nav-link">
-              <a href="#">
+              <Link to="/profil/messages">
                 <i className="bx bxs-bell bx-tada-hover bx-md icon"></i>
-                <span className="text nav-text">Mes messages </span>
-              </a>
+                <span className="text nav-text">Mes messages</span>
+              </Link>
             </li>
 
             <li className="nav-link">
@@ -74,20 +99,40 @@ const Navigation = () => {
             </li>
 
             <li className="nav-link">
-              <a href="/admin">
+              <Link to="/admin">
                 <i className="bx bx-tada-hover bxs-shield bx-md icon"></i>
                 <span className="text nav-text">Admin</span>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
 
         <div className="bottom-content">
-          <li className="">
-            <a href="/login">
-              <i className="bx bx-log-out bx-tada-hover bx-md icon"></i>
-              <span className="text nav-text">Se deconnecter</span>
-            </a>
+          <li>
+            {location.pathname === '/login' && !memberName ? (
+              <Link to="/register">
+                <i className="bx bx-user-plus bx-tada-hover bx-md icon"></i>
+                <span className="text nav-text">Créer un compte</span>
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={handleLogout}
+                style={{
+                  alignItems: 'center',
+                  background: 'transparent',
+                  border: 0,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  width: '100%',
+                }}
+              >
+                <i className="bx bx-log-out bx-tada-hover bx-md icon"></i>
+                <span className="text nav-text">
+                  {memberName ? 'Se déconnecter' : 'Se connecter'}
+                </span>
+              </button>
+            )}
           </li>
 
           <li className="mode">
