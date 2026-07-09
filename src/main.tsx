@@ -11,6 +11,7 @@ import '@fontsource/raleway/latin-700.css';
 import '@fontsource/raleway/latin-800.css';
 import 'boxicons/css/boxicons.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/legacy-reference.css';
 
 import App from './app/App';
 

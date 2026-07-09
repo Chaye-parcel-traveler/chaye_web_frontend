@@ -1,0 +1,41 @@
+body {
+  background-color: var(--body-color);
+  font-family: 'Poppins', sans-serif;
+  line-height: 16px;
+}
+
+body * {
+  font-family: 'Poppins', sans-serif;
+}
+
+h2 {
+  color: #1f1f1f;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 0;
+}
+
+.sidebar .nav-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  display: flex;
+  height: 100%;
+  padding: 0;
+  text-align: left;
+  width: 100%;
+}
+
+.sidebar .search-box button.icon {
+  background: transparent;
+  border: 0;
+  color: var(--text-color);
+  padding: 0;
+}
+
+.sidebar .nav-button .icon {
+  flex: 0 0 60px;
+  width: 60px;
+}
