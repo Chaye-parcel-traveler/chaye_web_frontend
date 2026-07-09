@@ -2,21 +2,23 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <footer className="">
-      <div className="">
-        <p>© 2023,Chaye</p>
+    <footer>
+      <div className="container">
+        <div className="row">
+          <div className="col-8">
+            <span>© 2023 Chaye</span>
+          </div>
+          <div className="col-5">
+            <span>
+              <Link to="/legal-notice">Mentions légales</Link>
+            </span>
+            <span>
+              <Link to="/privacy-policy">Politique de confidentialité</Link>
+            </span>
+            <span>Tous droits réservés</span>
+          </div>
+        </div>
       </div>
-      <ul className="lienFooter ">
-        <li>
-          <Link to="/legal-notice">Mentions légales</Link>
-        </li>
-        <li>
-          <Link to="/privacy-policy">Politiques de confidentialité</Link>
-        </li>
-        <li>
-          <span>Tous droits reservés</span>
-        </li>
-      </ul>
     </footer>
   );
 }

@@ -208,7 +208,7 @@ const SenderFormular = () => {
           {message ? <Feedback $status={status}>{message}</Feedback> : null}
 
           <Actions>
-            <SecondaryLink to="/annonces">Voir les annonces</SecondaryLink>
+            <SecondaryLink to="/announcements">Voir les annonces</SecondaryLink>
             <SubmitButton
               type="submit"
               disabled={isRestricted || isSubmitting || !isFormComplete}

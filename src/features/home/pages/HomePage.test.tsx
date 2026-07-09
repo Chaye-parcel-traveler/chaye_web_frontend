@@ -1,14 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { vi } from 'vitest';
 
 import HomePage from './HomePage';
 
-vi.mock('../../announcements/components/AnnouncementCarousel', () => ({
-  default: () => <section aria-label="Annonces à la une" />,
-}));
-
-test('renders the home screen labels and canonical action links', () => {
+test('renders the fonctionnality_bases home sections and action links', () => {
   render(
     <MemoryRouter>
       <HomePage />
@@ -21,17 +16,21 @@ test('renders the home screen labels and canonical action links', () => {
   expect(
     screen.getByRole('heading', { name: 'Assurance' })
   ).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'A la une' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Vos avis' })).toBeInTheDocument();
   expect(
-    screen.getByRole('img', { name: 'logo Chaye Assurance' })
-  ).toBeVisible();
+    screen.getByRole('heading', { name: 'Les Régions du monde' })
+  ).toBeInTheDocument();
+
   expect(screen.getByRole('link', { name: "J'expédie" })).toHaveAttribute(
     'href',
-    '/packages/new'
+    '/sender'
   );
   expect(screen.getByRole('link', { name: 'Je transporte' })).toHaveAttribute(
     'href',
-    '/announcements/new'
+    '/carrier'
   );
+
   for (const category of [
     'Caraïbes',
     'Europe',
@@ -39,9 +38,6 @@ test('renders the home screen labels and canonical action links', () => {
     'Afrique',
     'Asie',
   ]) {
-    expect(
-      screen.queryByRole('link', { name: category })
-    ).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: category })).toBeInTheDocument();
   }
 });

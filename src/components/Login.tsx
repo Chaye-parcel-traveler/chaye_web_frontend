@@ -10,7 +10,6 @@ const Login = () => {
   const [password, setPassword] = useState('ChayeDemo2026!');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
-  const [status, setStatus] = useState<'error' | 'idle'>('idle');
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,9 +18,8 @@ const Login = () => {
 
     try {
       await loginMember(email, password);
-      navigate('/annonces');
+      navigate('/announcements');
     } catch (error) {
-      setStatus('error');
       setMessage(
         error instanceof Error ? error.message : 'Connexion impossible.'
       );
@@ -31,20 +29,13 @@ const Login = () => {
   };
 
   return (
-    <>
+    <div className="auth-page">
       <LogoChayeSection />
       <section className="container forms">
         <div className="form login">
           <div className="form-content">
             <header>
-              <h4
-                style={{
-                  fontSize: '17px!important',
-                  fontFamily: 'Poppins, sans-serif',
-                }}
-              >
-                Connectez-vous à votre compte
-              </h4>
+              <h4 className="auth-subtitle">Connectez-vous à votre compte</h4>
             </header>
             <form onSubmit={handleSubmit}>
               <div className="field input-field">
@@ -70,10 +61,7 @@ const Login = () => {
                 <i className="bx bx-hide eye-icon"></i>
               </div>
 
-              <div
-                className="form-link"
-                style={{ display: 'flex', justifyContent: 'space-between' }}
-              >
+              <div className="form-link auth-options-row">
                 <div>
                   <input
                     type="checkbox"
@@ -92,12 +80,7 @@ const Login = () => {
               </div>
 
               {message ? (
-                <p
-                  className={
-                    status === 'error' ? 'form-submit-message error' : ''
-                  }
-                  style={{ marginTop: 14 }}
-                >
+                <p className="form-submit-message error" role="status">
                   {message}
                 </p>
               ) : null}
@@ -121,7 +104,7 @@ const Login = () => {
           <SignInOrUpBy />
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

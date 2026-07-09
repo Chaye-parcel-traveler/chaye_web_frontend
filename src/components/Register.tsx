@@ -1,7 +1,5 @@
 import { FormEvent, useMemo, useState } from 'react';
 import SignInOrUpBy from './SignInOrUpBy';
-import '../../public/css/reset.css';
-import '../../public/css/loginSingup.css';
 import './registerEnhancements.css';
 import LogoChayeSection from './LogoChayeSection';
 import {
@@ -114,22 +112,14 @@ const Register = () => {
   };
 
   return (
-    <>
+    <div className="auth-page">
       <LogoChayeSection />
       <section className="container forms">
         <div className="form signup">
           <div className="form-content">
             <header>
-              {' '}
               <h2>S’enregistrer</h2>
-              <h4
-                style={{
-                  fontSize: '17px!important',
-                  fontFamily: 'Poppins, sans-serif',
-                }}
-              >
-                Créez votre nouveau compte
-              </h4>
+              <h4 className="auth-subtitle">Créez votre nouveau compte</h4>
             </header>
             <form onSubmit={submitRegister}>
               <div className="field input-field">
@@ -280,10 +270,7 @@ const Register = () => {
           <SignInOrUpBy />
         </div>
       </section>
-
-      {/* <!-- JavaScript --> */}
-      {/* <script src="js/script.js"></script> */}
-    </>
+    </div>
   );
 };
 

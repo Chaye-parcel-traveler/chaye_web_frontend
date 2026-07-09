@@ -1,37 +1,32 @@
 import { useState, useEffect } from 'react';
-import { logout } from '../features/auth/api/auth.api';
-import { Link } from 'react-router-dom';
-import apiClient, { clearAuthToken } from '../lib/api-client';
-import type { Member } from '../features/members/member.types';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { getStoredMember, logoutMember, onAuthChange } from './API/apiManager';
 
 function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState<Member | null>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
   const [sideBarClose, setSideBarClose] = useState(true);
+  const [memberName, setMemberName] = useState(() => {
+    const member = getStoredMember();
+    return member ? `${member.firstname} ${member.lastname}` : '';
+  });
 
   useEffect(() => {
-    apiClient
-      .get<Member>('/me')
-      .then((response) => {
-        setUserData(response.data);
-        setIsLoggedIn(true);
-      })
-      .catch(() => {
-        setUserData(null);
-      });
-  }, []);
-  const handleSearch = () => {
-    // Vous pouvez ajouter ici la logique de recherche en fonction de la valeur de e.target.value
-  };
+    const syncMember = () => {
+      const member = getStoredMember();
+      setMemberName(member ? `${member.firstname} ${member.lastname}` : '');
+    };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } finally {
-      clearAuthToken();
-      setUserData(null);
-      setIsLoggedIn(false);
+    syncMember();
+    return onAuthChange(syncMember);
+  }, []);
+
+  const handleAuthAction = () => {
+    if (memberName) {
+      logoutMember();
     }
+
+    navigate('/login');
   };
 
   const toggleSidebar = () => {
@@ -46,14 +41,16 @@ function Navbar() {
       <header>
         <div className="image-text">
           <span className="image">
-            <Link to="/">
-              <img src="/images/logo.png" alt="Accueil Chaye" />
+            <Link to="/" aria-label="Accueil Chaye" className="brand-logo">
+              <img src="/images/logo.png" alt="Chaye" />
             </Link>
           </span>
 
           <div className="text logo-text">
             <span className="name">Chaye</span>
-            {/*<span className="profession">New Edge</span>*/}
+            {memberName ? (
+              <span className="profession">{memberName}</span>
+            ) : null}
           </div>
         </div>
 
@@ -79,14 +76,13 @@ function Navbar() {
                 id="navigation-search"
                 type="search"
                 placeholder="Rechercher..."
-                onChange={handleSearch}
                 onFocus={() => setSideBarClose(false)}
               />
             </li>
           </ul>
 
           <ul className="menu-links">
-            <li className="menu-item">
+            <li className="nav-link menu-item">
               <Link aria-label="Annonces" to="/announcements">
                 <i
                   className="bx bx-tada-hover bxs-widget bx-md icon"
@@ -96,13 +92,8 @@ function Navbar() {
               </Link>
             </li>
 
-            <li className="menu-item">
-              <Link
-                aria-label="Mon compte"
-                to={
-                  isLoggedIn && userData ? `/members/${userData.id}` : '/auth'
-                }
-              >
+            <li className="nav-link menu-item">
+              <Link aria-label="Mon compte" to="/profil">
                 <i
                   className="bx bx-tada-hover bxs-user-detail bx-md icon"
                   aria-hidden="true"
@@ -111,7 +102,7 @@ function Navbar() {
               </Link>
             </li>
 
-            <li className="menu-item">
+            <li className="nav-link menu-item">
               <Link aria-label="Support" to="/support">
                 <i
                   className="bx bx-tada-hover bxs-help-circle bx-md icon"
@@ -121,7 +112,7 @@ function Navbar() {
               </Link>
             </li>
 
-            <li className="menu-item">
+            <li className="nav-link menu-item">
               <Link aria-label="À propos de nous" to="/about">
                 <i
                   className="bx bx-tada-hover bxs-info-circle bx-md icon"
@@ -131,7 +122,7 @@ function Navbar() {
               </Link>
             </li>
 
-            <li className="menu-item">
+            <li className="nav-link menu-item">
               <span
                 className="nav-item-content"
                 aria-disabled="true"
@@ -145,7 +136,7 @@ function Navbar() {
               </span>
             </li>
 
-            <li className="menu-item">
+            <li className="nav-link menu-item">
               <span
                 className="nav-item-content"
                 aria-disabled="true"
@@ -158,39 +149,60 @@ function Navbar() {
                 <span className="text nav-text">Portefeuille</span>
               </span>
             </li>
+
+            <li className="nav-link menu-item">
+              <Link aria-label="Admin" to="/admin">
+                <i
+                  className="bx bx-tada-hover bxs-shield bx-md icon"
+                  aria-hidden="true"
+                ></i>
+                <span className="text nav-text">Admin</span>
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div className="bottom-content">
-          {isLoggedIn && (
-            <ul className="list-unstyled">
-              <li>
-                <button
-                  type="button"
-                  className="logout-button"
-                  data-testid="logout-button"
-                  onClick={handleLogout}
-                >
-                  <i
-                    className="bx bx-log-out bx-tada-hover bx-md icon"
-                    aria-hidden="true"
-                  ></i>
-                  <span className="text nav-text pointer">Se déconnecter</span>
-                </button>
-              </li>
-            </ul>
+          {location.pathname === '/login' && !memberName ? (
+            <li className="nav-link menu-item">
+              <Link aria-label="Créer un compte" to="/register">
+                <i
+                  className="bx bx-user-plus bx-tada-hover bx-md icon"
+                  aria-hidden="true"
+                ></i>
+                <span className="text nav-text">Créer un compte</span>
+              </Link>
+            </li>
+          ) : (
+            <li className="nav-link menu-item">
+              <button
+                type="button"
+                className="logout-button"
+                data-testid="auth-action-button"
+                onClick={handleAuthAction}
+              >
+                <i
+                  className="bx bx-log-out bx-tada-hover bx-md icon"
+                  aria-hidden="true"
+                ></i>
+                <span className="text nav-text pointer">
+                  {memberName ? 'Se déconnecter' : 'Se connecter'}
+                </span>
+              </button>
+            </li>
           )}
-          {/* <li className="mode">
-                <div className="sun-moon">
-                  <i className="bx bx-moon icon moon"></i>
-                  <i className="bx bx-sun icon sun"></i>
-                </div>
-                <span className="mode-text text">Dark mode</span>
-    
-                <div className="toggle-switch">
-                  <span className="switch"></span>
-                </div>
-              </li>*/}
+
+          <li className="mode">
+            <div className="sun-moon">
+              <i className="bx bx-moon icon moon" aria-hidden="true"></i>
+              <i className="bx bx-sun icon sun" aria-hidden="true"></i>
+            </div>
+            <span className="mode-text text">Dark mode</span>
+
+            <div className="toggle-switch">
+              <span className="switch"></span>
+            </div>
+          </li>
         </div>
       </div>
     </nav>

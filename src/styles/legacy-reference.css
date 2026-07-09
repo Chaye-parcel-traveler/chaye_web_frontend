@@ -1,41 +1,192 @@
-body {
-  background-color: var(--body-color);
-  font-family: 'Poppins', sans-serif;
-  line-height: 16px;
+/* Compatibility overrides for the fonctionnality_bases visual baseline. */
+
+body,
+button,
+input,
+select,
+textarea,
+.App,
+.App
+  :where(
+    a,
+    p,
+    span,
+    div,
+    section,
+    article,
+    header,
+    footer,
+    nav,
+    main,
+    aside,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    li,
+    label,
+    strong,
+    small
+  ) {
+  font-family: 'Raleway', sans-serif;
 }
 
-body * {
-  font-family: 'Poppins', sans-serif;
-}
-
-h2 {
+.App h2 {
   color: #1f1f1f;
-  font-size: 30px;
-  font-weight: 700;
+  font-family: 'Raleway', sans-serif;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 0.5px;
   line-height: normal;
-  margin-bottom: 0;
+  text-align: center;
 }
 
-.sidebar .nav-button {
+.sidebar header .toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  padding: 0;
+}
+
+.sidebar .logout-button {
   align-items: center;
   background: transparent;
+  border-radius: 6px;
   border: 0;
   color: inherit;
+  cursor: pointer;
   display: flex;
   height: 100%;
   padding: 0;
   text-align: left;
+  text-decoration: none;
+  transition: var(--tran-03);
   width: 100%;
 }
 
-.sidebar .search-box button.icon {
-  background: transparent;
-  border: 0;
-  color: var(--text-color);
-  padding: 0;
+.sidebar .logout-button:hover {
+  background-color: var(--color-purple);
 }
 
-.sidebar .nav-button .icon {
-  flex: 0 0 60px;
-  width: 60px;
+.sidebar .logout-button:hover .icon,
+.sidebar .logout-button:hover .text {
+  color: var(--color-white);
+}
+
+.sidebar li .nav-item-content {
+  align-items: center;
+  background-color: transparent;
+  border-radius: 6px;
+  display: flex;
+  height: 100%;
+  list-style: none;
+  text-decoration: none;
+  transition: var(--tran-03);
+  width: 100%;
+}
+
+.sidebar li .nav-item-content[aria-disabled='true'] {
+  cursor: default;
+}
+
+.auth-page {
+  background-color: #ec634e;
+  font-family: 'Poppins', sans-serif;
+  inset: 0;
+  min-height: 100vh;
+  overflow-y: auto;
+  position: fixed;
+}
+
+.auth-page .container.forms {
+  align-items: flex-start;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.auth-page,
+.auth-page .form,
+.auth-page .form * {
+  font-family: 'Poppins', sans-serif;
+}
+
+.auth-page .form {
+  position: relative;
+}
+
+.auth-page h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+}
+
+.auth-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 17px;
+}
+
+.auth-options-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.media-options button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+}
+
+button.facebook {
+  color: #fff;
+  background-color: #4267b2;
+}
+
+button.facebook .facebook-icon {
+  height: 28px;
+  width: 28px;
+  color: #0171d3;
+  font-size: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+button.google {
+  border: 1px solid #cacaca;
+}
+
+button.google span {
+  font-weight: 500;
+  opacity: 0.6;
+  color: #232836;
+}
+
+button.apple {
+  color: #fff;
+  background-color: #090a0a;
+}
+
+button.apple .apple-icon {
+  color: #fff;
+  font-size: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 15px !important;
+}
+
+button.forgot-pass {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
 }

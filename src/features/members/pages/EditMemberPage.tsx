@@ -89,7 +89,7 @@ function EditMemberPage() {
     apiClient
       .put(`/members/${params.id}`, formData)
       .then(() => {
-        return navigate(`/members/${params.id}`);
+        return navigate('/members');
       })
       .catch(() => {});
   };

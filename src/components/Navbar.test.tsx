@@ -1,21 +1,25 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { HttpResponse, http } from 'msw';
 import { MemoryRouter } from 'react-router-dom';
+import { beforeEach } from 'vitest';
 
-import { persistAuthToken } from '../lib/api-client';
-import { server } from '../test/mocks/server';
+import { saveAuthSession } from './API/apiManager';
 import Navbar from './Navbar';
 
-test('uses canonical destinations and preserves the sidebar layout contract', async () => {
-  const user = userEvent.setup();
-  server.use(http.get('*/me', () => new HttpResponse(null, { status: 401 })));
-
+const renderNavbar = (path = '/') =>
   render(
-    <MemoryRouter>
+    <MemoryRouter initialEntries={[path]}>
       <Navbar />
     </MemoryRouter>
   );
+
+beforeEach(() => {
+  window.localStorage.clear();
+});
+
+test('uses canonical destinations and preserves the sidebar layout contract', async () => {
+  const user = userEvent.setup();
+  renderNavbar();
 
   expect(
     screen.getByRole('navigation', { name: 'Navigation principale' })
@@ -30,8 +34,13 @@ test('uses canonical destinations and preserves the sidebar layout contract', as
   );
   expect(screen.getByRole('link', { name: /Mon compte/ })).toHaveAttribute(
     'href',
-    '/auth'
+    '/profil'
   );
+  expect(screen.getByRole('link', { name: /^Admin$/ })).toHaveAttribute(
+    'href',
+    '/admin'
+  );
+  expect(screen.getByRole('button', { name: /Se connecter/ })).toBeEnabled();
   expect(screen.getByRole('link', { name: /Support/ })).toHaveAttribute(
     'href',
     '/support'
@@ -53,8 +62,10 @@ test('uses canonical destinations and preserves the sidebar layout contract', as
       'true'
     );
     expect(item.closest('li')).toHaveClass('menu-item');
-    expect(item.closest('li')).not.toHaveClass('nav-link');
+    expect(item.closest('li')).toHaveClass('nav-link');
   }
+
+  expect(screen.getByText('Dark mode')).toBeInTheDocument();
 
   const toggle = screen.getByRole('button', { name: 'Ouvrir le menu' });
   expect(toggle).toHaveAttribute('aria-expanded', 'false');
@@ -65,36 +76,48 @@ test('uses canonical destinations and preserves the sidebar layout contract', as
   ).toHaveAttribute('aria-expanded', 'true');
 });
 
-test('logs out through a stable button and clears the session token', async () => {
+test('shows the register action on the login page when no member is stored', () => {
+  renderNavbar('/login');
+
+  expect(screen.getByRole('link', { name: /Créer un compte/ })).toHaveAttribute(
+    'href',
+    '/register'
+  );
+  expect(
+    screen.queryByRole('button', { name: /Se connecter/ })
+  ).not.toBeInTheDocument();
+});
+
+test('logs out through a stable button and clears the stored legacy session', async () => {
   const user = userEvent.setup();
-  let logoutAuthorization: string | null = null;
-  persistAuthToken('session-token');
-  server.use(
-    http.get('*/me', () =>
-      HttpResponse.json({
-        id: 42,
-        email: 'lea@example.test',
-        firstname: 'Léa',
-        lastname: 'Martin',
-      })
-    ),
-    http.post('*/logout', ({ request }) => {
-      logoutAuthorization = request.headers.get('authorization');
-      return HttpResponse.json({ message: 'Logged out' });
-    })
+  saveAuthSession({
+    token: 'legacy-session-token',
+    member: {
+      id: 42,
+      email: 'lea@example.test',
+      firstname: 'Léa',
+      lastname: 'Martin',
+      avatarUrl: null,
+      address: '1 rue Test',
+      phone: '+596000000000',
+      birthDate: '1990-01-01',
+      role: 'member',
+      status: 'active',
+      isAdmin: false,
+    },
+  });
+
+  renderNavbar();
+
+  expect(screen.getByText('Léa Martin')).toBeInTheDocument();
+  const authButton = screen.getByTestId('auth-action-button');
+  expect(authButton).toHaveAccessibleName('Se déconnecter');
+  await user.click(authButton);
+
+  expect(window.localStorage.getItem('chaye_auth_token')).toBeNull();
+  expect(window.localStorage.getItem('chaye_auth_member')).toBeNull();
+  expect(screen.getByRole('link', { name: /Créer un compte/ })).toHaveAttribute(
+    'href',
+    '/register'
   );
-
-  render(
-    <MemoryRouter>
-      <Navbar />
-    </MemoryRouter>
-  );
-
-  const logoutButton = await screen.findByTestId('logout-button');
-  expect(logoutButton).toHaveAccessibleName('Se déconnecter');
-  await user.click(logoutButton);
-
-  expect(logoutAuthorization).toBe('Bearer session-token');
-  expect(sessionStorage.getItem('token')).toBeNull();
-  expect(screen.queryByTestId('logout-button')).not.toBeInTheDocument();
 });

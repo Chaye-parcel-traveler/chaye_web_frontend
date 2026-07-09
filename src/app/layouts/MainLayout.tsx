@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Footer from '../../components/Footer';
+import AccountStatusNotice from '../../components/AccountStatusNotice';
 import Navbar from '../../components/Navbar';
 
 const MainLayout = () => {
@@ -7,8 +7,8 @@ const MainLayout = () => {
     <div>
       <Navbar />
       <section className="home">
+        <AccountStatusNotice />
         <Outlet />
-        <Footer />
       </section>
     </div>
   );

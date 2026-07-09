@@ -27,6 +27,13 @@ const emptyFilters: AnnouncementFilters = {
   search: '',
 };
 
+// Placeholders shown when the /announcements API payload does not carry the
+// information that the local airport catalogue used to provide (see the
+// difference list documented at the bottom of this file).
+const AIRPORT_PLACEHOLDER = 'Aéroport non renseigné';
+const AIRPORT_CODE_PLACEHOLDER = 'Code IATA non communiqué';
+const DESCRIPTION_PLACEHOLDER = 'Aucune description fournie.';
+
 type AnnouncementTypeFilter = 'shipping' | 'transport';
 
 const announcementTypeTabs: Array<{
@@ -75,7 +82,7 @@ const airportOptions: AirportOption[] = [
   ),
 ];
 
-const Announces = () => {
+const Announcements = () => {
   const navigate = useNavigate();
   const { isRestricted } = useAccountRestrictions();
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
@@ -366,36 +373,21 @@ const Announces = () => {
 
       <CardsGrid>
         {filteredAnnouncements.map((announcement) => {
-          const departureAirport = resolveAirport(announcement.departingFrom);
-          const destinationAirport = resolveAirport(announcement.arrivingAt);
-          const cardImage =
-            destinationAirport?.imageUrl ?? fallbackAirportImage;
+          const departureLabel =
+            announcement.departingFrom || AIRPORT_PLACEHOLDER;
+          const arrivalLabel = announcement.arrivingAt || AIRPORT_PLACEHOLDER;
 
           return (
             <AnnouncementCard key={announcement.id}>
               <ImageWrap>
+                {/*
+                  The /announcements payload carries no destination picture or
+                  country flag, so we render a neutral placeholder image.
+                */}
                 <img
-                  src={cardImage}
-                  onError={(event) => {
-                    if (!event.currentTarget.dataset.fallbackApplied) {
-                      event.currentTarget.dataset.fallbackApplied = 'true';
-                      event.currentTarget.src = fallbackAirportImage;
-                    }
-                  }}
-                  alt={
-                    destinationAirport?.imageAlt ??
-                    `${announcement.departingFrom} vers ${announcement.arrivingAt}`
-                  }
+                  src={fallbackAirportImage}
+                  alt={`${departureLabel} vers ${arrivalLabel}`}
                 />
-                {destinationAirport ? (
-                  <FlagImage
-                    src={destinationAirport.flagImageUrl}
-                    alt={destinationAirport.flagImageAlt}
-                    onError={(event) => {
-                      event.currentTarget.style.display = 'none';
-                    }}
-                  />
-                ) : null}
                 <FavoriteButton type="button" aria-label="Ajouter aux favoris">
                   ♥
                 </FavoriteButton>
@@ -404,28 +396,19 @@ const Announces = () => {
                 <RouteLine>
                   <span>Départ</span>
                   <AirportInfo>
-                    <strong>
-                      {departureAirport?.name ?? announcement.departingFrom}
-                    </strong>
+                    <strong>{departureLabel}</strong>
                     <small>
-                      {formatAirportLocation(
-                        departureAirport,
-                        announcement.departingFrom
-                      )}
+                      {announcement.departureAirport ||
+                        AIRPORT_CODE_PLACEHOLDER}
                     </small>
                   </AirportInfo>
                 </RouteLine>
                 <RouteLine>
                   <span>Destination</span>
                   <AirportInfo>
-                    <strong>
-                      {destinationAirport?.name ?? announcement.arrivingAt}
-                    </strong>
+                    <strong>{arrivalLabel}</strong>
                     <small>
-                      {formatAirportLocation(
-                        destinationAirport,
-                        announcement.arrivingAt
-                      )}
+                      {announcement.arrivalAirport || AIRPORT_CODE_PLACEHOLDER}
                     </small>
                   </AirportInfo>
                 </RouteLine>
@@ -439,7 +422,9 @@ const Announces = () => {
                   <span>Prix</span>
                   <strong>{formatPrice(announcement.price)}</strong>
                 </Line>
-                <Description>{announcement.description}</Description>
+                <Description>
+                  {announcement.description || DESCRIPTION_PLACEHOLDER}
+                </Description>
                 <CardActions>
                   <ReserveButton type="button" disabled={isRestricted}>
                     Réserver
@@ -479,31 +464,6 @@ const getSelectedAirport = (value: string) =>
 
 const matchesAirportFilter = (announcementValue: string, filterValue: string) =>
   normalizeValue(announcementValue).includes(normalizeValue(filterValue));
-
-const resolveAirport = (value: string) => {
-  const normalizedValue = normalizeValue(value);
-
-  return airportOptions.find(
-    (airport) =>
-      normalizeValue(airport.name) === normalizedValue ||
-      normalizeValue(airport.city) === normalizedValue ||
-      normalizeValue(airport.country) === normalizedValue ||
-      normalizedValue.includes(normalizeValue(airport.name)) ||
-      normalizedValue.includes(normalizeValue(airport.city)) ||
-      normalizedValue.includes(normalizeValue(airport.country))
-  );
-};
-
-const formatAirportLocation = (
-  airport: AirportOption | undefined,
-  fallback: string
-) => {
-  if (!airport) {
-    return fallback;
-  }
-
-  return `${airport.city}, ${airport.country}`;
-};
 
 const parseLocaleNumber = (value: string) => {
   if (!value.trim()) {
@@ -825,18 +785,6 @@ const FavoriteButton = styled.button`
   width: 28px;
 `;
 
-const FlagImage = styled.img`
-  border: 2px solid #fff;
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(35, 35, 35, 0.22);
-  height: 28px !important;
-  left: 8px;
-  object-fit: cover;
-  position: absolute;
-  top: 8px;
-  width: 42px !important;
-`;
-
 const CardBody = styled.div`
   display: grid;
   gap: 6px;
@@ -949,4 +897,4 @@ const Feedback = styled.p<{ $tone: 'error' | 'info' }>`
   padding: 12px 14px;
 `;
 
-export default Announces;
+export default Announcements;
