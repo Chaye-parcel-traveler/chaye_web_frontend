@@ -19,6 +19,9 @@ const MessageThread = lazy(
 const MessagesList = lazy(
   () => import('../features/messages/pages/MessagesListPage'),
 );
+const NotFound = lazy(
+  () => import('../features/navigation/pages/NotFoundPage'),
+);
 const ProfileAnnouncements = lazy(
   () => import('../features/profile/pages/ProfileAnnouncementsPage'),
 );
@@ -49,6 +52,7 @@ function AppRouter() {
             element={<MessageThread />}
           />
           <Route path="/admin" element={<AdminModeration />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </Suspense>
