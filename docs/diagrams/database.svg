@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="430" viewBox="0 0 960 430" role="img" aria-labelledby="title desc">
+  <title id="title">Flux données frontend API MariaDB</title>
+  <desc id="desc">Diagramme du frontend vers API AdonisJS puis MariaDB, avec tests MSW et E2E Docker Compose.</desc>
+  <style>
+    text { font-family: Arial, sans-serif; fill: #252331; }
+    .box { fill: #fff; stroke: #56469f; stroke-width: 2; rx: 12; }
+    .front { fill: #f15f4f; stroke: #f15f4f; }
+    .api { fill: #f5f2ff; }
+    .db { fill: #eef7f1; stroke: #2f9c56; }
+    .test { fill: #f8f8fb; stroke: #88829e; }
+    .label { font-size: 18px; font-weight: 700; }
+    .small { font-size: 14px; fill: #5d596b; }
+    .white { fill: #fff; }
+    .arrow { stroke: #56469f; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#56469f" />
+    </marker>
+  </defs>
+  <rect x="40" y="35" width="880" height="345" fill="#f2f1f8" rx="18" />
+
+  <rect class="box front" x="90" y="95" width="205" height="118" />
+  <text class="label white" x="125" y="137">Frontend Vite</text>
+  <text class="small white" x="125" y="162">React, Axios</text>
+  <text class="small white" x="125" y="184">src/config/env.ts</text>
+
+  <rect class="box api" x="385" y="95" width="205" height="118" />
+  <text class="label" x="425" y="137">API AdonisJS</text>
+  <text class="small" x="425" y="162">auth, annonces</text>
+  <text class="small" x="425" y="184">messages, moderation</text>
+
+  <rect class="box db" x="680" y="95" width="190" height="118" />
+  <text class="label" x="740" y="137">MariaDB</text>
+  <text class="small" x="727" y="162">dev / test / CI</text>
+  <text class="small" x="727" y="184">migrations API</text>
+
+  <rect class="box test" x="130" y="270" width="270" height="72" />
+  <text class="label" x="163" y="302">Vitest + MSW</text>
+  <text class="small" x="163" y="325">contrats HTTP frontend isolés</text>
+
+  <rect class="box test" x="560" y="270" width="270" height="72" />
+  <text class="label" x="592" y="302">Playwright + Compose</text>
+  <text class="small" x="592" y="325">frontend + API + MariaDB</text>
+
+  <path class="arrow" d="M295 154 H378" />
+  <path class="arrow" d="M590 154 H672" />
+  <path class="arrow" d="M265 270 C260 238 235 224 208 213" />
+  <path class="arrow" d="M695 270 C690 238 724 224 775 213" />
+</svg>

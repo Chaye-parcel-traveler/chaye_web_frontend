@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ReportButton from './ReportButton';
+import ReportButton from '../features/moderation/components/ReportButton';
 
 const HeadlineNews = () => {
   return (

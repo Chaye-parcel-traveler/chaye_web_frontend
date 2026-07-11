@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { getStoredMember, logoutMember, onAuthChange } from './API/apiManager';
+import {
+  getStoredMember,
+  logoutMember,
+  onAuthChange,
+} from '../features/auth/api/auth.api';
 
 const Navigation = () => {
   const sidebar = useRef<HTMLElement | null>(null);

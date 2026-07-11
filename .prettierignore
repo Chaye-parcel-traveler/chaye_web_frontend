@@ -1,0 +1,15 @@
+coverage
+dist
+node_modules
+playwright-report
+test-results
+.pnpm-store
+pnpm-lock.yaml
+
+docs/*.html
+public/css/*.css
+public/fonts/
+public/js/
+src/assets/Mocks/*.JSON
+src/assets/Mocks/*.json
+src/prettier.config.cjs

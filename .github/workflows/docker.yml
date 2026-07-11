@@ -1,0 +1,44 @@
+name: Docker
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-images:
+    name: Build Docker images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout frontend
+        uses: actions/checkout@v4
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build production image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          target: production
+          tags: chaye-web-frontend:ci
+          build-args: |
+            VITE_API_URL=http://localhost:3333
+            VITE_API_ASSETS_URL=http://localhost:3333
+            VITE_APP_ENV=production
+            VITE_PUBLIC_ASSETS_URL=/
+          cache-from: type=gha,scope=chaye-frontend-production
+          cache-to: type=gha,mode=max,scope=chaye-frontend-production
+
+      - name: Build E2E image with cached Playwright browsers
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          target: e2e
+          tags: chaye-web-frontend-e2e:ci
+          cache-from: type=gha,scope=chaye-frontend-e2e
+          cache-to: type=gha,mode=max,scope=chaye-frontend-e2e
