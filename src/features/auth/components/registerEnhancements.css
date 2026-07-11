@@ -1,0 +1,40 @@
+.field button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.terms-field {
+  align-items: flex-start;
+  color: #383838;
+  display: flex;
+  font-size: 12px;
+  gap: 10px;
+  line-height: 1.4;
+  margin-top: 18px;
+}
+
+.terms-field input {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.form-alert,
+.form-submit-message {
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1.45;
+  margin-top: 12px;
+  padding: 10px 12px;
+}
+
+.form-alert.error,
+.form-submit-message.error {
+  background: #fff1ef;
+  color: #9d1c12;
+}
+
+.form-alert.success,
+.form-submit-message.success {
+  background: #edf8f1;
+  color: #0b6b3a;
+}

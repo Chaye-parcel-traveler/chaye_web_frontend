@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+set -eu
+
+if [ "$#" -gt 0 ]; then
+  echo "Usage: E2E_API_DIR=/chemin/vers/chaye_API ./launch" >&2
+  echo "Ne combine pas ./launch avec pnpm run dev:e2e-stack." >&2
+  exit 1
+fi
+
+pnpm run dev:e2e-stack

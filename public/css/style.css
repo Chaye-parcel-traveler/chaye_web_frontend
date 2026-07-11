@@ -188,9 +188,21 @@ header .image-text .profession {
   justify-content: center;
 }
 
+.sidebar header .brand-logo {
+  align-items: center;
+  display: inline-flex;
+  height: 54px;
+  justify-content: center;
+  width: 54px;
+}
+
 .sidebar header .image img {
-  width: 40px;
-  border-radius: 6px;
+  border-radius: 0;
+  display: block;
+  height: 48px;
+  max-width: 48px;
+  object-fit: contain;
+  width: auto;
 }
 
 .sidebar header .toggle {
@@ -425,6 +437,11 @@ body.dark .home .text {
   align-items: center;
 }
 .btnChaye:hover {
+  background: var(--color-purple);
+  color: #fff;
+}
+
+.btnChaye-active {
   background: var(--color-purple);
   color: #fff;
 }

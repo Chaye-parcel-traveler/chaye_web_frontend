@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+
 import { useRef, useState } from 'react';
 
 type StyledElement = HTMLElement | null;

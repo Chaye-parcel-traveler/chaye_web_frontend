@@ -1,0 +1,130 @@
+services:
+  e2e-control:
+    image: busybox:1.37
+    command:
+      - sh
+      - -c
+      - mkdir -p /e2e-control && chmod 777 /e2e-control && tail -f /dev/null
+    volumes:
+      - e2e-control:/e2e-control
+
+  db-e2e:
+    image: mariadb:11
+    environment:
+      MARIADB_ROOT_PASSWORD: ${E2E_MARIADB_ROOT_PASSWORD:-chaye-e2e-root}
+      MARIADB_DATABASE: chayedb_e2e
+      MARIADB_USER: chayeuser
+      MARIADB_PASSWORD: ${E2E_MARIADB_PASSWORD:-chayepwd}
+    healthcheck:
+      test: ['CMD', 'healthcheck.sh', '--connect', '--innodb_initialized']
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    ports:
+      - '${E2E_DB_PORT:-3307}:3306'
+    tmpfs:
+      - /var/lib/mysql
+
+  api-e2e:
+    build:
+      context: ${E2E_API_DIR:-../chaye_API}
+      target: dev-dependencies
+    environment:
+      NODE_ENV: test
+      HOST: 0.0.0.0
+      PORT: 3333
+      LOG_LEVEL: warn
+      APP_NAME: chaye-api-e2e
+      APP_KEY: ${E2E_API_APP_KEY:-cz1jAV7_eZwCE6MSMkhWAkFjYzoLz2Pn}
+      DRIVE_DISK: local
+      DB_CONNECTION: mysql
+      MYSQL_HOST: db-e2e
+      MYSQL_PORT: 3306
+      MYSQL_USER: chayeuser
+      MYSQL_PASSWORD: ${E2E_MARIADB_PASSWORD:-chayepwd}
+      MYSQL_ROOT_PASSWORD: ${E2E_MARIADB_ROOT_PASSWORD:-chaye-e2e-root}
+      MYSQL_DB_NAME: chayedb_e2e
+      E2E_CONTROL_DIR: /e2e-control
+    command: ['sh', 'scripts/e2e-server.sh']
+    depends_on:
+      db-e2e:
+        condition: service_healthy
+      e2e-control:
+        condition: service_started
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - >-
+          fetch('http://127.0.0.1:3333/')
+          .then((response) => response.ok ? undefined : process.exit(1))
+          .catch(() => process.exit(1))
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    ports:
+      - '${E2E_API_PORT:-3333}:3333'
+    volumes:
+      - e2e-control:/e2e-control
+
+  frontend-e2e:
+    build:
+      context: .
+      target: development
+    environment:
+      VITE_API_ASSETS_URL: ${VITE_API_ASSETS_URL:-http://api-e2e:3333}
+      VITE_API_URL: ${VITE_API_URL:-http://api-e2e:3333}
+      VITE_APP_ENV: e2e
+      VITE_E2E: 'true'
+      VITE_PUBLIC_ASSETS_URL: ${VITE_PUBLIC_ASSETS_URL:-/}
+    depends_on:
+      api-e2e:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - >-
+          fetch('http://127.0.0.1:3000/')
+          .then((response) => response.ok ? undefined : process.exit(1))
+          .catch(() => process.exit(1))
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    ports:
+      - '${E2E_FRONTEND_PORT:-3000}:3000'
+
+  e2e:
+    build:
+      context: .
+      target: e2e
+    user: root
+    environment:
+      PLAYWRIGHT_BASE_URL: ${PLAYWRIGHT_BASE_URL:-http://frontend-e2e:3000}
+      E2E_API_URL: ${E2E_API_URL:-http://api-e2e:3333}
+      VITE_API_ASSETS_URL: ${VITE_API_ASSETS_URL:-http://api-e2e:3333}
+      VITE_API_URL: ${VITE_API_URL:-http://api-e2e:3333}
+      VITE_APP_ENV: e2e
+      VITE_E2E: 'true'
+      VITE_PUBLIC_ASSETS_URL: ${VITE_PUBLIC_ASSETS_URL:-/}
+      E2E_CONTROL_DIR: /e2e-control
+    command:
+      - sh
+      - -c
+      - mkdir -p playwright-report test-results && chmod -R 777 playwright-report test-results && pnpm run e2e; status=$$?; touch "$${E2E_CONTROL_DIR}/done"; exit $$status
+    depends_on:
+      frontend-e2e:
+        condition: service_healthy
+    volumes:
+      - e2e-control:/e2e-control
+      - type: bind
+        source: ./playwright-report
+        target: /home/node/app/playwright-report
+      - type: bind
+        source: ./test-results
+        target: /home/node/app/test-results
+
+volumes:
+  e2e-control:

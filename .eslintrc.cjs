@@ -6,31 +6,29 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
     },
-    "ecmaVersion": 12,
-    "sourceType": "module"
+    ecmaVersion: 12,
+    sourceType: 'module',
   },
-  plugins: ['react-refresh', "react",
-    "@typescript-eslint",
-    "prettier"],
+  plugins: ['react-refresh', 'react', '@typescript-eslint', 'prettier'],
   rules: {
-    "prettier/prettier": "error",
-    "react/react-in-jsx-scope": "off",
+    'prettier/prettier': 'error',
+    'react/react-in-jsx-scope': 'off',
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
     ],
   },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  }
-}
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+};

@@ -12,7 +12,7 @@ const SignInOrUpBy = () => {
 
       <div className="media-options">
         <a href="#" className="field google">
-          <img src="images/google.png" alt="" className="google-img" />
+          <img src="/images/google.png" alt="" className="google-img" />
           <span>Se connecter avec Google</span>
         </a>
       </div>

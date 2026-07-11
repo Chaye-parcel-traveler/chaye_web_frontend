@@ -18,6 +18,12 @@ body{
     justify-content: center;
       margin-top: 50px;
     margin-bottom: 30px;}
+
+.logoChaye img {
+    height: auto;
+    max-width: 185px;
+    width: min(185px, 70vw);
+}
 /*======= H ========*/
 h2 {
   color: #1f1f1f;
