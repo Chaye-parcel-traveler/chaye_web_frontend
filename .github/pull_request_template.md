@@ -6,6 +6,9 @@ Décrire en français le comportement livré.
 
 Closes #
 
+Utiliser `Fixes #123`, `Closes #123` ou `Resolves #123`. GitHub ne fermera
+l'issue qu'après le merge effectif de la PR dans la branche par défaut.
+
 ## Détails techniques
 
 Use English for code-level details, API contracts, fields, commands, and implementation notes.

@@ -1,5 +1,8 @@
-# Default reviewer until GitHub teams are configured.
-* @jiraiya972
+# Governance files require review by the technical maintainers.
+* @Chaye-parcel-traveler/chaye-maintainers
+/.github/workflows/required-reviewers.yml @Chaye-parcel-traveler/chaye-maintainers
+/.github/workflows/security*.yml @Chaye-parcel-traveler/chaye-maintainers
+/.github/CODEOWNERS @Chaye-parcel-traveler/chaye-maintainers
 
 # Frontend compliance and auth-sensitive areas.
 /src/features/auth/ @jiraiya972
