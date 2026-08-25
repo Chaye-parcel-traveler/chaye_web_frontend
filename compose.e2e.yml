@@ -26,7 +26,7 @@ services:
       PORT: 3333
       LOG_LEVEL: warn
       APP_NAME: chaye-api-e2e
-      APP_KEY: cz1jAV7_eZwCE6MSMkhWAkFjYzoLz2Pn
+      APP_KEY: ${E2E_APP_KEY:?set E2E_APP_KEY}
       DRIVE_DISK: local
       DB_CONNECTION: mysql
       MYSQL_HOST: db-e2e
