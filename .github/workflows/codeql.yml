@@ -1,0 +1,25 @@
+name: CodeQL
+
+on:
+  push:
+    branches: [task/lboi/use_chaye_api_backend]
+  pull_request:
+    branches: [task/lboi/use_chaye_api_backend]
+  schedule:
+    - cron: '23 3 * * 2'
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: security/codeql
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.0.3
+      - uses: github/codeql-action/init@v4
+        with:
+          languages: javascript-typescript
+      - uses: github/codeql-action/autobuild@v4
+      - uses: github/codeql-action/analyze@v4
