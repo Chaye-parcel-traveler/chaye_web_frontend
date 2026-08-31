@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const SignInOrUpBy = () => {
   return (
     <>
@@ -22,6 +24,18 @@ const SignInOrUpBy = () => {
           <i className="bx bxl-apple apple-icon"></i>
           <span>Se connecter avec Apple</span>
         </a>
+      </div>
+
+      <div className="form-link">
+        <span>
+          <Link to="/legal-notice" className="link">
+            Mentions légales
+          </Link>
+          {' | '}
+          <Link to="/privacy-policy" className="link">
+            Politique de confidentialité
+          </Link>
+        </span>
       </div>
     </>
   );

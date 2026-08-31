@@ -1,0 +1,13 @@
+# Default reviewer until GitHub teams are configured.
+* @jiraiya972
+
+# Frontend compliance and auth-sensitive areas.
+/src/features/auth/ @jiraiya972
+/src/features/legal/ @jiraiya972
+/src/features/members/ @jiraiya972
+/src/lib/api-client.ts @jiraiya972
+
+# Workflow and repository governance.
+/.github/ @jiraiya972
+/README.md @jiraiya972
+/docs/ @jiraiya972
