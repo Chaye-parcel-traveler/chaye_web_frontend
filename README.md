@@ -60,6 +60,8 @@ E2E_API_DIR=/chemin/vers/chaye_API pnpm run dev:e2e-stack
 ```
 
 Le lanceur vérifie Docker, tente `sudo systemctl start docker` sur Linux avec systemd si le daemon ne répond pas, puis démarre MariaDB, l’API et le frontend via Docker Compose.
+Il génère une clé `E2E_API_APP_KEY` éphémère locale si aucune clé dédiée n'est
+fournie par l'environnement. Cette clé n'est pas écrite dans le dépôt.
 
 Par défaut, le lancement local insère aussi les données de démonstration riches de l’API : membres, annonces, collaborations, destinataires et discussions. Pour garder uniquement le seed minimal E2E :
 

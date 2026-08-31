@@ -70,6 +70,7 @@ docker compose -f compose.e2e.yml run --rm e2e
 | `E2E_FRONTEND_PORT`   | `3000`                     | Port frontend exposé sur hôte |
 | `PLAYWRIGHT_BASE_URL` | `http://frontend-e2e:3000` | URL navigateur dans Compose   |
 | `E2E_API_URL`         | `http://api-e2e:3333`      | URL API pour helpers E2E      |
+| `E2E_API_APP_KEY`     | généré par le lanceur      | Clé AdonisJS dédiée E2E       |
 | `VITE_API_URL`        | `http://api-e2e:3333`      | URL API injectée au frontend  |
 | `VITE_API_ASSETS_URL` | `http://api-e2e:3333`      | Base URL des assets API       |
 | `VITE_APP_ENV`        | `e2e`                      | Environnement frontend        |
@@ -82,6 +83,8 @@ Il :
 
 - checkout ce dépôt dans `chaye_web_frontend`;
 - checkout `Chaye-parcel-traveler/chaye_API` via `CI_REPO_READ_TOKEN`;
+- utilise `E2E_API_APP_KEY` depuis les secrets GitHub pour éviter toute clé
+  applicative hardcodée dans le dépôt;
 - build les images `frontend-e2e` et `e2e`;
 - lance `docker compose -f compose.e2e.yml run --rm e2e`;
 - publie `playwright-report` uniquement en cas d'échec;

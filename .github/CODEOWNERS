@@ -1,5 +1,12 @@
-# Default reviewer until GitHub teams are configured.
-* @jiraiya972
+# Default reviewers until GitHub teams are configured.
+* @JonC0DER @jiraiya972
+
+# Governance files require review by both technical maintainers.
+/.github/workflows/required-reviewers.yml @JonC0DER @jiraiya972
+/.github/workflows/security*.yml @JonC0DER @jiraiya972
+/.github/workflows/codeql.yml @JonC0DER @jiraiya972
+/.github/workflows/dependency-review.yml @JonC0DER @jiraiya972
+/.github/CODEOWNERS @JonC0DER @jiraiya972
 
 # Frontend compliance and auth-sensitive areas.
 /src/features/auth/ @jiraiya972
@@ -9,5 +16,5 @@
 
 # Workflow and repository governance.
 /.github/ @jiraiya972
-/README.md @jiraiya972
 /docs/ @jiraiya972
+/README.md @jiraiya972

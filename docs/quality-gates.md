@@ -42,9 +42,13 @@ repository and must not run automatically for untrusted fork code.
 Required secret in `chaye_web_frontend`:
 
 - `CI_REPO_READ_TOKEN`
+- `E2E_API_APP_KEY`
 
 The token must have read-only contents access to
 `Chaye-parcel-traveler/chaye_API`. It must not be printed in logs.
+`E2E_API_APP_KEY` doit être une clé AdonisJS dédiée à l'environnement E2E, sans
+réutiliser les clés de développement ou de production. En local, le lanceur
+génère une clé éphémère si cette variable n'est pas fournie.
 
 Manual launch:
 

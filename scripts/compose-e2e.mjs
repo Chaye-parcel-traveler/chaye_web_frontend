@@ -1,11 +1,14 @@
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { randomBytes } from 'node:crypto';
 
 const mode = process.argv[2] ?? 'up';
 const apiDir = resolve(process.env.E2E_API_DIR ?? '../chaye_API');
 const e2eApiPort = process.env.E2E_API_PORT ?? '3333';
 const e2eFrontendPort = process.env.E2E_FRONTEND_PORT ?? '3000';
+const e2eApiAppKey =
+  process.env.E2E_API_APP_KEY ?? randomBytes(24).toString('base64url');
 const richSeedFiles = [
   './database/seeders/01_member.ts',
   './database/seeders/02_announcement.ts',
@@ -111,9 +114,13 @@ if (!existsSync(resolve(apiDir, 'Dockerfile'))) {
 
 const composeEnv =
   mode === 'test'
-    ? process.env
+    ? {
+        ...process.env,
+        E2E_API_APP_KEY: e2eApiAppKey,
+      }
     : {
         ...process.env,
+        E2E_API_APP_KEY: e2eApiAppKey,
         VITE_API_ASSETS_URL:
           process.env.VITE_API_ASSETS_URL ?? `http://127.0.0.1:${e2eApiPort}`,
         VITE_API_URL:

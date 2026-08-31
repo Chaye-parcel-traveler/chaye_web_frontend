@@ -45,6 +45,7 @@ jobs:
           VITE_API_ASSETS_URL: http://api-e2e:3333
           VITE_APP_ENV: e2e
           VITE_E2E: 'true'
+          E2E_API_APP_KEY: ${{ secrets.E2E_API_APP_KEY }}
         run: docker compose -f compose.e2e.yml build frontend-e2e e2e
 
       - name: Run Playwright E2E stack
@@ -60,6 +61,7 @@ jobs:
           VITE_API_ASSETS_URL: http://api-e2e:3333
           VITE_APP_ENV: e2e
           VITE_E2E: 'true'
+          E2E_API_APP_KEY: ${{ secrets.E2E_API_APP_KEY }}
         run: docker compose -f compose.e2e.yml run --rm e2e
 
       - name: Upload Playwright report on failure
@@ -78,4 +80,5 @@ jobs:
           E2E_DB_PORT: 33307
           E2E_API_PORT: 33333
           E2E_FRONTEND_PORT: 33000
+          E2E_API_APP_KEY: ${{ secrets.E2E_API_APP_KEY }}
         run: docker compose -f compose.e2e.yml down --volumes --remove-orphans
