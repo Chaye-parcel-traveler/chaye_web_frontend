@@ -19,12 +19,13 @@ vi.mock('../features/announcements/pages/AnnouncementsPage', () => ({
   default: () => <h1>Annonces</h1>,
 }));
 
+vi.mock('../features/announcements/pages/NewAnnouncementPage', () => ({
+  default: () => <h1>Nouvelle annonce</h1>,
+}));
+
 function renderRoute(path: string) {
   return render(
-    <MemoryRouter
-      future={{ v7_relativeSplatPath: true, v7_startTransition: true }}
-      initialEntries={[path]}
-    >
+    <MemoryRouter initialEntries={[path]}>
       <AppRouter />
     </MemoryRouter>,
   );
@@ -45,6 +46,14 @@ describe('AppRouter', () => {
 
     expect(
       await screen.findByRole('heading', { name: 'Annonces' }),
+    ).toBeInTheDocument();
+  });
+
+  it('keeps the legacy new announcement route available', async () => {
+    renderRoute('/announcements/new');
+
+    expect(
+      await screen.findByRole('heading', { name: 'Nouvelle annonce' }),
     ).toBeInTheDocument();
   });
 

@@ -6,9 +6,7 @@ import AppRouter from './router';
 function App() {
   return (
     <AppProviders>
-      <BrowserRouter
-        future={{ v7_relativeSplatPath: true, v7_startTransition: true }}
-      >
+      <BrowserRouter>
         <RouteErrorBoundary>
           <AppRouter />
         </RouteErrorBoundary>

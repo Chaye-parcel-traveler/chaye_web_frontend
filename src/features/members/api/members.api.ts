@@ -1,7 +1,7 @@
 import { apiRequest } from '../../../shared/api/request';
 import { getAuthToken, saveAuthSession } from '../../auth/api/auth.api';
 import { normalizeMemberProfile } from './member.normalizers';
-import type { AccountStatusResponse } from './member.types';
+import type { AccountStatusResponse, MemberProfile } from './member.types';
 
 export const getCurrentMember = async () => {
   const member = normalizeMemberProfile(
@@ -26,6 +26,16 @@ export const getMember = (memberId: number) =>
     auth: true,
     getAuthToken,
   }).then(normalizeMemberProfile);
+
+export const getMembers = async (): Promise<MemberProfile[]> => {
+  const response = await apiRequest<unknown[]>('/members', {
+    method: 'GET',
+    auth: true,
+    getAuthToken,
+  });
+
+  return response.map(normalizeMemberProfile);
+};
 
 export const getCurrentAccountStatus = async () => {
   const member = await getCurrentMember();
