@@ -59,5 +59,10 @@ jobs:
             --scanners vuln,secret,misconfig \
             --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
             --exit-code 1 \
+            --skip-dirs /workspace/.pnpm-store \
+            --skip-dirs /workspace/node_modules \
+            --skip-dirs /workspace/dist \
+            --skip-dirs /workspace/playwright-report \
+            --skip-dirs /workspace/test-results \
             --no-progress \
             /workspace
