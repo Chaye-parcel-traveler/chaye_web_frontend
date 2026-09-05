@@ -78,6 +78,7 @@ services:
       VITE_APP_ENV: e2e
       VITE_E2E: 'true'
       VITE_PUBLIC_ASSETS_URL: ${VITE_PUBLIC_ASSETS_URL:-/}
+      __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS: frontend-e2e
     depends_on:
       api-e2e:
         condition: service_healthy
