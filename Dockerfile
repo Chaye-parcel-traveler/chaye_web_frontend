@@ -1,6 +1,5 @@
-ARG NODE_IMAGE=node:22-bookworm-slim
-
-FROM $NODE_IMAGE AS base
+# Update pinned base image digests via issue #40.
+FROM node:22-bookworm-slim@sha256:83f487e0a63425e5b4d146fb5e5be574bcbe1b7b843d3ebafdd95eaf7767a7e5 AS base
 ENV PNPM_HOME=/home/node/.local/share/pnpm
 ENV PATH=$PNPM_HOME:$PATH
 RUN corepack enable && corepack prepare pnpm@9.6.0 --activate
@@ -30,8 +29,11 @@ ENV VITE_APP_ENV=$VITE_APP_ENV
 ENV VITE_PUBLIC_ASSETS_URL=$VITE_PUBLIC_ASSETS_URL
 RUN pnpm run build
 
-FROM nginx:1.30.3-alpine AS production
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+FROM nginx:1.30.5-alpine-slim@sha256:0ae85631d55f78b0ad8e8468baadd7fa82c1a1285152c63055fd6333dded4e06 AS production
+ARG VITE_API_URL=http://localhost:3333
+ENV VITE_API_URL=$VITE_API_URL
+ENV NGINX_ENVSUBST_FILTER=^VITE_API_URL$
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 COPY --from=build /home/node/app/dist /usr/share/nginx/html
 EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD wget -qO- http://127.0.0.1/ >/dev/null || exit 1
