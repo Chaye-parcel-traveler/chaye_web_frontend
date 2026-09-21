@@ -35,12 +35,10 @@ describe('feature API modules', () => {
     ]);
   });
 
-  it('sends authenticated announcement creation requests', async () => {
-    window.localStorage.setItem('chaye_auth_token', 'test-token');
-
+  it('sends session-authenticated announcement creation requests', async () => {
     server.use(
       http.post(`${apiUrl}/announcements`, async ({ request }) => {
-        expect(request.headers.get('authorization')).toBe('Bearer test-token');
+        expect(request.headers.get('authorization')).toBeNull();
         expect(await request.json()).toMatchObject({
           arrivingAt: 'Fort-de-France',
           departingFrom: 'Paris-Orly',
@@ -79,20 +77,27 @@ describe('feature API modules', () => {
     ).resolves.toMatchObject({ id: 10, status: 'draft' });
   });
 
-  it('normalizes login and stores the member session', async () => {
+  it('logs in through web session endpoints and stores only in memory', async () => {
+    const calls: string[] = [];
+
     server.use(
-      http.post(`${apiUrl}/login`, () =>
-        HttpResponse.json({
-          abilities: ['*'],
-          expiresAt: null,
-          lastUsedAt: null,
-          name: null,
-          token: 'login-token',
-          type: 'bearer',
-        }),
-      ),
+      http.get(`${apiUrl}/auth/csrf`, () => {
+        calls.push('csrf');
+        return new HttpResponse(null);
+      }),
+      http.post(`${apiUrl}/auth/web/login`, async ({ request }) => {
+        calls.push('login');
+        expect(request.headers.get('authorization')).toBeNull();
+        expect(await request.json()).toEqual({
+          email: 'codex@chaye.test',
+          password: 'test-password',
+        });
+
+        return new HttpResponse(null, { status: 204 });
+      }),
       http.get(`${apiUrl}/me`, ({ request }) => {
-        expect(request.headers.get('authorization')).toBe('Bearer login-token');
+        calls.push('me');
+        expect(request.headers.get('authorization')).toBeNull();
 
         return HttpResponse.json({
           birthDate: '1990-01-01',
@@ -110,6 +115,8 @@ describe('feature API modules', () => {
     const session = await loginMember('codex@chaye.test', 'test-password');
 
     expect(session.member).toMatchObject({ firstname: 'Codex', id: 61 });
-    expect(window.localStorage.getItem('chaye_auth_token')).toBe('login-token');
+    expect(calls).toEqual(['csrf', 'login', 'me']);
+    expect(window.localStorage.getItem('chaye_auth_token')).toBeNull();
+    expect(window.localStorage.getItem('chaye_auth_member')).toBeNull();
   });
 });

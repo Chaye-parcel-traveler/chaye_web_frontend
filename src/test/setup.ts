@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom/vitest';
+import { cleanup } from '@testing-library/react';
 import { afterAll, afterEach, beforeAll } from 'vitest';
+import { clearAuthSession } from '../features/auth/api/auth.api';
 import { server } from './mocks/server';
 
 const createStorageMock = (): Storage => {
@@ -36,7 +38,9 @@ beforeAll(() => {
 
 afterEach(() => {
   server.resetHandlers();
+  clearAuthSession();
   window.localStorage?.clear();
+  cleanup();
 });
 
 afterAll(() => {

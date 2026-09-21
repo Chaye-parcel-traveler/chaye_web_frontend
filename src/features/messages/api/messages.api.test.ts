@@ -11,14 +11,10 @@ import {
 const apiUrl = appEnv.apiUrl;
 
 describe('messages API', () => {
-  it('loads and normalizes discussions with auth', async () => {
-    window.localStorage.setItem('chaye_auth_token', 'message-token');
-
+  it('loads and normalizes discussions with session auth', async () => {
     server.use(
       http.get(`${apiUrl}/tchat-discussions`, ({ request }) => {
-        expect(request.headers.get('authorization')).toBe(
-          'Bearer message-token',
-        );
+        expect(request.headers.get('authorization')).toBeNull();
 
         return HttpResponse.json({
           data: [
@@ -44,8 +40,6 @@ describe('messages API', () => {
   });
 
   it('loads and sends messages through discussion endpoints', async () => {
-    window.localStorage.setItem('chaye_auth_token', 'message-token');
-
     server.use(
       http.get(`${apiUrl}/tchat-discussions/5/messages`, () =>
         HttpResponse.json([

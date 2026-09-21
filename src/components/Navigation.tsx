@@ -1,34 +1,34 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import {
-  getStoredMember,
-  logoutMember,
-  onAuthChange,
-} from '../features/auth/api/auth.api';
+import { getStoredMember, logoutMember } from '../features/auth/api/auth.api';
+import { useAuthSession } from '../features/auth/auth-session-context';
 
 const Navigation = () => {
   const sidebar = useRef<HTMLElement | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const [memberName, setMemberName] = useState(() => {
-    const member = getStoredMember();
-    return member ? `${member.firstname} ${member.lastname}` : '';
-  });
+  const { member } = useAuthSession();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const memberName = member ? `${member.firstname} ${member.lastname}` : '';
   const toggle = () => sidebar.current?.classList.toggle('close');
 
-  useEffect(() => {
-    const syncMember = () => {
-      const member = getStoredMember();
-      setMemberName(member ? `${member.firstname} ${member.lastname}` : '');
-    };
+  const handleLogout = async () => {
+    if (!memberName) {
+      navigate('/login');
+      return;
+    }
 
-    syncMember();
-    return onAuthChange(syncMember);
-  }, []);
-
-  const handleLogout = () => {
-    logoutMember();
-    navigate('/login');
+    setIsLoggingOut(true);
+    try {
+      await logoutMember();
+      navigate('/login');
+    } catch {
+      if (!getStoredMember()) {
+        navigate('/login');
+      }
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
 
   return (
@@ -133,7 +133,11 @@ const Navigation = () => {
               >
                 <i className="bx bx-log-out bx-tada-hover bx-md icon"></i>
                 <span className="text nav-text">
-                  {memberName ? 'Se déconnecter' : 'Se connecter'}
+                  {isLoggingOut
+                    ? 'Déconnexion...'
+                    : memberName
+                      ? 'Se déconnecter'
+                      : 'Se connecter'}
                 </span>
               </button>
             )}

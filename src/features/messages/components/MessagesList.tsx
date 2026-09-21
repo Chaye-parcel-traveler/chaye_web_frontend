@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { getStoredMember, onAuthChange } from '../../auth/api/auth.api';
+import { useAuthSession } from '../../auth/auth-session-context';
 import { getMember } from '../../members/api/members.api';
 import type { MemberIdentity } from '../../members/api/member.types';
 import { getDiscussions } from '../api/messages.api';
@@ -20,7 +20,8 @@ type DiscussionPreview = {
 
 const MessagesList = () => {
   const navigate = useNavigate();
-  const [currentMember, setCurrentMember] = useState(() => getStoredMember());
+  const { isLoading: isSessionLoading, member: currentMember } =
+    useAuthSession();
   const [previews, setPreviews] = useState<DiscussionPreview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -77,15 +78,17 @@ const MessagesList = () => {
   );
 
   useEffect(() => {
+    if (isSessionLoading) {
+      return;
+    }
+
     if (!currentMember) {
       navigate('/login');
       return;
     }
 
     void loadDiscussions({ showLoading: true });
-  }, [currentMember, loadDiscussions, navigate]);
-
-  useEffect(() => onAuthChange(() => setCurrentMember(getStoredMember())), []);
+  }, [currentMember, isSessionLoading, loadDiscussions, navigate]);
 
   useEffect(() => {
     const refreshVisibleMessages = () => {
