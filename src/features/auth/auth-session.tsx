@@ -2,6 +2,7 @@ import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { onApiUnauthorized } from '../../lib/api-client';
 import type { MemberProfile } from '../members/api/member.types';
 import {
+  AuthSessionRequestError,
   clearAuthSession,
   getCurrentSessionMember,
   getStoredMember,
@@ -19,6 +20,7 @@ export function AuthSessionProvider({ children }: AuthSessionProviderProps) {
     getStoredMember(),
   );
   const [isLoading, setIsLoading] = useState(true);
+  const [sessionError, setSessionError] = useState<string | null>(null);
 
   const syncFromAuthStore = useCallback(() => {
     setMember(getStoredMember());
@@ -27,11 +29,22 @@ export function AuthSessionProvider({ children }: AuthSessionProviderProps) {
   const refreshSession = useCallback(async () => {
     try {
       const nextMember = await getCurrentSessionMember();
+      setSessionError(null);
       setMember(nextMember);
       return nextMember;
-    } catch {
-      clearAuthSession();
-      setMember(null);
+    } catch (error) {
+      if (error instanceof AuthSessionRequestError && error.status === 401) {
+        clearAuthSession();
+        setSessionError(null);
+        setMember(null);
+        return null;
+      }
+
+      setSessionError(
+        error instanceof Error
+          ? error.message
+          : 'Session impossible à vérifier.',
+      );
       return null;
     }
   }, []);
@@ -44,13 +57,27 @@ export function AuthSessionProvider({ children }: AuthSessionProviderProps) {
     getCurrentSessionMember()
       .then((nextMember) => {
         if (isMounted) {
+          setSessionError(null);
           setMember(nextMember);
         }
       })
-      .catch(() => {
-        clearAuthSession();
+      .catch((error) => {
         if (isMounted) {
-          setMember(null);
+          if (
+            error instanceof AuthSessionRequestError &&
+            error.status === 401
+          ) {
+            clearAuthSession();
+            setSessionError(null);
+            setMember(null);
+            return;
+          }
+
+          setSessionError(
+            error instanceof Error
+              ? error.message
+              : 'Session impossible à vérifier.',
+          );
         }
       })
       .finally(() => {
@@ -70,6 +97,7 @@ export function AuthSessionProvider({ children }: AuthSessionProviderProps) {
     () =>
       onApiUnauthorized(() => {
         clearAuthSession();
+        setSessionError(null);
         setMember(null);
       }),
     [],
@@ -80,9 +108,10 @@ export function AuthSessionProvider({ children }: AuthSessionProviderProps) {
       isAuthenticated: Boolean(member),
       isLoading,
       member,
+      sessionError,
       refreshSession,
     }),
-    [isLoading, member, refreshSession],
+    [isLoading, member, refreshSession, sessionError],
   );
 
   return (

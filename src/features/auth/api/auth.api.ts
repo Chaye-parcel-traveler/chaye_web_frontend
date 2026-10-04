@@ -1,4 +1,7 @@
-import { onApiUnauthorized } from '../../../lib/api-client';
+import apiClient, {
+  normalizeApiError,
+  onApiUnauthorized,
+} from '../../../lib/api-client';
 import { apiRequest, ensureApiCsrfCookie } from '../../../shared/api/request';
 import { normalizeMemberProfile } from '../../members/api/member.normalizers';
 import type { MemberProfile } from '../../members/api/member.types';
@@ -26,6 +29,16 @@ export type RegisterPayload = {
 export type AuthSession = {
   member: MemberProfile;
 };
+
+export class AuthSessionRequestError extends Error {
+  readonly status?: number;
+
+  constructor(message: string, status?: number) {
+    super(message);
+    this.name = 'AuthSessionRequestError';
+    this.status = status;
+  }
+}
 
 let currentMember: MemberProfile | null = null;
 
@@ -94,12 +107,20 @@ export const registerMember = (payload: RegisterPayload) =>
 export const ensureCsrfCookie = ensureApiCsrfCookie;
 
 export const getCurrentSessionMember = async () => {
-  const member = normalizeMemberProfile(
-    await apiRequest<unknown>('/me', {
-      method: 'GET',
-      auth: true,
-    }),
-  );
+  let data: unknown;
+
+  try {
+    const response = await apiClient.get<unknown>('/me');
+    data = response.data;
+  } catch (error) {
+    const normalizedError = normalizeApiError(error);
+    throw new AuthSessionRequestError(
+      normalizedError.message,
+      normalizedError.status,
+    );
+  }
+
+  const member = normalizeMemberProfile(data);
 
   saveAuthSession({ member });
   return member;

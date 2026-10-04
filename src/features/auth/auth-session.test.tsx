@@ -1,7 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 import { describe, expect, it } from 'vitest';
+import SignInOrUpBy from '../../components/SignInOrUpBy';
 import { appEnv } from '../../config/env';
 import type { MemberProfile } from '../members/api/member.types';
 import { apiRequest } from '../../shared/api/request';
@@ -31,17 +33,25 @@ const memberResponse: MemberProfile = {
 };
 
 function SessionProbe() {
-  const { isAuthenticated, isLoading, member } = useAuthSession();
+  const { isAuthenticated, isLoading, member, sessionError } = useAuthSession();
 
   return (
     <output>
       {isLoading
         ? 'loading'
-        : isAuthenticated
-          ? `${member?.firstname} ${member?.lastname}`
-          : 'guest'}
+        : sessionError
+          ? 'session-error'
+          : isAuthenticated
+            ? `${member?.firstname} ${member?.lastname}`
+            : 'guest'}
     </output>
   );
+}
+
+function LocationProbe() {
+  const location = useLocation();
+
+  return <output aria-label="location">{location.pathname}</output>;
 }
 
 function SessionProbeWithForbiddenAction() {
@@ -93,6 +103,75 @@ describe('auth session', () => {
     );
 
     expect(await screen.findByText('guest')).toBeInTheDocument();
+  });
+
+  it('does not treat a /me 500 as a confirmed guest session', async () => {
+    server.use(
+      http.get(`${apiUrl}/me`, () => new HttpResponse(null, { status: 500 })),
+    );
+
+    render(
+      <AuthSessionProvider>
+        <SessionProbe />
+      </AuthSessionProvider>,
+    );
+
+    expect(await screen.findByText('session-error')).toBeInTheDocument();
+  });
+
+  it('does not treat a /me network error as a confirmed guest session', async () => {
+    server.use(http.get(`${apiUrl}/me`, () => HttpResponse.error()));
+
+    render(
+      <AuthSessionProvider>
+        <SessionProbe />
+      </AuthSessionProvider>,
+    );
+
+    expect(await screen.findByText('session-error')).toBeInTheDocument();
+  });
+
+  it('starts Google OAuth through the backend without storing tokens', async () => {
+    render(
+      <MemoryRouter>
+        <AuthSessionProvider>
+          <SignInOrUpBy />
+        </AuthSessionProvider>
+      </MemoryRouter>,
+    );
+
+    const googleLink = screen.getByRole('link', {
+      name: /se connecter avec google/i,
+    });
+
+    expect(googleLink).toHaveAttribute(
+      'href',
+      `${apiUrl}/auth/google/redirect?acceptedCguVersion=2026-06-01`,
+    );
+    expect(window.localStorage.getItem('chaye_auth_token')).toBeNull();
+    expect(window.localStorage.getItem('chaye_auth_member')).toBeNull();
+  });
+
+  it('restores the session after a successful Google callback redirect', async () => {
+    server.use(
+      http.get(`${apiUrl}/me`, () => HttpResponse.json(memberResponse)),
+    );
+
+    render(
+      <MemoryRouter initialEntries={['/auth?oauth=success']}>
+        <AuthSessionProvider>
+          <SignInOrUpBy />
+          <LocationProbe />
+        </AuthSessionProvider>
+      </MemoryRouter>,
+    );
+
+    await waitFor(() =>
+      expect(screen.getByLabelText('location')).toHaveTextContent('/annonces'),
+    );
+    expect(getStoredMember()).toMatchObject({ email: 'codex@chaye.test' });
+    expect(window.localStorage.getItem('chaye_auth_token')).toBeNull();
+    expect(window.localStorage.getItem('chaye_auth_member')).toBeNull();
   });
 
   it('logs in through csrf, web login, then /me', async () => {

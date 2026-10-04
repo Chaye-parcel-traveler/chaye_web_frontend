@@ -64,6 +64,7 @@ function AppRouter() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<Home />} />
+          <Route path="/auth" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/carrier" element={<CarrierFormular />} />

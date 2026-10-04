@@ -229,12 +229,22 @@
   font-weight: 500;
 }
 
-.auth-page a.facebook {
+.auth-page button.field {
+  border: 0;
+  cursor: not-allowed;
+  font: inherit;
+}
+
+.auth-page button.field:disabled {
+  opacity: 0.55;
+}
+
+.auth-page .facebook {
   background-color: #4267b2;
   color: #ffffff;
 }
 
-.auth-page a.facebook .facebook-icon {
+.auth-page .facebook .facebook-icon {
   align-items: center;
   background-color: #ffffff;
   border-radius: 50%;
@@ -255,12 +265,12 @@
   opacity: 0.68;
 }
 
-.auth-page a.apple {
+.auth-page .apple {
   background-color: #090a0a;
   color: #ffffff;
 }
 
-.auth-page a.apple .apple-icon {
+.auth-page .apple .apple-icon {
   color: #ffffff;
   font-size: 30px;
 }

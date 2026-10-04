@@ -5,6 +5,7 @@ export type AuthSessionContextValue = {
   isAuthenticated: boolean;
   isLoading: boolean;
   member: MemberProfile | null;
+  sessionError: string | null;
   refreshSession: () => Promise<MemberProfile | null>;
 };
 
