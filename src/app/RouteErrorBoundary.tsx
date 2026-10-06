@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Component, ErrorInfo, ReactNode } from 'react';
 
 type RouteErrorBoundaryState = {
