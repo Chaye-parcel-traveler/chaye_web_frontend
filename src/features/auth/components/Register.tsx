@@ -306,7 +306,7 @@ const Register = () => {
               </span>
             </div>
           </div>
-          <SignInOrUpBy />
+          <SignInOrUpBy mode="register" />
         </div>
       </section>
     </main>

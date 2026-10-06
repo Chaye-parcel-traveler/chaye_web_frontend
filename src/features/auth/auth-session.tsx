@@ -45,7 +45,7 @@ export function AuthSessionProvider({ children }: AuthSessionProviderProps) {
           ? error.message
           : 'Session impossible à vérifier.',
       );
-      return null;
+      throw error;
     }
   }, []);
 

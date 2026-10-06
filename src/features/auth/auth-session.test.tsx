@@ -131,11 +131,11 @@ describe('auth session', () => {
     expect(await screen.findByText('session-error')).toBeInTheDocument();
   });
 
-  it('starts Google OAuth through the backend without storing tokens', async () => {
+  it('starts Google login without sending acceptedCguVersion', async () => {
     render(
       <MemoryRouter>
         <AuthSessionProvider>
-          <SignInOrUpBy />
+          <SignInOrUpBy mode="login" />
         </AuthSessionProvider>
       </MemoryRouter>,
     );
@@ -145,6 +145,44 @@ describe('auth session', () => {
     });
 
     expect(googleLink).toHaveAttribute(
+      'href',
+      `${apiUrl}/auth/google/redirect`,
+    );
+    expect(window.localStorage.getItem('chaye_auth_token')).toBeNull();
+    expect(window.localStorage.getItem('chaye_auth_member')).toBeNull();
+  });
+
+  it('starts Google signup with acceptedCguVersion only after explicit consent', async () => {
+    render(
+      <MemoryRouter>
+        <AuthSessionProvider>
+          <SignInOrUpBy mode="register" />
+        </AuthSessionProvider>
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.queryByRole('link', { name: /se connecter avec google/i }),
+    ).not.toBeInTheDocument();
+
+    await userEvent.click(
+      screen.getByRole('button', { name: /se connecter avec google/i }),
+    );
+    expect(
+      await screen.findByText(
+        'Vous devez accepter explicitement les CGU avant Google.',
+      ),
+    ).toBeInTheDocument();
+
+    await userEvent.click(
+      screen.getByLabelText(
+        /j’accepte les conditions générales d’utilisation de chayé/i,
+      ),
+    );
+
+    expect(
+      screen.getByRole('link', { name: /se connecter avec google/i }),
+    ).toHaveAttribute(
       'href',
       `${apiUrl}/auth/google/redirect?acceptedCguVersion=2026-06-01`,
     );
@@ -170,6 +208,68 @@ describe('auth session', () => {
       expect(screen.getByLabelText('location')).toHaveTextContent('/annonces'),
     );
     expect(getStoredMember()).toMatchObject({ email: 'codex@chaye.test' });
+    expect(window.localStorage.getItem('chaye_auth_token')).toBeNull();
+    expect(window.localStorage.getItem('chaye_auth_member')).toBeNull();
+  });
+
+  it('shows an absent Google session when the OAuth callback cannot restore /me with 401', async () => {
+    server.use(
+      http.get(`${apiUrl}/me`, () => new HttpResponse(null, { status: 401 })),
+    );
+
+    render(
+      <MemoryRouter initialEntries={['/auth?oauth=success']}>
+        <AuthSessionProvider>
+          <SignInOrUpBy />
+        </AuthSessionProvider>
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByText('Session Google introuvable. Réessayez.'),
+    ).toBeInTheDocument();
+    expect(window.localStorage.getItem('chaye_auth_token')).toBeNull();
+    expect(window.localStorage.getItem('chaye_auth_member')).toBeNull();
+  });
+
+  it('keeps OAuth callback /me 500 as a temporary session verification error', async () => {
+    server.use(
+      http.get(`${apiUrl}/me`, () => new HttpResponse(null, { status: 500 })),
+    );
+
+    render(
+      <MemoryRouter initialEntries={['/auth?oauth=success']}>
+        <AuthSessionProvider>
+          <SignInOrUpBy />
+        </AuthSessionProvider>
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByText(
+        'Impossible de vérifier la session Google pour le moment. Réessayez.',
+      ),
+    ).toBeInTheDocument();
+    expect(window.localStorage.getItem('chaye_auth_token')).toBeNull();
+    expect(window.localStorage.getItem('chaye_auth_member')).toBeNull();
+  });
+
+  it('keeps OAuth callback /me network error as a temporary session verification error', async () => {
+    server.use(http.get(`${apiUrl}/me`, () => HttpResponse.error()));
+
+    render(
+      <MemoryRouter initialEntries={['/auth?oauth=success']}>
+        <AuthSessionProvider>
+          <SignInOrUpBy />
+        </AuthSessionProvider>
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByText(
+        'Impossible de vérifier la session Google pour le moment. Réessayez.',
+      ),
+    ).toBeInTheDocument();
     expect(window.localStorage.getItem('chaye_auth_token')).toBeNull();
     expect(window.localStorage.getItem('chaye_auth_member')).toBeNull();
   });

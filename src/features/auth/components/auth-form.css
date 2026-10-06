@@ -256,13 +256,27 @@
   width: 28px;
 }
 
-.auth-page a.google {
+.auth-page .google {
   border: 1px solid #cacaca;
   color: #232836;
 }
 
-.auth-page a.google span {
+.auth-page .google span {
   opacity: 0.68;
+}
+
+.auth-page .google-terms-field {
+  align-items: flex-start;
+  color: #232836;
+  display: flex;
+  font-size: 13px;
+  gap: 8px;
+  line-height: 1.35;
+  margin: 10px 0 0;
+}
+
+.auth-page .google-terms-field input {
+  margin-top: 2px;
 }
 
 .auth-page .apple {
