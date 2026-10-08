@@ -15,9 +15,9 @@ jobs:
     name: security/codeql
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: github/codeql-action/init@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: github/codeql-action/init@7999b86c43a865dc79d8923397f35af22de63401 # v4
         with:
           languages: javascript-typescript
-      - uses: github/codeql-action/autobuild@v4
-      - uses: github/codeql-action/analyze@v4
+      - uses: github/codeql-action/autobuild@7999b86c43a865dc79d8923397f35af22de63401 # v4
+      - uses: github/codeql-action/analyze@7999b86c43a865dc79d8923397f35af22de63401 # v4
