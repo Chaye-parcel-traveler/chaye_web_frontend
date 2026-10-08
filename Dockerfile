@@ -30,8 +30,12 @@ ENV VITE_APP_ENV=$VITE_APP_ENV
 ENV VITE_PUBLIC_ASSETS_URL=$VITE_PUBLIC_ASSETS_URL
 RUN pnpm run build
 
-FROM nginx:1.30.3-alpine AS production
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+FROM nginx:1.31.6-alpine3.24@sha256:df221db836e1754089190208cee7eeda94f233197056426eda74a43ab1abeac2 AS production
+RUN apk upgrade --no-cache pcre2 libexpat
+ARG VITE_API_URL=http://localhost:3333
+ENV VITE_API_URL=$VITE_API_URL
+ENV NGINX_ENVSUBST_FILTER=^VITE_API_URL$
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 COPY --from=build /home/node/app/dist /usr/share/nginx/html
 EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 CMD wget -qO- http://127.0.0.1/ >/dev/null || exit 1
