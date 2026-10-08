@@ -229,12 +229,22 @@
   font-weight: 500;
 }
 
-.auth-page a.facebook {
+.auth-page button.field {
+  border: 0;
+  cursor: not-allowed;
+  font: inherit;
+}
+
+.auth-page button.field:disabled {
+  opacity: 0.55;
+}
+
+.auth-page .facebook {
   background-color: #4267b2;
   color: #ffffff;
 }
 
-.auth-page a.facebook .facebook-icon {
+.auth-page .facebook .facebook-icon {
   align-items: center;
   background-color: #ffffff;
   border-radius: 50%;
@@ -246,21 +256,35 @@
   width: 28px;
 }
 
-.auth-page a.google {
+.auth-page .google {
   border: 1px solid #cacaca;
   color: #232836;
 }
 
-.auth-page a.google span {
+.auth-page .google span {
   opacity: 0.68;
 }
 
-.auth-page a.apple {
+.auth-page .google-terms-field {
+  align-items: flex-start;
+  color: #232836;
+  display: flex;
+  font-size: 13px;
+  gap: 8px;
+  line-height: 1.35;
+  margin: 10px 0 0;
+}
+
+.auth-page .google-terms-field input {
+  margin-top: 2px;
+}
+
+.auth-page .apple {
   background-color: #090a0a;
   color: #ffffff;
 }
 
-.auth-page a.apple .apple-icon {
+.auth-page .apple .apple-icon {
   color: #ffffff;
   font-size: 30px;
 }

@@ -134,7 +134,7 @@ const Login = () => {
               </span>
             </div>
           </div>
-          <SignInOrUpBy />
+          <SignInOrUpBy mode="login" />
         </div>
       </section>
     </main>

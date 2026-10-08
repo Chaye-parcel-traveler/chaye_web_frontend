@@ -7,11 +7,10 @@ import './registerEnhancements.css';
 import LogoChayeSection from '../../../components/LogoChayeSection';
 import { getAge, isMinorFromBirthDate, registerMember } from '../api/auth.api';
 import { registerSchema, type RegisterFormValues } from '../auth.schemas';
+import { CURRENT_CGU_VERSION } from '../auth.constants';
 import { createReport } from '../../moderation/api/moderation.api';
 
 type SubmitStatus = 'idle' | 'loading' | 'success' | 'error';
-
-const CGU_VERSION = '2026-06-01';
 
 const initialForm: RegisterFormValues = {
   firstname: '',
@@ -76,8 +75,8 @@ const Register = () => {
         password: values.password,
         passwordConfirmation: values.passwordConfirmation,
         termsAccepted: values.termsAccepted,
-        termsVersion: CGU_VERSION,
-        acceptedCguVersion: CGU_VERSION,
+        termsVersion: CURRENT_CGU_VERSION,
+        acceptedCguVersion: CURRENT_CGU_VERSION,
         isMinor,
       });
       setStatus('success');
@@ -307,7 +306,7 @@ const Register = () => {
               </span>
             </div>
           </div>
-          <SignInOrUpBy />
+          <SignInOrUpBy mode="register" />
         </div>
       </section>
     </main>

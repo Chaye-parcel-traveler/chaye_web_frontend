@@ -1,5 +1,5 @@
 import { apiRequest } from '../../../shared/api/request';
-import { getAuthToken, saveAuthSession } from '../../auth/api/auth.api';
+import { saveAuthSession } from '../../auth/api/auth.api';
 import { normalizeMemberProfile } from './member.normalizers';
 import type { AccountStatusResponse, MemberProfile } from './member.types';
 
@@ -8,14 +8,10 @@ export const getCurrentMember = async () => {
     await apiRequest<unknown>('/me', {
       method: 'GET',
       auth: true,
-      getAuthToken,
     }),
   );
 
-  const token = getAuthToken();
-  if (token) {
-    saveAuthSession({ token, member });
-  }
+  saveAuthSession({ member });
 
   return member;
 };
@@ -24,14 +20,12 @@ export const getMember = (memberId: number) =>
   apiRequest<unknown>(`/members/${memberId}`, {
     method: 'GET',
     auth: true,
-    getAuthToken,
   }).then(normalizeMemberProfile);
 
 export const getMembers = async (): Promise<MemberProfile[]> => {
   const response = await apiRequest<unknown[]>('/members', {
     method: 'GET',
     auth: true,
-    getAuthToken,
   });
 
   return response.map(normalizeMemberProfile);

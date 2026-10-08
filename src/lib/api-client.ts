@@ -52,16 +52,32 @@ const apiClient = axios.create({
   headers: {
     Accept: 'application/json',
   },
+  withCredentials: true,
+  withXSRFToken: true,
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
 });
 
-export const setApiAuthToken = (token: string | null) => {
-  if (token) {
-    apiClient.defaults.headers.common.Authorization = `Bearer ${token}`;
-    return;
-  }
+const unauthorizedListeners = new Set<() => void>();
 
-  delete apiClient.defaults.headers.common.Authorization;
+export const onApiUnauthorized = (callback: () => void) => {
+  unauthorizedListeners.add(callback);
+
+  return () => {
+    unauthorizedListeners.delete(callback);
+  };
 };
+
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error: unknown) => {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      unauthorizedListeners.forEach((listener) => listener());
+    }
+
+    return Promise.reject(error);
+  },
+);
 
 const getFirstValidationMessage = (errors: ApiErrorPayload['errors']) => {
   if (Array.isArray(errors)) {
