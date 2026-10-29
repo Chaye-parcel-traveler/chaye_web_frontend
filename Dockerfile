@@ -31,7 +31,7 @@ ENV VITE_PUBLIC_ASSETS_URL=$VITE_PUBLIC_ASSETS_URL
 RUN pnpm run build
 
 FROM nginx:1.31.6-alpine3.24@sha256:df221db836e1754089190208cee7eeda94f233197056426eda74a43ab1abeac2 AS production
-RUN apk upgrade --no-cache pcre2 libexpat
+RUN apk upgrade --no-cache
 ARG VITE_API_URL=http://localhost:3333
 ENV VITE_API_URL=$VITE_API_URL
 ENV NGINX_ENVSUBST_FILTER=^VITE_API_URL$
