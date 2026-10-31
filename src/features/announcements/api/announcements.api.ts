@@ -1,5 +1,4 @@
 import { apiRequest } from '../../../shared/api/request';
-import { getAuthToken } from '../../auth/api/auth.api';
 
 export type Announcement = {
   id: number;
@@ -66,6 +65,5 @@ export const createAnnouncement = (payload: CreateAnnouncementPayload) =>
   apiRequest<Announcement>('/announcements', {
     method: 'POST',
     auth: true,
-    getAuthToken,
     body: payload,
   });

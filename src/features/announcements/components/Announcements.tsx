@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAccountRestrictions } from '../../members/components/AccountStatusNotice';
 import { Announcement, getAnnouncements } from '../api/announcements.api';
-import { getStoredMember } from '../../auth/api/auth.api';
+import { useAuthSession } from '../../auth/auth-session-context';
 import { findOrCreateDiscussion } from '../../messages/api/messages.api';
 import { flightDestinationCatalog } from '../../../assets/flightDestinationsAfriqueAntilles';
 import fallbackAirportImage from '../../../assets/generique_airport.png';
@@ -85,7 +85,7 @@ const Announces = () => {
   const [actionMessage, setActionMessage] = useState('');
   const [selectedType, setSelectedType] =
     useState<AnnouncementTypeFilter>('shipping');
-  const currentMember = useMemo(() => getStoredMember(), []);
+  const { member: currentMember } = useAuthSession();
 
   useEffect(() => {
     getAnnouncements()

@@ -1,5 +1,8 @@
-import { setApiAuthToken } from '../../../lib/api-client';
-import { apiRequest } from '../../../shared/api/request';
+import apiClient, {
+  normalizeApiError,
+  onApiUnauthorized,
+} from '../../../lib/api-client';
+import { apiRequest, ensureApiCsrfCookie } from '../../../shared/api/request';
 import { normalizeMemberProfile } from '../../members/api/member.normalizers';
 import type { MemberProfile } from '../../members/api/member.types';
 
@@ -23,19 +26,21 @@ export type RegisterPayload = {
   isMinor: boolean;
 };
 
-export type AuthResponse = {
-  type: string;
-  name: string | null;
-  token: string;
-  abilities: string[];
-  lastUsedAt: string | null;
-  expiresAt: string | null;
-};
-
 export type AuthSession = {
-  token: string;
   member: MemberProfile;
 };
+
+export class AuthSessionRequestError extends Error {
+  readonly status?: number;
+
+  constructor(message: string, status?: number) {
+    super(message);
+    this.name = 'AuthSessionRequestError';
+    this.status = status;
+  }
+}
+
+let currentMember: MemberProfile | null = null;
 
 const getLocalStorage = () => {
   if (typeof window === 'undefined' || !window.localStorage) {
@@ -51,61 +56,38 @@ const emitAuthChange = () => {
   }
 };
 
-const parseStoredMember = () => {
-  const storage = getLocalStorage();
-  const rawMember = storage?.getItem(AUTH_MEMBER_KEY);
-
-  if (!rawMember) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(rawMember) as MemberProfile;
-  } catch {
-    storage?.removeItem(AUTH_MEMBER_KEY);
-    return null;
-  }
-};
-
-export const getAuthToken = () =>
-  getLocalStorage()?.getItem(AUTH_TOKEN_KEY) ?? null;
-
-setApiAuthToken(getAuthToken());
-
-export const getStoredMember = () => parseStoredMember();
-
-export const getStoredSession = (): AuthSession | null => {
-  const token = getAuthToken();
-  const member = parseStoredMember();
-
-  if (!token || !member) {
-    return null;
-  }
-
-  return { token, member };
-};
-
-export const saveAuthSession = (session: AuthSession) => {
-  const storage = getLocalStorage();
-
-  storage?.setItem(AUTH_TOKEN_KEY, session.token);
-  storage?.setItem(AUTH_MEMBER_KEY, JSON.stringify(session.member));
-  storage?.setItem('chaye_account_status', session.member.status);
-  storage?.setItem('chaye_account_status_reason', '');
-  setApiAuthToken(session.token);
-  emitAuthChange();
-};
-
-export const clearAuthSession = () => {
+export const removeLegacyAuthStorage = () => {
   const storage = getLocalStorage();
 
   storage?.removeItem(AUTH_TOKEN_KEY);
   storage?.removeItem(AUTH_MEMBER_KEY);
-  storage?.removeItem('chaye_account_status');
-  storage?.removeItem('chaye_account_status_reason');
-  setApiAuthToken(null);
+};
+
+removeLegacyAuthStorage();
+
+export const getStoredMember = () => currentMember;
+
+export const getStoredSession = (): AuthSession | null => {
+  if (!currentMember) {
+    return null;
+  }
+
+  return { member: currentMember };
+};
+
+export const saveAuthSession = (session: AuthSession) => {
+  removeLegacyAuthStorage();
+  currentMember = session.member;
   emitAuthChange();
 };
+
+export const clearAuthSession = () => {
+  removeLegacyAuthStorage();
+  currentMember = null;
+  emitAuthChange();
+};
+
+onApiUnauthorized(clearAuthSession);
 
 export const onAuthChange = (callback: () => void) => {
   if (typeof window === 'undefined') {
@@ -122,28 +104,48 @@ export const registerMember = (payload: RegisterPayload) =>
     body: payload,
   });
 
-export const loginMember = async (email: string, password: string) => {
-  const auth = await apiRequest<AuthResponse>('/login', {
-    method: 'POST',
-    body: new URLSearchParams({ email, password }),
-  });
-  const member = normalizeMemberProfile(
-    await apiRequest<unknown>('/me', {
-      method: 'GET',
-      auth: true,
-      getAuthToken,
-      headers: {
-        Authorization: `Bearer ${auth.token}`,
-      },
-    }),
-  );
+export const ensureCsrfCookie = ensureApiCsrfCookie;
 
-  const session = { token: auth.token, member };
-  saveAuthSession(session);
-  return session;
+export const getCurrentSessionMember = async () => {
+  let data: unknown;
+
+  try {
+    const response = await apiClient.get<unknown>('/me');
+    data = response.data;
+  } catch (error) {
+    const normalizedError = normalizeApiError(error);
+    throw new AuthSessionRequestError(
+      normalizedError.message,
+      normalizedError.status,
+    );
+  }
+
+  const member = normalizeMemberProfile(data);
+
+  saveAuthSession({ member });
+  return member;
 };
 
-export const logoutMember = () => clearAuthSession();
+export const loginMember = async (email: string, password: string) => {
+  await ensureCsrfCookie();
+  await apiRequest<void>('/auth/web/login', {
+    method: 'POST',
+    body: { email, password },
+    skipCsrf: true,
+  });
+
+  return { member: await getCurrentSessionMember() };
+};
+
+export const logoutMember = async () => {
+  await ensureCsrfCookie();
+  await apiRequest<void>('/auth/web/logout', {
+    method: 'POST',
+    auth: true,
+    skipCsrf: true,
+  });
+  clearAuthSession();
+};
 
 export const getAge = (birthDate: string, now = new Date()) => {
   const birth = new Date(`${birthDate}T00:00:00`);

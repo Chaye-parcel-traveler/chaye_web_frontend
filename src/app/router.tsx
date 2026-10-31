@@ -64,6 +64,8 @@ function AppRouter() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<Home />} />
+          {/* /auth receives the backend OAuth callback; /login is the classic login form. */}
+          <Route path="/auth" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/carrier" element={<CarrierFormular />} />

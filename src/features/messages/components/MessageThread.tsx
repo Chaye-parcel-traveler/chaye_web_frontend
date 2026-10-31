@@ -1,9 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { getStoredMember } from '../../auth/api/auth.api';
+import { useAuthSession } from '../../auth/auth-session-context';
 import { getMember } from '../../members/api/members.api';
 import type { MemberIdentity } from '../../members/api/member.types';
 import {
@@ -24,7 +24,8 @@ import {
 const MessageThread = () => {
   const { discussionId } = useParams();
   const navigate = useNavigate();
-  const currentMember = useMemo(() => getStoredMember(), []);
+  const { isLoading: isSessionLoading, member: currentMember } =
+    useAuthSession();
   const [discussion, setDiscussion] = useState<TchatDiscussion | null>(null);
   const [peerProfile, setPeerProfile] = useState<MemberIdentity | null>(null);
   const [messages, setMessages] = useState<TchatMessage[]>([]);
@@ -53,6 +54,10 @@ const MessageThread = () => {
       : null;
 
   useEffect(() => {
+    if (isSessionLoading) {
+      return;
+    }
+
     if (!currentMember) {
       navigate('/login');
       return;
@@ -91,7 +96,7 @@ const MessageThread = () => {
         ),
       )
       .finally(() => setIsLoading(false));
-  }, [currentMember, navigate, numericDiscussionId]);
+  }, [currentMember, isSessionLoading, navigate, numericDiscussionId]);
 
   const submitMessage = handleSubmit(async (values) => {
     if (!numericDiscussionId) {

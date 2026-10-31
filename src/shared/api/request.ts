@@ -5,10 +5,25 @@ type HttpMethod = 'DELETE' | 'GET' | 'PATCH' | 'POST';
 type RequestOptions = {
   auth?: boolean;
   body?: BodyInit | Record<string, unknown>;
-  getAuthToken?: () => string | null;
   headers?: Record<string, string>;
   method: HttpMethod;
+  skipCsrf?: boolean;
 };
+
+let csrfCookiePromise: Promise<void> | null = null;
+
+export const ensureApiCsrfCookie = async () => {
+  csrfCookiePromise ??= apiClient
+    .get('/auth/csrf')
+    .then(() => undefined)
+    .finally(() => {
+      csrfCookiePromise = null;
+    });
+
+  return csrfCookiePromise;
+};
+
+const requiresCsrf = (method: HttpMethod) => method !== 'GET';
 
 export const apiRequest = async <T>(
   path: string,
@@ -27,17 +42,11 @@ export const apiRequest = async <T>(
     headers['Content-Type'] = 'application/json';
   }
 
-  if (options.auth && !headers.Authorization) {
-    const token = options.getAuthToken?.();
-
-    if (!token) {
-      throw new Error('Vous devez être connecté pour effectuer cette action.');
+  try {
+    if (!options.skipCsrf && requiresCsrf(options.method)) {
+      await ensureApiCsrfCookie();
     }
 
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  try {
     const response = await apiClient.request<T>({
       data: options.body,
       headers,
